@@ -1,0 +1,118 @@
+#!/bin/sh
+
+# Copyright: (C) 2010 RobotCub Consortium
+# Author: Paul Fitzpatrick
+# CopyPolicy: Released under the terms of the LGPLv2.1 or later, see LGPL.TXT
+
+echo "Puts license text in order."
+echo "Make sure you run this as ./scripts/admin/update-license"
+
+if true; then
+
+# reset change log
+echo -n | tee license-changes.txt
+echo -n | tee license-good.txt
+echo -n | tee license-odd.txt
+
+rm -rf license_check
+#mkdir -p license_check
+#svn export src license_check/src
+svn export . license_check
+
+for f in `cd license_check; find . -type f -iname "*.cpp" -or  -iname "*.c" -or  -iname "*.h" -or -iname "*.txt" -or -iname "*.cmake" | grep -v "/ace_" | grep -v "/maze.txt"`; do
+    ignore=false
+    if $ignore ; then
+	echo ignored $f >> license-changes.txt
+    else
+	./scripts/admin/update-license-single $f
+    fi
+done
+
+fi
+
+# license-good.txt has files under GNU GPL
+# license-odd.txt has everything else
+
+# Gather information on main GPL material
+cat license-good.txt  | grep "Copyright:" > license-gpl.txt
+cat license-good.txt  | grep "Authors:" | sed "s/\.$//" > author-gpl.txt
+GPL_PEOPLE=`( sed "s/.*[0-9][0-9][0-9][0-9] */ , /g" | sed "s/ and / , /g" | sed "s/ \& / , /g" | sed "s/ - / , /g" | grep -i "[a-z]" ) < license-gpl.txt`
+GPL_AUTHOR=`( sed "s/.*: */ , /g" | sed "s/ and / , /g" | sed "s/ \& / , /g" | sed "s/ - / , /g" | grep -i "[a-z]" ) < author-gpl.txt`
+echo $GPL_PEOPLE | perl -ne "print join(\"\\n\",split(/ *, */,\$_))" | grep "." | tee license-gpl-people.txt
+echo $GPL_AUTHOR | perl -ne "print join(\"\\n\",split(/ *, */,\$_))" | grep "." | tee license-gpl-author.txt
+GPL_YEARS=`(sed "s/\-[^ ]*//g" | sed "s/[^0-9 ]/ /g" ) < license-gpl.txt`
+echo $GPL_YEARS | perl -ne "print join(\"\\n\",split(/ +/,\$_))" | sort | uniq | grep "20" | tee license-gpl-years.txt
+
+grep -i -o "\[thanks [^]]*\]" ChangeLog | sed "s/^.thanks //i" | sed "s/\]//" > license-thanked.txt
+
+# Construct license report
+(
+
+cat<<EOF
+Unless otherwise stated, files in YARP are:
+  Copyright: 2012 Paul Fitzpatrick, Lorenzo Natale, Giorgio Metta
+  Released under the GNU LGPLv2.1 or later - see LGPL.TXT for details.
+
+The list of authors for YARP (ordered by file count) is:
+EOF
+( cat license-gpl-author.txt license-gpl-people.txt | sort | uniq -c | sort -n -r | sed "s/.*[0-9] //" | grep -v "RobotCub Consortium" ) | grep -v "IITRBCS" | sed "s/^/  /"
+
+cat<<EOF
+
+The list of people thanked in the ChangeLog (ordered by mention count) is:
+EOF
+( cat license-thanked.txt | sort | uniq -c | sort -n -r | sed "s/.*[0-9] // " ) | sed "s/^/  /"
+
+cat<<EOF
+
+The list of copyright holders for YARP is:
+EOF
+
+echo -n "  Copyright "
+echo -n `cat license-gpl-years.txt`
+echo ""
+( cat license-gpl-people.txt | sort | uniq -c | sort -n -r | sed "s/ *\([0-9]*\) /(\1 files) /" ) | sed "s/^/  /" | sed "s/(1 files)/(1 file)/" | sed "s/\(.*\)\((.*)\) \(.*\)/\1\3 \2/"
+echo ""
+
+cat<<EOF
+The identifier "RobotCub Consortium" used in some copyright statements is 
+equivalent to the following list of institutions:
+  * Ecole Polytechnique Federale de Lausanne - Biologically-Inspired
+    Robotics Group (BIRG) and Learning Algorithms and Systems Lab (LASA),
+    Switzerland
+  * IST Lisbon - Computer Vision and Robotics Lab Lisbon - Portugal
+  * Italian Institute of Technology - Dept. of Robotics, Brain and
+    Cognitive Sciences - Genova, Italy
+  * Sant'Anna School of Advanced Studies - ARTS Lab - Pisa - Italy
+  * Telerobot S.r.l. - Genova - Italy
+  * University of Ferrara - Department of Biomedical Science - Human
+    Physiology - Ferrara - Italy
+  * University of Genova - LIRA-Lab, Dipartimento di Informatica,
+    Sistemistica e Telematica - Genova - Italy
+  * University of Hertfordshire - School of Computer Science - United
+    Kingdom
+  * University of Uppsala - Department of Psychology - Uppsala - Sweden
+  * University of Zurich - Artificial Intelligence Lab, Department of
+    Information Technology - Zurich - Switzerland
+  * [2005-2008] University of Salford - Centre for Robotics and 
+    Automation - Salford - United Kingdom
+  * [2009-2010] The University of Sheffield, Dept. of Automatic Control & 
+    Systems Engineering, Sheffield, UK 
+
+Certain files are integrated in YARP from other sources with
+friendly licenses.  Here is a list of these files and a summary of
+their copyright.  See the individual files for more details.
+All files used in the default YARP build are compatible with the 
+LGPL.  Optional modules may require use of YARP under the GPL, 
+rather than the LGPL.
+
+EOF
+
+cat license-odd.txt | sed "s|^\./||"
+
+) > license-statement.txt
+
+sed -i "s/IITRBCS/Dept. Robotics, Brain and Cognitive Sciences, Istituto Italiano di Tecnologia/" license-statement.txt
+
+echo "License statement in license-statement.txt"
+

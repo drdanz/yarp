@@ -1,0 +1,35 @@
+// -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
+
+/*
+ * Copyright: (C) 2009 RobotCub Consortium
+ * Author: Paul Fitzpatrick
+ * CopyPolicy: Released under the terms of the LGPLv2.1 or later, see LGPL.TXT
+ */
+
+#include <yarp/os/api.h>
+
+#cmakedefine BUILD_SHARED_LIBS
+#ifdef BUILD_SHARED_LIBS
+#  define YARP_PLUGIN_IMPORT YARP_HELPER_DLL_IMPORT
+#  define YARP_PLUGIN_EXPORT YARP_HELPER_DLL_EXPORT
+#else
+#  define YARP_PLUGIN_IMPORT
+#  define YARP_PLUGIN_EXPORT
+#endif
+
+@YARP_CODE_PRE@
+
+// give the function for adding devices a consistent name
+extern "C" YARP_PLUGIN_EXPORT void add_@YARP_LIB_NAME@_devices();
+
+static bool @YARP_LIB_NAME@_added = false;
+
+void add_@YARP_LIB_NAME@_devices() {
+    if (!@YARP_LIB_NAME@_added) {
+        @YARP_LIB_NAME@_added = true;
+        @YARP_CODE_POST@
+    }
+}
+
+
+

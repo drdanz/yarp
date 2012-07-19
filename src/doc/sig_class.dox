@@ -1,0 +1,16 @@
+/*
+ * Copyright (C) 2010 RobotCub Consortium
+ * CopyPolicy: Released under the terms of the LGPLv2.1 or later, see LGPL.TXT
+ *
+ */
+
+
+/**
+ * \defgroup sig_class Signal Processing
+ *
+ * Basic classes and methods related to signal processing.
+ * YARP sticks with very basic data types here, with 
+ * an emphasis on easy interoperability with external libraries.
+ *
+ */
+

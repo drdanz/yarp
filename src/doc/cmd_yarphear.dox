@@ -1,0 +1,15 @@
+/*
+ * Copyright (C) 2010 RobotCub Consortium
+ * CopyPolicy: Released under the terms of the LGPLv2.1 or later, see LGPL.TXT
+ *
+ */
+
+/**
+ * @page yarphear Listen to YARP audio streams
+
+The command-line utility "yarphear" opens a port and connects it to the 
+speakers.  If data is sent to the port, it is rendered to the speakers.
+Type "help" for commands for saving, muting, etc.
+
+
+*/

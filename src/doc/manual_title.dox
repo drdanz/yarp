@@ -1,0 +1,30 @@
+/*
+ * Copyright (C) 2010 RobotCub Consortium
+ * CopyPolicy: Released under the terms of the LGPLv2.1 or later, see LGPL.TXT
+ *
+ */
+
+/**
+ * @page manual_title User Manual Title
+
+\image html yarp-yal01.png ""
+\image latex yarp-yal01.eps ""
+
+\latexonly
+\ \\
+{\Large
+YARP User Manual
+}
+\endlatexonly
+
+
+Paul Fitzpatrick
+
+Giorgio Metta
+
+Lorenzo Natale
+
+online at http://yarp0.sourceforge.net
+
+*
+*/

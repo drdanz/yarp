@@ -1,0 +1,40 @@
+=== Steps for building a release ==
+
+* Look at this page to get the current YARP version, say 2.3.14:
+
+  http://eris.liralab.it/yarp/specs/dox/download.html
+
+* Check regression tests
+
+* Make sure that conf/YarpVersion.cmake is different to the latest
+  public version, bumping up the version number if needed.
+
+* Prepare licenses
+
+  rm -rf license_check
+  ./scripts/admin/update-license
+  # check license-statement.txt for sanity
+  cp license-statement.txt COPYING
+
+* Commit current version:
+  svn commit -m "tagging ..." 
+
+* Write down revision svn revision number (REVISION)
+
+* Tag:
+  svn copy -r REVISION  https://yarp0.svn.sourceforge.net/svnroot/yarp0/trunk/yarp2  https://yarp0.svn.sourceforge.net/svnroot/yarp0/tags/yarp-2.3.14 -m "yarp release 2.X.X"
+
+* Build source packages:
+  ./scripts/admin/make-source-package-svn yarp-2.3.14
+
+* Upload to sourceforge:
+
+  cd source-package
+  rsync --recursive yarp-2.3.14 YOUR_USERNAME,yarp0@frs.sourceforge.net:/home/frs/project/y/ya/yarp0/yarp2
+
+* Update src/doc/download.dox
+
+  
+
+
+

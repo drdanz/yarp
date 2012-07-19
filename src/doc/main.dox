@@ -1,0 +1,76 @@
+// -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
+
+/*
+ * Copyright (C) 2010 RobotCub Consortium
+ * CopyPolicy: Released under the terms of the LGPLv2.1 or later, see LGPL.TXT
+ *
+ */
+
+
+/**
+ * @mainpage Welcome to YARP
+
+YARP stands for Yet Another Robot Platform.  What is it?
+If data is the bloodstream of your robot, then YARP is
+the circulatory system.
+
+More specifically, YARP supports building a robot control system as a
+\ref note_ports "collection of programs" communicating in a
+peer-to-peer way, with a \ref carrier_config "family of connection types" 
+(tcp, udp, multicast, local, MPI, 
+mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+match your needs.  
+We also support similarly flexible interfacing 
+with hardware devices.  Our strategic goal
+is to increase the longevity of robot software projects [1].
+
+YARP is <i>not</i> an operating system for your robot.  We figure you
+already have an operating system, or perhaps several.  Nor does it do
+package management (we like the package managers we have).  We're not
+out for world domination.  It is easy to interoperate with YARP-using
+programs without yourself necessarily having to use YARP -- see the
+\ref yarp_without_yarp "YARP without YARP" tutorial. YARP is written
+in C++.  The <a href="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</a> 
+library is used for Windows builds, and to support extra
+protocols.  On Linux and Mac OSX, ACE can optionally be omitted,
+giving a very light footprint (with the trade-off being the
+loss of support for some non-TCP-based protocols).
+YARP is free and open, under the LGPL (*).
+
+Getting set up:
+\li \ref install
+\li \ref yarp_cluster
+\li \ref yarp
+
+Using yarp:
+\li \ref yarp_cmake_hello
+\li \ref tutorials
+\li \ref yarprun
+\li \ref yarpmanager
+
+Highlights:
+\li \ref note_ports
+\li \ref note_devices
+
+More information:
+\li \ref what_is_yarp
+
+YARP resources:
+\li <a href="http://eris.liralab.it/yarp">Home&nbsp;Page</a>
+\li <a href="http://eris.liralab.it/yarp/specs/dox/download.html">Downloads</a>
+\li <a href="http://eris.liralab.it/wiki/YARP">Wiki</a>
+\li <a href="http://eris.liralab.it/wiki/Robotcub-hackers">Mailing&nbsp;list</a>
+
+Related links:
+\li <a href="http://www.icub.org">iCub family</a>
+\li <a href="http://playerstage.sourceforge.net/">Player/Stage</a>
+\li <a href="http://www.orocos.org/">Orocos</a>
+\li <a href="http://www.ros.org">ROS</a>
+\li <a href="http://gostai.com/products/urbi/">Urbi</a>
+
+[1] Towards Long-Lived Robot Genes.  Paul Fitzpatrick, Giorgio Metta, and Lorenzo Natale.  Robotics and Autonomous Systems, 56(1):29-45. Online at http://eris.liralab.it/yarp/media/humantech07towards.pdf
+
+(*) Certain optional plugin devices, carriers, or libraries are under the GPL.
+
+ *
+ */
