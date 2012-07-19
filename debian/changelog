@@ -1,0 +1,5 @@
+yarp (2.3.19-0r1) UNRELEASED; urgency=low
+
+  * Initial release. (Closes: #682756)
+
+ -- Daniele E. Domenichelli <daniele.domenichelli@gmail.com>  Fri, 13 Jul 2012 16:47:54 +0200

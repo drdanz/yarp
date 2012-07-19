@@ -1,0 +1,45 @@
+Source: yarp
+Priority: optional
+Maintainer: Daniele E. Domenichelli <daniele.domenichelli@gmail.com>
+Homepage: http://eris.liralab.it/yarp/
+Build-Depends: debhelper (>= 7.3.16),
+ cdbs, cmake (>= 2.6.4)
+Standards-Version: 3.9.3
+Section: libs
+
+Package: yarp-dev
+Section: libdevel
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends},
+Description: thin middleware for humanoid robots and more - development files
+ [TODO add description]
+ .
+ This package contains the development files.
+
+Package: libyarp-doc
+Section: doc
+Architecture: all
+Depends: ${misc:Depends}, ${shlibs:Depends},
+ lynx | www-browser, doc-base
+Description: thin middleware for humanoid robots and more - documentation and examples
+ [TODO add description]
+ .
+ This package contains the documentation and example files.
+
+Package: libyarp-1
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: thin middleware for humanoid robots and more- shared libraries
+ [TODO add description]
+ .
+ This package contains the shared library.
+
+Package: libyarp-dbg
+Section: debug
+Architecture: any
+Description: thin middleware for humanoid robots and more - debug symbols
+ [TODO add description]
+ .
+ This package contains the debugging symbols.
+
+
