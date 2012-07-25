@@ -37,6 +37,7 @@ Description: thin middleware for humanoid robots and more- shared libraries
 Package: libyarp-dbg
 Section: debug
 Architecture: any
+Depends: ${misc:Depends}
 Description: thin middleware for humanoid robots and more - debug symbols
  [TODO add description]
  .
