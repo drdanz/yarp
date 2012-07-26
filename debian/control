@@ -27,7 +27,7 @@ Description: thin middleware for humanoid robots and more - documentation and ex
  .
  This package contains the documentation and example files.
 
-Package: libyarp-1
+Package: libyarp1
 Section: libs
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
@@ -35,15 +35,6 @@ Description: thin middleware for humanoid robots and more- shared libraries
  [TODO add description]
  .
  This package contains the shared library.
-
-Package: libyarp-dbg
-Section: debug
-Architecture: any
-Depends: ${misc:Depends}
-Description: thin middleware for humanoid robots and more - debug symbols
- [TODO add description]
- .
- This package contains the debugging symbols.
 
 Package: yarp-tools
 Architecture: any
@@ -68,3 +59,13 @@ Description: thin middleware for humanoid robots and more - yarpview
  [TODO add description]
  .
  This package contains yarpview.
+
+Package: libyarp1-dbg
+Section: debug
+Priority: extra
+Architecture: any
+Depends: ${misc:Depends}, libyarp1 (=${binary:Version})
+Description: thin middleware for humanoid robots and more - debug symbols
+ [TODO add description]
+ .
+ This package contains the debugging symbols.
