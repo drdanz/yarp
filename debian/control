@@ -45,4 +45,26 @@ Description: thin middleware for humanoid robots and more - debug symbols
  .
  This package contains the debugging symbols.
 
+Package: yarp-tools
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: thin middleware for humanoid robots and more - command line tools
+ [TODO add description]
+ .
+ This package contains the command line tools.
 
+Package: gyarpmanager
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: thin middleware for humanoid robots and more - gyarpmanager
+ [TODO add description]
+ .
+ This package contains gyarpmanager.
+
+Package: yarpview
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: thin middleware for humanoid robots and more - yarpview
+ [TODO add description]
+ .
+ This package contains yarpview.

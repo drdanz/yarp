@@ -1,0 +1,8 @@
+debian/tmp/usr/bin/yarp
+debian/tmp/usr/bin/yarpdev
+debian/tmp/usr/bin/yarpmanager
+debian/tmp/usr/bin/yarprun
+debian/tmp/usr/bin/yarpserver
+debian/tmp/usr/bin/yarpserver2
+debian/tmp/usr/bin/yarpserver3
+
