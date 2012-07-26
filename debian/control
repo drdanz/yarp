@@ -69,3 +69,36 @@ Description: thin middleware for humanoid robots and more - debug symbols
  [TODO add description]
  .
  This package contains the debugging symbols.
+
+Package: yarp-tools-dbg
+Section: debug
+Priority: extra
+Architecture: any
+Depends: ${misc:Depends}, yarp-tools (=${binary:Version})
+Recommends: libyarp-dbg
+Description: thin middleware for humanoid robots and more - yarp-tools debug symbols
+ [TODO add description]
+ .
+ This package contains yarp-tools debugging symbols.
+
+Package: gyarpmanager-dbg
+Section: debug
+Priority: extra
+Architecture: any
+Depends: ${misc:Depends}, gyarpmanager (=${binary:Version})
+Recommends: libyarp-dbg
+Description: thin middleware for humanoid robots and more - gyarpmanager debug symbols
+ [TODO add description]
+ .
+ This package contains gyarpmanager debugging symbols.
+
+Package: yarpview-dbg
+Section: debug
+Priority: extra
+Architecture: any
+Depends: ${misc:Depends}, yarpview (=${binary:Version})
+Recommends: libyarp-dbg
+Description: thin middleware for humanoid robots and more - yarpview debug symbols
+ [TODO add description]
+ .
+ This package contains yarpview debugging symbols.
