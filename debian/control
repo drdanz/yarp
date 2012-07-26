@@ -20,7 +20,7 @@ Description: thin middleware for humanoid robots and more - development files
 Package: libyarp-doc
 Section: doc
 Architecture: all
-Depends: ${misc:Depends}
+Depends: ${misc:Depends},
  lynx | www-browser, doc-base
 Description: thin middleware for humanoid robots and more - documentation and examples
  [TODO add description]
