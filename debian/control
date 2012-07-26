@@ -11,7 +11,7 @@ Section: science
 Package: libyarp-dev
 Section: libdevel
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends},
+Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: thin middleware for humanoid robots and more - development files
  [TODO add description]
  .
@@ -20,7 +20,7 @@ Description: thin middleware for humanoid robots and more - development files
 Package: libyarp-doc
 Section: doc
 Architecture: all
-Depends: ${misc:Depends}, ${shlibs:Depends},
+Depends: ${misc:Depends}
  lynx | www-browser, doc-base
 Description: thin middleware for humanoid robots and more - documentation and examples
  [TODO add description]
@@ -30,7 +30,7 @@ Description: thin middleware for humanoid robots and more - documentation and ex
 Package: libyarp-1
 Section: libs
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: thin middleware for humanoid robots and more- shared libraries
  [TODO add description]
  .
