@@ -428,6 +428,10 @@ Copyright: 2006, Toni Ronkko
   2011, Robotics, Brain and Cognitive Sciences - Italian Institute of Technology (IIT)
 License: LGPL-2.1+
 
+Files: debian/*
+Copyright: 2012  Daniele E. Domenichelli <daniele.domenichelli@gmail.com>
+License: GPL-2+
+
 License: LGPL-2.1+
  This library is free software; you can redistribute it
  and/or modify it under the terms of the GNU Lesser General
