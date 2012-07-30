@@ -12,3 +12,21 @@ DEB_CMAKE_EXTRA_FLAGS+=-DCREATE_GUIS=ON \
  -DYARP_USE_SYSTEM_SQLITE=ON \
  -DCREATE_LIB_MATH=ON \
  -DYARP_USE_ATLAS=ON
+
+binary-fixup/libyarp-doc::
+	chmod -x $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/matrix/basic_ops.cpp \
+	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/matrix/CMakeLists.txt \
+	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/nvidia/progs/FP-resize.cg \
+	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/os/ratethread.cpp \
+	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/nvidia/progs/motion.cg \
+	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/rand/CMakeLists.txt \
+	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/stressTests/scripts/hammer-yarp-server \
+	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/portaudio/sound_loopback.cpp \
+	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/motorcontrol/CMakeLists.txt \
+	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/portaudio/CMakeLists.txt \
+	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/swig/src/Example3.java \
+	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/stressTests/scripts/grind \
+	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/stressTests/scripts/hammer \
+	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/portaudio/sound_sender.cpp \
+	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/rand/rand.cpp \
+	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/portaudio/sound_receiver.cpp
