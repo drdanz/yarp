@@ -15,7 +15,8 @@ Vcs-Browser: http://anonscm.debian.org/gitweb/?p=debian-science/packages/yarp.gi
 Package: libyarp-dev
 Section: libdevel
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends},
+ libyarp1 (=${binary:Version})
 Description: thin middleware for humanoid robots and more - development files
  [TODO add description]
  .
@@ -39,18 +40,102 @@ Description: thin middleware for humanoid robots and more - documentation and ex
  .
  This package contains the documentation and example files.
 
-Package: libyarp1
+Package: libyarp-os1
 Section: libs
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: thin middleware for humanoid robots and more- shared libraries
+Description: thin middleware for humanoid robots and more - [os] shared libraries
  [TODO add description]
  .
  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
  lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
  viverra nec consectetur ante hendrerit. Donec et mollis dolor.
  .
- This package contains the shared library.
+ This package contains the [os] shared library.
+
+Package: libyarp-sig1
+Section: libs
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: thin middleware for humanoid robots and more - [sig] shared libraries
+ [TODO add description]
+ .
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
+ lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
+ viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ .
+ This package contains the [sig] shared library.
+
+Package: libyarp-math1
+Section: libs
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: thin middleware for humanoid robots and more - [math] shared libraries
+ [TODO add description]
+ .
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
+ lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
+ viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ .
+ This package contains the [math] shared library.
+
+Package: libyarp-dev1
+Section: libs
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: thin middleware for humanoid robots and more - [dev] shared libraries
+ [TODO add description]
+ .
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
+ lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
+ viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ .
+ This package contains the [dev] shared library.
+
+Package: libyarp-name1
+Section: libs
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: thin middleware for humanoid robots and more - [name] shared libraries
+ [TODO add description]
+ .
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
+ lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
+ viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ .
+ This package contains the [name] shared library.
+
+Package: libyarp-init1
+Section: libs
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: thin middleware for humanoid robots and more - [init] shared libraries
+ [TODO add description]
+ .
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
+ lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
+ viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ .
+ This package contains the [init] shared library.
+
+Package: libyarp1
+Section: libs
+Architecture: any
+Depends: ${misc:Depends},
+ libyarp-os1 (>= ${source:Version}),
+ libyarp-sig1 (>= ${source:Version}),
+ libyarp-math1 (>= ${source:Version}),
+ libyarp-dev1 (>= ${source:Version}),
+ libyarp-name1 (>= ${source:Version}),
+ libyarp-init1 (>= ${source:Version}),
+Description: thin middleware for humanoid robots and more - shared libraries
+ [TODO add description]
+ .
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
+ lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
+ viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ .
+ This package contains the shared library. [metapackage]
 
 Package: yarp-tools
 Architecture: any
@@ -88,11 +173,101 @@ Description: thin middleware for humanoid robots and more - yarpview
  .
  This package contains yarpview.
 
+Package: libyarp-os1-dbg
+Section: debug
+Priority: extra
+Architecture: any
+Depends: ${misc:Depends}, libyarp-os1 (=${binary:Version})
+Description: thin middleware for humanoid robots and more - [os] debug symbols
+ [TODO add description]
+ .
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
+ lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
+ viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ .
+ This package contains the [os] debugging symbols.
+
+Package: libyarp-sig1-dbg
+Section: debug
+Priority: extra
+Architecture: any
+Depends: ${misc:Depends}, libyarp-sig1 (=${binary:Version})
+Description: thin middleware for humanoid robots and more - [sig] debug symbols
+ [TODO add description]
+ .
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
+ lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
+ viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ .
+ This package contains the [sig] debugging symbols.
+
+Package: libyarp-init1-dbg
+Section: debug
+Priority: extra
+Architecture: any
+Depends: ${misc:Depends}, libyarp-init1 (=${binary:Version})
+Description: thin middleware for humanoid robots and more - [init] debug symbols
+ [TODO add description]
+ .
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
+ lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
+ viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ .
+ This package contains the [init] debugging symbols.
+
+Package: libyarp-name1-dbg
+Section: debug
+Priority: extra
+Architecture: any
+Depends: ${misc:Depends}, libyarp-name1 (=${binary:Version})
+Description: thin middleware for humanoid robots and more - [name] debug symbols
+ [TODO add description]
+ .
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
+ lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
+ viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ .
+ This package contains the [name] debugging symbols.
+
+Package: libyarp-dev1-dbg
+Section: debug
+Priority: extra
+Architecture: any
+Depends: ${misc:Depends}, libyarp-dev1 (=${binary:Version})
+Description: thin middleware for humanoid robots and more - [dev] debug symbols
+ [TODO add description]
+ .
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
+ lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
+ viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ .
+ This package contains the [dev] debugging symbols.
+
+Package: libyarp-math1-dbg
+Section: debug
+Priority: extra
+Architecture: any
+Depends: ${misc:Depends}, libyarp-math1 (=${binary:Version})
+Description: thin middleware for humanoid robots and more - [math] debug symbols
+ [TODO add description]
+ .
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
+ lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
+ viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ .
+ This package contains the [math] debugging symbols.
+
 Package: libyarp1-dbg
 Section: debug
 Priority: extra
 Architecture: any
-Depends: ${misc:Depends}, libyarp1 (=${binary:Version})
+Depends: ${misc:Depends}, libyarp1 (= ${binary:Version}),
+ libyarp-os1-dbg (>= ${source:Version}),
+ libyarp-sig1-dbg (>= ${source:Version}),
+ libyarp-math1-dbg (>= ${source:Version}),
+ libyarp-dev1-dbg (>= ${source:Version}),
+ libyarp-name1-dbg (>= ${source:Version}),
+ libyarp-init1-dbg (>= ${source:Version}),
 Description: thin middleware for humanoid robots and more - debug symbols
  [TODO add description]
  .
@@ -100,7 +275,7 @@ Description: thin middleware for humanoid robots and more - debug symbols
  lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
  viverra nec consectetur ante hendrerit. Donec et mollis dolor.
  .
- This package contains the debugging symbols.
+ This package contains the debugging symbols. [metapackage]
 
 Package: yarp-tools-dbg
 Section: debug
