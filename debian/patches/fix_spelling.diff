@@ -1,0 +1,93 @@
+# Fix spelling errors reported by lintian
+
+--- a/example/yayarpview/CImg.h
++++ b/example/yayarpview/CImg.h
+@@ -3154,7 +3154,7 @@
+ 
+     //! Print informations about %CImg environement variables.
+     /**
+-       Printing is done on the standart error output.
++       Printing is done on the standard error output.
+     **/
+     inline void info() {
+       std::fprintf(stderr,"\n %sCImg Library %g%s, compiled %s ( %s ) with the following flags :\n\n",
+@@ -3466,7 +3466,7 @@
+ 
+     //! Print the current statistics.
+     /**
+-       Printing is done on the standart error output.
++       Printing is done on the standard error output.
+     **/
+     const CImgStats& print(const char* title=NULL) const {
+       if (lmin>=0 && lmax>=0)
+@@ -6196,7 +6196,7 @@
+       return *this;
+     }
+ 
+-    //! Display informations about the image on the standart output.
++    //! Display informations about the image on the standard output.
+     const CImg& print(const unsigned int print_flag) const { return print(NULL,print_flag); }
+   
+     //@}
+--- a/src/yarpmanager/gymanager/application_window.cpp
++++ b/src/yarpmanager/gymanager/application_window.cpp
+@@ -299,7 +299,7 @@
+                             sigc::mem_fun(*this, &ApplicationWindow::onPMenuDisconnect) );
+     m_refActionGroup->add( Gtk::Action::create("PManageRefresh", Gtk::Stock::REFRESH, "Re_fresh Status", "Refresh Modules/connections Status"),
+                             sigc::mem_fun(*this, &ApplicationWindow::onPMenuRefresh) );
+-    m_refActionGroup->add( Gtk::Action::create("PManageStdout", Gtk::Stock::NETWORK, "_Attach to stdout", "Attach to standart output"),
++    m_refActionGroup->add( Gtk::Action::create("PManageStdout", Gtk::Stock::NETWORK, "_Attach to stdout", "Attach to standard output"),
+                             sigc::mem_fun(*this, &ApplicationWindow::onPMenuAttachStdout) );        
+     m_refActionGroup->add( Gtk::Action::create("PModuleSelAll", Gtk::StockID("YSELECTALL"), "Select _all modules", "Select all modules"),
+                             sigc::mem_fun(*this, &ApplicationWindow::onPModuleSelectAll) );
+--- a/src/yarpmanager/gymanager/resource_window.cpp
++++ b/src/yarpmanager/gymanager/resource_window.cpp
+@@ -134,7 +134,7 @@
+ 
+ 
+     row = *(m_refTreeModel->append());
+-    row[m_Columns.m_col_name] = "Availablity";
++    row[m_Columns.m_col_name] = "Availability";
+     if(m_pComputer->getAvailability())
+     {
+         row[m_Columns.m_col_value] = "Yes";
+--- a/src/yarpmanager/gymanager/template_res.h
++++ b/src/yarpmanager/gymanager/template_res.h
+@@ -120,7 +120,7 @@
+ 
+ static const std::string str_res_template = 
+ "<resources>\n"
+-"    <!-- Mutiple computer descriptions can be introduced -->\n"
++"    <!-- Multiple computer descriptions can be introduced -->\n"
+ "    <computer>\n"
+ "        <name>hostname1</name>\n"
+ "        <description>Template resource</description>\n"
+--- a/src/yarpmanager/libymanager/include/fsm.h
++++ b/src/yarpmanager/libymanager/include/fsm.h
+@@ -185,7 +185,7 @@
+         it = transitions.find(state);
+         if(it==transitions.end())
+         {
+-            std::cerr<<"No transition is registerd from state "<<state->getName()<<std::endl;
++            std::cerr<<"No transition is registered from state "<<state->getName()<<std::endl;
+             semEvent.post();
+             return;
+         }
+@@ -194,7 +194,7 @@
+         std::map<Event*, StateBase*>::iterator itr2 = row.find(event); 
+         if(itr2 == row.end())
+         {
+-            std::cerr<<"No transition is registerd for event ";
++            std::cerr<<"No transition is registered for event ";
+             std::cerr<<event->getName()<<" ("<<event->getTimeStamp()<<")";
+             std::cerr<<" from state "<<state->getName()<<std::endl;
+             semEvent.post();
+--- a/src/yarpmanager/tests/templates/resource.xml.template
++++ b/src/yarpmanager/tests/templates/resource.xml.template
+@@ -1,5 +1,5 @@
+ <resources>
+-    <!-- Mutiple computer descriptions can be introduced -->
++    <!-- Multiple computer descriptions can be introduced -->
+     <computer>
+         <name>hostname1</name>
+         <description>Template resource</description>
