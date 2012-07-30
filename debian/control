@@ -3,7 +3,7 @@ Priority: optional
 Maintainer: Daniele E. Domenichelli <daniele.domenichelli@gmail.com>
 Homepage: http://eris.liralab.it/yarp/
 Build-Depends: debhelper (>= 7.3.16),
- cdbs, cmake (>= 2.6.4),
+ cdbs, cmake (>= 2.6.4), doxygen,
  libace-dev, libgtk2.0-dev, libgtkmm-2.4-dev,
  libsqlite3-dev,
  libgsl0-dev, libatlas-base-dev
