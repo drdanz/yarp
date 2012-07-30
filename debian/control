@@ -9,6 +9,8 @@ Build-Depends: debhelper (>= 7.3.16),
  libgsl0-dev, libatlas-base-dev
 Standards-Version: 3.9.3
 Section: science
+Vcs-Git: git://anonscm.debian.org/debian-science/packages/yarp.git
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=debian-science/packages/yarp.git
 
 Package: libyarp-dev
 Section: libdevel
