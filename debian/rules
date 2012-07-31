@@ -19,6 +19,8 @@ build/libyarp-doc::
 
 binary-install/libyarp-doc::
 	cp -R $(DEB_BUILDDIR)/dox/html $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc
+	rm $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/html/jquery.js
+	ln -s /usr/share/javascript/jquery/jquery.js $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/html/
 
 binary-fixup/libyarp-doc::
 	chmod -x $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/matrix/basic_ops.cpp \

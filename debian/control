@@ -30,7 +30,7 @@ Package: libyarp-doc
 Section: doc
 Architecture: all
 Depends: ${misc:Depends},
- lynx | www-browser, doc-base
+ lynx | www-browser, doc-base, libjs-jquery
 Description: thin middleware for humanoid robots and more - documentation and examples
  [TODO add description]
  .
