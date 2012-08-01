@@ -1,0 +1,9 @@
+Document: yarp
+Title: Yarp
+Author: Doxygen
+Abstract: Reference Manual for Yarp (Yet Another Robot Platform)
+Section: Science/Data Analysis
+
+Format: HTML
+Index: /usr/share/doc/libyarp-doc/html/index.html
+Files: /usr/share/doc/libyarp-doc/html/*.html
