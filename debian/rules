@@ -7,12 +7,19 @@ include /usr/share/cdbs/1/rules/debhelper.mk
 
 CFLAGS+=$(CPPFLAGS)
 CXXFLAGS+=$(CPPFLAGS)
-DEB_CMAKE_EXTRA_FLAGS+=-DCREATE_GUIS=ON \
+DEB_CMAKE_EXTRA_FLAGS+=-DCREATE_IDLS=TRUE \
+ -DCREATE_GUIS=ON \
  -DCREATE_SHARED_LIBRARY=ON \
  -DYARP_USE_SYSTEM_SQLITE=ON \
  -DCREATE_LIB_MATH=ON \
  -DYARP_USE_ATLAS=ON \
- -DDOX_GENERATE_XML=ON
+ -DDOX_GENERATE_XML=ON \
+ -DCREATE_OPTIONAL_CARRIERS=TRUE \
+ -DENABLE_yarpcar_bayer_carrier=TRUE -DRUNTIME_yarpcar_bayer_carrier=TRUE -DUSE_LIBDC1394=FALSE \
+ -DENABLE_yarpcar_tcpros_carrier=TRUE -DRUNTIME_yarpcar_tcpros_carrier=TRUE \
+ -DENABLE_yarpcar_xmlrpc_carrier=TRUE -DRUNTIME_yarpcar_xmlrpc_carrier=TRUE \
+ -DENABLE_yarpcar_priority_carrier=TRUE -DRUNTIME_yarpcar_priority_carrier=TRUE \
+ -DENABLE_yarpidl_thrift=TRUE
 
 build/yarp-tools::
 	doxygen $(CURDIR)/conf/doxygen/Doxyfile.man
