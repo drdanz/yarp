@@ -14,6 +14,18 @@ DEB_CMAKE_EXTRA_FLAGS+=-DCREATE_GUIS=ON \
  -DYARP_USE_ATLAS=ON \
  -DDOX_GENERATE_XML=ON
 
+build/yarp-tools::
+	doxygen $(CURDIR)/conf/doxygen/Doxyfile.man
+	install -D -p -m0644 $(CURDIR)/doc/man/man/man1/yarp.1 \
+	  $(CURDIR)/debian/yarp-tools/usr/share/man/man1
+	install -D -p -m0644 $(CURDIR)/doc/man/man/man1/yarpdev.1 \
+	  $(CURDIR)/debian/yarp-tools/usr/share/man/man1
+	install -D -p -m0644 $(CURDIR)/doc/man/man/man1/yarprun.1 \
+	  $(CURDIR)/debian/yarp-tools/usr/share/man/man/man1
+	install -D -p -m0644 $(CURDIR)/doc/man/man/man1/yarpview.1 \
+	  $(CURDIR)/debian/yarp-tools/usr/share/man/man1
+	rm -R $(CURDIR)/doc/man
+
 build/libyarp-doc::
 	$(MAKE) -C $(DEB_BUILDDIR) dox
 
