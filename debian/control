@@ -321,3 +321,15 @@ Description: thin middleware for humanoid robots and more - yarpview debug symbo
  viverra nec consectetur ante hendrerit. Donec et mollis dolor.
  .
  This package contains yarpview debugging symbols.
+
+Package: yarp-carriers
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: thin middleware for humanoid robots and more - carriers
+ [TODO add description]
+ .
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
+ lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
+ viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ .
+ This package contains the carriers.
