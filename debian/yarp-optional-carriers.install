@@ -1,10 +1,4 @@
 debian/tmp/usr/lib/libbayer_carrier.so
 debian/tmp/usr/lib/libpriority_carrier.so
 debian/tmp/usr/lib/libtcpros_carrier.so
-debian/tmp/usr/lib/libwire_rep_utils.so
-debian/tmp/usr/lib/libwire_rep_utils.so.1
-debian/tmp/usr/lib/libwire_rep_utils.so.2.3.19
 debian/tmp/usr/lib/libxmlrpc_carrier.so
-debian/tmp/usr/lib/libyarpcar.so
-debian/tmp/usr/lib/libyarpcar.so.1
-debian/tmp/usr/lib/libyarpcar.so.2.3.19
