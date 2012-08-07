@@ -19,7 +19,8 @@ DEB_CMAKE_EXTRA_FLAGS+=-DCREATE_IDLS=ON \
  -DENABLE_yarpcar_tcpros_carrier=ON -DRUNTIME_yarpcar_tcpros_carrier=ON \
  -DENABLE_yarpcar_xmlrpc_carrier=ON -DRUNTIME_yarpcar_xmlrpc_carrier=ON \
  -DENABLE_yarpcar_priority_carrier=ON -DRUNTIME_yarpcar_priority_carrier=ON \
- -DENABLE_yarpidl_thrift=ON
+ -DENABLE_yarpidl_thrift=ON \
+ -DYARP_COMPILE_TESTS=OFF
 
 build/yarp-tools::
 	doxygen $(CURDIR)/conf/doxygen/Doxyfile.man
