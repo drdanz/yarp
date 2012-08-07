@@ -1,0 +1,2 @@
+usr/include/yarp/sig/*.h
+usr/lib/*/libYARP_sig.so

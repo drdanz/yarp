@@ -1,0 +1,2 @@
+usr/include/yarp/math/*.h
+usr/lib/*/libYARP_math.so

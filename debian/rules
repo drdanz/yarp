@@ -1,60 +1,74 @@
 #!/usr/bin/make -f
 
-DPKG_EXPORT_BUILDFLAGS = 1
--include /usr/share/dpkg/buildflags.mk
-include /usr/share/cdbs/1/class/cmake.mk
-include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/dpkg/architecture.mk
 
-CFLAGS+=$(CPPFLAGS)
-CXXFLAGS+=$(CPPFLAGS)
-DEB_CMAKE_EXTRA_FLAGS+=-DCREATE_IDLS=ON \
- -DCREATE_GUIS=ON \
- -DCREATE_SHARED_LIBRARY=ON \
- -DYARP_USE_SYSTEM_SQLITE=ON \
- -DCREATE_LIB_MATH=ON \
- -DYARP_USE_ATLAS=ON \
- -DDOX_GENERATE_XML=ON \
- -DCREATE_OPTIONAL_CARRIERS=ON \
- -DENABLE_yarpcar_bayer_carrier=ON -DRUNTIME_yarpcar_bayer_carrier=ON -DUSE_LIBDC1394=OFF \
- -DENABLE_yarpcar_tcpros_carrier=ON -DRUNTIME_yarpcar_tcpros_carrier=ON \
- -DENABLE_yarpcar_xmlrpc_carrier=ON -DRUNTIME_yarpcar_xmlrpc_carrier=ON \
- -DENABLE_yarpcar_priority_carrier=ON -DRUNTIME_yarpcar_priority_carrier=ON \
- -DENABLE_yarpidl_thrift=ON \
- -DYARP_COMPILE_TESTS=OFF
+%:
+	dh $@ --parallel --list-missing
 
-build/yarp-tools::
-	doxygen $(CURDIR)/conf/doxygen/Doxyfile.man
-	install -D -p -m0644 $(CURDIR)/doc/man/man/man1/yarp.1 \
-	  $(CURDIR)/debian/yarp-tools/usr/share/man/man1
-	install -D -p -m0644 $(CURDIR)/doc/man/man/man1/yarpdev.1 \
-	  $(CURDIR)/debian/yarp-tools/usr/share/man/man1
-	install -D -p -m0644 $(CURDIR)/doc/man/man/man1/yarprun.1 \
-	  $(CURDIR)/debian/yarp-tools/usr/share/man/man/man1
-	install -D -p -m0644 $(CURDIR)/doc/man/man/man1/yarpview.1 \
-	  $(CURDIR)/debian/yarp-tools/usr/share/man/man1
-	rm -R $(CURDIR)/doc/man
+override_dh_auto_configure:
+	dh_auto_configure -- \
+	                     -DCREATE_GUIS=ON \
+	                     -DCREATE_YARPBUILDER=ON \
+	                     -DCREATE_LIB_MATH=ON \
+	                     -DDOX_GENERATE_XML=ON \
+	                     -DCREATE_OPTIONAL_CARRIERS=ON \
+	                     -DENABLE_yarpcar_bayer_carrier=ON -DUSE_LIBDC1394=OFF \
+	                     -DENABLE_yarpcar_human_carrier=ON \
+	                     -DENABLE_yarpcar_mjpeg_carrier=ON \
+	                     -DENABLE_yarpcar_priority_carrier=ON \
+	                     -DENABLE_yarpcar_rossrv_carrier=ON \
+	                     -DENABLE_yarpcar_tcpros_carrier=ON \
+	                     -DENABLE_yarpcar_xmlrpc_carrier=ON \
+	                     -DCREATE_DEVICE_LIBRARY_MODULES=ON \
+	                     -DENABLE_yarpmod_serial=ON \
+	                     -DYARP_COMPILE_TESTS=OFF
+# -DENABLE_yarpmod_KinectDeviceClient=ON -DRUNTIME_yarpmod_KinectDeviceClient=ON \
+# -DENABLE_yarpmod_KinectDeviceLocal=ON -DRUNTIME_yarpmod_KinectDeviceLocal=ON \
+# -DENABLE_yarpmod_SerialServoBoard=ON -DRUNTIME_yarpmod_SerialServoBoard=ON \
+# -DENABLE_yarpmod_cuda=ON -DRUNTIME_yarpmod_cuda=ON \
+# -DENABLE_yarpmod_dimax_u2c=ON -DRUNTIME_yarpmod_dimax_u2c=ON \
+# -DENABLE_yarpmod_dynamixelAX12Ft=ON -DRUNTIME_yarpmod_dynamixelAX12Ft=ON \
+# -DENABLE_yarpmod_fakebot=ON -DRUNTIME_yarpmod_fakebot=ON \
+# -DENABLE_yarpmod_ffmpeg_grabber=ON -DRUNTIME_yarpmod_ffmpeg_grabber=ON \
+# -DENABLE_yarpmod_ffmpeg_writer=ON -DRUNTIME_yarpmod_ffmpeg_writer=ON \
+# -DENABLE_yarpmod_firewirecamera=ON -DRUNTIME_yarpmod_firewirecamera=ON \
+# -DENABLE_yarpmod_jrkerr=ON -DRUNTIME_yarpmod_jrkerr=ON \
+# -DENABLE_yarpmod_laserHokuyo=ON -DRUNTIME_yarpmod_laserHokuyo=ON \
+# -DENABLE_yarpmod_microphone=ON -DRUNTIME_yarpmod_microphone=ON \
+# -DENABLE_yarpmod_nvidia=ON -DRUNTIME_yarpmod_nvidia=ON \
+# -DENABLE_yarpmod_opencv_grabber=ON -DRUNTIME_yarpmod_opencv_grabber=ON \
+# -DENABLE_yarpmod_portaudio=ON -DRUNTIME_yarpmod_portaudio=ON \
+# -DENABLE_yarpmod_serialport=ON -DRUNTIME_yarpmod_serialport=ON \
+# -DENABLE_yarpmod_stage=ON -DRUNTIME_yarpmod_stage=ON \
+# -DENABLE_yarpmod_urbtc=ON -DRUNTIME_yarpmod_urbtc=ON \
+# -DENABLE_yarpmod_vfw_grabber=ON -DRUNTIME_yarpmod_vfw_grabber=ON \
+# -DENABLE_yarpmod_wxsdl=ON -DRUNTIME_yarpmod_wxsdl=ON \
 
-build/libyarp-doc::
-	$(MAKE) -C $(DEB_BUILDDIR) dox
+# -DENABLE_yarpcar_mpi_carrier=ON -DRUNTIME_yarpcar_mpi_carrier=ON \
+# -DENABLE_yarpcar_mpibcast_carrier=ON -DRUNTIME_yarpcar_mpibcast_carrier=ON \
 
-binary-install/libyarp-doc::
-	rm $(DEB_BUILDDIR)/dox/html/jquery.js
-	cp -au $(DEB_BUILDDIR)/dox/html $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc
 
-binary-fixup/libyarp-doc::
-	chmod -x $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/matrix/basic_ops.cpp \
-	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/matrix/CMakeLists.txt \
-	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/nvidia/progs/FP-resize.cg \
-	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/os/ratethread.cpp \
-	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/nvidia/progs/motion.cg \
-	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/rand/CMakeLists.txt \
-	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/stressTests/scripts/hammer-yarp-server \
-	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/portaudio/sound_loopback.cpp \
-	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/motorcontrol/CMakeLists.txt \
-	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/portaudio/CMakeLists.txt \
-	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/swig/src/Example3.java \
-	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/stressTests/scripts/grind \
-	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/stressTests/scripts/hammer \
-	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/portaudio/sound_sender.cpp \
-	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/rand/rand.cpp \
-	         $(CURDIR)/debian/libyarp-doc/usr/share/doc/libyarp-doc/examples/portaudio/sound_receiver.cpp
+#	                     -DCREATE_SHARED_LIBRARY=ON \
+#	                     -DYARP_USE_SYSTEM_SQLITE=ON \
+
+
+
+override_dh_auto_build-arch:
+	dh_auto_build --parallel
+
+override_dh_auto_build-indep:
+	dh_auto_build -- dox
+	dh_auto_build -- man
+
+# Do not run tests, as they fall into race conditions sometimes
+override_dh_auto_test:
+
+override_dh_strip:
+	dh_strip --dbg-package=libyarp-dbg
+
+override_dh_install:
+	dh_install --list-missing
+
+override_dh_installdocs:
+	dh_doxygen --package=libyarp-doc
+	dh_installdocs --link-doc=libyarp-doc

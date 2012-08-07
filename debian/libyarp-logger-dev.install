@@ -1,0 +1,2 @@
+usr/include/yarp/logger/*.h
+usr/lib/*/libYARP_logger.a

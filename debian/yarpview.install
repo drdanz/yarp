@@ -1,1 +1,3 @@
-debian/tmp/usr/bin/yarpview
+usr/bin/yarpview
+usr/lib/x86_64-linux-gnu/qt5/qml/robotology/yarp/view/qmldir
+usr/lib/x86_64-linux-gnu/qt5/qml/robotology/yarp/view/libQtYARPViewPlugin.so

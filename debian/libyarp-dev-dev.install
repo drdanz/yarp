@@ -1,0 +1,3 @@
+usr/include/yarp/dev/*.h
+usr/include/yarp/dev/*.inl
+usr/lib/*/libYARP_dev.so

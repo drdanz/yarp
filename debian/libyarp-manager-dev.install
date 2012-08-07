@@ -1,0 +1,2 @@
+usr/include/yarp/manager/*.h
+usr/lib/*/libYARP_manager.a

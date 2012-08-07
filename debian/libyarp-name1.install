@@ -1,1 +1,1 @@
-debian/tmp/usr/lib/libYARP_name.so.*
+usr/lib/*/libYARP_name.so.*

@@ -1,4 +1,4 @@
-debian/tmp/usr/include/*
-debian/tmp/usr/lib/lib*.so
-debian/tmp/usr/share/yarp/cmake/*
-debian/tmp/usr/lib/YARP-*/*.cmake
+usr/include/*
+usr/lib/*/libYARP_*.so
+usr/share/yarp/cmake/*
+usr/lib/*/YARP/*.cmake

@@ -1,4 +1,8 @@
-debian/tmp/usr/lib/libbayer_carrier.so
-debian/tmp/usr/lib/libpriority_carrier.so
-debian/tmp/usr/lib/libtcpros_carrier.so
-debian/tmp/usr/lib/libxmlrpc_carrier.so
+#usr/lib/*/libYARP_wire_rep_utils.a
+usr/lib/*/yarp/yarp_mjpeg.so
+usr/lib/*/yarp/yarp_bayer.so
+usr/lib/*/yarp/yarp_human.so
+usr/lib/*/yarp/yarp_priority.so
+usr/lib/*/yarp/yarp_serial.so
+usr/lib/*/yarp/yarp_tcpros.so
+usr/lib/*/yarp/yarp_xmlrpc.so

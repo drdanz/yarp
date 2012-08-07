@@ -1,0 +1,7 @@
+usr/include/yarp/conf/*.h
+usr/include/yarp/os/*.h
+usr/include/yarp/os/idl/*.h
+usr/lib/*/libYARP_OS.so
+usr/lib/*/libYARP_init.so
+usr/lib/*/YARP/*.cmake
+usr/share/yarp/cmake/*

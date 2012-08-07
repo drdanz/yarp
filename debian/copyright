@@ -25,8 +25,8 @@ Files: src/carriers/mpi_carrier/*
 Copyright: 2010, 2011 Daniel Krieg
 License: LGPL-2.1+
 
-Files: example/cuda/
- example/nvidia/
+Files: example/cuda/*
+ example/nvidia/*
  src/libYARP_dev/include/yarp/dev/GPUInterface.h
  src/modules/SerialServoBoard/SerialServoBoard.cpp
  src/modules/SerialServoBoard/SerialServoBoard.h
@@ -69,12 +69,12 @@ Files: src/libYARP_dev/include/yarp/dev/RemoteFrameGrabber.h
  src/libYARP_dev/include/yarp/dev/RemoteFrameGrabberDC1394.h
  src/libYARP_dev/src/RemoteFrameGrabber.cpp
  src/libYARP_dev/src/RemoteFrameGrabberDC1394.cpp
- src/yarpview/FpsStats.h
- src/yarpview/ImagePort.cpp
- src/yarpview/ImagePort.h
- src/yarpview/ViewerResources.h
- src/yarpview/YarpImage2Pixbuf.cpp
- src/yarpview/YarpImage2Pixbuf.h
+ src/yarpview-gtk/FpsStats.h
+ src/yarpview-gtk/ImagePort.cpp
+ src/yarpview-gtk/ImagePort.h
+ src/yarpview-gtk/ViewerResources.h
+ src/yarpview-gtk/YarpImage2Pixbuf.cpp
+ src/yarpview-gtk/YarpImage2Pixbuf.h
 Copyright: 2006, 2009, 2010 RobotCub Consortium, European Commission FP6 Project IST-004370
 License: LGPL-2.1+
 
@@ -84,19 +84,6 @@ Files: example/yayarpview/YarpCImgViewer.cpp
  example/yayarpview/stmac.h
 Copyright: 2010 Renaud Detry
 License: LGPL-2.1+
-
-Files: src/yarpmanager/libymanager/tinyxml/tinystr.cpp
- src/yarpmanager/libymanager/tinyxml/tinystr.h
- src/yarpmanager/libymanager/tinyxml/tinyxml.cpp
- src/yarpmanager/libymanager/tinyxml/tinyxml.h
- src/yarpmanager/libymanager/tinyxml/tinyxmlparser.cpp
- src/yarpscope/src/tinyxml/tinystr.cpp
- src/yarpscope/src/tinyxml/tinystr.h
- src/yarpscope/src/tinyxml/tinyxml.cpp
- src/yarpscope/src/tinyxml/tinyxml.h
- src/yarpscope/src/tinyxml/tinyxmlparser.cpp
-Copyright: Lee Thomason, Yves Berquin, Andrew Ellerton
-License: zlib/libpng
 
 Files: src/libYARP_OS/include/yarp/os/impl/TcpAcceptor.h
  src/libYARP_OS/include/yarp/os/impl/TcpConnector.h
@@ -139,14 +126,14 @@ Files: src/modules/jrkerr/nmccom.cpp
  src/modules/jrkerr/sio_util.cpp
  src/modules/jrkerr/sio_util.h
 Copyright: 2007, Jeffrey Kerr LLC
-License: BSD
+License: BSD-3-clause
 
 Files: src/libYARP_OS/include/yarp/os/impl/hmac/hmac_sha2.h
  src/libYARP_OS/include/yarp/os/impl/hmac/sha2.h
  src/libYARP_OS/src/hmac_sha2.c
  src/libYARP_OS/src/sha2.c
 Copyright: 2005, 2007 Olivier Gay <olivier.gay@a3.epfl.ch>
-License: BSD
+License: BSD-3-clause
 
 Files: src/modules/dimax_u2c/I2c.cpp
  src/modules/dimax_u2c/I2c.h
@@ -202,8 +189,6 @@ Copyright: 2007, RobotCub Consortium, Giacomo Spigler
 License: LGPL-2.1+
 
 Files: example/gtk/gtkdemo.cpp
- src/yarpscope/src/gtkdatabox/gtkdatabox_ruler.c
- src/yarpscope/src/gtkdatabox/gtkdatabox_ruler.h
 Copyright: 1995-1997, Peter Mattis, Spencer Kimball and Josh MacDonald
 License: LGPL-2+
 
@@ -211,7 +196,7 @@ Files: src/idls/thrift/msvc/inttypes.h
  src/idls/thrift/msvc/stdint.h
 Copyright: 2006-2008, Alexander Chemeris
   2006-2008, Alexander Chemeris
-License: BSD
+License: BSD-3-clause
 
 Files: src/idls/thrift/src_gen/parser.cc
  src/idls/thrift/src_gen/parser.hh
@@ -244,38 +229,7 @@ License: LGPL-2.1+
 
 Files: src/libYARP_sig/include/yarp/sig/IplImage.h
 Copyright: 2000, Intel Corporation
-License:
- Redistribution and use in source and binary forms, with or
- without modification, are permitted provided that the
- following conditions are met:
- .
-   * Redistribution's of source code must retain the above
-     copyright notice, this list of conditions and the
-     following disclaimer.
- .
-   * Redistribution's in binary form must reproduce the
-     above copyright notice, this list of conditions and
-     the following disclaimer in the documentation and/or
-     other materials provided with the distribution.
- .
-   * The name of Intel Corporation may not be used to
-     endorse or promote products derived from this software
-     without specific prior written permission.
- .
- This software is provided by the copyright holders and
- contributors "as is" and any express or implied
- warranties, including, but not limited to, the implied
- warranties of merchantability and fitness for a particular
- purpose are disclaimed. In no event shall the Intel
- Corporation or contributors be liable for any direct,
- indirect, incidental, special, exemplary, or consequential
- damages (including, but not limited to, procurement of
- substitute goods or services; loss of use, data, or
- profits; or business interruption) however caused and on
- any theory of liability, whether in contract, strict
- liability, or tort (including negligence or otherwise)
- arising in any way out of the use of this software, even
- if advised of the possibility of such damage.
+License: BSD-3-clause
 
 Files: src/modules/urbtc/UrbtcControl.cpp
  src/modules/urbtc/UrbtcControl.h
@@ -291,8 +245,8 @@ Files: src/modules/laserHokuyo/laserHokuyo.cpp
 Copyright: 2010, Marco Randazzo
 License: LGPL-2.1+
 
-Files: src/yarpview/yarpview.cpp
- src/yarpview/yarpview.h
+Files: src/yarpview-gtk/yarpview.cpp
+ src/yarpview-gtk/yarpview.h
 Copyright: 2006, Matteo Brunettini
 License: LGPL-2.1+
 
@@ -303,37 +257,21 @@ License: LGPL-2.1+
 
 Files: src/modules/DynamixelAX12Ftdi/*
 Copyright: 2010, Ze Ji
-License: LGPLv2.1+
+License: LGPL-2.1+
 
 Files: src/modules/urbtc/kernel_module/urbtc.h
  src/modules/urbtc/kernel_module/urobotc.h
 Copyright: 2007, iXs Research Corp
 License: GPL-2
 
-Files: src/yarpserver/sqlite/sqlite3.c
- src/yarpserver/sqlite/sqlite3.h
-Copyright: Public Domain
-License:
- The author disclaims copyright to this source code.  In place of
- a legal notice, here is a blessing:
- .
-    May you do good and not evil.
-    May you find forgiveness for yourself and forgive others.
-    May you share freely, never taking more than you give.
-
 Files: src/idls/thrift/src_thrift/md5.c
  src/idls/thrift/src_thrift/md5.h
 Copyright: 1999-2000, 2002 Aladdin Enterprises.
 License: zlib/libpng
 
-Files: src/yarpmanager/libymanager/tinyxml/tinyxmlerror.cpp
- src/yarpscope/src/tinyxml/tinyxmlerror.cpp
-Copyright: 2000-2006, Lee Thomason (www.grinninglizard.com)
-License: zlib/libpng
-
 Files: src/modules/vfw/vfw_extra_from_australia.h
 Copyright: 2006, The University of Queensland, Australia <www.uq.edu.au>
-License: BSD (4 clause) GPL-2+
+License: GPL-2+
 
 Files: example/yayarpview/CImg.h
 Copyright: 2004, David Tschumperle
@@ -377,10 +315,6 @@ Files: src/carriers/xmlrpc_carrier/xmlrpc/XmlRpc.h
 Copyright: 2002-2003, Chris Morley
 License: LGPL-2.1+
 
-Files: src/carriers/bayer_carrier/libdc1394_bayer.c
-Copyright: Damien Douxchamps and Frederic Devernay
-License: LGPL-2.1+
-
 Files: src/modules/vfw/vfw_extra_from_wine.h
 Copyright: 2007, the Wine project
 License: LGPL-2.1+
@@ -388,19 +322,18 @@ License: LGPL-2.1+
 Files: src/modules/ffmpeg/FfmpegWriter.cpp
 Copyright: 2003, Fabrice Bellard
   2006, RobotCub Consortium
-License: LGPLv2.1+
+License: LGPL-2.1+
 
 Files: src/libYARP_OS/src/Random.cpp
 Copyright: 1994, Everett F. Carter Jr
-License:
+License: UNKNOWN
  Permission is granted by the author to use
  this software for any application provided this
  copyright notice is preserved.
 
 Files: src/libYARP_OS/src/DummyConnector.cpp
 Copyright: 2007, Freyr Magnusson and RobotCub Consortium
-License: UNKNOWN
- FIXME
+License: LGPL-2.1+
 
 Files: src/modules/vfw/VfwGrabber.cpp
 Copyright: 2000, Intel Corporation
@@ -423,7 +356,7 @@ Files: src/modules/ffmpeg/FfmpegGrabber.cpp
 Copyright: 2006, RobotCub Consortium, Jonas Ruesch, Arjan Gijsberts
 License: LGPL-2.1+
 
-Files: src/yarpmanager/libymanager/include/ymm-dir.h
+Files: src/libYARP_manager/include/yarp/manager/ymm-dir.h
 Copyright: 2006, Toni Ronkko
   2011, Robotics, Brain and Cognitive Sciences - Italian Institute of Technology (IIT)
 License: LGPL-2.1+
@@ -431,6 +364,31 @@ License: LGPL-2.1+
 Files: debian/*
 Copyright: 2012  Daniele E. Domenichelli <daniele.domenichelli@gmail.com>
 License: GPL-2+
+
+Files: extern/sqlite/sqlite/sqlite3.c
+ extern/sqlite/sqlite/sqlite3.h
+Copyright: Public Domain
+License: public-domain
+ The author disclaims copyright to this source code.  In place of
+ a legal notice, here is a blessing:
+ .
+    May you do good and not evil.
+    May you find forgiveness for yourself and forgive others.
+    May you share freely, never taking more than you give.
+
+Files: extern/libdc1394_bayer/libdc1394_bayer.c
+Copyright: Damien Douxchamps and Frederic Devernay
+License: LGPL-2.1+
+
+Files: extern/tinyxml/tinyxml/*
+Copyright: Lee Thomason, Yves Berquin, Andrew Ellerton
+License: zlib/libpng
+
+Files: extern/gtkdatabox/gtkdatabox/gtk/gtkdatabox_ruler.c
+ extern/gtkdatabox/gtkdatabox/gtk/gtkdatabox_ruler.h
+Copyright: 1995-1997, Peter Mattis, Spencer Kimball and Josh MacDonald
+License: LGPL-2+
+
 
 License: LGPL-2.1+
  This library is free software; you can redistribute it
@@ -476,7 +434,71 @@ License: LGPL-2+
  Public License version 2 can be found in the file
  `/usr/share/common-licenses/LGPL-2'.
 
-License: BSD
+License: GPL-2
+ This library is free software; you can redistribute it
+ and/or modify it under the terms of the GNU General Public
+ License as published by the Free Software Foundation
+ version 2.
+ .
+ This library is distributed in the hope that it will be
+ useful, but WITHOUT ANY WARRANTY; without even the implied
+ warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ PURPOSE.  See the GNU General Public License for more
+ details.
+ .
+ You should have received a copy of the GNU General Public
+ License along with this library; if not, write to the Free
+ Software Foundation, Inc., 51 Franklin Street, Fifth
+ Floor, Boston, MA  02110-1301  USA
+ .
+ On Debian systems, the full text of the GNU Lesser General
+ Public License version 2 can be found in the file
+ `/usr/share/common-licenses/GPL-2'.
+
+License: GPL-2+
+ This library is free software; you can redistribute it
+ and/or modify it under the terms of the GNU General Public
+ License as published by the Free Software Foundation;
+ either version 2 of the License, or (at your option) any
+ later version.
+ .
+ This library is distributed in the hope that it will be
+ useful, but WITHOUT ANY WARRANTY; without even the implied
+ warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ PURPOSE.  See the GNU General Public License for more
+ details.
+ .
+ You should have received a copy of the GNU General Public
+ License along with this library; if not, write to the Free
+ Software Foundation, Inc., 51 Franklin Street, Fifth
+ Floor, Boston, MA  02110-1301  USA
+ .
+ On Debian systems, the full text of the GNU Lesser General
+ Public License version 2 can be found in the file
+ `/usr/share/common-licenses/GPL-2'.
+
+License: GPL-3+
+ This program is free software: you can redistribute it
+ and/or modify it under the terms of the GNU General Public
+ License as published by the Free Software Foundation,
+ either version 3 of the License, or (at your option) any
+ later version.
+ .
+ This program is distributed in the hope that it will be
+ useful, but WITHOUT ANY WARRANTY; without even the implied
+ warranty of MERCHANTABILITY or FITNESS FOR A PARTICULA
+ PURPOSE.  See the GNU General Public License for more
+ details.
+ .
+ You should have received a copy of the GNU General Public
+ License along with this program.  If not, see
+ <http://www.gnu.org/licenses/>.
+ .
+ On Debian systems, the full text of the GNU Lesser General
+ Public License version 2 can be found in the file
+ `/usr/share/common-licenses/GPL-3'.
+
+License: BSD-3-clause
  Redistribution and use in source and binary forms, with or
  without modification, are permitted provided that the
  following conditions are met:
@@ -507,7 +529,7 @@ License: BSD
  POSSIBILITY OF SUCH DAMAGE.
  .
  On Debian systems, the full text of the BSD License can be
- found in the file `/usr/share/common-licenses/LGPL'.
+ found in the file `/usr/share/common-licenses/BSD'.
 
 License: Apache-2.0
  Licensed to the Apache Software Foundation (ASF) under one
