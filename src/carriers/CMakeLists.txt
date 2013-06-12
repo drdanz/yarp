@@ -20,3 +20,7 @@ if (CREATE_OPTIONAL_CARRIERS)
   set_property(GLOBAL APPEND PROPERTY YARP_LIBS yarpcar ${yarpcar_LIBRARIES})
   install(TARGETS yarpcar EXPORT YARP COMPONENT runtime DESTINATION ${CMAKE_INSTALL_LIBDIR})
 endif (CREATE_OPTIONAL_CARRIERS)
+
+
+
+add_subdirectory(xxx_carrier)
