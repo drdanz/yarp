@@ -48,18 +48,32 @@ if(YARP_TREE_BUILD)
     # When compiling YARP,
     # Prepare path information for the benefit of clients
 
-    get_target_property(YARP_LIBRARY_PATH YARP_OS LOCATION)
-    get_target_property(YARP_LIBRARY_TYPE YARP_OS TYPE)
-    string(REPLACE "STATIC_LIBRARY" "static" YARP_LIBRARY_TYPE ${YARP_LIBRARY_TYPE})
-    string(REPLACE "SHARED_LIBRARY" "shared" YARP_LIBRARY_TYPE ${YARP_LIBRARY_TYPE})
-    get_filename_component(YARP_LIBRARY_EXTENSION ${YARP_LIBRARY_PATH} EXT)
-    get_filename_component(YARP_LIBRARY_PREFIX ${YARP_LIBRARY_PATH} NAME_WE)
-    string(REPLACE "YARP_OS" "" YARP_LIBRARY_PREFIX ${YARP_LIBRARY_PREFIX})
-    get_filename_component(YARP_LIBRARY_PATH ${YARP_LIBRARY_PATH} ABSOLUTE)
-    get_filename_component(YARP_LIBRARY_PATH ${YARP_LIBRARY_PATH} PATH)
+    get_target_property(_location YARP_OS LOCATION)
+    get_filename_component(_location ${_location} ABSOLUTE)
+
+    # YARP_LIBRARY_TYPE
+    if(BUILD_SHARED_LIBS)
+        set(YARP_LIBRARY_TYPE "shared")
+    else()
+        set(YARP_LIBRARY_TYPE "static")
+    endif()
+
+    # YARP_LIBRARY_EXTENSION
+    get_filename_component(YARP_LIBRARY_EXTENSION ${_location} EXT)
+
+    # YARP_LIBRARY_PATH (build)
+    if(BUILD_SHARED_LIBS)
+        set(YARP_LIBRARY_PATH ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+    else()
+        set(YARP_LIBRARY_PATH ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY})
+    endif()
+
     configure_file(${YARP_MODULE_DIR}/template/YarpPluginPath.cmake
         ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_DATADIR}/yarp/plugins/path.ini @ONLY)
+
+    # YARP_LIBRARY_PATH (install)
     set(YARP_LIBRARY_PATH ${CMAKE_INSTALL_FULL_LIBDIR})
+
     configure_file(${YARP_MODULE_DIR}/template/YarpPluginPath.cmake
         ${CMAKE_BINARY_DIR}/path_for_install.ini @ONLY)
     install(FILES ${CMAKE_BINARY_DIR}/path_for_install.ini RENAME path.ini COMPONENT configuration DESTINATION ${CMAKE_INSTALL_DATADIR}/yarp/plugins)
