@@ -63,16 +63,16 @@ if(YARP_TREE_BUILD)
 
     # YARP_LIBRARY_PATH (build)
     if(BUILD_SHARED_LIBS)
-        set(YARP_LIBRARY_PATH ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+        set(YARP_LIBRARY_PATH ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/yarp)
     else()
-        set(YARP_LIBRARY_PATH ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY})
+        set(YARP_LIBRARY_PATH ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/yarp)
     endif()
 
     configure_file(${YARP_MODULE_DIR}/template/YarpPluginPath.cmake
         ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_DATADIR}/yarp/plugins/path.ini @ONLY)
 
     # YARP_LIBRARY_PATH (install)
-    set(YARP_LIBRARY_PATH ${CMAKE_INSTALL_FULL_LIBDIR})
+    set(YARP_LIBRARY_PATH ${CMAKE_INSTALL_FULL_LIBDIR}/yarp)
 
     configure_file(${YARP_MODULE_DIR}/template/YarpPluginPath.cmake
         ${CMAKE_BINARY_DIR}/path_for_install.ini @ONLY)
@@ -328,12 +328,20 @@ macro(YARP_ADD_PLUGIN LIBNAME)
     # Reset the list of generated source code to empty.
     set_property(GLOBAL PROPERTY YARP_BUNDLE_CODE)
     if(YARP_TREE_INCLUDE_DIRS)
+        set_target_properties(${LIBNAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/yarp
+                                                    ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/yarp)
+        foreach(config ${CMAKE_CONFIGURATION_TYPES})
+            string(TOUPPER ${config} CONFIG)
+            set_target_properties(${_target} PROPERTIES LIBRARY_OUTPUT_DIRECTORY_${CONFIG} ${CMAKE_LIBRARY_OUTPUT_DIRECTORY_${CONFIG}}/yarp
+                                                        ARCHIVE_OUTPUT_DIRECTORY_${CONFIG} ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${CONFIG}}/yarp)
+        endforeach()
+
         # If compiling YARP, we go ahead and set up installing this
         # target.  It isn't safe to do this outside of YARP though.
         install(TARGETS ${LIBNAME}
                 EXPORT YARP
                 COMPONENT runtime
-                DESTINATION ${CMAKE_INSTALL_LIBDIR})
+                DESTINATION ${CMAKE_INSTALL_LIBDIR}/yarp)
     endif(YARP_TREE_INCLUDE_DIRS)
 endmacro(YARP_ADD_PLUGIN)
 
