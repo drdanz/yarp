@@ -76,8 +76,13 @@ install(EXPORT YARP
         FILE YARPTargets.cmake)
 
 foreach(lib ${YARP_LIBS})
-    set_target_properties(${lib} PROPERTIES VERSION ${YARP_VERSION}
-                                            SOVERSION ${YARP_GENERIC_SOVERSION})
+
+    if(NOT "${lib}" MATCHES "carrier$" AND
+       NOT "${lib}" MATCHES "^yarp_")
+        # Do not set SOVERSION for plugins
+        set_target_properties(${lib} PROPERTIES VERSION ${YARP_VERSION}
+                                                SOVERSION ${YARP_GENERIC_SOVERSION})
+    endif()
 
     # Compile libraries using -fPIC to produce position independent code
     # For CMAKE_VERSION >= 2.8.10 this is handled in YarpOptions.cmake
