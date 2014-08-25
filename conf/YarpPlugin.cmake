@@ -321,6 +321,8 @@ macro(YARP_ADD_PLUGIN LIBNAME)
         set_property(GLOBAL APPEND PROPERTY YARP_BUNDLE_OWNERS ${LIBNAME})
     endforeach(s)
     add_library(${LIBNAME} ${srcs} ${ARGN})
+    set_target_properties(${LIBNAME} PROPERTIES PREFIX "")
+
     # Add the library to the list of plugin libraries.
     set_property(GLOBAL APPEND PROPERTY YARP_BUNDLE_LIBS ${LIBNAME})
     # Reset the list of generated source code to empty.
