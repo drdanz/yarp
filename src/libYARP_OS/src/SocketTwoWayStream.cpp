@@ -71,16 +71,16 @@ int SocketTwoWayStream::open(ACE_SOCK_Acceptor& acceptor) {
 }
 
 void SocketTwoWayStream::updateAddresses() {
-#ifdef YARP_HAS_ACE
     //int zero = 0;
     int one = 1;
-    stream.set_option (ACE_IPPROTO_TCP, TCP_NODELAY, &one,
-                       sizeof(int));
+    stream.set_option(IPPROTO_TCP, TCP_NODELAY, &one, sizeof(int));
+
     struct linger lval;
     lval.l_onoff = 1;
     lval.l_linger = 0;
-    stream.set_option (ACE_SOL_SOCKET, SO_LINGER, &lval,
-                       sizeof(linger));
+    stream.set_option (SOL_SOCKET, SO_LINGER, &lval, sizeof(linger));
+
+#ifdef YARP_HAS_ACE
     ACE_INET_Addr local, remote;
     stream.get_local_addr(local);
     stream.get_remote_addr(remote);
