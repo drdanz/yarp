@@ -177,22 +177,22 @@ bool AbstractCarrier::sendSenderSpecifier(ConnectionState& proto) {
 
 bool AbstractCarrier::defaultSendIndex(ConnectionState& proto,
                                        SizedWriter& writer) {
-    writeYarpInt(10,proto);
+    writeYarpInt(10, proto, true);
     int len = (int)writer.length();
     char lens[] = { (char)len, 1,
                     -1, -1, -1, -1,
                     -1, -1, -1, -1 };
     Bytes b(lens,10);
     OutputStream& os = proto.os();
-    os.write(b);
+    os.write(b, true);
     NetInt32 numberSrc;
     Bytes number((char*)&numberSrc,sizeof(NetInt32));
     for (int i=0; i<len; i++) {
         NetType::netInt((int)writer.length(i),number);
-        os.write(number);
+        os.write(number, true);
     }
     NetType::netInt(0,number);
-    os.write(number);
+    os.write(number, true);
     return os.isOk();
 }
 
@@ -310,10 +310,10 @@ int AbstractCarrier::readYarpInt(ConnectionState& proto) {
     return interpretYarpNumber(header);
 }
 
-void AbstractCarrier::writeYarpInt(int n, ConnectionState& proto) {
+void AbstractCarrier::writeYarpInt(int n, ConnectionState& proto, bool more) {
     char buf[8];
     Bytes header((char*)&buf[0],sizeof(buf));
     createYarpNumber(n,header);
-    proto.os().write(header);
+    proto.os().write(header, more);
 }
 

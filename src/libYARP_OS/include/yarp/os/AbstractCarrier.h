@@ -78,7 +78,7 @@ public:
     bool defaultSendAck(ConnectionState& proto);
 
     int readYarpInt(ConnectionState& proto);
-    void writeYarpInt(int n, ConnectionState& proto);
+    void writeYarpInt(int n, ConnectionState& proto, bool more = false);
 
 protected:
     int getSpecifier(const Bytes& b);

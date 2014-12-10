@@ -38,10 +38,11 @@ public:
      * calls write(const Bytes& b) to do its work.
      *
      * @param ch the byte to write
+     * @param more true if more data is following this message
      *
      */
-    virtual void write(char ch) {
-        write(yarp::os::Bytes(&ch,1));
+    virtual void write(char ch, bool more = false) {
+        write(yarp::os::Bytes(&ch,1), more);
     }
 
     /**
@@ -52,10 +53,23 @@ public:
      * @param b the bytes to write
      * @param offset an offset within the block to start at
      * @param len the number of bytes to write
+     * @param more true if more data is following this message
      *
      */
-    virtual void write(const Bytes& b, int offset, int len) {
-        write(yarp::os::Bytes(b.get()+offset,len));
+    virtual void write(const Bytes& b, int offset, int len, bool more = false) {
+        write(yarp::os::Bytes(b.get()+offset,len), more);
+    }
+
+    /**
+     *
+     * Write a block of bytes to the stream.
+     *
+     * @param b the bytes to write
+     * @param more true if more data is following this message
+     *
+     */
+    virtual void write(const yarp::os::Bytes& b, bool more) {
+        write(b);
     }
 
     /**
@@ -90,10 +104,10 @@ public:
      * @param data the text to write
      *
      */
-    virtual void writeLine(const char *data, int len) {
+    virtual void writeLine(const char *data, int len, bool more = false) {
         yarp::os::Bytes b((char*)data,len);
-        write(b);
-        write('\n');
+        write(b, true);
+        write('\n', more);
     }
 
     /**

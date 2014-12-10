@@ -128,18 +128,22 @@ public:
         return result;
     }
 
-    virtual void write(const Bytes& b) {
+    virtual void write(const Bytes& b, bool more) {
         if (!isOk()) { return; }
         YARP_SSIZE_T result;
         if (haveWriteTimeout) {
-            result = stream.send_n(b.get(),b.length(),&writeTimeout);
+            result = stream.send_n(b.get(), b.length(), (more ? MSG_MORE : 0), &writeTimeout);
         } else {
-            result = stream.send_n(b.get(),b.length());
+            result = stream.send_n(b.get(), b.length(), (more ? MSG_MORE : 0));
         }
         if (result<0) {
             happy = false;
             YARP_DEBUG(Logger::get(),"bad socket write");
         }
+    }
+
+    virtual void write(const Bytes& b) {
+        write(b, false);
     }
 
     virtual void flush() {
