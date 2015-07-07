@@ -22,35 +22,29 @@ override_dh_auto_configure:
 	                     -DCREATE_DEVICE_LIBRARY_MODULES=ON \
 	                     -DENABLE_yarpmod_serial=ON \
 	                     -DYARP_COMPILE_TESTS=OFF
-# -DENABLE_yarpmod_KinectDeviceClient=ON -DRUNTIME_yarpmod_KinectDeviceClient=ON \
-# -DENABLE_yarpmod_KinectDeviceLocal=ON -DRUNTIME_yarpmod_KinectDeviceLocal=ON \
-# -DENABLE_yarpmod_SerialServoBoard=ON -DRUNTIME_yarpmod_SerialServoBoard=ON \
-# -DENABLE_yarpmod_cuda=ON -DRUNTIME_yarpmod_cuda=ON \
-# -DENABLE_yarpmod_dimax_u2c=ON -DRUNTIME_yarpmod_dimax_u2c=ON \
-# -DENABLE_yarpmod_dynamixelAX12Ft=ON -DRUNTIME_yarpmod_dynamixelAX12Ft=ON \
-# -DENABLE_yarpmod_fakebot=ON -DRUNTIME_yarpmod_fakebot=ON \
-# -DENABLE_yarpmod_ffmpeg_grabber=ON -DRUNTIME_yarpmod_ffmpeg_grabber=ON \
-# -DENABLE_yarpmod_ffmpeg_writer=ON -DRUNTIME_yarpmod_ffmpeg_writer=ON \
-# -DENABLE_yarpmod_firewirecamera=ON -DRUNTIME_yarpmod_firewirecamera=ON \
-# -DENABLE_yarpmod_jrkerr=ON -DRUNTIME_yarpmod_jrkerr=ON \
-# -DENABLE_yarpmod_laserHokuyo=ON -DRUNTIME_yarpmod_laserHokuyo=ON \
-# -DENABLE_yarpmod_microphone=ON -DRUNTIME_yarpmod_microphone=ON \
-# -DENABLE_yarpmod_nvidia=ON -DRUNTIME_yarpmod_nvidia=ON \
-# -DENABLE_yarpmod_opencv_grabber=ON -DRUNTIME_yarpmod_opencv_grabber=ON \
-# -DENABLE_yarpmod_portaudio=ON -DRUNTIME_yarpmod_portaudio=ON \
-# -DENABLE_yarpmod_serialport=ON -DRUNTIME_yarpmod_serialport=ON \
-# -DENABLE_yarpmod_stage=ON -DRUNTIME_yarpmod_stage=ON \
-# -DENABLE_yarpmod_urbtc=ON -DRUNTIME_yarpmod_urbtc=ON \
-# -DENABLE_yarpmod_vfw_grabber=ON -DRUNTIME_yarpmod_vfw_grabber=ON \
-# -DENABLE_yarpmod_wxsdl=ON -DRUNTIME_yarpmod_wxsdl=ON \
-
-# -DENABLE_yarpcar_mpi_carrier=ON -DRUNTIME_yarpcar_mpi_carrier=ON \
-# -DENABLE_yarpcar_mpibcast_carrier=ON -DRUNTIME_yarpcar_mpibcast_carrier=ON \
-
-
-#	                     -DCREATE_SHARED_LIBRARY=ON \
-#	                     -DYARP_USE_SYSTEM_SQLITE=ON \
-
+# -DENABLE_yarpmod_KinectDeviceClient=ON \
+# -DENABLE_yarpmod_KinectDeviceLocal=ON \
+# -DENABLE_yarpmod_SerialServoBoard=ON \
+# -DENABLE_yarpmod_cuda=ON \
+# -DENABLE_yarpmod_dimax_u2c=ON \
+# -DENABLE_yarpmod_dynamixelAX12Ft=ON \
+# -DENABLE_yarpmod_fakebot=ON \
+# -DENABLE_yarpmod_ffmpeg_grabber=ON \
+# -DENABLE_yarpmod_ffmpeg_writer=ON \
+# -DENABLE_yarpmod_firewirecamera=ON \
+# -DENABLE_yarpmod_jrkerr=ON \
+# -DENABLE_yarpmod_laserHokuyo=ON \
+# -DENABLE_yarpmod_microphone=ON \
+# -DENABLE_yarpmod_nvidia=ON \
+# -DENABLE_yarpmod_opencv_grabber=ON \
+# -DENABLE_yarpmod_portaudio=ON \
+# -DENABLE_yarpmod_serialport=ON \
+# -DENABLE_yarpmod_stage=ON \
+# -DENABLE_yarpmod_urbtc=ON \
+# -DENABLE_yarpmod_vfw_grabber=ON \
+# -DENABLE_yarpmod_wxsdl=ON \
+# -DENABLE_yarpcar_mpi_carrier=ON \
+# -DENABLE_yarpcar_mpibcast_carrier=ON \
 
 
 override_dh_auto_build-arch:
