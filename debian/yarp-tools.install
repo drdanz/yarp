@@ -11,3 +11,4 @@ usr/bin/yarpidl_thrift
 usr/bin/yarpidl_rosmsg
 usr/bin/yarphear
 usr/bin/yarpros
+usr/lib/*/libYARP_name.so.*

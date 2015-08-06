@@ -1,5 +1,6 @@
 yarp (2.3.64-0r1) UNRELEASED; urgency=low
 
+  [ Daniele E. Domenichelli ]
   * Initial release. (Closes: #682756)
 
- -- Daniele E. Domenichelli <daniele.domenichelli@gmail.com>  Thu, 23 Aug 2012 15:58:12 +0200
+ -- Matteo Brunettini <matteo.brunettini@iit.it>  Wed, 08 Jul 2015 09:49:34 +0200

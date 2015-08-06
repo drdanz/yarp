@@ -91,6 +91,10 @@ usr/lib/x86_64-linux-gnu/libYARP_manager.a
 usr/lib/x86_64-linux-gnu/libyarpcar.so
 usr/lib/x86_64-linux-gnu/libyarpmod.so
 
+# libYARP_name
+usr/include/yarp/name/*.h
+usr/lib/*/libYARP_name.so
+
 
 
 #usr/share/yarp/bindings/example.scm
