@@ -33,7 +33,9 @@ Vcs-Browser: http://anonscm.debian.org/gitweb/?p=debian-science/packages/yarp.gi
 Package: libyarp-os1
 Section: libs
 Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
 Description: thin middleware for humanoid robots and more - [os] shared libraries
  [TODO add description]
  .
@@ -46,7 +48,9 @@ Description: thin middleware for humanoid robots and more - [os] shared librarie
 Package: libyarp-sig1
 Section: libs
 Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
 Description: thin middleware for humanoid robots and more - [sig] shared libraries
  [TODO add description]
  .
@@ -59,7 +63,9 @@ Description: thin middleware for humanoid robots and more - [sig] shared librari
 Package: libyarp-math1
 Section: libs
 Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
 Description: thin middleware for humanoid robots and more - [math] shared libraries
  [TODO add description]
  .
@@ -72,7 +78,9 @@ Description: thin middleware for humanoid robots and more - [math] shared librar
 Package: libyarp-dev1
 Section: libs
 Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
 Description: thin middleware for humanoid robots and more - [dev] shared libraries
  [TODO add description]
  .
@@ -85,7 +93,9 @@ Description: thin middleware for humanoid robots and more - [dev] shared librari
 Package: libyarp-name1
 Section: libs
 Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
 Description: thin middleware for humanoid robots and more - [name] shared libraries
  [TODO add description]
  .
@@ -195,6 +205,7 @@ Section: doc
 Architecture: all
 Depends: ${misc:Depends},
  lynx | www-browser, doc-base, libjs-jquery
+Multi-Arch: foreign
 Description: thin middleware for humanoid robots and more - documentation and examples
  [TODO add description]
  .
