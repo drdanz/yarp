@@ -575,28 +575,28 @@ Depends: ${misc:Depends},
  yarp-gui (= ${binary:Version}),
  yarp-tools (= ${binary:Version}),
  yarpdatadumper (= ${binary:Version})
-Description: thin middleware for humanoid robots and more - all runtime files
+Description: thin middleware for humanoid robots and more
  [TODO add description]
  .
  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
  lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
  viverra nec consectetur ante hendrerit. Donec et mollis dolor.
  .
- This metapackage installs all runtime dependancies.
+ This metapackage installs all libraries and tools.
 
 Package: yarp-full
 Architecture: any
 Depends: ${misc:Depends},
  yarp (= ${binary:Version}),
  yarp-dev (= ${binary:Version})
-Description: thin middleware for humanoid robots and more - all runtime files
+Description: thin middleware for humanoid robots and more - full
  [TODO add description]
  .
  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
  lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
  viverra nec consectetur ante hendrerit. Donec et mollis dolor.
  .
- This metapackage installs all runtime dependancies.
+ This metapackage installs all libraries, tools, and development files
 
 
 # Package: yarp-optional-carriers
