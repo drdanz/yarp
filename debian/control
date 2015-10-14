@@ -402,6 +402,83 @@ Description: mjpeg carrier
  .
  This package contains the mjpeg carrier plugin.
 
+Package: yarp-carrier-bayer
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends},
+ libyarp-os1 (= ${binary:Version})
+Description: bayer carrier
+ [TODO add description]
+ .
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
+ lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
+ viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ .
+ This package contains the bayer carrier plugin.
+
+Package: yarp-carrier-human
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends},
+ libyarp-os1 (= ${binary:Version})
+Description: human carrier
+ [TODO add description]
+ .
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
+ lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
+ viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ .
+ This package contains the human carrier plugin.
+
+Package: yarp-carrier-xmlrpc
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends},
+ libyarp-os1 (= ${binary:Version})
+Description: xmlrpc carrier
+ [TODO add description]
+ .
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
+ lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
+ viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ .
+ This package contains the xmlrpc carrier plugin.
+
+Package: yarp-carrier-tcpros
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends},
+ libyarp-os1 (= ${binary:Version})
+Description: tcpros carrier
+ [TODO add description]
+ .
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
+ lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
+ viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ .
+ This package contains the tcpros carrier plugin.
+
+Package: yarp-carrier-priority
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends},
+ libyarp-os1 (= ${binary:Version})
+Description: priority carrier
+ [TODO add description]
+ .
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
+ lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
+ viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ .
+ This package contains the priority carrier plugin.
+
+Package: yarp-carrier-serial
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends},
+ libyarp-os1 (= ${binary:Version})
+Description: serial carrier
+ [TODO add description]
+ .
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
+ lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
+ viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ .
+ This package contains the serial carrier plugin.
 
 ##################### DEVICES
 
