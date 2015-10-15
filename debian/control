@@ -529,18 +529,6 @@ Description: fakebot device
  .
  This package contains the fakebot device plugin.
 
-Package: yarp-device-microphone
-Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: microphone device
- [TODO add description]
- .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
- .
- This package contains the microphone device plugin.
-
 Package: yarp-device-opencv
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
@@ -689,7 +677,6 @@ Package: yarp-optional-devices
 Architecture: any
 Depends: ${misc:Depends},
  yarp-device-fakebot (= ${binary:Version}),
- yarp-device-microphone (= ${binary:Version}),
  yarp-device-opencv (= ${binary:Version}),
  yarp-device-portaudio (= ${binary:Version}),
  yarp-device-serial (= ${binary:Version})
