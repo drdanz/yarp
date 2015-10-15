@@ -24,16 +24,12 @@ usr/lib/*/libYARP_name.so
 # TODO
 
 
-usr/share/yarp/modules/yarpscope.xml
-usr/share/yarp/modules/test_grabber.xml
-usr/share/yarp/modules/yarpview.xml
 usr/share/yarp/plugins/portmonitor.ini
 usr/share/yarp/plugins/mpi.ini
 usr/share/yarp/plugins/opencv.ini
 usr/share/yarp/plugins/cuda.ini
 usr/share/yarp/plugins/jrkerr.ini
 usr/share/yarp/plugins/openni2.ini
-usr/share/yarp/plugins/yarp.ini
 usr/share/yarp/plugins/stage.ini
 usr/share/yarp/plugins/dynamixelAX12Ftdi.ini
 usr/share/yarp/plugins/ffmpeg.ini
@@ -46,15 +42,6 @@ usr/share/yarp/plugins/portaudio.ini
 usr/share/yarp/plugins/kinect.ini
 usr/share/yarp/plugins/vfw.ini
 usr/share/yarp/plugins/wxsdl.ini
-usr/share/yarp/applications/yarpdatadumperExample.xml
-usr/share/yarp/applications/eyesviewer-localhost.xml
-usr/share/yarp/applications/yarpdataplayerExample.xml
-usr/share/yarp/applications/fakeye-localhost.xml
-usr/share/yarp/contexts/yarpdataplayer/config.ini
-usr/share/yarp/contexts/yarpscope/test_yarpscope_wbd.xml
-usr/share/yarp/templates/applications/eyesviewer-cluster.xml.template
-usr/share/yarp/templates/applications/yarpdataplayer.xml.template
-usr/share/yarp/templates/applications/yarpdatadumper.xml.template
 
 
 

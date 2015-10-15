@@ -27,6 +27,21 @@ Section: science
 Vcs-Git: git://anonscm.debian.org/debian-science/packages/yarp.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=debian-science/packages/yarp.git
 
+##################### DATA
+
+Package: yarp-data
+Architecture: all
+Depends: ${misc:Depends}
+Description: thin middleware for humanoid robots and more - data
+ [TODO add description]
+ .
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
+ lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
+ viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ .
+ This package contains architecture-independent supporting data files
+ required for use with yarp, such as such as documentation, icons,
+ and translations.
 
 ##################### LIBS
 
@@ -34,7 +49,8 @@ Package: libyarp-os1
 Section: libs
 Architecture: any
 Pre-Depends: ${misc:Pre-Depends}
-Depends: ${misc:Depends}, ${shlibs:Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends},
+ yarp-data (= ${source:Version})
 Multi-Arch: same
 Description: thin middleware for humanoid robots and more - [os] shared libraries
  [TODO add description]
