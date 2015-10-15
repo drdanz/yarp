@@ -7,6 +7,11 @@ include /usr/share/dpkg/architecture.mk
 
 override_dh_auto_configure:
 	dh_auto_configure -- \
+	                     -DYARP_CLEAN_API=ON \
+	                     -DYARP_COMPILE_EXECUTABLES=ON \
+	                     -DYARP_COMPILE_BINDINGS=OFF \
+	                     -DYARP_COMPILE_TESTS=OFF \
+	                     -DYARP_COMPILE_UNMAINTAINED=OFF \
 	                     -DCREATE_GUIS=ON \
 	                     -DCREATE_YARPBUILDER=ON \
 	                     -DCREATE_LIB_MATH=ON \
@@ -24,7 +29,6 @@ override_dh_auto_configure:
 	                     -DENABLE_yarpcar_xmlrpc_carrier=ON \
 	                     -DCREATE_DEVICE_LIBRARY_MODULES=ON \
 	                     -DENABLE_yarpmod_serial=ON \
-	                     -DYARP_COMPILE_TESTS=OFF
 	                     -DENABLE_yarpmod_serialport=ON \
 	                     -DENABLE_yarpmod_fakebot=ON \
 	                     -DENABLE_yarpmod_microphone=ON \

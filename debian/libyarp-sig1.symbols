@@ -1,74 +1,11 @@
 libYARP_sig.so.1 libyarp-sig1 #MINVER#
- _Z10iplHSV2RGBP9_IplImageS0_@Base 2.3.64
- _Z10iplRGB2HSVP9_IplImageS0_@Base 2.3.64
- _Z11FreeAlignedIcEvPT_@Base 2.3.64
- _Z11FreeAlignedIfEvPT_@Base 2.3.64
- _Z11iplSubtractP9_IplImageS0_S0_@Base 2.3.64
- _Z12AllocAlignedIfEPT_i@Base 2.3.64
- _Z12iplCreateROIiiiii@Base 2.3.64
- _Z12iplSubtractSP9_IplImageS0_ib@Base 2.3.64
- _Z12iplThresholdP9_IplImageS0_i@Base 2.3.64
- _Z13compareHeaderP9_IplImageS0_@Base 2.3.64
- _Z13iplCloneImagePK9_IplImage@Base 2.3.64
- _Z13iplConvolve2DP9_IplImageS0_PP14_IplConvKernelii@Base 2.3.64
- _Z13iplDeallocateP9_IplImagei@Base 2.3.64
- _Z14iplColorToGrayP9_IplImageS0_@Base 2.3.64
- _Z14iplMultiplySFPP9_IplImageS0_f@Base 2.3.64
- _Z15iplConvolve2DFPP9_IplImageS0_PP16_IplConvKernelFPii@Base 2.3.64
- _Z16iplAllocateImageP9_IplImageii@Base 2.3.64
- _Z16iplConvolveSep2DP9_IplImageS0_P14_IplConvKernelS2_@Base 2.3.64
- _Z16iplGetConvKernelP14_IplConvKernelPiS1_S1_S1_PS1_S1_@Base 2.3.64
- _Z16iplSetBorderModeP9_IplImageiii@Base 2.3.64
- _Z18iplAllocateImageFPP9_IplImageif@Base 2.3.64
- _Z18iplConvolveSep2DFPP9_IplImageS0_P16_IplConvKernelFPS2_@Base 2.3.64
- _Z18iplDeallocateImageP9_IplImage@Base 2.3.64
- _Z18iplGetConvKernelFPP16_IplConvKernelFPPiS1_S1_S1_PPf@Base 2.3.64
- _Z19iplCreateConvKerneliiiiPii@Base 2.3.64
- _Z19iplDeallocateHeaderP9_IplImage@Base 2.3.64
- _Z19iplDeleteConvKernelP14_IplConvKernel@Base 2.3.64
- _Z20iplCreateImageHeaderiiiPcS_iiiiiP7_IplROIP9_IplImagePvP12_IplTileInfo@Base 2.3.64
- _Z21iplCreateConvKernelFPiiiiPf@Base 2.3.64
- _Z21iplDeleteConvKernelFPP16_IplConvKernelFP@Base 2.3.64
- _Z6iplAbsP9_IplImageS0_@Base 2.3.64
- _Z6iplAddP9_IplImageS0_S0_@Base 2.3.64
- _Z6iplSetP9_IplImagei@Base 2.3.64
- _Z7iplAddSP9_IplImageS0_i@Base 2.3.64
- _Z7iplCopyP9_IplImageS0_@Base 2.3.64
- _Z7iplXorSP9_IplImageS0_j@Base 2.3.64
- _Z8iplSetFPP9_IplImagef@Base 2.3.64
- _Z9iplSetROIP7_IplROIiiiii@Base 2.3.64
- _ZN12ImageStorage10_free_dataEv@Base 2.3.64
- _ZN12ImageStorage11_alloc_dataEv@Base 2.3.64
- _ZN12ImageStorage13_alloc_externEPv@Base 2.3.64
- _ZN12ImageStorage14_free_completeEv@Base 2.3.64
- _ZN12ImageStorage15_alloc_completeEiiiib@Base 2.3.64
- _ZN12ImageStorage15_set_ipl_headerEiiiib@Base 2.3.64
- _ZN12ImageStorage16_free_ipl_headerEv@Base 2.3.64
- _ZN12ImageStorage17_make_independentEv@Base 2.3.64
- _ZN12ImageStorage22_alloc_complete_externEPviiiib@Base 2.3.64
- _ZN12ImageStorage5_freeEv@Base 2.3.64
- _ZN12ImageStorage6_allocEv@Base 2.3.64
- _ZN12ImageStorage6resizeEiiiiib@Base 2.3.64
- _ZN12PcmWavHeader14setup_to_writeERKN4yarp3sig5SoundEP8_IO_FILE@Base 2.3.64
- _ZN12PcmWavHeader15parse_from_fileEP8_IO_FILE@Base 2.3.64
- _ZN12PcmWavHeaderD1Ev@Base 2.3.64
- _ZN12PcmWavHeaderD2Ev@Base 2.3.64
- _ZN4yarp2os10PortReader11getReadTypeEv@Base 2.3.64
- _ZN4yarp2os10PortWriter12getWriteTypeEv@Base 2.3.64
- _ZN4yarp2os8Portable7getTypeEv@Base 2.3.64
  _ZN4yarp2os8PortableD0Ev@Base 2.3.64
  _ZN4yarp2os8PortableD1Ev@Base 2.3.64
  _ZN4yarp2os8PortableD2Ev@Base 2.3.64
- _ZN4yarp2oseqERKNS0_11ConstStringEPKc@Base 2.3.64
  _ZN4yarp3sig10VectorBase4readERNS_2os16ConnectionReaderE@Base 2.3.64
  _ZN4yarp3sig10VectorBase5writeERNS_2os16ConnectionWriterE@Base 2.3.64
  _ZN4yarp3sig10removeColsERKNS0_6MatrixERS1_ii@Base 2.3.64
  _ZN4yarp3sig10removeRowsERKNS0_6MatrixERS1_ii@Base 2.3.64
- _ZN4yarp3sig4file17soundStreamReader4openEPKc@Base 2.3.64
- _ZN4yarp3sig4file17soundStreamReader5closeEv@Base 2.3.64
- _ZN4yarp3sig4file17soundStreamReader6rewindEm@Base 2.3.64
- _ZN4yarp3sig4file17soundStreamReader8getIndexEv@Base 2.3.64
- _ZN4yarp3sig4file17soundStreamReader9readBlockERNS0_5SoundEm@Base 2.3.64
  _ZN4yarp3sig4file4readERNS0_5SoundEPKc@Base 2.3.64
  _ZN4yarp3sig4file4readERNS0_7ImageOfINS0_8PixelBgrEEERKNS_2os11ConstStringE@Base 2.3.64
  _ZN4yarp3sig4file4readERNS0_7ImageOfINS0_8PixelRgbEEERKNS_2os11ConstStringE@Base 2.3.64
@@ -86,7 +23,6 @@ libYARP_sig.so.1 libyarp-sig1 #MINVER#
  _ZN4yarp3sig5Image10initializeEv@Base 2.3.64
  _ZN4yarp3sig5Image10setQuantumEi@Base 2.3.64
  _ZN4yarp3sig5Image11getIplImageEv@Base 2.3.64
- _ZN4yarp3sig5Image11getReadTypeEv@Base 2.3.64
  _ZN4yarp3sig5Image11setExternalEPvii@Base 2.3.64
  _ZN4yarp3sig5Image11synchronizeEv@Base 2.3.64
  _ZN4yarp3sig5Image12setPixelCodeEi@Base 2.3.64
@@ -158,12 +94,8 @@ libYARP_sig.so.1 libyarp-sig1 #MINVER#
  _ZN4yarp3sig6Vector4readERNS_2os16ConnectionReaderE@Base 2.3.64
  _ZN4yarp3sig6Vector4zeroEv@Base 2.3.64
  _ZN4yarp3sig6Vector5writeERNS_2os16ConnectionWriterE@Base 2.3.64
- _ZN4yarp3sig6Vector7getTypeEv@Base 2.3.64
  _ZN4yarp3sig6VectorC1EmPKd@Base 2.3.64
  _ZN4yarp3sig6VectorC2EmPKd@Base 2.3.64
- _ZN4yarp3sig6VectorD0Ev@Base 2.3.64
- _ZN4yarp3sig6VectorD1Ev@Base 2.3.64
- _ZN4yarp3sig6VectorD2Ev@Base 2.3.64
  _ZN4yarp3sig6VectoraSERKS1_@Base 2.3.64
  _ZN4yarp3sig6VectoraSEd@Base 2.3.64
  _ZN4yarp3sig7ImageOfINS0_8PixelRgbEED0Ev@Base 2.3.64
@@ -172,15 +104,7 @@ libYARP_sig.so.1 libyarp-sig1 #MINVER#
  _ZN4yarp3sig7ImageOfIhED0Ev@Base 2.3.64
  _ZN4yarp3sig7ImageOfIhED1Ev@Base 2.3.64
  _ZN4yarp3sig7ImageOfIhED2Ev@Base 2.3.64
- _ZN4yarp3sig8VectorOfIdE6resizeEm@Base 2.3.64
- _ZN4yarp3sig8VectorOfIdED0Ev@Base 2.3.64
- _ZN4yarp3sig8VectorOfIdED1Ev@Base 2.3.64
- _ZN4yarp3sig8VectorOfIdED2Ev@Base 2.3.64
- _ZN4yarp3sig9FlexImageD0Ev@Base 2.3.64
- _ZN4yarp3sig9FlexImageD1Ev@Base 2.3.64
- _ZN4yarp3sig9FlexImageD2Ev@Base 2.3.64
  _ZN4yarp3sig9submatrixERKNS0_6MatrixERS1_iiii@Base 2.3.64
- _ZNK12ImageStorage10_pad_bytesEii@Base 2.3.64
  _ZNK4yarp3sig5Image11getIplImageEv@Base 2.3.64
  _ZNK4yarp3sig5Image11getRawImageEv@Base 2.3.64
  _ZNK4yarp3sig5Image12getPixelCodeEv@Base 2.3.64
@@ -201,14 +125,6 @@ libYARP_sig.so.1 libyarp-sig1 #MINVER#
  _ZNK4yarp3sig6Vector8toStringEii@Base 2.3.64
  _ZNK4yarp3sig6Vector9subVectorEjj@Base 2.3.64
  _ZNK4yarp3sig6VectoreqERKS1_@Base 2.3.64
- _ZNK4yarp3sig7ImageOfINS0_8PixelBgrEE12getPixelSizeEv@Base 2.3.64
- _ZNK4yarp3sig7ImageOfINS0_8PixelRgbEE12getPixelCodeEv@Base 2.3.64
- _ZNK4yarp3sig7ImageOfINS0_8PixelRgbEE12getPixelSizeEv@Base 2.3.64
- _ZNK4yarp3sig7ImageOfIhE12getPixelCodeEv@Base 2.3.64
- _ZNK4yarp3sig7ImageOfIhE12getPixelSizeEv@Base 2.3.64
- _ZNK4yarp3sig8VectorOfIdE11getListSizeEv@Base 2.3.64
- _ZNK4yarp3sig8VectorOfIdE14getElementSizeEv@Base 2.3.64
- _ZNK4yarp3sig8VectorOfIdE14getMemoryBlockEv@Base 2.3.64
  _ZTIN4yarp2os8PortableE@Base 2.3.64
  _ZTIN4yarp3sig10VectorBaseE@Base 2.3.64
  _ZTIN4yarp3sig5ImageE@Base 2.3.64
@@ -217,8 +133,6 @@ libYARP_sig.so.1 libyarp-sig1 #MINVER#
  _ZTIN4yarp3sig6VectorE@Base 2.3.64
  _ZTIN4yarp3sig7ImageOfINS0_8PixelRgbEEE@Base 2.3.64
  _ZTIN4yarp3sig7ImageOfIhEE@Base 2.3.64
- _ZTIN4yarp3sig8VectorOfIdEE@Base 2.3.64
- _ZTIN4yarp3sig9FlexImageE@Base 2.3.64
  _ZTSN4yarp2os8PortableE@Base 2.3.64
  _ZTSN4yarp3sig10VectorBaseE@Base 2.3.64
  _ZTSN4yarp3sig5ImageE@Base 2.3.64
@@ -227,8 +141,6 @@ libYARP_sig.so.1 libyarp-sig1 #MINVER#
  _ZTSN4yarp3sig6VectorE@Base 2.3.64
  _ZTSN4yarp3sig7ImageOfINS0_8PixelRgbEEE@Base 2.3.64
  _ZTSN4yarp3sig7ImageOfIhEE@Base 2.3.64
- _ZTSN4yarp3sig8VectorOfIdEE@Base 2.3.64
- _ZTSN4yarp3sig9FlexImageE@Base 2.3.64
  _ZTVN4yarp2os8PortableE@Base 2.3.64
  _ZTVN4yarp3sig10VectorBaseE@Base 2.3.64
  _ZTVN4yarp3sig5ImageE@Base 2.3.64
@@ -237,8 +149,6 @@ libYARP_sig.so.1 libyarp-sig1 #MINVER#
  _ZTVN4yarp3sig6VectorE@Base 2.3.64
  _ZTVN4yarp3sig7ImageOfINS0_8PixelRgbEEE@Base 2.3.64
  _ZTVN4yarp3sig7ImageOfIhEE@Base 2.3.64
- _ZTVN4yarp3sig8VectorOfIdEE@Base 2.3.64
- _ZTVN4yarp3sig9FlexImageE@Base 2.3.64
  _ZThn8_N4yarp2os8PortableD0Ev@Base 2.3.64
  _ZThn8_N4yarp2os8PortableD1Ev@Base 2.3.64
  _ZThn8_N4yarp3sig10VectorBase5writeERNS_2os16ConnectionWriterE@Base 2.3.64
@@ -252,13 +162,7 @@ libYARP_sig.so.1 libyarp-sig1 #MINVER#
  _ZThn8_N4yarp3sig6MatrixD0Ev@Base 2.3.64
  _ZThn8_N4yarp3sig6MatrixD1Ev@Base 2.3.64
  _ZThn8_N4yarp3sig6Vector5writeERNS_2os16ConnectionWriterE@Base 2.3.64
- _ZThn8_N4yarp3sig6VectorD0Ev@Base 2.3.64
- _ZThn8_N4yarp3sig6VectorD1Ev@Base 2.3.64
  _ZThn8_N4yarp3sig7ImageOfINS0_8PixelRgbEED0Ev@Base 2.3.64
  _ZThn8_N4yarp3sig7ImageOfINS0_8PixelRgbEED1Ev@Base 2.3.64
  _ZThn8_N4yarp3sig7ImageOfIhED0Ev@Base 2.3.64
  _ZThn8_N4yarp3sig7ImageOfIhED1Ev@Base 2.3.64
- _ZThn8_N4yarp3sig8VectorOfIdED0Ev@Base 2.3.64
- _ZThn8_N4yarp3sig8VectorOfIdED1Ev@Base 2.3.64
- _ZThn8_N4yarp3sig9FlexImageD0Ev@Base 2.3.64
- _ZThn8_N4yarp3sig9FlexImageD1Ev@Base 2.3.64

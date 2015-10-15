@@ -1,21 +1,7 @@
 libYARP_math.so.1 libyarp-math1 #MINVER#
- _Z7getViewRKN4yarp3sig6VectorE@Base 2.3.64
- _Z7getViewRN4yarp3sig6VectorE@Base 2.3.64
- _ZN20ThreadSafeRandScalarD1Ev@Base 2.3.64
- _ZN20ThreadSafeRandScalarD2Ev@Base 2.3.64
- _ZN4yarp2os10PortReader11getReadTypeEv@Base 2.3.64
- _ZN4yarp2os10PortWriter12getWriteTypeEv@Base 2.3.64
- _ZN4yarp2os8Portable7getTypeEv@Base 2.3.64
  _ZN4yarp2os8PortableD0Ev@Base 2.3.64
  _ZN4yarp2os8PortableD1Ev@Base 2.3.64
  _ZN4yarp2os8PortableD2Ev@Base 2.3.64
- _ZN4yarp3sig6VectorD0Ev@Base 2.3.64
- _ZN4yarp3sig6VectorD1Ev@Base 2.3.64
- _ZN4yarp3sig6VectorD2Ev@Base 2.3.64
- _ZN4yarp3sig8VectorOfIdE6resizeEm@Base 2.3.64
- _ZN4yarp3sig8VectorOfIdED0Ev@Base 2.3.64
- _ZN4yarp3sig8VectorOfIdED1Ev@Base 2.3.64
- _ZN4yarp3sig8VectorOfIdED2Ev@Base 2.3.64
  _ZN4yarp4math10RandScalar3getEdd@Base 2.3.64
  _ZN4yarp4math10RandScalar3getEv@Base 2.3.64
  _ZN4yarp4math10RandScalar4initEi@Base 2.3.64
@@ -117,7 +103,6 @@ libYARP_math.so.1 libyarp-math1 #MINVER#
  _ZN4yarp4math8NormRand6vectorEidd@Base 2.3.64
  _ZN4yarp4math8axis2dcmERKNS_3sig6VectorE@Base 2.3.64
  _ZN4yarp4math8dcm2axisERKNS_3sig6MatrixE@Base 2.3.64
- _ZN4yarp4math9SVDJacobiERKNS_3sig6MatrixERS2_RNS1_6VectorES5_@Base 2.3.64
  _ZN4yarp4math9dcm2eulerERKNS_3sig6MatrixE@Base 2.3.64
  _ZN4yarp4math9euler2dcmERKNS_3sig6VectorE@Base 2.3.64
  _ZN4yarp4mathdVERNS_3sig6MatrixEd@Base 2.3.64
@@ -153,20 +138,8 @@ libYARP_math.so.1 libyarp-math1 #MINVER#
  _ZN4yarp4mathplERKNS_3sig6VectorERKd@Base 2.3.64
  _ZN4yarp4mathplERKNS_3sig6VectorES4_@Base 2.3.64
  _ZN4yarp4mathplERKdRKNS_3sig6VectorE@Base 2.3.64
- _ZNK4yarp3sig8VectorOfIdE11getListSizeEv@Base 2.3.64
- _ZNK4yarp3sig8VectorOfIdE14getElementSizeEv@Base 2.3.64
- _ZNK4yarp3sig8VectorOfIdE14getMemoryBlockEv@Base 2.3.64
  _ZTIN4yarp2os8PortableE@Base 2.3.64
- _ZTIN4yarp3sig8VectorOfIdEE@Base 2.3.64
  _ZTSN4yarp2os8PortableE@Base 2.3.64
- _ZTSN4yarp3sig8VectorOfIdEE@Base 2.3.64
  _ZTVN4yarp2os8PortableE@Base 2.3.64
- _ZTVN4yarp3sig8VectorOfIdEE@Base 2.3.64
  _ZThn8_N4yarp2os8PortableD0Ev@Base 2.3.64
  _ZThn8_N4yarp2os8PortableD1Ev@Base 2.3.64
- _ZThn8_N4yarp3sig6VectorD0Ev@Base 2.3.64
- _ZThn8_N4yarp3sig6VectorD1Ev@Base 2.3.64
- _ZThn8_N4yarp3sig8VectorOfIdED0Ev@Base 2.3.64
- _ZThn8_N4yarp3sig8VectorOfIdED1Ev@Base 2.3.64
- theRandScalar@Base 2.3.64
- theRandnScalar@Base 2.3.64
