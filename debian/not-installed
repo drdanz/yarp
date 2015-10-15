@@ -24,7 +24,6 @@ usr/lib/*/libYARP_name.so
 # TODO
 
 
-usr/share/yarp/plugins/opencv.ini
 usr/share/yarp/plugins/cuda.ini
 usr/share/yarp/plugins/jrkerr.ini
 usr/share/yarp/plugins/openni2.ini
@@ -33,10 +32,7 @@ usr/share/yarp/plugins/dynamixelAX12Ftdi.ini
 usr/share/yarp/plugins/ffmpeg.ini
 usr/share/yarp/plugins/firewirecamera.ini
 usr/share/yarp/plugins/laserHokuyo.ini
-usr/share/yarp/plugins/microphone.ini
-usr/share/yarp/plugins/fakebot.ini
 usr/share/yarp/plugins/nvidia.ini
-usr/share/yarp/plugins/portaudio.ini
 usr/share/yarp/plugins/kinect.ini
 usr/share/yarp/plugins/vfw.ini
 usr/share/yarp/plugins/wxsdl.ini
