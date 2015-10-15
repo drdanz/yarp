@@ -1,6 +1,8 @@
 libYARP_sig.so.1 libyarp-sig1 #MINVER#
  _Z10iplHSV2RGBP9_IplImageS0_@Base 2.3.64
  _Z10iplRGB2HSVP9_IplImageS0_@Base 2.3.64
+ _Z11FreeAlignedIcEvPT_@Base 2.3.64
+ _Z11FreeAlignedIfEvPT_@Base 2.3.64
  _Z11iplSubtractP9_IplImageS0_S0_@Base 2.3.64
  _Z12AllocAlignedIfEPT_i@Base 2.3.64
  _Z12iplCreateROIiiiii@Base 2.3.64

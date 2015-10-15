@@ -9,6 +9,7 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _Z26createVirtualAnalogWrapperv@Base 2.3.64
  _Z29dummyRemoteFrameGrabberMethodv@Base 2.3.64
  _Z35dummyRemoteFrameGrabberDC1394Methodv@Base 2.3.64
+ _Z38convertEulerAngleYXZrads_to_quaternionPdS_@Base 2.3.64
  _ZN10ACE_VectorIN4yarp3dev20PolyDriverDescriptorELm32EE9push_backERKS2_@Base 2.3.64
  _ZN10ACE_VectorIPN4yarp3dev13DriverCreatorELm32EE9push_backERKS3_@Base 2.3.64
  _ZN10StubDriver17getImplementationEv@Base 2.3.64
@@ -23,12 +24,19 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZN13DriversHelperD0Ev@Base 2.3.64
  _ZN13DriversHelperD1Ev@Base 2.3.64
  _ZN13DriversHelperD2Ev@Base 2.3.64
- _ZN14ACE_Array_BaseIN4yarp2os11ConstStringEE8max_sizeEm@Base 2.3.64
+ _ZN14ACE_Array_BaseIN4yarp2os11ConstStringEE4sizeEm@Base 2.3.64
  _ZN14ACE_Array_BaseIN4yarp2os11ConstStringEED1Ev@Base 2.3.64
  _ZN14ACE_Array_BaseIN4yarp2os11ConstStringEED2Ev@Base 2.3.64
- _ZN14ACE_Array_BaseIN4yarp3dev20PolyDriverDescriptorEE8max_sizeEm@Base 2.3.64
- _ZN14ACE_Array_BaseIPN4yarp3dev10PolyDriverEE8max_sizeEm@Base 2.3.64
- _ZN14ACE_Array_BaseIPN4yarp3dev13DriverCreatorEE8max_sizeEm@Base 2.3.64
+ _ZN14ACE_Array_BaseIN4yarp3dev20PolyDriverDescriptorEE4sizeEm@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp3dev10PolyDriverEE4sizeEm@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp3dev10PolyDriverEED1Ev@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp3dev10PolyDriverEED2Ev@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp3dev13DriverCreatorEE4sizeEm@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp3dev13DriverCreatorEED1Ev@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp3dev13DriverCreatorEED2Ev@Base 2.3.64
+ _ZN14ACE_Array_BaseIbE4sizeEm@Base 2.3.64
+ _ZN14ACE_Array_BaseIbED1Ev@Base 2.3.64
+ _ZN14ACE_Array_BaseIbED2Ev@Base 2.3.64
  _ZN14StateInputPort6onReadERN4yarp3sig6VectorE@Base 2.3.64
  _ZN14StateInputPortD0Ev@Base 2.3.64
  _ZN14StateInputPortD1Ev@Base 2.3.64
@@ -50,6 +58,7 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZN15sensor_msgs_ImuD1Ev@Base 2.3.64
  _ZN15sensor_msgs_ImuD2Ev@Base 2.3.64
  _ZN16DiagnosticThread3runEv@Base 2.3.64
+ _ZN16DiagnosticThread8setOwnerEP14StateInputPort@Base 2.3.64
  _ZN16DiagnosticThreadD0Ev@Base 2.3.64
  _ZN16DiagnosticThreadD1Ev@Base 2.3.64
  _ZN16DiagnosticThreadD2Ev@Base 2.3.64
@@ -132,8 +141,6 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZN4yarp2os10YarpPluginINS_3dev12DeviceDriverEED0Ev@Base 2.3.64
  _ZN4yarp2os10YarpPluginINS_3dev12DeviceDriverEED1Ev@Base 2.3.64
  _ZN4yarp2os10YarpPluginINS_3dev12DeviceDriverEED2Ev@Base 2.3.64
- _ZN4yarp2os11ConstStringC1ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE@Base 2.3.64
- _ZN4yarp2os11ConstStringC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE@Base 2.3.64
  _ZN4yarp2os11ConstStringD1Ev@Base 2.3.64
  _ZN4yarp2os11ConstStringD2Ev@Base 2.3.64
  _ZN4yarp2os12BufferedPortI15sensor_msgs_ImuE10setReplierERNS0_10PortReaderE@Base 2.3.64
@@ -282,7 +289,6 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZN4yarp2os12BufferedPortI9jointDataE12setInputModeEb@Base 2.3.64
  _ZN4yarp2os12BufferedPortI9jointDataE13getInputCountEv@Base 2.3.64
  _ZN4yarp2os12BufferedPortI9jointDataE13setOutputModeEb@Base 2.3.64
- _ZN4yarp2os12BufferedPortI9jointDataE14attachIfNeededEv@Base 2.3.64
  _ZN4yarp2os12BufferedPortI9jointDataE14getOutputCountEv@Base 2.3.64
  _ZN4yarp2os12BufferedPortI9jointDataE14setAdminReaderERNS0_10PortReaderE@Base 2.3.64
  _ZN4yarp2os12BufferedPortI9jointDataE14unlockCallbackEv@Base 2.3.64
@@ -375,7 +381,6 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZN4yarp2os12BufferedPortINS_3sig6VectorEE12setInputModeEb@Base 2.3.64
  _ZN4yarp2os12BufferedPortINS_3sig6VectorEE13getInputCountEv@Base 2.3.64
  _ZN4yarp2os12BufferedPortINS_3sig6VectorEE13setOutputModeEb@Base 2.3.64
- _ZN4yarp2os12BufferedPortINS_3sig6VectorEE14attachIfNeededEv@Base 2.3.64
  _ZN4yarp2os12BufferedPortINS_3sig6VectorEE14getOutputCountEv@Base 2.3.64
  _ZN4yarp2os12BufferedPortINS_3sig6VectorEE14setAdminReaderERNS0_10PortReaderE@Base 2.3.64
  _ZN4yarp2os12BufferedPortINS_3sig6VectorEE14unlockCallbackEv@Base 2.3.64
@@ -850,12 +855,13 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZN4yarp2os9LogStreamD2Ev@Base 2.3.64
  _ZN4yarp2os9LogStreamlsEPKc@Base 2.3.64
  _ZN4yarp2os9LogStreamlsERKNS0_11ConstStringE@Base 2.3.64
- _ZN4yarp2os9LogStreamlsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE@Base 2.3.64
+ _ZN4yarp2os9LogStreamlsERKSs@Base 2.3.64
  _ZN4yarp2os9LogStreamlsEi@Base 2.3.64
  _ZN4yarp2os9PublisherI15sensor_msgs_ImuE4openERKNS0_11ConstStringE@Base 2.3.64
  _ZN4yarp2os9PublisherI15sensor_msgs_ImuE4openERKNS0_7ContactEb@Base 2.3.64
  _ZN4yarp2os9PublisherI15sensor_msgs_ImuE5closeEv@Base 2.3.64
  _ZN4yarp2os9PublisherI15sensor_msgs_ImuE6asPortEv@Base 2.3.64
+ _ZN4yarp2os9PublisherI15sensor_msgs_ImuE6bufferEv@Base 2.3.64
  _ZN4yarp2os9PublisherI15sensor_msgs_ImuE6resumeEv@Base 2.3.64
  _ZN4yarp2os9PublisherI15sensor_msgs_ImuE9interruptEv@Base 2.3.64
  _ZN4yarp2os9PublisherI15sensor_msgs_ImuE9setReaderERNS0_10PortReaderE@Base 2.3.64
@@ -976,8 +982,8 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZN4yarp3dev13AnalogWrapper3runEv@Base 2.3.64
  _ZN4yarp3dev13AnalogWrapper4openERNS_2os10SearchableE@Base 2.3.64
  _ZN4yarp3dev13AnalogWrapper5closeEv@Base 2.3.64
- _ZN4yarp3dev13AnalogWrapper5getIdB5cxx11Ev@Base 2.3.64
- _ZN4yarp3dev13AnalogWrapper5setIdERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE@Base 2.3.64
+ _ZN4yarp3dev13AnalogWrapper5getIdEv@Base 2.3.64
+ _ZN4yarp3dev13AnalogWrapper5setIdERKSs@Base 2.3.64
  _ZN4yarp3dev13AnalogWrapper6attachEPNS0_13IAnalogSensorE@Base 2.3.64
  _ZN4yarp3dev13AnalogWrapper6detachEv@Base 2.3.64
  _ZN4yarp3dev13AnalogWrapper9attachAllERKNS0_14PolyDriverListE@Base 2.3.64
@@ -1227,7 +1233,7 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZN4yarp3dev18AnalogSensorClient16calibrateChannelEi@Base 2.3.64
  _ZN4yarp3dev18AnalogSensorClient16calibrateChannelEid@Base 2.3.64
  _ZN4yarp3dev18AnalogSensorClient17getLastInputStampEv@Base 2.3.64
- _ZN4yarp3dev18AnalogSensorClient32removeLeadingTrailingSlashesOnlyERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE@Base 2.3.64
+ _ZN4yarp3dev18AnalogSensorClient32removeLeadingTrailingSlashesOnlyERSs@Base 2.3.64
  _ZN4yarp3dev18AnalogSensorClient4openERNS_2os10SearchableE@Base 2.3.64
  _ZN4yarp3dev18AnalogSensorClient4readERNS_3sig6VectorE@Base 2.3.64
  _ZN4yarp3dev18AnalogSensorClient5closeEv@Base 2.3.64
@@ -1403,14 +1409,12 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZN4yarp3dev18RemoteControlBoard4stopEiPKi@Base 2.3.64
  _ZN4yarp3dev18RemoteControlBoard4stopEv@Base 2.3.64
  _ZN4yarp3dev18RemoteControlBoard5closeEv@Base 2.3.64
- _ZN4yarp3dev18RemoteControlBoard5set1VEi@Base 2.3.64
  _ZN4yarp3dev18RemoteControlBoard6getPidEiPNS0_3PidE@Base 2.3.64
  _ZN4yarp3dev18RemoteControlBoard6isLiveEv@Base 2.3.64
  _ZN4yarp3dev18RemoteControlBoard6setPidEiRKNS0_3PidE@Base 2.3.64
  _ZN4yarp3dev18RemoteControlBoard7get1VDAEiPd@Base 2.3.64
  _ZN4yarp3dev18RemoteControlBoard7getAxesEPi@Base 2.3.64
  _ZN4yarp3dev18RemoteControlBoard7getPidsEPNS0_3PidE@Base 2.3.64
- _ZN4yarp3dev18RemoteControlBoard7set1V1IEii@Base 2.3.64
  _ZN4yarp3dev18RemoteControlBoard7set1VDAEiPKd@Base 2.3.64
  _ZN4yarp3dev18RemoteControlBoard7setPidsEPKNS0_3PidE@Base 2.3.64
  _ZN4yarp3dev18RemoteControlBoard8get2V1DAEiiPd@Base 2.3.64
@@ -2044,10 +2048,12 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZN4yarp3dev24RemoteFrameGrabberDC139412getFPSDC1394Ev@Base 2.3.64
  _ZN4yarp3dev24RemoteFrameGrabberDC139412setFPSDC1394Ei@Base 2.3.64
  _ZN4yarp3dev24RemoteFrameGrabberDC139413getModeDC1394Ei@Base 2.3.64
+ _ZN4yarp3dev24RemoteFrameGrabberDC139413hasAutoDC1394Ei@Base 2.3.64
  _ZN4yarp3dev24RemoteFrameGrabberDC139414hasOnOffDC1394Ei@Base 2.3.64
  _ZN4yarp3dev24RemoteFrameGrabberDC139414setPowerDC1394Eb@Base 2.3.64
  _ZN4yarp3dev24RemoteFrameGrabberDC139414setResetDC1394Ev@Base 2.3.64
  _ZN4yarp3dev24RemoteFrameGrabberDC139415getActiveDC1394Ei@Base 2.3.64
+ _ZN4yarp3dev24RemoteFrameGrabberDC139415hasManualDC1394Ei@Base 2.3.64
  _ZN4yarp3dev24RemoteFrameGrabberDC139416getFPSMaskDC1394Ev@Base 2.3.64
  _ZN4yarp3dev24RemoteFrameGrabberDC139416getFeatureDC1394Ei@Base 2.3.64
  _ZN4yarp3dev24RemoteFrameGrabberDC139416hasFeatureDC1394Ei@Base 2.3.64
@@ -2153,49 +2159,15 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZN4yarp3dev26StubImplInteractionModeRaw22setInteractionModesRawEPNS0_19InteractionModeEnumE@Base 2.3.64
  _ZN4yarp3dev26StubImplInteractionModeRaw22setInteractionModesRawEiPiPNS0_19InteractionModeEnumE@Base 2.3.64
  _ZN4yarp3dev26StubImplPositionControlRaw19NOT_YET_IMPLEMENTEDEPKc@Base 2.3.64
- _ZN4yarp3dev27StubImplPositionControl2Raw14getRefSpeedRawEiPd@Base 2.3.64
- _ZN4yarp3dev27StubImplPositionControl2Raw14setRefSpeedRawEid@Base 2.3.64
- _ZN4yarp3dev27StubImplPositionControl2Raw15getRefSpeedsRawEPd@Base 2.3.64
  _ZN4yarp3dev27StubImplPositionControl2Raw15getRefSpeedsRawEiPKiPd@Base 2.3.64
- _ZN4yarp3dev27StubImplPositionControl2Raw15positionMoveRawEPKd@Base 2.3.64
  _ZN4yarp3dev27StubImplPositionControl2Raw15positionMoveRawEiPKiPKd@Base 2.3.64
- _ZN4yarp3dev27StubImplPositionControl2Raw15positionMoveRawEid@Base 2.3.64
- _ZN4yarp3dev27StubImplPositionControl2Raw15relativeMoveRawEPKd@Base 2.3.64
  _ZN4yarp3dev27StubImplPositionControl2Raw15relativeMoveRawEiPKiPKd@Base 2.3.64
- _ZN4yarp3dev27StubImplPositionControl2Raw15relativeMoveRawEid@Base 2.3.64
- _ZN4yarp3dev27StubImplPositionControl2Raw15setRefSpeedsRawEPKd@Base 2.3.64
  _ZN4yarp3dev27StubImplPositionControl2Raw15setRefSpeedsRawEiPKiPKd@Base 2.3.64
- _ZN4yarp3dev27StubImplPositionControl2Raw18checkMotionDoneRawEPb@Base 2.3.64
  _ZN4yarp3dev27StubImplPositionControl2Raw18checkMotionDoneRawEiPKiPb@Base 2.3.64
- _ZN4yarp3dev27StubImplPositionControl2Raw18checkMotionDoneRawEiPb@Base 2.3.64
- _ZN4yarp3dev27StubImplPositionControl2Raw18setPositionModeRawEv@Base 2.3.64
  _ZN4yarp3dev27StubImplPositionControl2Raw19NOT_YET_IMPLEMENTEDEPKc@Base 2.3.64
- _ZN4yarp3dev27StubImplPositionControl2Raw21getRefAccelerationRawEiPd@Base 2.3.64
- _ZN4yarp3dev27StubImplPositionControl2Raw21setRefAccelerationRawEid@Base 2.3.64
- _ZN4yarp3dev27StubImplPositionControl2Raw22getRefAccelerationsRawEPd@Base 2.3.64
  _ZN4yarp3dev27StubImplPositionControl2Raw22getRefAccelerationsRawEiPKiPd@Base 2.3.64
- _ZN4yarp3dev27StubImplPositionControl2Raw22setRefAccelerationsRawEPKd@Base 2.3.64
  _ZN4yarp3dev27StubImplPositionControl2Raw22setRefAccelerationsRawEiPKiPKd@Base 2.3.64
- _ZN4yarp3dev27StubImplPositionControl2Raw7stopRawEi@Base 2.3.64
  _ZN4yarp3dev27StubImplPositionControl2Raw7stopRawEiPKi@Base 2.3.64
- _ZN4yarp3dev27StubImplPositionControl2Raw7stopRawEv@Base 2.3.64
- _ZN4yarp3dev27StubImplVelocityControl2Raw12getVelPidRawEiPNS0_3PidE@Base 2.3.64
- _ZN4yarp3dev27StubImplVelocityControl2Raw12setVelPidRawEiRKNS0_3PidE@Base 2.3.64
- _ZN4yarp3dev27StubImplVelocityControl2Raw13getVelPidsRawEPNS0_3PidE@Base 2.3.64
- _ZN4yarp3dev27StubImplVelocityControl2Raw13setVelPidsRawEPKNS0_3PidE@Base 2.3.64
- _ZN4yarp3dev27StubImplVelocityControl2Raw15velocityMoveRawEPKd@Base 2.3.64
- _ZN4yarp3dev27StubImplVelocityControl2Raw15velocityMoveRawEiPKiPKd@Base 2.3.64
- _ZN4yarp3dev27StubImplVelocityControl2Raw15velocityMoveRawEid@Base 2.3.64
- _ZN4yarp3dev27StubImplVelocityControl2Raw18setVelocityModeRawEv@Base 2.3.64
- _ZN4yarp3dev27StubImplVelocityControl2Raw21getRefAccelerationRawEiPd@Base 2.3.64
- _ZN4yarp3dev27StubImplVelocityControl2Raw21setRefAccelerationRawEid@Base 2.3.64
- _ZN4yarp3dev27StubImplVelocityControl2Raw22getRefAccelerationsRawEPd@Base 2.3.64
- _ZN4yarp3dev27StubImplVelocityControl2Raw22getRefAccelerationsRawEiPKiPd@Base 2.3.64
- _ZN4yarp3dev27StubImplVelocityControl2Raw22setRefAccelerationsRawEPKd@Base 2.3.64
- _ZN4yarp3dev27StubImplVelocityControl2Raw22setRefAccelerationsRawEiPKiPKd@Base 2.3.64
- _ZN4yarp3dev27StubImplVelocityControl2Raw7stopRawEi@Base 2.3.64
- _ZN4yarp3dev27StubImplVelocityControl2Raw7stopRawEiPKi@Base 2.3.64
- _ZN4yarp3dev27StubImplVelocityControl2Raw7stopRawEv@Base 2.3.64
  _ZN4yarp3dev3Pid17setStictionValuesEdd@Base 2.3.64
  _ZN4yarp3dev3Pid5setKdEd@Base 2.3.64
  _ZN4yarp3dev3Pid5setKiEd@Base 2.3.64
@@ -2222,9 +2194,9 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZN4yarp3dev4impl15AnalogPortEntryD1Ev@Base 2.3.64
  _ZN4yarp3dev4impl15AnalogPortEntryD2Ev@Base 2.3.64
  _ZN4yarp3dev4impl15AnalogPortEntryaSERKS2_@Base 2.3.64
- _ZN4yarp3dev4impl15AnalogSubDevice6attachEPNS0_10PolyDriverERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE@Base 2.3.64
+ _ZN4yarp3dev4impl15AnalogSubDevice6attachEPNS0_10PolyDriverERKSs@Base 2.3.64
  _ZN4yarp3dev4impl15AnalogSubDevice6detachEv@Base 2.3.64
- _ZN4yarp3dev4impl15AnalogSubDevice9configureEiiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE@Base 2.3.64
+ _ZN4yarp3dev4impl15AnalogSubDevice9configureEiiRKSs@Base 2.3.64
  _ZN4yarp3dev4impl15AnalogSubDeviceC1Ev@Base 2.3.64
  _ZN4yarp3dev4impl15AnalogSubDeviceC2Ev@Base 2.3.64
  _ZN4yarp3dev4impl15AnalogSubDeviceD1Ev@Base 2.3.64
@@ -2261,9 +2233,9 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZN4yarp3dev4impl23StreamingMessagesParserD0Ev@Base 2.3.64
  _ZN4yarp3dev4impl23StreamingMessagesParserD1Ev@Base 2.3.64
  _ZN4yarp3dev4impl23StreamingMessagesParserD2Ev@Base 2.3.64
- _ZN4yarp3dev4impl9SubDevice6attachEPNS0_10PolyDriverERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE@Base 2.3.64
+ _ZN4yarp3dev4impl9SubDevice6attachEPNS0_10PolyDriverERKSs@Base 2.3.64
  _ZN4yarp3dev4impl9SubDevice6detachEv@Base 2.3.64
- _ZN4yarp3dev4impl9SubDevice9configureEiiiRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE@Base 2.3.64
+ _ZN4yarp3dev4impl9SubDevice9configureEiiiRKSs@Base 2.3.64
  _ZN4yarp3dev4impl9SubDeviceC1ERKS2_@Base 2.3.64
  _ZN4yarp3dev4impl9SubDeviceC1Ev@Base 2.3.64
  _ZN4yarp3dev4impl9SubDeviceC2ERKS2_@Base 2.3.64
@@ -2540,11 +2512,12 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZNK4yarp3sig8VectorOfIdE11getListSizeEv@Base 2.3.64
  _ZNK4yarp3sig8VectorOfIdE14getElementSizeEv@Base 2.3.64
  _ZNK4yarp3sig8VectorOfIdE14getMemoryBlockEv@Base 2.3.64
+ _ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag@Base 2.3.64
+ _ZNSt12_Destroy_auxILb0EE9__destroyIPSsEEvT_S3_@Base 2.3.64
  _ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPN4yarp3dev4impl15AnalogPortEntryES6_EET0_T_S8_S7_@Base 2.3.64
  _ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPN4yarp3dev4impl9SubDeviceES6_EET0_T_S8_S7_@Base 2.3.64
- _ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_EET0_T_SA_S9_@Base 2.3.64
- _ZNSt22__uninitialized_fill_nILb0EE15__uninit_fill_nIPN4yarp3dev4impl15AnalogPortEntryEmS5_EET_S7_T0_RKT1_@Base 2.3.64
- _ZNSt22__uninitialized_fill_nILb0EE15__uninit_fill_nIPN4yarp3dev4impl9SubDeviceEmS5_EET_S7_T0_RKT1_@Base 2.3.64
+ _ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPSsS2_EET0_T_S4_S3_@Base 2.3.64
+ _ZNSt22__uninitialized_fill_nILb0EE15__uninit_fill_nIPN4yarp3dev4impl9SubDeviceEmS5_EEvT_T0_RKT1_@Base 2.3.64
  _ZNSt6vectorI15DevicesLutEntrySaIS0_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS0_S2_EEmRKS0_@Base 2.3.64
  _ZNSt6vectorIN4yarp3dev4impl15AnalogPortEntryESaIS3_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS3_S5_EEmRKS3_@Base 2.3.64
  _ZNSt6vectorIN4yarp3dev4impl15AnalogPortEntryESaIS3_EED1Ev@Base 2.3.64
@@ -2555,20 +2528,21 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZNSt6vectorIN4yarp3dev4impl15AnalogSubDeviceESaIS3_EED2Ev@Base 2.3.64
  _ZNSt6vectorIN4yarp3dev4impl9SubDeviceESaIS3_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS3_S5_EEmRKS3_@Base 2.3.64
  _ZNSt6vectorIN4yarp3dev4impl9SubDeviceESaIS3_EE6resizeEmS3_@Base 2.3.64
- _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS5_S7_EERKS5_@Base 2.3.64
- _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS5_S7_EEmRKS5_@Base 2.3.64
- _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED1Ev@Base 2.3.64
- _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev@Base 2.3.64
- _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEaSERKS7_@Base 2.3.64
  _ZNSt6vectorIPN4yarp3dev4impl19AnalogServerHandlerESaIS4_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS4_S6_EERKS4_@Base 2.3.64
+ _ZNSt6vectorISsSaISsEE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPSsS1_EERKSs@Base 2.3.64
+ _ZNSt6vectorISsSaISsEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPSsS1_EEmRKSs@Base 2.3.64
+ _ZNSt6vectorISsSaISsEED1Ev@Base 2.3.64
+ _ZNSt6vectorISsSaISsEED2Ev@Base 2.3.64
+ _ZNSt6vectorISsSaISsEEaSERKS1_@Base 2.3.64
  _ZNSt6vectorIdSaIdEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPdS1_EEmRKd@Base 2.3.64
  _ZNSt6vectorIdSaIdEE6resizeEmd@Base 2.3.64
  _ZNSt6vectorIdSaIdEEaSERKS1_@Base 2.3.64
  _ZNSt6vectorIiSaIiEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPiS1_EEmRKi@Base 2.3.64
  _ZNSt6vectorIiSaIiEE6resizeEmi@Base 2.3.64
  _ZNSt6vectorIiSaIiEEaSERKS1_@Base 2.3.64
- _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_@Base 2.3.64
- _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_SA_@Base 2.3.64
+ _ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_@Base 2.3.64
+ _ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_ERKS6_PKS3_@Base 2.3.64
+ _ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_ERKS6_S8_@Base 2.3.64
  _ZTI10StubDriver@Base 2.3.64
  _ZTI13DriversHelper@Base 2.3.64
  _ZTI14StateInputPort@Base 2.3.64
@@ -3004,6 +2978,22 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZTV8TickTime@Base 2.3.64
  _ZTV9jointData@Base 2.3.64
  _ZTVN4yarp2os10YarpPluginINS_3dev12DeviceDriverEEE@Base 2.3.64
+ _ZTVN4yarp2os11LocalReaderI15sensor_msgs_ImuEE@Base 2.3.64
+ _ZTVN4yarp2os11LocalReaderI22sensor_msgs_JointStateEE@Base 2.3.64
+ _ZTVN4yarp2os11LocalReaderI27geometry_msgs_WrenchStampedEE@Base 2.3.64
+ _ZTVN4yarp2os11LocalReaderI9jointDataEE@Base 2.3.64
+ _ZTVN4yarp2os11LocalReaderINS0_12PortablePairINS0_6BottleENS_3sig6VectorEEEEE@Base 2.3.64
+ _ZTVN4yarp2os11LocalReaderINS0_6BottleEEE@Base 2.3.64
+ _ZTVN4yarp2os11LocalReaderINS_3sig6VectorEEE@Base 2.3.64
+ _ZTVN4yarp2os11LocalReaderINS_3sig7ImageOfINS2_8PixelRgbEEEEE@Base 2.3.64
+ _ZTVN4yarp2os11TypedReaderI15sensor_msgs_ImuEE@Base 2.3.64
+ _ZTVN4yarp2os11TypedReaderI22sensor_msgs_JointStateEE@Base 2.3.64
+ _ZTVN4yarp2os11TypedReaderI27geometry_msgs_WrenchStampedEE@Base 2.3.64
+ _ZTVN4yarp2os11TypedReaderI9jointDataEE@Base 2.3.64
+ _ZTVN4yarp2os11TypedReaderINS0_12PortablePairINS0_6BottleENS_3sig6VectorEEEEE@Base 2.3.64
+ _ZTVN4yarp2os11TypedReaderINS0_6BottleEEE@Base 2.3.64
+ _ZTVN4yarp2os11TypedReaderINS_3sig6VectorEEE@Base 2.3.64
+ _ZTVN4yarp2os11TypedReaderINS_3sig7ImageOfINS2_8PixelRgbEEEEE@Base 2.3.64
  _ZTVN4yarp2os12BufferedPortI15sensor_msgs_ImuEE@Base 2.3.64
  _ZTVN4yarp2os12BufferedPortI22sensor_msgs_JointStateEE@Base 2.3.64
  _ZTVN4yarp2os12BufferedPortI27geometry_msgs_WrenchStampedEE@Base 2.3.64
@@ -3043,6 +3033,14 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZTVN4yarp2os17TypedReaderThreadINS_3sig7ImageOfINS2_8PixelRgbEEEEE@Base 2.3.64
  _ZTVN4yarp2os18SharedLibraryClassINS_3dev12DeviceDriverEEE@Base 2.3.64
  _ZTVN4yarp2os18YarpPluginSelectorE@Base 2.3.64
+ _ZTVN4yarp2os19AbstractContactableE@Base 2.3.64
+ _ZTVN4yarp2os19TypedReaderCallbackI15sensor_msgs_ImuEE@Base 2.3.64
+ _ZTVN4yarp2os19TypedReaderCallbackI22sensor_msgs_JointStateEE@Base 2.3.64
+ _ZTVN4yarp2os19TypedReaderCallbackI27geometry_msgs_WrenchStampedEE@Base 2.3.64
+ _ZTVN4yarp2os19TypedReaderCallbackI9jointDataEE@Base 2.3.64
+ _ZTVN4yarp2os19TypedReaderCallbackINS0_12PortablePairINS0_6BottleENS_3sig6VectorEEEEE@Base 2.3.64
+ _ZTVN4yarp2os19TypedReaderCallbackINS0_6BottleEEE@Base 2.3.64
+ _ZTVN4yarp2os19TypedReaderCallbackINS_3sig6VectorEEE@Base 2.3.64
  _ZTVN4yarp2os21UnbufferedContactableE@Base 2.3.64
  _ZTVN4yarp2os23PortWriterBufferAdaptorI15sensor_msgs_ImuEE@Base 2.3.64
  _ZTVN4yarp2os23PortWriterBufferAdaptorI22sensor_msgs_JointStateEE@Base 2.3.64
@@ -3061,12 +3059,17 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZTVN4yarp2os9PublisherI15sensor_msgs_ImuEE@Base 2.3.64
  _ZTVN4yarp2os9PublisherI22sensor_msgs_JointStateEE@Base 2.3.64
  _ZTVN4yarp2os9PublisherI27geometry_msgs_WrenchStampedEE@Base 2.3.64
+ _ZTVN4yarp3dev10DataSourceINS_2os12PortablePairINS_3sig7ImageOfINS4_8PixelRgbEEENS4_5SoundEEEEE@Base 2.3.64
+ _ZTVN4yarp3dev10DataSourceINS_3sig5SoundEEE@Base 2.3.64
+ _ZTVN4yarp3dev10DataSourceINS_3sig7ImageOfINS2_8PixelRgbEEEEE@Base 2.3.64
+ _ZTVN4yarp3dev10DataSourceINS_3sig7ImageOfIhEEEE@Base 2.3.64
  _ZTVN4yarp3dev10DataWriterINS_2os12PortablePairINS_3sig7ImageOfINS4_8PixelRgbEEENS4_5SoundEEEEE@Base 2.3.64
  _ZTVN4yarp3dev10DataWriterINS_3sig5SoundEEE@Base 2.3.64
  _ZTVN4yarp3dev10DataWriterINS_3sig7ImageOfINS2_8PixelRgbEEEEE@Base 2.3.64
  _ZTVN4yarp3dev10DataWriterINS_3sig7ImageOfIhEEEE@Base 2.3.64
  _ZTVN4yarp3dev10DevicePipeE@Base 2.3.64
  _ZTVN4yarp3dev10PolyDriverE@Base 2.3.64
+ _ZTVN4yarp3dev11DataSource2INS_3sig7ImageOfINS2_8PixelRgbEEENS2_5SoundEEE@Base 2.3.64
  _ZTVN4yarp3dev11DataWriter2INS_3sig7ImageOfINS2_8PixelRgbEEENS2_5SoundEEE@Base 2.3.64
  _ZTVN4yarp3dev11DeviceGroupE@Base 2.3.64
  _ZTVN4yarp3dev11IPidControlE@Base 2.3.64
@@ -3074,11 +3077,14 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZTVN4yarp3dev12IControlModeE@Base 2.3.64
  _ZTVN4yarp3dev12ServerSerialE@Base 2.3.64
  _ZTVN4yarp3dev13AnalogWrapperE@Base 2.3.64
+ _ZTVN4yarp3dev13DriverCreatorE@Base 2.3.64
+ _ZTVN4yarp3dev13IAnalogSensorE@Base 2.3.64
  _ZTVN4yarp3dev13IControlMode2E@Base 2.3.64
  _ZTVN4yarp3dev13ISerialDeviceE@Base 2.3.64
  _ZTVN4yarp3dev14CommandsHelperE@Base 2.3.64
  _ZTVN4yarp3dev14IControlLimitsE@Base 2.3.64
  _ZTVN4yarp3dev14IEncodersTimedE@Base 2.3.64
+ _ZTVN4yarp3dev14IGenericSensorE@Base 2.3.64
  _ZTVN4yarp3dev14IMotorEncodersE@Base 2.3.64
  _ZTVN4yarp3dev14ITorqueControlE@Base 2.3.64
  _ZTVN4yarp3dev14ImplementMotorE@Base 2.3.64
@@ -3102,8 +3108,10 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZTVN4yarp3dev15IPositionDirectE@Base 2.3.64
  _ZTVN4yarp3dev15IPreciselyTimedE@Base 2.3.64
  _ZTVN4yarp3dev16IInteractionModeE@Base 2.3.64
+ _ZTVN4yarp3dev16IMultipleWrapperE@Base 2.3.64
  _ZTVN4yarp3dev16IOpenLoopControlE@Base 2.3.64
  _ZTVN4yarp3dev16IPositionControlE@Base 2.3.64
+ _ZTVN4yarp3dev16IRemoteVariablesE@Base 2.3.64
  _ZTVN4yarp3dev16IVelocityControlE@Base 2.3.64
  _ZTVN4yarp3dev16TestFrameGrabberE@Base 2.3.64
  _ZTVN4yarp3dev17DriverLinkCreatorE@Base 2.3.64
@@ -3114,16 +3122,22 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZTVN4yarp3dev17IVelocityControl2E@Base 2.3.64
  _ZTVN4yarp3dev17StubDriverCreatorE@Base 2.3.64
  _ZTVN4yarp3dev18AnalogSensorClientE@Base 2.3.64
+ _ZTVN4yarp3dev18IAudioGrabberSoundE@Base 2.3.64
+ _ZTVN4yarp3dev18IAudioVisualStreamE@Base 2.3.64
+ _ZTVN4yarp3dev18IFrameGrabberImageE@Base 2.3.64
  _ZTVN4yarp3dev18RemoteControlBoardE@Base 2.3.64
  _ZTVN4yarp3dev18RemoteFrameGrabberE@Base 2.3.64
  _ZTVN4yarp3dev18ServerControlBoardE@Base 2.3.64
  _ZTVN4yarp3dev18ServerFrameGrabberE@Base 2.3.64
  _ZTVN4yarp3dev18ServerSoundGrabberE@Base 2.3.64
  _ZTVN4yarp3dev19ControlBoardWrapperE@Base 2.3.64
+ _ZTVN4yarp3dev19IAudioVisualGrabberE@Base 2.3.64
  _ZTVN4yarp3dev19IControlCalibrationE@Base 2.3.64
  _ZTVN4yarp3dev20IControlCalibration2E@Base 2.3.64
  _ZTVN4yarp3dev20ImplementControlModeE@Base 2.3.64
  _ZTVN4yarp3dev20VirtualAnalogWrapperE@Base 2.3.64
+ _ZTVN4yarp3dev21IFrameGrabberControlsE@Base 2.3.64
+ _ZTVN4yarp3dev21IFrameGrabberImageRawE@Base 2.3.64
  _ZTVN4yarp3dev21ImplementControlMode2E@Base 2.3.64
  _ZTVN4yarp3dev22ImplementEncodersTimedE@Base 2.3.64
  _ZTVN4yarp3dev22ImplementMotorEncodersE@Base 2.3.64
@@ -3143,6 +3157,7 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZTVN4yarp3dev4impl23StreamingMessagesParserE@Base 2.3.64
  _ZTVN4yarp3dev6IMotorE@Base 2.3.64
  _ZTVN4yarp3dev7DriversE@Base 2.3.64
+ _ZTVN4yarp3dev8IServiceE@Base 2.3.64
  _ZTVN4yarp3dev9IAxisInfoE@Base 2.3.64
  _ZTVN4yarp3dev9IEncodersE@Base 2.3.64
  _ZTVN4yarp3dev9TestMotorE@Base 2.3.64
@@ -3418,9 +3433,19 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZThn184_N4yarp3dev19ControlBoardWrapper11getAxisNameEiRNS_2os11ConstStringE@Base 2.3.64
  _ZThn184_N4yarp3dev19ControlBoardWrapperD0Ev@Base 2.3.64
  _ZThn184_N4yarp3dev19ControlBoardWrapperD1Ev@Base 2.3.64
+ _ZThn192_N4yarp3dev18ServerFrameGrabber8getImageERNS_3sig7ImageOfINS2_8PixelRgbEEE@Base 2.3.64
+ _ZThn192_N4yarp3dev18ServerFrameGrabberD0Ev@Base 2.3.64
+ _ZThn192_N4yarp3dev18ServerFrameGrabberD1Ev@Base 2.3.64
  _ZThn192_N4yarp3dev19ControlBoardWrapper17getLastInputStampEv@Base 2.3.64
  _ZThn192_N4yarp3dev19ControlBoardWrapperD0Ev@Base 2.3.64
  _ZThn192_N4yarp3dev19ControlBoardWrapperD1Ev@Base 2.3.64
+ _ZThn192_NK4yarp3dev18ServerFrameGrabber5widthEv@Base 2.3.64
+ _ZThn192_NK4yarp3dev18ServerFrameGrabber6heightEv@Base 2.3.64
+ _ZThn200_N4yarp3dev18ServerFrameGrabber13stopRecordingEv@Base 2.3.64
+ _ZThn200_N4yarp3dev18ServerFrameGrabber14startRecordingEv@Base 2.3.64
+ _ZThn200_N4yarp3dev18ServerFrameGrabber8getSoundERNS_3sig5SoundE@Base 2.3.64
+ _ZThn200_N4yarp3dev18ServerFrameGrabberD0Ev@Base 2.3.64
+ _ZThn200_N4yarp3dev18ServerFrameGrabberD1Ev@Base 2.3.64
  _ZThn200_N4yarp3dev19ControlBoardWrapper18getInteractionModeEiPNS0_19InteractionModeEnumE@Base 2.3.64
  _ZThn200_N4yarp3dev19ControlBoardWrapper18setInteractionModeEiNS0_19InteractionModeEnumE@Base 2.3.64
  _ZThn200_N4yarp3dev19ControlBoardWrapper19getInteractionModesEPNS0_19InteractionModeEnumE@Base 2.3.64
@@ -3429,11 +3454,50 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZThn200_N4yarp3dev19ControlBoardWrapper19setInteractionModesEiPiPNS0_19InteractionModeEnumE@Base 2.3.64
  _ZThn200_N4yarp3dev19ControlBoardWrapperD0Ev@Base 2.3.64
  _ZThn200_N4yarp3dev19ControlBoardWrapperD1Ev@Base 2.3.64
+ _ZThn208_N4yarp3dev18ServerFrameGrabber14getAudioVisualERNS_3sig7ImageOfINS2_8PixelRgbEEERNS2_5SoundE@Base 2.3.64
+ _ZThn208_N4yarp3dev18ServerFrameGrabberD0Ev@Base 2.3.64
+ _ZThn208_N4yarp3dev18ServerFrameGrabberD1Ev@Base 2.3.64
  _ZThn208_N4yarp3dev19ControlBoardWrapper17getRemoteVariableENS_2os11ConstStringERNS2_6BottleE@Base 2.3.64
  _ZThn208_N4yarp3dev19ControlBoardWrapper17setRemoteVariableENS_2os11ConstStringERKNS2_6BottleE@Base 2.3.64
  _ZThn208_N4yarp3dev19ControlBoardWrapper22getRemoteVariablesListEPNS_2os6BottleE@Base 2.3.64
  _ZThn208_N4yarp3dev19ControlBoardWrapperD0Ev@Base 2.3.64
  _ZThn208_N4yarp3dev19ControlBoardWrapperD1Ev@Base 2.3.64
+ _ZThn216_N4yarp3dev18ServerFrameGrabber10getShutterEv@Base 2.3.64
+ _ZThn216_N4yarp3dev18ServerFrameGrabber10setShutterEd@Base 2.3.64
+ _ZThn216_N4yarp3dev18ServerFrameGrabber11getExposureEv@Base 2.3.64
+ _ZThn216_N4yarp3dev18ServerFrameGrabber11setExposureEd@Base 2.3.64
+ _ZThn216_N4yarp3dev18ServerFrameGrabber12getSharpnessEv@Base 2.3.64
+ _ZThn216_N4yarp3dev18ServerFrameGrabber12setSharpnessEd@Base 2.3.64
+ _ZThn216_N4yarp3dev18ServerFrameGrabber13getBrightnessEv@Base 2.3.64
+ _ZThn216_N4yarp3dev18ServerFrameGrabber13getSaturationEv@Base 2.3.64
+ _ZThn216_N4yarp3dev18ServerFrameGrabber13setBrightnessEd@Base 2.3.64
+ _ZThn216_N4yarp3dev18ServerFrameGrabber13setSaturationEd@Base 2.3.64
+ _ZThn216_N4yarp3dev18ServerFrameGrabber15getWhiteBalanceERdS2_@Base 2.3.64
+ _ZThn216_N4yarp3dev18ServerFrameGrabber15setWhiteBalanceEdd@Base 2.3.64
+ _ZThn216_N4yarp3dev18ServerFrameGrabber6getHueEv@Base 2.3.64
+ _ZThn216_N4yarp3dev18ServerFrameGrabber6setHueEd@Base 2.3.64
+ _ZThn216_N4yarp3dev18ServerFrameGrabber7getGainEv@Base 2.3.64
+ _ZThn216_N4yarp3dev18ServerFrameGrabber7getIrisEv@Base 2.3.64
+ _ZThn216_N4yarp3dev18ServerFrameGrabber7setGainEd@Base 2.3.64
+ _ZThn216_N4yarp3dev18ServerFrameGrabber7setIrisEd@Base 2.3.64
+ _ZThn216_N4yarp3dev18ServerFrameGrabber8getGammaEv@Base 2.3.64
+ _ZThn216_N4yarp3dev18ServerFrameGrabber8setGammaEd@Base 2.3.64
+ _ZThn216_N4yarp3dev18ServerFrameGrabberD0Ev@Base 2.3.64
+ _ZThn216_N4yarp3dev18ServerFrameGrabberD1Ev@Base 2.3.64
+ _ZThn224_N4yarp3dev18ServerFrameGrabber11stopServiceEv@Base 2.3.64
+ _ZThn224_N4yarp3dev18ServerFrameGrabber12startServiceEv@Base 2.3.64
+ _ZThn224_N4yarp3dev18ServerFrameGrabber13updateServiceEv@Base 2.3.64
+ _ZThn224_N4yarp3dev18ServerFrameGrabberD0Ev@Base 2.3.64
+ _ZThn224_N4yarp3dev18ServerFrameGrabberD1Ev@Base 2.3.64
+ _ZThn232_N4yarp3dev18ServerFrameGrabber8getDatumERNS_3sig7ImageOfINS2_8PixelRgbEEE@Base 2.3.64
+ _ZThn232_N4yarp3dev18ServerFrameGrabberD0Ev@Base 2.3.64
+ _ZThn232_N4yarp3dev18ServerFrameGrabberD1Ev@Base 2.3.64
+ _ZThn240_N4yarp3dev18ServerFrameGrabber8getDatumERNS_3sig7ImageOfIhEE@Base 2.3.64
+ _ZThn240_N4yarp3dev18ServerFrameGrabberD0Ev@Base 2.3.64
+ _ZThn240_N4yarp3dev18ServerFrameGrabberD1Ev@Base 2.3.64
+ _ZThn248_N4yarp3dev18ServerFrameGrabber8getDatumERNS_3sig5SoundE@Base 2.3.64
+ _ZThn248_N4yarp3dev18ServerFrameGrabberD0Ev@Base 2.3.64
+ _ZThn248_N4yarp3dev18ServerFrameGrabberD1Ev@Base 2.3.64
  _ZThn24_N4yarp3dev13AnalogWrapper9attachAllERKNS0_14PolyDriverListE@Base 2.3.64
  _ZThn24_N4yarp3dev13AnalogWrapper9detachAllEv@Base 2.3.64
  _ZThn24_N4yarp3dev13AnalogWrapperD0Ev@Base 2.3.64
@@ -3509,58 +3573,12 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZThn24_N4yarp3dev9TestMotor7getAxesEPi@Base 2.3.64
  _ZThn24_N4yarp3dev9TestMotorD0Ev@Base 2.3.64
  _ZThn24_N4yarp3dev9TestMotorD1Ev@Base 2.3.64
- _ZThn264_N4yarp3dev18ServerFrameGrabber8getImageERNS_3sig7ImageOfINS2_8PixelRgbEEE@Base 2.3.64
+ _ZThn256_N4yarp3dev18ServerFrameGrabber8getDatumERNS_2os12PortablePairINS_3sig7ImageOfINS4_8PixelRgbEEENS4_5SoundEEE@Base 2.3.64
+ _ZThn256_N4yarp3dev18ServerFrameGrabberD0Ev@Base 2.3.64
+ _ZThn256_N4yarp3dev18ServerFrameGrabberD1Ev@Base 2.3.64
+ _ZThn264_N4yarp3dev18ServerFrameGrabber8getDatumERNS_3sig7ImageOfINS2_8PixelRgbEEERNS2_5SoundE@Base 2.3.64
  _ZThn264_N4yarp3dev18ServerFrameGrabberD0Ev@Base 2.3.64
  _ZThn264_N4yarp3dev18ServerFrameGrabberD1Ev@Base 2.3.64
- _ZThn264_NK4yarp3dev18ServerFrameGrabber5widthEv@Base 2.3.64
- _ZThn264_NK4yarp3dev18ServerFrameGrabber6heightEv@Base 2.3.64
- _ZThn272_N4yarp3dev18ServerFrameGrabber13stopRecordingEv@Base 2.3.64
- _ZThn272_N4yarp3dev18ServerFrameGrabber14startRecordingEv@Base 2.3.64
- _ZThn272_N4yarp3dev18ServerFrameGrabber8getSoundERNS_3sig5SoundE@Base 2.3.64
- _ZThn272_N4yarp3dev18ServerFrameGrabberD0Ev@Base 2.3.64
- _ZThn272_N4yarp3dev18ServerFrameGrabberD1Ev@Base 2.3.64
- _ZThn280_N4yarp3dev18ServerFrameGrabber14getAudioVisualERNS_3sig7ImageOfINS2_8PixelRgbEEERNS2_5SoundE@Base 2.3.64
- _ZThn280_N4yarp3dev18ServerFrameGrabberD0Ev@Base 2.3.64
- _ZThn280_N4yarp3dev18ServerFrameGrabberD1Ev@Base 2.3.64
- _ZThn288_N4yarp3dev18ServerFrameGrabber10getShutterEv@Base 2.3.64
- _ZThn288_N4yarp3dev18ServerFrameGrabber10setShutterEd@Base 2.3.64
- _ZThn288_N4yarp3dev18ServerFrameGrabber11getExposureEv@Base 2.3.64
- _ZThn288_N4yarp3dev18ServerFrameGrabber11setExposureEd@Base 2.3.64
- _ZThn288_N4yarp3dev18ServerFrameGrabber12getSharpnessEv@Base 2.3.64
- _ZThn288_N4yarp3dev18ServerFrameGrabber12setSharpnessEd@Base 2.3.64
- _ZThn288_N4yarp3dev18ServerFrameGrabber13getBrightnessEv@Base 2.3.64
- _ZThn288_N4yarp3dev18ServerFrameGrabber13getSaturationEv@Base 2.3.64
- _ZThn288_N4yarp3dev18ServerFrameGrabber13setBrightnessEd@Base 2.3.64
- _ZThn288_N4yarp3dev18ServerFrameGrabber13setSaturationEd@Base 2.3.64
- _ZThn288_N4yarp3dev18ServerFrameGrabber15getWhiteBalanceERdS2_@Base 2.3.64
- _ZThn288_N4yarp3dev18ServerFrameGrabber15setWhiteBalanceEdd@Base 2.3.64
- _ZThn288_N4yarp3dev18ServerFrameGrabber6getHueEv@Base 2.3.64
- _ZThn288_N4yarp3dev18ServerFrameGrabber6setHueEd@Base 2.3.64
- _ZThn288_N4yarp3dev18ServerFrameGrabber7getGainEv@Base 2.3.64
- _ZThn288_N4yarp3dev18ServerFrameGrabber7getIrisEv@Base 2.3.64
- _ZThn288_N4yarp3dev18ServerFrameGrabber7setGainEd@Base 2.3.64
- _ZThn288_N4yarp3dev18ServerFrameGrabber7setIrisEd@Base 2.3.64
- _ZThn288_N4yarp3dev18ServerFrameGrabber8getGammaEv@Base 2.3.64
- _ZThn288_N4yarp3dev18ServerFrameGrabber8setGammaEd@Base 2.3.64
- _ZThn288_N4yarp3dev18ServerFrameGrabberD0Ev@Base 2.3.64
- _ZThn288_N4yarp3dev18ServerFrameGrabberD1Ev@Base 2.3.64
- _ZThn296_N4yarp3dev18ServerFrameGrabber11stopServiceEv@Base 2.3.64
- _ZThn296_N4yarp3dev18ServerFrameGrabber12startServiceEv@Base 2.3.64
- _ZThn296_N4yarp3dev18ServerFrameGrabber13updateServiceEv@Base 2.3.64
- _ZThn296_N4yarp3dev18ServerFrameGrabberD0Ev@Base 2.3.64
- _ZThn296_N4yarp3dev18ServerFrameGrabberD1Ev@Base 2.3.64
- _ZThn304_N4yarp3dev18ServerFrameGrabber8getDatumERNS_3sig7ImageOfINS2_8PixelRgbEEE@Base 2.3.64
- _ZThn304_N4yarp3dev18ServerFrameGrabberD0Ev@Base 2.3.64
- _ZThn304_N4yarp3dev18ServerFrameGrabberD1Ev@Base 2.3.64
- _ZThn312_N4yarp3dev18ServerFrameGrabber8getDatumERNS_3sig7ImageOfIhEE@Base 2.3.64
- _ZThn312_N4yarp3dev18ServerFrameGrabberD0Ev@Base 2.3.64
- _ZThn312_N4yarp3dev18ServerFrameGrabberD1Ev@Base 2.3.64
- _ZThn320_N4yarp3dev18ServerFrameGrabber8getDatumERNS_3sig5SoundE@Base 2.3.64
- _ZThn320_N4yarp3dev18ServerFrameGrabberD0Ev@Base 2.3.64
- _ZThn320_N4yarp3dev18ServerFrameGrabberD1Ev@Base 2.3.64
- _ZThn328_N4yarp3dev18ServerFrameGrabber8getDatumERNS_2os12PortablePairINS_3sig7ImageOfINS4_8PixelRgbEEENS4_5SoundEEE@Base 2.3.64
- _ZThn328_N4yarp3dev18ServerFrameGrabberD0Ev@Base 2.3.64
- _ZThn328_N4yarp3dev18ServerFrameGrabberD1Ev@Base 2.3.64
  _ZThn32_N4yarp3dev14ServerInertial4readERNS_2os16ConnectionReaderE@Base 2.3.64
  _ZThn32_N4yarp3dev14ServerInertialD0Ev@Base 2.3.64
  _ZThn32_N4yarp3dev14ServerInertialD1Ev@Base 2.3.64
@@ -3641,9 +3659,6 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZThn32_N4yarp3dev20VirtualAnalogWrapper9detachAllEv@Base 2.3.64
  _ZThn32_N4yarp3dev20VirtualAnalogWrapperD0Ev@Base 2.3.64
  _ZThn32_N4yarp3dev20VirtualAnalogWrapperD1Ev@Base 2.3.64
- _ZThn336_N4yarp3dev18ServerFrameGrabber8getDatumERNS_3sig7ImageOfINS2_8PixelRgbEEERNS2_5SoundE@Base 2.3.64
- _ZThn336_N4yarp3dev18ServerFrameGrabberD0Ev@Base 2.3.64
- _ZThn336_N4yarp3dev18ServerFrameGrabberD1Ev@Base 2.3.64
  _ZThn40_N4yarp3dev14ServerInertial11getChannelsEPi@Base 2.3.64
  _ZThn40_N4yarp3dev14ServerInertial4readERNS_3sig6VectorE@Base 2.3.64
  _ZThn40_N4yarp3dev14ServerInertial9calibrateEid@Base 2.3.64

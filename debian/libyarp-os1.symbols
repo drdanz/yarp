@@ -22,6 +22,7 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZN10ACE_VectorIPN4yarp2os4impl12PortCoreUnitELm32EE9push_backERKS4_@Base 2.3.64
  _ZN10ACE_VectorIPN4yarp2os7CarrierELm32EE9push_backERKS3_@Base 2.3.64
  _ZN10ACE_VectorIPN4yarp2os9NameSpaceELm32EE9push_backERKS3_@Base 2.3.64
+ _ZN10ACE_VectorIcLm32EE6resizeEmRKc@Base 2.3.64
  _ZN10ACE_VectorIiLm32EE9push_backERKi@Base 2.3.64
  _ZN10NodeHelper12requestTopicER8NodeArgs@Base 2.3.64
  _ZN10NodeHelper15publisherUpdateER8NodeArgs@Base 2.3.64
@@ -44,13 +45,12 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZN11ACE_Event_TI22ACE_System_Time_PolicyED1Ev@Base 2.3.64
  _ZN11ACE_Event_TI22ACE_System_Time_PolicyED2Ev@Base 2.3.64
  _ZN11NodesHelper3addERN4yarp2os11ContactableE@Base 2.3.64
+ _ZN11NodesHelper5clearEv@Base 2.3.64
  _ZN11NodesHelper5queryERKN4yarp2os11ConstStringES4_@Base 2.3.64
- _ZN11NodesHelper6getURIERKN4yarp2os11ConstStringE@Base 2.3.64
  _ZN11NodesHelper6removeERN4yarp2os11ContactableE@Base 2.3.64
  _ZN11NodesHelper6updateERN4yarp2os11ContactableE@Base 2.3.64
  _ZN11NodesHelper7getNodeERKN4yarp2os11ConstStringEb@Base 2.3.64
  _ZN11NodesHelper7prepareERKN4yarp2os11ConstStringE@Base 2.3.64
- _ZN11NodesHelper9getParentERKN4yarp2os11ConstStringE@Base 2.3.64
  _ZN11NodesHelper9interruptEv@Base 2.3.64
  _ZN11PingSampler4readERN4yarp2os16ConnectionReaderE@Base 2.3.64
  _ZN11PingSamplerD0Ev@Base 2.3.64
@@ -73,7 +73,6 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZN12ModuleHelperD0Ev@Base 2.3.64
  _ZN12ModuleHelperD1Ev@Base 2.3.64
  _ZN12ModuleHelperD2Ev@Base 2.3.64
- _ZN12PropertyItem5flushEv@Base 2.3.64
  _ZN12PropertyItemD1Ev@Base 2.3.64
  _ZN12PropertyItemD2Ev@Base 2.3.64
  _ZN12RootUnitTest7getNameEv@Base 2.3.64
@@ -96,20 +95,42 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZN13RunTerminatorD0Ev@Base 2.3.64
  _ZN13RunTerminatorD1Ev@Base 2.3.64
  _ZN13RunTerminatorD2Ev@Base 2.3.64
- _ZN14ACE_Array_BaseIN4yarp2os11ConstStringEE8max_sizeEm@Base 2.3.64
+ _ZN14ACE_Array_BaseIN4yarp2os11ConstStringEE4sizeEm@Base 2.3.64
  _ZN14ACE_Array_BaseIN4yarp2os11ConstStringEEC1EmP13ACE_Allocator@Base 2.3.64
  _ZN14ACE_Array_BaseIN4yarp2os11ConstStringEEC2EmP13ACE_Allocator@Base 2.3.64
  _ZN14ACE_Array_BaseIN4yarp2os11ConstStringEED1Ev@Base 2.3.64
  _ZN14ACE_Array_BaseIN4yarp2os11ConstStringEED2Ev@Base 2.3.64
- _ZN14ACE_Array_BaseIPN4yarp2os12ManagedBytesEE8max_sizeEm@Base 2.3.64
- _ZN14ACE_Array_BaseIPN4yarp2os4impl12PortCoreUnitEE8max_sizeEm@Base 2.3.64
- _ZN14ACE_Array_BaseIPN4yarp2os4impl8StorableEE8max_sizeEm@Base 2.3.64
- _ZN14ACE_Array_BaseIPN4yarp2os4impl8UnitTestEE8max_sizeEm@Base 2.3.64
- _ZN14ACE_Array_BaseIPN4yarp2os7CarrierEE8max_sizeEm@Base 2.3.64
- _ZN14ACE_Array_BaseIPN4yarp2os9NameSpaceEE8max_sizeEm@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os12ManagedBytesEE4sizeEm@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os12ManagedBytesEEC1EmP13ACE_Allocator@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os12ManagedBytesEEC2EmP13ACE_Allocator@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os12ManagedBytesEED1Ev@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os12ManagedBytesEED2Ev@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os4impl12PortCoreUnitEE4sizeEm@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os4impl12PortCoreUnitEEC1EmP13ACE_Allocator@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os4impl12PortCoreUnitEEC2EmP13ACE_Allocator@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os4impl12PortCoreUnitEED1Ev@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os4impl12PortCoreUnitEED2Ev@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os4impl8StorableEE4sizeEm@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os4impl8StorableEED1Ev@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os4impl8StorableEED2Ev@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os4impl8UnitTestEE4sizeEm@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os4impl8UnitTestEEC1EmP13ACE_Allocator@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os4impl8UnitTestEEC2EmP13ACE_Allocator@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os4impl8UnitTestEED1Ev@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os4impl8UnitTestEED2Ev@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os7CarrierEE4sizeEm@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os7CarrierEED1Ev@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os7CarrierEED2Ev@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os9NameSpaceEE4sizeEm@Base 2.3.64
  _ZN14ACE_Array_BaseIPN4yarp2os9NameSpaceEEC1ERKS4_@Base 2.3.64
  _ZN14ACE_Array_BaseIPN4yarp2os9NameSpaceEEC2ERKS4_@Base 2.3.64
- _ZN14ACE_Array_BaseIiE8max_sizeEm@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os9NameSpaceEED1Ev@Base 2.3.64
+ _ZN14ACE_Array_BaseIPN4yarp2os9NameSpaceEED2Ev@Base 2.3.64
+ _ZN14ACE_Array_BaseIiE4sizeEm@Base 2.3.64
+ _ZN14ACE_Array_BaseIiEC1EmP13ACE_Allocator@Base 2.3.64
+ _ZN14ACE_Array_BaseIiEC2EmP13ACE_Allocator@Base 2.3.64
+ _ZN14ACE_Array_BaseIiED1Ev@Base 2.3.64
+ _ZN14ACE_Array_BaseIiED2Ev@Base 2.3.64
  _ZN14ACE_Auto_EventD0Ev@Base 2.3.64
  _ZN14ACE_Auto_EventD1Ev@Base 2.3.64
  _ZN14ACE_Auto_EventD2Ev@Base 2.3.64
@@ -120,13 +141,14 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZN14MainNameServerD2Ev@Base 2.3.64
  _ZN14PortReaderPoolD1Ev@Base 2.3.64
  _ZN14PortReaderPoolD2Ev@Base 2.3.64
+ _ZN14PropertyHelper10fromBottleERN4yarp2os6BottleEb@Base 2.3.64
  _ZN14PropertyHelper10fromConfigEPKcRN4yarp2os10SearchableEb@Base 2.3.64
  _ZN14PropertyHelper11fromCommandEiPPcb@Base 2.3.64
- _ZN14PropertyHelper13fromConfigDirERKN4yarp2os11ConstStringES4_b@Base 2.3.64
  _ZN14PropertyHelper14fromConfigFileERKN4yarp2os11ConstStringERNS1_10SearchableEb@Base 2.3.64
  _ZN14PropertyHelper15putBottleCompatEPKcRKN4yarp2os6BottleE@Base 2.3.64
  _ZN14PropertyHelper6expandEPKcRN4yarp2os10SearchableES5_@Base 2.3.64
  _ZN14PropertyHelper7readDirERKN4yarp2os11ConstStringERP11__dirstreamRS2_S4_@Base 2.3.64
+ _ZN14PropertyHelper8readFileERKN4yarp2os11ConstStringERS2_b@Base 2.3.64
  _ZN14RFModuleHelper3runEv@Base 2.3.64
  _ZN14RFModuleHelper4readERN4yarp2os16ConnectionReaderE@Base 2.3.64
  _ZN14RFModuleHelperD0Ev@Base 2.3.64
@@ -221,6 +243,10 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZN18ACE_Hash_Map_EntryIN4yarp2os11ConstStringENS1_4impl10DispatcherINS3_10NameServerES2_E5EntryEED2Ev@Base 2.3.64
  _ZN18ACE_Hash_Map_EntryIN4yarp2os11ConstStringENS1_4impl10NameServer10HostRecordEED1Ev@Base 2.3.64
  _ZN18ACE_Hash_Map_EntryIN4yarp2os11ConstStringENS1_4impl10NameServer10HostRecordEED2Ev@Base 2.3.64
+ _ZN18ACE_Hash_Map_EntryIN4yarp2os11ConstStringENS1_4impl10NameServer10NameRecordEEC1EPS6_S7_@Base 2.3.64
+ _ZN18ACE_Hash_Map_EntryIN4yarp2os11ConstStringENS1_4impl10NameServer10NameRecordEEC1ERKS2_RKS5_PS6_SB_@Base 2.3.64
+ _ZN18ACE_Hash_Map_EntryIN4yarp2os11ConstStringENS1_4impl10NameServer10NameRecordEEC2EPS6_S7_@Base 2.3.64
+ _ZN18ACE_Hash_Map_EntryIN4yarp2os11ConstStringENS1_4impl10NameServer10NameRecordEEC2ERKS2_RKS5_PS6_SB_@Base 2.3.64
  _ZN18ACE_Hash_Map_EntryIN4yarp2os11ConstStringENS1_4impl10NameServer10NameRecordEED1Ev@Base 2.3.64
  _ZN18ACE_Hash_Map_EntryIN4yarp2os11ConstStringENS1_4impl10NameServer10NameRecordEED2Ev@Base 2.3.64
  _ZN18ACE_Hash_Map_EntryIN4yarp2os11ConstStringENS1_4impl10NameServer14PropertyRecordEED1Ev@Base 2.3.64
@@ -255,7 +281,6 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZN20CompanionCheckHelperD0Ev@Base 2.3.64
  _ZN20CompanionCheckHelperD1Ev@Base 2.3.64
  _ZN20CompanionCheckHelperD2Ev@Base 2.3.64
- _ZN20DummyConnectorHelper9getReaderEv@Base 2.3.64
  _ZN20DummyConnectorReader9getWriterEv@Base 2.3.64
  _ZN20DummyConnectorReaderD0Ev@Base 2.3.64
  _ZN20DummyConnectorReaderD1Ev@Base 2.3.64
@@ -265,9 +290,6 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZN20MainNameServerWorkerD1Ev@Base 2.3.64
  _ZN20MainNameServerWorkerD2Ev@Base 2.3.64
  _ZN20MultiNameSpaceHelper8activateEb@Base 2.3.64
- _ZN20MultiNameSpaceHelper9queryNameERKN4yarp2os11ConstStringE@Base 2.3.64
- _ZN20ResourceFinderHelper12context2pathERN4yarp2os8PropertyERKNS1_11ConstStringE@Base 2.3.64
- _ZN20ResourceFinderHelper16getHomeRobotPathEv@Base 2.3.64
  _ZN20ResourceFinderHelper17findFileBaseInnerERN4yarp2os8PropertyERKNS1_11ConstStringEbbRNS1_6BottleERKNS1_21ResourceFinderOptionsERKS7_PKc@Base 2.3.64
  _ZN20ResourceFinderHelper18getHomeContextPathERN4yarp2os8PropertyERKNS1_11ConstStringE@Base 2.3.64
  _ZN20ResourceFinderHelper19configureFromPolicyERN4yarp2os8PropertyEPKc@Base 2.3.64
@@ -301,28 +323,27 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringE12PropertyItem8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE11shared_findERKS2_RP18ACE_Hash_Map_EntryIS2_S3_ERm@Base 2.3.64
  _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringE12PropertyItem8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE12unbind_all_iEv@Base 2.3.64
  _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringE12PropertyItem8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE6bind_iERKS2_RKS3_RP18ACE_Hash_Map_EntryIS2_S3_E@Base 2.3.64
+ _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringE12PropertyItem8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE7close_iEv@Base 2.3.64
  _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10DispatcherINS3_10NameServerENS1_6BottleEE5EntryE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE11shared_findERKS2_RP18ACE_Hash_Map_EntryIS2_S8_ERm@Base 2.3.64
- _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10DispatcherINS3_10NameServerENS1_6BottleEE5EntryE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE12unbind_all_iEv@Base 2.3.64
- _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10DispatcherINS3_10NameServerENS1_6BottleEE5EntryE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE5closeEv@Base 2.3.64
+ _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10DispatcherINS3_10NameServerENS1_6BottleEE5EntryE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE6bind_iERKS2_RKS8_RP18ACE_Hash_Map_EntryIS2_S8_E@Base 2.3.64
+ _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10DispatcherINS3_10NameServerENS1_6BottleEE5EntryE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE7close_iEv@Base 2.3.64
  _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10DispatcherINS3_10NameServerES2_E5EntryE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE11shared_findERKS2_RP18ACE_Hash_Map_EntryIS2_S7_ERm@Base 2.3.64
- _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10DispatcherINS3_10NameServerES2_E5EntryE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE12unbind_all_iEv@Base 2.3.64
- _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10DispatcherINS3_10NameServerES2_E5EntryE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE5closeEv@Base 2.3.64
+ _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10DispatcherINS3_10NameServerES2_E5EntryE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE6bind_iERKS2_RKS7_RP18ACE_Hash_Map_EntryIS2_S7_E@Base 2.3.64
+ _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10DispatcherINS3_10NameServerES2_E5EntryE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE7close_iEv@Base 2.3.64
  _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10NameServer10HostRecordE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE11shared_findERKS2_RP18ACE_Hash_Map_EntryIS2_S5_ERm@Base 2.3.64
- _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10NameServer10HostRecordE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE12unbind_all_iEv@Base 2.3.64
- _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10NameServer10HostRecordE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE5closeEv@Base 2.3.64
+ _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10NameServer10HostRecordE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE6bind_iERKS2_RKS5_RP18ACE_Hash_Map_EntryIS2_S5_E@Base 2.3.64
+ _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10NameServer10HostRecordE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE7close_iEv@Base 2.3.64
  _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10NameServer10NameRecordE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE11shared_findERKS2_RP18ACE_Hash_Map_EntryIS2_S5_ERm@Base 2.3.64
- _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10NameServer10NameRecordE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE12unbind_all_iEv@Base 2.3.64
  _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10NameServer10NameRecordE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE14create_bucketsEm@Base 2.3.64
- _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10NameServer10NameRecordE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE5closeEv@Base 2.3.64
- _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10NameServer10NameRecordE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE6bind_iERKS2_RKS5_RP18ACE_Hash_Map_EntryIS2_S5_E@Base 2.3.64
+ _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10NameServer10NameRecordE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE7close_iEv@Base 2.3.64
  _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10NameServer14PropertyRecordE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE11shared_findERKS2_RP18ACE_Hash_Map_EntryIS2_S5_ERm@Base 2.3.64
  _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10NameServer14PropertyRecordE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE12unbind_all_iEv@Base 2.3.64
- _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10NameServer14PropertyRecordE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE14create_bucketsEm@Base 2.3.64
- _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10NameServer14PropertyRecordE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE5closeEv@Base 2.3.64
+ _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10NameServer14PropertyRecordE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE4openEmP13ACE_AllocatorSD_@Base 2.3.64
  _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10NameServer14PropertyRecordE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE6bind_iERKS2_RKS5_RP18ACE_Hash_Map_EntryIS2_S5_E@Base 2.3.64
+ _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl10NameServer14PropertyRecordE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE7close_iEv@Base 2.3.64
  _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl9Companion5EntryE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE11shared_findERKS2_RP18ACE_Hash_Map_EntryIS2_S5_ERm@Base 2.3.64
- _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl9Companion5EntryE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE12unbind_all_iEv@Base 2.3.64
- _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl9Companion5EntryE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE5closeEv@Base 2.3.64
+ _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl9Companion5EntryE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE6bind_iERKS2_RKS5_RP18ACE_Hash_Map_EntryIS2_S5_E@Base 2.3.64
+ _ZN23ACE_Hash_Map_Manager_ExIN4yarp2os11ConstStringENS1_4impl9Companion5EntryE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE7close_iEv@Base 2.3.64
  _ZN23YarpRunCmdWithStdioInfo14TerminateStdioEv@Base 2.3.64
  _ZN23YarpRunCmdWithStdioInfo5CleanEiRP15YarpRunProcInfo@Base 2.3.64
  _ZN23YarpRunCmdWithStdioInfo5CleanEv@Base 2.3.64
@@ -354,7 +375,6 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZN29ACE_Hash_Map_Iterator_Base_ExIN4yarp2os11ConstStringENS1_4impl10NameServer10NameRecordE8ACE_HashIS2_E12ACE_Equal_ToIS2_E14ACE_Null_MutexE9forward_iEv@Base 2.3.64
  _ZN4yarp2os10Connection10isBareModeEv@Base 2.3.64
  _ZN4yarp2os10Connection7isValidEv@Base 2.3.64
- _ZN4yarp2os10ElectionOfINS0_10PeerRecordINS0_4impl12McastCarrierEEEE12getRecordRawERKNS0_11ConstStringEb@Base 2.3.64
  _ZN4yarp2os10ElectionOfINS0_10PeerRecordINS0_4impl12McastCarrierEEEED0Ev@Base 2.3.64
  _ZN4yarp2os10ElectionOfINS0_10PeerRecordINS0_4impl12McastCarrierEEEED1Ev@Base 2.3.64
  _ZN4yarp2os10ElectionOfINS0_10PeerRecordINS0_4impl12McastCarrierEEEED2Ev@Base 2.3.64
@@ -524,8 +544,6 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZN4yarp2os11SizedWriter5writeERNS0_12OutputStreamE@Base 2.3.64
  _ZN4yarp2os11SizedWriter5writeERNS0_16ConnectionWriterE@Base 2.3.64
  _ZN4yarp2os11SystemClock11delaySystemEd@Base 2.3.64
- _ZN4yarp2os11SystemClock3nowEv@Base 2.3.64
- _ZN4yarp2os11SystemClock5delayEd@Base 2.3.64
  _ZN4yarp2os11SystemClock9nowSystemEv@Base 2.3.64
  _ZN4yarp2os11gethostnameEPcm@Base 2.3.64
  _ZN4yarp2os11getprognameEPcm@Base 2.3.64
@@ -583,7 +601,7 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZN4yarp2os12ContactStyleC2Ev@Base 2.3.64
  _ZN4yarp2os12LogForwarder11getInstanceEv@Base 2.3.64
  _ZN4yarp2os12LogForwarder3semE@Base 2.3.64
- _ZN4yarp2os12LogForwarder7forwardENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE@Base 2.3.64
+ _ZN4yarp2os12LogForwarder7forwardESs@Base 2.3.64
  _ZN4yarp2os12LogForwarder8instanceE@Base 2.3.64
  _ZN4yarp2os12LogForwarder9destroyerE@Base 2.3.64
  _ZN4yarp2os12LogForwarderC1Ev@Base 2.3.64
@@ -672,7 +690,9 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZN4yarp2os12TwoWayStreamD2Ev@Base 2.3.64
  _ZN4yarp2os13NestedContact10fromStringERKNS0_11ConstStringE@Base 2.3.64
  _ZN4yarp2os13NestedContactC1ERKNS0_11ConstStringE@Base 2.3.64
+ _ZN4yarp2os13NestedContactC1ERKS1_@Base 2.3.64
  _ZN4yarp2os13NestedContactC2ERKNS0_11ConstStringE@Base 2.3.64
+ _ZN4yarp2os13NestedContactC2ERKS1_@Base 2.3.64
  _ZN4yarp2os13NestedContactD1Ev@Base 2.3.64
  _ZN4yarp2os13NestedContactD2Ev@Base 2.3.64
  _ZN4yarp2os13SearchMonitorD0Ev@Base 2.3.64
@@ -937,8 +957,6 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZN4yarp2os18StringOutputStreamD0Ev@Base 2.3.64
  _ZN4yarp2os18StringOutputStreamD1Ev@Base 2.3.64
  _ZN4yarp2os18StringOutputStreamD2Ev@Base 2.3.64
- _ZN4yarp2os18YarpDummyNameSpaceC1Ev@Base 2.3.64
- _ZN4yarp2os18YarpDummyNameSpaceC2Ev@Base 2.3.64
  _ZN4yarp2os18YarpDummyNameSpaceD0Ev@Base 2.3.64
  _ZN4yarp2os18YarpDummyNameSpaceD1Ev@Base 2.3.64
  _ZN4yarp2os18YarpDummyNameSpaceD2Ev@Base 2.3.64
@@ -947,6 +965,8 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZN4yarp2os18YarpPluginSelectorD0Ev@Base 2.3.64
  _ZN4yarp2os18YarpPluginSelectorD1Ev@Base 2.3.64
  _ZN4yarp2os18YarpPluginSelectorD2Ev@Base 2.3.64
+ _ZN4yarp2os18YarpPluginSettings11setSelectorERNS0_18YarpPluginSelectorE@Base 2.3.64
+ _ZN4yarp2os18YarpPluginSettings16readFromSelectorERKNS0_11ConstStringE@Base 2.3.64
  _ZN4yarp2os18YarpPluginSettings18readFromSearchableERNS0_10SearchableERKNS0_11ConstStringE@Base 2.3.64
  _ZN4yarp2os18YarpPluginSettings4openERNS0_20SharedLibraryFactoryE@Base 2.3.64
  _ZN4yarp2os18YarpPluginSettings4openERNS0_20SharedLibraryFactoryERKNS0_11ConstStringES6_@Base 2.3.64
@@ -1375,6 +1395,7 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZN4yarp2os4impl10NameServer10NameRecord5getPRERKNS0_11ConstStringEb@Base 2.3.64
  _ZN4yarp2os4impl10NameServer10NameRecord7getPropERKNS0_11ConstStringE@Base 2.3.64
  _ZN4yarp2os4impl10NameServer11McastRecord14releaseAddressEPKc@Base 2.3.64
+ _ZN4yarp2os4impl10NameServer11McastRecord3getEv@Base 2.3.64
  _ZN4yarp2os4impl10NameServer11McastRecord5freshEv@Base 2.3.64
  _ZN4yarp2os4impl10NameServer11McastRecordD0Ev@Base 2.3.64
  _ZN4yarp2os4impl10NameServer11McastRecordD1Ev@Base 2.3.64
@@ -1530,8 +1551,6 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZN4yarp2os4impl11HttpCarrierD2Ev@Base 2.3.64
  _ZN4yarp2os4impl11PortCommand4readERNS0_16ConnectionReaderE@Base 2.3.64
  _ZN4yarp2os4impl11PortCommand5writeERNS0_16ConnectionWriterE@Base 2.3.64
- _ZN4yarp2os4impl11PortCommandC1EcRKNS0_11ConstStringE@Base 2.3.64
- _ZN4yarp2os4impl11PortCommandC2EcRKNS0_11ConstStringE@Base 2.3.64
  _ZN4yarp2os4impl11PortCommandD0Ev@Base 2.3.64
  _ZN4yarp2os4impl11PortCommandD1Ev@Base 2.3.64
  _ZN4yarp2os4impl11PortCommandD2Ev@Base 2.3.64
@@ -1687,7 +1706,6 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZN4yarp2os4impl14PortCorePacketD0Ev@Base 2.3.64
  _ZN4yarp2os4impl14PortCorePacketD1Ev@Base 2.3.64
  _ZN4yarp2os4impl14PortCorePacketD2Ev@Base 2.3.64
- _ZN4yarp2os4impl15PortCorePackets13getFreePacketEv@Base 2.3.64
  _ZN4yarp2os4impl15PortCorePacketsD0Ev@Base 2.3.64
  _ZN4yarp2os4impl15PortCorePacketsD1Ev@Base 2.3.64
  _ZN4yarp2os4impl15PortCorePacketsD2Ev@Base 2.3.64
@@ -2033,8 +2051,6 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZN4yarp2os4impl24BufferedConnectionWriter9appendIntEi@Base 2.3.64
  _ZN4yarp2os4impl24BufferedConnectionWriter9getBufferEv@Base 2.3.64
  _ZN4yarp2os4impl24BufferedConnectionWriter9stopWriteEv@Base 2.3.64
- _ZN4yarp2os4impl24BufferedConnectionWriterC1Ebb@Base 2.3.64
- _ZN4yarp2os4impl24BufferedConnectionWriterC2Ebb@Base 2.3.64
  _ZN4yarp2os4impl24BufferedConnectionWriterD0Ev@Base 2.3.64
  _ZN4yarp2os4impl24BufferedConnectionWriterD1Ev@Base 2.3.64
  _ZN4yarp2os4impl24BufferedConnectionWriterD2Ev@Base 2.3.64
@@ -2733,18 +2749,25 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZN6ACE_OS8hostnameEPcm@Base 2.3.64
  _ZN7RunRead4exitEv@Base 2.3.64
  _ZN7RunRead4loopEv@Base 2.3.64
+ _ZN7RunReadC1ERN4yarp2os11ConstStringE@Base 2.3.64
+ _ZN7RunReadC2ERN4yarp2os11ConstStringE@Base 2.3.64
  _ZN7RunReadD0Ev@Base 2.3.64
  _ZN7RunReadD1Ev@Base 2.3.64
  _ZN7RunReadD2Ev@Base 2.3.64
+ _ZN8NodeArgsD1Ev@Base 2.3.64
+ _ZN8NodeArgsD2Ev@Base 2.3.64
  _ZN8RunWrite4exitEv@Base 2.3.64
  _ZN8RunWrite4loopEv@Base 2.3.64
+ _ZN8RunWriteC1ERN4yarp2os11ConstStringE@Base 2.3.64
  _ZN8RunWriteC1ERN4yarp2os11ConstStringES3_@Base 2.3.64
+ _ZN8RunWriteC2ERN4yarp2os11ConstStringE@Base 2.3.64
  _ZN8RunWriteC2ERN4yarp2os11ConstStringES3_@Base 2.3.64
  _ZN8RunWriteD0Ev@Base 2.3.64
  _ZN8RunWriteD1Ev@Base 2.3.64
  _ZN8RunWriteD2Ev@Base 2.3.64
  _ZNK10NullBottle6isNullEv@Base 2.3.64
- _ZNK14PropertyHelper15getPropNoCreateERKN4yarp2os11ConstStringE@Base 2.3.64
+ _ZNK14PropertyHelper9getBottleERKN4yarp2os11ConstStringE@Base 2.3.64
+ _ZNK20ACE_Ordered_MultiSetIN4yarp2os11ConstStringEE6locateERKS2_P9ACE_DNodeIS2_ERS8_@Base 2.3.64
  _ZNK4yarp2os10Searchable10getMonitorEv@Base 2.3.64
  _ZNK4yarp2os10Searchable15reportToMonitorERKNS0_12SearchReportE@Base 2.3.64
  _ZNK4yarp2os10Searchable17getMonitorContextEv@Base 2.3.64
@@ -2756,7 +2779,6 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZNK4yarp2os11ConstString4hashEv@Base 2.3.64
  _ZNK4yarp2os11ConstString6substrEmm@Base 2.3.64
  _ZNK4yarp2os11Contactable7getNameEv@Base 2.3.64
- _ZNK4yarp2os11SystemClock7isValidEv@Base 2.3.64
  _ZNK4yarp2os12BufferedPortINS0_6BottleEE5whereEv@Base 2.3.64
  _ZNK4yarp2os12BufferedPortINS0_6BottleEE7getNameEv@Base 2.3.64
  _ZNK4yarp2os12ManagedBytes3getEv@Base 2.3.64
@@ -3018,10 +3040,19 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZNK4yarp2os9RpcServer5writeERNS0_10PortWriterERNS0_10PortReaderEPS2_@Base 2.3.64
  _ZNK4yarp2os9RpcServer6asPortEv@Base 2.3.64
  _ZNKSt5ctypeIcE8do_widenEc@Base 2.3.64
+ _ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag@Base 2.3.64
  _ZNSt11_Deque_baseIN4yarp2os6BottleESaIS2_EED1Ev@Base 2.3.64
  _ZNSt11_Deque_baseIN4yarp2os6BottleESaIS2_EED2Ev@Base 2.3.64
+ _ZNSt12_Destroy_auxILb0EE9__destroyIPN4yarp2os11ConstStringEEEvT_S6_@Base 2.3.64
+ _ZNSt15basic_stringbufIcSt11char_traitsIcESaIcEED0Ev@Base 2.3.64
+ _ZNSt15basic_stringbufIcSt11char_traitsIcESaIcEED1Ev@Base 2.3.64
+ _ZNSt15basic_stringbufIcSt11char_traitsIcESaIcEED2Ev@Base 2.3.64
  _ZNSt4pairIKN4yarp2os11ConstStringE8NodeItemED1Ev@Base 2.3.64
  _ZNSt4pairIKN4yarp2os11ConstStringE8NodeItemED2Ev@Base 2.3.64
+ _ZNSt4pairIKN4yarp2os11ConstStringENS1_10PeerRecordINS1_4impl12McastCarrierEEEED1Ev@Base 2.3.64
+ _ZNSt4pairIKN4yarp2os11ConstStringENS1_10PeerRecordINS1_4impl12McastCarrierEEEED2Ev@Base 2.3.64
+ _ZNSt4pairIN4yarp2os11ConstStringE8NodeItemED1Ev@Base 2.3.64
+ _ZNSt4pairIN4yarp2os11ConstStringE8NodeItemED2Ev@Base 2.3.64
  _ZNSt5dequeIN4yarp2os6BottleESaIS2_EE16_M_push_back_auxERKS2_@Base 2.3.64
  _ZNSt5dequeIN4yarp2os6BottleESaIS2_EE19_M_destroy_data_auxESt15_Deque_iteratorIS2_RS2_PS2_ES8_@Base 2.3.64
  _ZNSt5dequeIN4yarp2os6BottleESaIS2_EED1Ev@Base 2.3.64
@@ -3029,15 +3060,14 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZNSt6vectorIN4yarp2os11ConstStringESaIS2_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS2_S4_EERKS2_@Base 2.3.64
  _ZNSt6vectorIN4yarp2os11ConstStringESaIS2_EED1Ev@Base 2.3.64
  _ZNSt6vectorIN4yarp2os11ConstStringESaIS2_EED2Ev@Base 2.3.64
- _ZNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEED0Ev@Base 2.3.64
- _ZNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEED1Ev@Base 2.3.64
- _ZNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEED2Ev@Base 2.3.64
+ _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_8NodeItemESt10_Select1stIS6_ESt4lessIS2_ESaIS6_EE10_M_insert_EPSt18_Rb_tree_node_baseSE_RKS6_@Base 2.3.64
  _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_8NodeItemESt10_Select1stIS6_ESt4lessIS2_ESaIS6_EE11equal_rangeERS4_@Base 2.3.64
  _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_8NodeItemESt10_Select1stIS6_ESt4lessIS2_ESaIS6_EE24_M_get_insert_unique_posERS4_@Base 2.3.64
  _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_8NodeItemESt10_Select1stIS6_ESt4lessIS2_ESaIS6_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS6_ERS4_@Base 2.3.64
  _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_8NodeItemESt10_Select1stIS6_ESt4lessIS2_ESaIS6_EE4findERS4_@Base 2.3.64
  _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_8NodeItemESt10_Select1stIS6_ESt4lessIS2_ESaIS6_EE5eraseERS4_@Base 2.3.64
  _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_8NodeItemESt10_Select1stIS6_ESt4lessIS2_ESaIS6_EE8_M_eraseEPSt13_Rb_tree_nodeIS6_E@Base 2.3.64
+ _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_NS1_10PeerRecordINS1_4impl12McastCarrierEEEESt10_Select1stIS9_ESt4lessIS2_ESaIS9_EE17_M_insert_unique_ESt23_Rb_tree_const_iteratorIS9_ERKS9_@Base 2.3.64
  _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_NS1_10PeerRecordINS1_4impl12McastCarrierEEEESt10_Select1stIS9_ESt4lessIS2_ESaIS9_EE24_M_get_insert_unique_posERS4_@Base 2.3.64
  _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_NS1_10PeerRecordINS1_4impl12McastCarrierEEEESt10_Select1stIS9_ESt4lessIS2_ESaIS9_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS9_ERS4_@Base 2.3.64
  _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_NS1_10PeerRecordINS1_4impl12McastCarrierEEEESt10_Select1stIS9_ESt4lessIS2_ESaIS9_EE4findERS4_@Base 2.3.64
@@ -3046,20 +3076,20 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_PNS1_4NodeEESt10_Select1stIS7_ESt4lessIS2_ESaIS7_EE24_M_get_insert_unique_posERS4_@Base 2.3.64
  _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_PNS1_4NodeEESt10_Select1stIS7_ESt4lessIS2_ESaIS7_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS7_ERS4_@Base 2.3.64
  _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_PNS1_4NodeEESt10_Select1stIS7_ESt4lessIS2_ESaIS7_EE4findERS4_@Base 2.3.64
- _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_PNS1_4NodeEESt10_Select1stIS7_ESt4lessIS2_ESaIS7_EE7_M_copyINSD_11_Alloc_nodeEEEPSt13_Rb_tree_nodeIS7_EPKSH_SI_RT_@Base 2.3.64
+ _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_PNS1_4NodeEESt10_Select1stIS7_ESt4lessIS2_ESaIS7_EE7_M_copyEPKSt13_Rb_tree_nodeIS7_EPSF_@Base 2.3.64
  _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_PNS1_4NodeEESt10_Select1stIS7_ESt4lessIS2_ESaIS7_EE8_M_eraseEPSt13_Rb_tree_nodeIS7_E@Base 2.3.64
  _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_iESt10_Select1stIS5_ESt4lessIS2_ESaIS5_EE11equal_rangeERS4_@Base 2.3.64
  _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_iESt10_Select1stIS5_ESt4lessIS2_ESaIS5_EE24_M_get_insert_unique_posERS4_@Base 2.3.64
  _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_iESt10_Select1stIS5_ESt4lessIS2_ESaIS5_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS5_ERS4_@Base 2.3.64
- _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_iESt10_Select1stIS5_ESt4lessIS2_ESaIS5_EE7_M_copyINSB_11_Alloc_nodeEEEPSt13_Rb_tree_nodeIS5_EPKSF_SG_RT_@Base 2.3.64
+ _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_iESt10_Select1stIS5_ESt4lessIS2_ESaIS5_EE7_M_copyEPKSt13_Rb_tree_nodeIS5_EPSD_@Base 2.3.64
  _ZNSt8_Rb_treeIN4yarp2os11ConstStringESt4pairIKS2_iESt10_Select1stIS5_ESt4lessIS2_ESaIS5_EE8_M_eraseEPSt13_Rb_tree_nodeIS5_E@Base 2.3.64
+ _ZNSt8_Rb_treeIPN4yarp2os11ContactableESt4pairIKS3_8NodeItemESt10_Select1stIS7_ESt4lessIS3_ESaIS7_EE17_M_insert_unique_ESt23_Rb_tree_const_iteratorIS7_ERKS7_@Base 2.3.64
  _ZNSt8_Rb_treeIPN4yarp2os11ContactableESt4pairIKS3_8NodeItemESt10_Select1stIS7_ESt4lessIS3_ESaIS7_EE24_M_get_insert_unique_posERS5_@Base 2.3.64
  _ZNSt8_Rb_treeIPN4yarp2os11ContactableESt4pairIKS3_8NodeItemESt10_Select1stIS7_ESt4lessIS3_ESaIS7_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS7_ERS5_@Base 2.3.64
- _ZNSt8_Rb_treeIPN4yarp2os11ContactableESt4pairIKS3_8NodeItemESt10_Select1stIS7_ESt4lessIS3_ESaIS7_EE5eraseERS5_@Base 2.3.64
  _ZNSt8_Rb_treeIPN4yarp2os11ContactableESt4pairIKS3_8NodeItemESt10_Select1stIS7_ESt4lessIS3_ESaIS7_EE8_M_eraseEPSt13_Rb_tree_nodeIS7_E@Base 2.3.64
  _ZNSt8_Rb_treeIPN4yarp2os4impl12McastCarrierESt4pairIKS4_bESt10_Select1stIS7_ESt4lessIS4_ESaIS7_EE24_M_get_insert_unique_posERS6_@Base 2.3.64
  _ZNSt8_Rb_treeIPN4yarp2os4impl12McastCarrierESt4pairIKS4_bESt10_Select1stIS7_ESt4lessIS4_ESaIS7_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS7_ERS6_@Base 2.3.64
- _ZNSt8_Rb_treeIPN4yarp2os4impl12McastCarrierESt4pairIKS4_bESt10_Select1stIS7_ESt4lessIS4_ESaIS7_EE7_M_copyINSD_20_Reuse_or_alloc_nodeEEEPSt13_Rb_tree_nodeIS7_EPKSH_SI_RT_@Base 2.3.64
+ _ZNSt8_Rb_treeIPN4yarp2os4impl12McastCarrierESt4pairIKS4_bESt10_Select1stIS7_ESt4lessIS4_ESaIS7_EE7_M_copyEPKSt13_Rb_tree_nodeIS7_EPSF_@Base 2.3.64
  _ZNSt8_Rb_treeIPN4yarp2os4impl12McastCarrierESt4pairIKS4_bESt10_Select1stIS7_ESt4lessIS4_ESaIS7_EE8_M_eraseEPSt13_Rb_tree_nodeIS7_E@Base 2.3.64
  _ZTI10NodeHelper@Base 2.3.64
  _ZTI10NullBottle@Base 2.3.64
@@ -3440,9 +3470,11 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZTV14RFModuleHelper@Base 2.3.64
  _ZTV15PortCoreAdapter@Base 2.3.64
  _ZTV15YarpRunProcInfo@Base 2.3.64
+ _ZTV16ACE_Auto_Event_TI22ACE_System_Time_PolicyE@Base 2.3.64
  _ZTV16ACE_Manual_Event@Base 2.3.64
  _ZTV16PortReaderPacket@Base 2.3.64
  _ZTV17ForwardingCarrier@Base 2.3.64
+ _ZTV18ACE_Manual_Event_TI22ACE_System_Time_PolicyE@Base 2.3.64
  _ZTV18MessageStackThread@Base 2.3.64
  _ZTV18ZombieHunterThread@Base 2.3.64
  _ZTV19CompanionMergeInput@Base 2.3.64
@@ -3457,6 +3489,7 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZTV7RunRead@Base 2.3.64
  _ZTV8RunStdio@Base 2.3.64
  _ZTV8RunWrite@Base 2.3.64
+ _ZTVN4yarp2os10ConnectionE@Base 2.3.64
  _ZTVN4yarp2os10ElectionOfINS0_10PeerRecordINS0_4impl12McastCarrierEEEEE@Base 2.3.64
  _ZTVN4yarp2os10NullStreamE@Base 2.3.64
  _ZTVN4yarp2os10PortReaderE@Base 2.3.64
@@ -3466,22 +3499,30 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZTVN4yarp2os10SearchableE@Base 2.3.64
  _ZTVN4yarp2os10YarpPluginINS0_7CarrierEEE@Base 2.3.64
  _ZTVN4yarp2os11ContactableE@Base 2.3.64
+ _ZTVN4yarp2os11InputStreamE@Base 2.3.64
+ _ZTVN4yarp2os11LocalReaderINS0_6BottleEEE@Base 2.3.64
  _ZTVN4yarp2os11ShiftStreamE@Base 2.3.64
  _ZTVN4yarp2os11SizedWriterE@Base 2.3.64
+ _ZTVN4yarp2os11TypedReaderINS0_6BottleEEE@Base 2.3.64
  _ZTVN4yarp2os12BufferedPortINS0_6BottleEEE@Base 2.3.64
+ _ZTVN4yarp2os12ContactablesE@Base 2.3.64
  _ZTVN4yarp2os12ManagedBytesE@Base 2.3.64
  _ZTVN4yarp2os12MessageStackE@Base 2.3.64
  _ZTVN4yarp2os12NetworkClockE@Base 2.3.64
+ _ZTVN4yarp2os12OutputStreamE@Base 2.3.64
  _ZTVN4yarp2os12RosNameSpaceE@Base 2.3.64
  _ZTVN4yarp2os12TwoWayStreamE@Base 2.3.64
+ _ZTVN4yarp2os13InputProtocolE@Base 2.3.64
  _ZTVN4yarp2os13SearchMonitorE@Base 2.3.64
  _ZTVN4yarp2os13SharedLibraryE@Base 2.3.64
  _ZTVN4yarp2os13YarpNameSpaceE@Base 2.3.64
  _ZTVN4yarp2os14DummyConnectorE@Base 2.3.64
  _ZTVN4yarp2os14MultiNameSpaceE@Base 2.3.64
  _ZTVN4yarp2os14NullConnectionE@Base 2.3.64
+ _ZTVN4yarp2os14OutputProtocolE@Base 2.3.64
  _ZTVN4yarp2os14ResourceFinderE@Base 2.3.64
  _ZTVN4yarp2os15AbstractCarrierE@Base 2.3.64
+ _ZTVN4yarp2os15ConnectionStateE@Base 2.3.64
  _ZTVN4yarp2os16ConnectionReaderE@Base 2.3.64
  _ZTVN4yarp2os16ConnectionWriterE@Base 2.3.64
  _ZTVN4yarp2os16ModifyingCarrierE@Base 2.3.64
@@ -3496,6 +3537,7 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZTVN4yarp2os18StringOutputStreamE@Base 2.3.64
  _ZTVN4yarp2os18YarpDummyNameSpaceE@Base 2.3.64
  _ZTVN4yarp2os18YarpPluginSelectorE@Base 2.3.64
+ _ZTVN4yarp2os19AbstractContactableE@Base 2.3.64
  _ZTVN4yarp2os19TypedReaderCallbackINS0_6BottleEEE@Base 2.3.64
  _ZTVN4yarp2os20NullConnectionReaderE@Base 2.3.64
  _ZTVN4yarp2os20NullConnectionWriterE@Base 2.3.64
@@ -3508,6 +3550,7 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZTVN4yarp2os25SharedLibraryClassFactoryINS0_7CarrierEEE@Base 2.3.64
  _ZTVN4yarp2os3LogE@Base 2.3.64
  _ZTVN4yarp2os3idl12WirePortableE@Base 2.3.64
+ _ZTVN4yarp2os4FaceE@Base 2.3.64
  _ZTVN4yarp2os4NodeE@Base 2.3.64
  _ZTVN4yarp2os4PortE@Base 2.3.64
  _ZTVN4yarp2os4TypeE@Base 2.3.64
@@ -3534,6 +3577,7 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZTVN4yarp2os4impl12PortCoreUnitE@Base 2.3.64
  _ZTVN4yarp2os4impl12ShmemCarrierE@Base 2.3.64
  _ZTVN4yarp2os4impl13SemaphoreImplE@Base 2.3.64
+ _ZTVN4yarp2os4impl14NameServerStubE@Base 2.3.64
  _ZTVN4yarp2os4impl14NameserCarrierE@Base 2.3.64
  _ZTVN4yarp2os4impl14PortCorePacketE@Base 2.3.64
  _ZTVN4yarp2os4impl15PortCorePacketsE@Base 2.3.64
@@ -3570,6 +3614,7 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZTVN4yarp2os4impl9StoreDictE@Base 2.3.64
  _ZTVN4yarp2os4impl9StoreListE@Base 2.3.64
  _ZTVN4yarp2os4impl9StoreNullE@Base 2.3.64
+ _ZTVN4yarp2os5ClockE@Base 2.3.64
  _ZTVN4yarp2os5EventE@Base 2.3.64
  _ZTVN4yarp2os5NodesE@Base 2.3.64
  _ZTVN4yarp2os5StampE@Base 2.3.64
@@ -3606,12 +3651,12 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZThn104_N4yarp2os4impl8PortCore9readBlockERNS0_16ConnectionReaderEPvPNS0_12OutputStreamE@Base 2.3.64
  _ZThn104_N4yarp2os4impl8PortCoreD0Ev@Base 2.3.64
  _ZThn104_N4yarp2os4impl8PortCoreD1Ev@Base 2.3.64
- _ZThn152_N15PortCoreAdapter4readERN4yarp2os16ConnectionReaderE@Base 2.3.64
- _ZThn152_N15PortCoreAdapterD0Ev@Base 2.3.64
- _ZThn152_N15PortCoreAdapterD1Ev@Base 2.3.64
- _ZThn152_N4yarp2os4impl8PortCore4readERNS0_16ConnectionReaderE@Base 2.3.64
- _ZThn152_N4yarp2os4impl8PortCoreD0Ev@Base 2.3.64
- _ZThn152_N4yarp2os4impl8PortCoreD1Ev@Base 2.3.64
+ _ZThn128_N15PortCoreAdapter4readERN4yarp2os16ConnectionReaderE@Base 2.3.64
+ _ZThn128_N15PortCoreAdapterD0Ev@Base 2.3.64
+ _ZThn128_N15PortCoreAdapterD1Ev@Base 2.3.64
+ _ZThn128_N4yarp2os4impl8PortCore4readERNS0_16ConnectionReaderE@Base 2.3.64
+ _ZThn128_N4yarp2os4impl8PortCoreD0Ev@Base 2.3.64
+ _ZThn128_N4yarp2os4impl8PortCoreD1Ev@Base 2.3.64
  _ZThn16_N10NullBottleD0Ev@Base 2.3.64
  _ZThn16_N10NullBottleD1Ev@Base 2.3.64
  _ZThn16_N12ModuleHelper3runEv@Base 2.3.64
@@ -3719,19 +3764,19 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZThn16_NK4yarp2os6Bottle6isNullEv@Base 2.3.64
  _ZThn16_NK4yarp2os6Bottle8toStringEv@Base 2.3.64
  _ZThn16_NK4yarp2os6Bottle9findGroupERKNS0_11ConstStringE@Base 2.3.64
+ _ZThn24_N4yarp2os8Property4readERNS0_16ConnectionReaderE@Base 2.3.64
+ _ZThn24_N4yarp2os8Property5writeERNS0_16ConnectionWriterE@Base 2.3.64
+ _ZThn24_N4yarp2os8PropertyD0Ev@Base 2.3.64
+ _ZThn24_N4yarp2os8PropertyD1Ev@Base 2.3.64
+ _ZThn32_N4yarp2os8Property5writeERNS0_16ConnectionWriterE@Base 2.3.64
+ _ZThn32_N4yarp2os8PropertyD0Ev@Base 2.3.64
+ _ZThn32_N4yarp2os8PropertyD1Ev@Base 2.3.64
  _ZThn40_N12ModuleHelper6reportERKN4yarp2os12SearchReportEPKc@Base 2.3.64
  _ZThn40_N12ModuleHelperD0Ev@Base 2.3.64
  _ZThn40_N12ModuleHelperD1Ev@Base 2.3.64
- _ZThn488_N14MainNameServer6createEv@Base 2.3.64
- _ZThn488_N14MainNameServerD0Ev@Base 2.3.64
- _ZThn488_N14MainNameServerD1Ev@Base 2.3.64
- _ZThn48_N4yarp2os8Property4readERNS0_16ConnectionReaderE@Base 2.3.64
- _ZThn48_N4yarp2os8Property5writeERNS0_16ConnectionWriterE@Base 2.3.64
- _ZThn48_N4yarp2os8PropertyD0Ev@Base 2.3.64
- _ZThn48_N4yarp2os8PropertyD1Ev@Base 2.3.64
- _ZThn56_N4yarp2os8Property5writeERNS0_16ConnectionWriterE@Base 2.3.64
- _ZThn56_N4yarp2os8PropertyD0Ev@Base 2.3.64
- _ZThn56_N4yarp2os8PropertyD1Ev@Base 2.3.64
+ _ZThn464_N14MainNameServer6createEv@Base 2.3.64
+ _ZThn464_N14MainNameServerD0Ev@Base 2.3.64
+ _ZThn464_N14MainNameServerD1Ev@Base 2.3.64
  _ZThn8_N10NullBottleD0Ev@Base 2.3.64
  _ZThn8_N10NullBottleD1Ev@Base 2.3.64
  _ZThn8_N12ModuleHelper6onReadERN4yarp2os6BottleE@Base 2.3.64
