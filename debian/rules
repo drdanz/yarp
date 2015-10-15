@@ -15,7 +15,6 @@ override_dh_auto_configure:
 	                     -DCREATE_GUIS=ON \
 	                     -DCREATE_YARPBUILDER=ON \
 	                     -DCREATE_LIB_MATH=ON \
-	                     -DDOX_GENERATE_XML=ON \
 	                     -DCREATE_OPTIONAL_CARRIERS=ON \
 	                     -DENABLE_yarpcar_bayer_carrier=ON -DUSE_LIBDC1394=OFF \
 	                     -DENABLE_yarpcar_human_carrier=ON \
@@ -33,7 +32,9 @@ override_dh_auto_configure:
 	                     -DENABLE_yarpmod_fakebot=ON \
 	                     -DENABLE_yarpmod_microphone=ON \
 	                     -DENABLE_yarpmod_opencv_grabber=ON \
-	                     -DENABLE_yarpmod_portaudio=ON
+	                     -DENABLE_yarpmod_portaudio=ON \
+	                     -DYARP_DOXYGEN_HTML=ON \
+	                     -DYARP_DOXYGEN_MAN=ON
 # -DENABLE_yarpmod_KinectDeviceClient=ON \
 # -DENABLE_yarpmod_KinectDeviceLocal=ON \
 # -DENABLE_yarpmod_SerialServoBoard=ON \
