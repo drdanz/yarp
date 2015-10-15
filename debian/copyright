@@ -326,7 +326,7 @@ License: LGPL-2.1+
 
 Files: src/libYARP_OS/src/Random.cpp
 Copyright: 1994, Everett F. Carter Jr
-License: UNKNOWN
+License: LR
  Permission is granted by the author to use
  this software for any application provided this
  copyright notice is preserved.
