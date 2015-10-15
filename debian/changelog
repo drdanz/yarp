@@ -1,6 +1,6 @@
-yarp (2.3.64-0r2) UNRELEASED; urgency=low
+yarp (2.3.64-0r3) UNRELEASED; urgency=low
 
   [ Daniele E. Domenichelli ]
   * Initial release. (Closes: #682756)
 
- -- Matteo Brunettini <matteo.brunettini@iit.it>  Wed, 08 Jul 2015 09:49:34 +0200
+ -- Daniele E. Domenichelli <daniele.domenichelli@gmail.com>  Wed, 14 Oct 2015 17:58:32 +0200
