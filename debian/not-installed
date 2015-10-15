@@ -24,8 +24,6 @@ usr/lib/*/libYARP_name.so
 # TODO
 
 
-usr/share/yarp/plugins/portmonitor.ini
-usr/share/yarp/plugins/mpi.ini
 usr/share/yarp/plugins/opencv.ini
 usr/share/yarp/plugins/cuda.ini
 usr/share/yarp/plugins/jrkerr.ini

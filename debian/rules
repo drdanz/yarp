@@ -15,6 +15,9 @@ override_dh_auto_configure:
 	                     -DENABLE_yarpcar_bayer_carrier=ON -DUSE_LIBDC1394=OFF \
 	                     -DENABLE_yarpcar_human_carrier=ON \
 	                     -DENABLE_yarpcar_mjpeg_carrier=ON \
+	                     -DENABLE_yarpcar_mpi_carrier=ON \
+	                     -DENABLE_yarpcar_mpibcast_carrier=ON \
+	                     -DENABLE_yarpcar_portmonitor_carrier=ON \
 	                     -DENABLE_yarpcar_priority_carrier=ON \
 	                     -DENABLE_yarpcar_rossrv_carrier=ON \
 	                     -DENABLE_yarpcar_tcpros_carrier=ON \
@@ -43,8 +46,6 @@ override_dh_auto_configure:
 # -DENABLE_yarpmod_urbtc=ON \
 # -DENABLE_yarpmod_vfw_grabber=ON \
 # -DENABLE_yarpmod_wxsdl=ON \
-# -DENABLE_yarpcar_mpi_carrier=ON \
-# -DENABLE_yarpcar_mpibcast_carrier=ON \
 
 
 override_dh_auto_build-arch:
