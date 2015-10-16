@@ -127,7 +127,7 @@ Description: thin middleware for humanoid robots and more - [os] development fil
  This package contains the [os] development files.
 
 Package: libyarp-os-private-dev
-Section: libs
+Section: libdevel
 Architecture: any
 Depends: ${misc:Depends},
  libyarp-os-dev (= ${binary:Version})
