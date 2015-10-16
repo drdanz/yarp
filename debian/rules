@@ -14,7 +14,7 @@ override_dh_auto_configure:
 	                     -DCREATE_YARPBUILDER=ON \
 	                     -DCREATE_LIB_MATH=ON \
 	                     -DCREATE_OPTIONAL_CARRIERS=ON \
-	                     -DENABLE_yarpcar_bayer_carrier=ON -DUSE_LIBDC1394=OFF \
+	                     -DENABLE_yarpcar_bayer_carrier=ON -DUSE_LIBDC1394=ON \
 	                     -DENABLE_yarpcar_human_carrier=ON \
 	                     -DENABLE_yarpcar_mjpeg_carrier=ON \
 	                     -DENABLE_yarpcar_mpi_carrier=ON \

@@ -24,7 +24,8 @@ Build-Depends: debhelper (>= 9),
                libopencv-dev,
                mpi-default-dev,
                liblua5.2-dev,
-               portaudio19-dev
+               portaudio19-dev,
+               libdc1394-22-dev
 Standards-Version: 3.9.6
 Section: science
 Vcs-Git: git://anonscm.debian.org/debian-science/packages/yarp.git
