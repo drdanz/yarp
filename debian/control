@@ -110,21 +110,6 @@ Description: thin middleware for humanoid robots and more - [dev] shared librari
  .
  This package contains the [dev] shared library.
 
-Package: libyarp-name1
-Section: libs
-Architecture: any
-Pre-Depends: ${misc:Pre-Depends}
-Depends: ${misc:Depends}, ${shlibs:Depends}
-Multi-Arch: same
-Description: thin middleware for humanoid robots and more - [name] shared libraries
- [TODO add description]
- .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
- .
- This package contains the [name] shared library.
-
 ##################### DEV
 
 Package: libyarp-os-dev
@@ -206,7 +191,6 @@ Architecture: any
 Depends: ${misc:Depends},
  libyarp-os1 (= ${binary:Version}) |
  libyarp-sig1 (= ${binary:Version}) |
- libyarp-name1 (= ${binary:Version}) |
  libyarp-dev1 (= ${binary:Version}) |
  libyarp-math1 (= ${binary:Version})
 Description: thin middleware for humanoid robots and more - debug symbols
@@ -572,7 +556,7 @@ Description: serial and serialport devices
 #Section: libdevel
 #Architecture: any
 #Depends: ${misc:Depends},
-# libyarp-name1 (= ${binary:Version})
+# libyarp-os1 (= ${binary:Version})
 #Description: thin middleware for humanoid robots and more - bindings
 # [TODO add description]
 # .
