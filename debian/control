@@ -25,7 +25,9 @@ Build-Depends: debhelper (>= 9),
                mpi-default-dev,
                liblua5.2-dev,
                portaudio19-dev,
-               libdc1394-22-dev
+               libdc1394-22-dev,
+               swig2.0,
+               perl
 Standards-Version: 3.9.6
 Section: science
 Vcs-Git: git://anonscm.debian.org/debian-science/packages/yarp.git
@@ -551,6 +553,22 @@ Description: serial and serialport devices
  This package contains the serial and serialport devices plugin.
 
 ##################### BINDINGS
+
+Package: libyarp-perl
+Section: perl
+Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}, ${perl:Depends},
+ yarp-data (= ${source:Version})
+Multi-Arch: same
+Description: thin middleware for humanoid robots and more - perl bindings
+ [TODO add description]
+ .
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
+ lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
+ viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ .
+ This package contains the Perl 5 bindings.
 
 #Package: libyarp-bindings-tmp
 #Section: libdevel
