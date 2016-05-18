@@ -14,7 +14,7 @@ override_dh_auto_configure:
 	                     -DCREATE_YARPBUILDER=ON \
 	                     -DCREATE_LIB_MATH=ON \
 	                     -DCREATE_OPTIONAL_CARRIERS=ON \
-	                     -DENABLE_yarpcar_bayer_carrier=ON -DUSE_LIBDC1394=ON \
+	                     -DENABLE_yarpcar_bayer_carrier=ON \
 	                     -DENABLE_yarpcar_human_carrier=ON \
 	                     -DENABLE_yarpcar_mjpeg_carrier=ON \
 	                     -DENABLE_yarpcar_mpi_carrier=ON \
@@ -61,7 +61,6 @@ override_dh_auto_build-arch:
 
 override_dh_auto_build-indep:
 	dh_auto_build -- dox
-	dh_auto_build -- man
 
 # Do not run tests, as they fall into race conditions sometimes
 override_dh_auto_test:
