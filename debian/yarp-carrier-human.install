@@ -1,2 +1,2 @@
-usr/share/yarp/plugins/bayer.ini
-usr/lib/x86_64-linux-gnu/yarp/yarp_bayer.so
+usr/share/yarp/plugins/human.ini
+usr/lib/x86_64-linux-gnu/yarp/yarp_human.so
