@@ -30,8 +30,8 @@ Build-Depends: debhelper (>= 9),
                perl
 Standards-Version: 3.9.6
 Section: science
-Vcs-Git: git://anonscm.debian.org/debian-science/packages/yarp.git
-Vcs-Browser: http://anonscm.debian.org/gitweb/?p=debian-science/packages/yarp.git
+Vcs-Git: https://anonscm.debian.org/git/debian-science/packages/yarp.git
+Vcs-Browser: https://anonscm.debian.org/cgit/debian-science/packages/yarp.git
 
 ##################### DATA
 
