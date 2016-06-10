@@ -124,6 +124,7 @@ matrix:
 branches:
   except:
     - /^*appveyor*$/
+    - /^*linthub*$/
 
 notifications:
   irc:
