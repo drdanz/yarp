@@ -2,10 +2,7 @@ analyzers:
  - cpplint: true
    include: ["*.cpp", "*.h", "*.hpp", "*.c"]
    path: ./src/
-   filters:
-   - -
-   - +whitespace/tab
-   - +whhitespace/end_of_line
+   filters: -,+whitespace/tab,+whhitespace/end_of_line
    style: google # webkit | google
 
  - polysquare-cmake: true
