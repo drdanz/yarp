@@ -4,7 +4,6 @@ analyzers:
    style: webkit
 
  - polysquare-cmake: true
-   allowed: ["CMakeLists.txt", "*.cmake"]
 
  - markdownlint: true
 
