@@ -27,6 +27,10 @@ if(${CMAKE_VERSION} VERSION_LESS 3.1)
 endif()
 set(CMAKE_MODULE_PATH ${YARP_MODULE_PATH})
 
+    
+
+SET (FOO ${BAR_DIR})
+
 # The YARP build is fairly flexible, so we need to accumulate some
 # information about what libraries are being built (and their dependencies),
 # along with the include path.  We'll be passing that along to clients
