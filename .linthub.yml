@@ -8,3 +8,6 @@ analyzers:
    allowed: ["CMakeLists.txt"]
 
  - markdownlint: true
+
+ - shellcheck: true
+   interpreter: sh
