@@ -39,6 +39,10 @@
 #  License text for the above reference.)
 
 
+    
+
+SET(PIPPO)
+
 include(StandardFindModule)
 standard_find_module(ACE ACE SKIP_CMAKE_CONFIG NOT_REQUIRED)
 
