@@ -1,14 +1,3 @@
-platform: linux
-
-build:
- - mkdir build
- - cd build
- - cmake ..
- - make
-
-test:
- - make test
-
 analyzers:
  - cpplint: true
    include: ["*.cpp", "*.h", "*.hpp", "*.c"]
