@@ -1,7 +1,7 @@
 analyzers:
  - cpplint: true
    path: ./src/
-   filters:
+   filter:
    - -whitespace
    style: google # webkit | google
 
