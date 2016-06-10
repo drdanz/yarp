@@ -40,7 +40,10 @@ echo "$2" | grep -iq "MacOSX"
 if [ "$?" == "0" ]; then
   OS_TYPE="macosx"
 fi
-
+   TEST
+   
+   asf
+    asa
 case $3 in
    "Experimental" )
       CMAKE_OPTIONS=" \
