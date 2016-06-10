@@ -1,8 +1,7 @@
 analyzers:
  - cpplint: true
    path: ./src/
-   filter:
-   - -whitespace
+   filter: ["-whitespace"]
    style: google # webkit | google
 
  - polysquare-cmake: true
