@@ -1,0 +1,13 @@
+analyzers:
+ - cpplint: true
+   include: ["*.cpp", "*.h", "*.hpp", "*.c"]
+   path: ./src/
+   filters:
+   - -whitespace
+   - +whitespace/braces
+   style: google # webkit | google
+
+ - polysquare-cmake: true
+   allowed: ["CMakeLists.txt"]
+
+ - markdownlint: true
