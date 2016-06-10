@@ -14,8 +14,7 @@ analyzers:
    include: ["*.cpp", "*.h", "*.hpp", "*.c"]
    path: ./src/
    filters:
-   - -whitespace
-   - +whitespace/braces
+   - -whitespace/braces
    style: google # webkit | google
 
  - polysquare-cmake: true
