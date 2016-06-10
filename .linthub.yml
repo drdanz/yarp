@@ -1,8 +1,7 @@
 analyzers:
  - cpplint: true
    path: ./src/
-   filter: ["-whitespace"]
-   style: google # webkit | google
+   style: webkit
 
  - polysquare-cmake: true
    allowed: ["CMakeLists.txt", "*.cmake"]
