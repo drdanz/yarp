@@ -5,7 +5,7 @@ analyzers:
    style: google # webkit | google
 
  - polysquare-cmake: true
-   allowed: ["CMakeLists.txt"]
+   allowed: ["CMakeLists.txt", "*.cmake"]
 
  - markdownlint: true
 
