@@ -8,8 +8,10 @@ include /usr/share/dpkg/architecture.mk
 override_dh_auto_configure:
 	dh_auto_configure -- \
 	                     -DYARP_CLEAN_API=ON \
+	                     -DYARP_COMPILE_EXECUTABLES=ON \
 	                     -DYARP_COMPILE_BINDINGS=ON \
 	                     -DYARP_COMPILE_TESTS=OFF \
+	                     -DYARP_COMPILE_UNMAINTAINED=OFF \
 	                     -DCREATE_GUIS=ON \
 	                     -DCREATE_YARPBUILDER=ON \
 	                     -DCREATE_LIB_MATH=ON \
@@ -30,7 +32,9 @@ override_dh_auto_configure:
 	                     -DENABLE_yarpmod_fakebot=ON \
 	                     -DENABLE_yarpmod_opencv_grabber=ON \
 	                     -DENABLE_yarpmod_portaudio=ON \
-	                     -DCREATE_PERL=ON
+	                     -DCREATE_PERL=ON \
+	                     -DYARP_DOXYGEN_HTML=ON \
+	                     -DYARP_DOXYGEN_MAN=ON
 # -DENABLE_yarpmod_KinectDeviceClient=ON \
 # -DENABLE_yarpmod_KinectDeviceLocal=ON \
 # -DENABLE_yarpmod_SerialServoBoard=ON \
@@ -47,15 +51,12 @@ override_dh_auto_configure:
 # -DENABLE_yarpmod_vfw_grabber=ON \
 # -DENABLE_yarpmod_wxsdl=ON \
 
+
 # Not building in YARP 2.3.64
 # 	                     -DENABLE_yarpmod_firewirecamera=ON
 # 	                     -DENABLE_yarpmod_microphone=ON
 
-# New in YARP 2.3.65
-# 	                     -DYARP_COMPILE_EXECUTABLES=ON
-# 	                     -DYARP_COMPILE_UNMAINTAINED=OFF
-# 	                     -DYARP_DOXYGEN_HTML=ON
-# 	                     -DYARP_DOXYGEN_MAN=ON
+
 
 override_dh_auto_build-arch:
 	dh_auto_build --parallel
