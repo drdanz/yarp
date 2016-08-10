@@ -1,0 +1,232 @@
+From: "Daniele E. Domenichelli" <ddomenichelli@drdanz.it>
+Date: Wed, 10 Aug 2016 18:45:29 +0200
+Subject: Make private libraries static and do not install the libraries and
+ the headers
+
+---
+ src/carriers/CMakeLists.txt                | 20 ++++++++++----------
+ src/carriers/wire_rep_utils/CMakeLists.txt | 14 +++++++-------
+ src/libYARP_logger/CMakeLists.txt          | 20 ++++++++++----------
+ src/libYARP_manager/CMakeLists.txt         | 20 ++++++++++----------
+ src/libYARP_name/CMakeLists.txt            | 26 +++++++++++++-------------
+ src/libYARP_serversql/CMakeLists.txt       | 20 ++++++++++----------
+ src/modules/CMakeLists.txt                 | 20 ++++++++++----------
+ 7 files changed, 70 insertions(+), 70 deletions(-)
+
+diff --git a/src/carriers/CMakeLists.txt b/src/carriers/CMakeLists.txt
+index 8a61948..7848185 100644
+--- a/src/carriers/CMakeLists.txt
++++ b/src/carriers/CMakeLists.txt
+@@ -17,15 +17,15 @@ if(CREATE_OPTIONAL_CARRIERS)
+     add_subdirectory(priority_carrier)
+     add_subdirectory(portmonitor_carrier)
+   YARP_END_PLUGIN_LIBRARY(yarpcar)
+-  install(TARGETS yarpcar
+-          EXPORT YARP
+-          COMPONENT runtime
+-          RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+-          LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+-          ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}")
+-
+-  if(YARP_LINK_PLUGINS)
+-    set_property(GLOBAL APPEND PROPERTY YARP_LIBS yarpcar ${yarpcar_LIBRARIES})
+-  endif()
++#   install(TARGETS yarpcar
++#           EXPORT YARP
++#           COMPONENT runtime
++#           RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
++#           LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
++#           ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}")
++#
++#   if(YARP_LINK_PLUGINS)
++#     set_property(GLOBAL APPEND PROPERTY YARP_LIBS yarpcar ${yarpcar_LIBRARIES})
++#   endif()
+ 
+ endif()
+diff --git a/src/carriers/wire_rep_utils/CMakeLists.txt b/src/carriers/wire_rep_utils/CMakeLists.txt
+index b5f9d22..434ecef 100644
+--- a/src/carriers/wire_rep_utils/CMakeLists.txt
++++ b/src/carriers/wire_rep_utils/CMakeLists.txt
+@@ -19,13 +19,13 @@ if(ENABLE_yarpcar_mjpeg_carrier OR ENABLE_yarpcar_tcpros_carrier)
+     target_link_libraries(YARP_wire_rep_utils LINK_PRIVATE ${ACE_LIBRARIES})
+ 
+     set_property(TARGET YARP_wire_rep_utils PROPERTY INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR})
+-    set_property(GLOBAL APPEND PROPERTY YARP_LIBS YARP_wire_rep_utils)
+-    install(TARGETS YARP_wire_rep_utils
+-            EXPORT YARP
+-            COMPONENT runtime
+-            RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+-            LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+-            ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}")
++#     set_property(GLOBAL APPEND PROPERTY YARP_LIBS YARP_wire_rep_utils)
++#     install(TARGETS YARP_wire_rep_utils
++#             EXPORT YARP
++#             COMPONENT runtime
++#             RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
++#             LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
++#             ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}")
+ 
+     if(YARP_COMPILE_TESTS)
+         add_executable(wire_rep_test test.cpp)
+diff --git a/src/libYARP_logger/CMakeLists.txt b/src/libYARP_logger/CMakeLists.txt
+index 5dbd5d9..ffba094 100644
+--- a/src/libYARP_logger/CMakeLists.txt
++++ b/src/libYARP_logger/CMakeLists.txt
+@@ -45,14 +45,14 @@ endif()
+ set_property(TARGET YARP_logger PROPERTY PUBLIC_HEADER ${YARP_logger_HDRS})
+ set_property(TARGET YARP_logger PROPERTY PRIVATE_HEADER ${YARP_logger_IMPL_HDRS})
+ 
+-install(TARGETS YARP_logger
+-        EXPORT YARP
+-        COMPONENT runtime
+-        RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+-        LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+-        ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+-        PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/yarp/logger"
+-        PRIVATE_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/yarp/logger/impl")
+-
+-set_property(GLOBAL APPEND PROPERTY YARP_LIBS YARP_logger)
++# install(TARGETS YARP_logger
++#         EXPORT YARP
++#         COMPONENT runtime
++#         RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
++#         LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
++#         ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
++#         PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/yarp/logger"
++#         PRIVATE_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/yarp/logger/impl")
++#
++# set_property(GLOBAL APPEND PROPERTY YARP_LIBS YARP_logger)
+ set_property(TARGET YARP_logger PROPERTY INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include)
+diff --git a/src/libYARP_manager/CMakeLists.txt b/src/libYARP_manager/CMakeLists.txt
+index 0547c4b..b0bec81 100644
+--- a/src/libYARP_manager/CMakeLists.txt
++++ b/src/libYARP_manager/CMakeLists.txt
+@@ -104,15 +104,15 @@ if(CREATE_LIB_MANAGER)
+   set_property(TARGET YARP_manager PROPERTY PUBLIC_HEADER ${YARP_manager_HDRS})
+   set_property(TARGET YARP_manager PROPERTY PRIVATE_HEADER ${YARP_manager_IMPL_HDRS})
+ 
+-  install(TARGETS YARP_manager
+-          EXPORT YARP
+-          COMPONENT runtime
+-          RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+-          LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+-          ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+-          PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/yarp/manager"
+-          PRIVATE_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/yarp/manager/impl")
+-
+-  set_property(GLOBAL APPEND PROPERTY YARP_LIBS YARP_manager)
++#   install(TARGETS YARP_manager
++#           EXPORT YARP
++#           COMPONENT runtime
++#           RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
++#           LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
++#           ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
++#           PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/yarp/manager"
++#           PRIVATE_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/yarp/manager/impl")
++#
++#   set_property(GLOBAL APPEND PROPERTY YARP_LIBS YARP_manager)
+   set_property(TARGET YARP_manager PROPERTY INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include)
+ endif()
+diff --git a/src/libYARP_name/CMakeLists.txt b/src/libYARP_name/CMakeLists.txt
+index 1a103fa..1d7afe7 100644
+--- a/src/libYARP_name/CMakeLists.txt
++++ b/src/libYARP_name/CMakeLists.txt
+@@ -28,24 +28,24 @@ if (YARP_USE_PERSISTENT_NAMESERVER)
+     include_directories(${YARP_TREE_INCLUDE_DIRS})
+     include_directories(SYSTEM ${ACE_INCLUDE_DIRS})
+ 
+-    add_library(YARP_name ${YARP_name_SRCS}
+-                          ${YARP_name_HDRS}
+-                          ${YARP_name_IMPL_HDRS})
++    add_library(YARP_name STATIC ${YARP_name_SRCS}
++                                 ${YARP_name_HDRS}
++                                 ${YARP_name_IMPL_HDRS})
+     target_link_libraries(YARP_name LINK_PRIVATE YARP_OS)
+     target_link_libraries(YARP_name LINK_PRIVATE ${ACE_LIBRARIES})
+ 
+     set_property(TARGET YARP_name PROPERTY PUBLIC_HEADER ${YARP_name_HDRS})
+     set_property(TARGET YARP_name PROPERTY PRIVATE_HEADER ${YARP_name_IMPL_HDRS})
+ 
+-    install(TARGETS YARP_name
+-            EXPORT YARP
+-            COMPONENT runtime
+-            RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+-            LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+-            ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+-            PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/yarp/name"
+-            PRIVATE_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/yarp/name/impl")
+-
+-    set_property(GLOBAL APPEND PROPERTY YARP_LIBS YARP_name)
++#    install(TARGETS YARP_name
++#            EXPORT YARP
++#            COMPONENT runtime
++#            RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
++#            LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
++#            ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
++#            PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/yarp/name"
++#            PRIVATE_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/yarp/name/impl")
++#
++#    set_property(GLOBAL APPEND PROPERTY YARP_LIBS YARP_name)
+     set_property(TARGET YARP_name PROPERTY INCLUDE_DIRS ${YARP_TREE_INCLUDE_DIRS})
+ endif()
+diff --git a/src/libYARP_serversql/CMakeLists.txt b/src/libYARP_serversql/CMakeLists.txt
+index ea835e5..4a1a177 100644
+--- a/src/libYARP_serversql/CMakeLists.txt
++++ b/src/libYARP_serversql/CMakeLists.txt
+@@ -50,16 +50,16 @@ endif()
+ set_property(TARGET YARP_serversql PROPERTY PUBLIC_HEADER ${YARP_serversql_HDRS})
+ set_property(TARGET YARP_serversql PROPERTY PRIVATE_HEADER ${YARP_serversql_IMPL_HDRS})
+ 
+-install(TARGETS YARP_serversql
+-        EXPORT YARP
+-        COMPONENT runtime
+-        RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+-        LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+-        ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+-        PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/yarp/serversql"
+-        PRIVATE_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/yarp/serversql/impl")
+-
+-set_property(GLOBAL APPEND PROPERTY YARP_LIBS YARP_serversql)
++# install(TARGETS YARP_serversql
++#         EXPORT YARP
++#         COMPONENT runtime
++#         RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
++#         LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
++#         ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
++#         PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/yarp/serversql"
++#         PRIVATE_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/yarp/serversql/impl")
++#
++# set_property(GLOBAL APPEND PROPERTY YARP_LIBS YARP_serversql)
+ set_property(TARGET YARP_serversql PROPERTY INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include
+                                                           ${YARP_OS_INCLUDE_DIRS})
+ 
+diff --git a/src/modules/CMakeLists.txt b/src/modules/CMakeLists.txt
+index ba8d7ba..ce8619e 100644
+--- a/src/modules/CMakeLists.txt
++++ b/src/modules/CMakeLists.txt
+@@ -80,15 +80,15 @@ YARP_BEGIN_PLUGIN_LIBRARY(yarpmod)
+ 
+ YARP_END_PLUGIN_LIBRARY(yarpmod)
+ 
+-install(TARGETS yarpmod
+-        EXPORT YARP
+-        COMPONENT runtime
+-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+-
+-if (YARP_LINK_PLUGINS)
+-  set_property(GLOBAL APPEND PROPERTY YARP_LIBS yarpmod ${yarpmod_LIBRARIES})
+-endif()
++# install(TARGETS yarpmod
++#         EXPORT YARP
++#         COMPONENT runtime
++#         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
++#         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
++#         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
++#
++# if (YARP_LINK_PLUGINS)
++#   set_property(GLOBAL APPEND PROPERTY YARP_LIBS yarpmod ${yarpmod_LIBRARIES})
++# endif()
+ 
+ endif (CREATE_DEVICE_LIBRARY_MODULES)
