@@ -3,7 +3,7 @@
 include /usr/share/dpkg/architecture.mk
 
 %:
-	dh $@ --parallel --list-missing
+	dh $@ --parallel
 
 override_dh_auto_configure:
 	dh_auto_configure -- \
