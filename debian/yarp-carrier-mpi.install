@@ -1,2 +1,3 @@
 usr/share/yarp/plugins/mpi.ini
 usr/lib/x86_64-linux-gnu/yarp/yarp_mpi.so
+usr/lib/x86_64-linux-gnu/yarp/yarp_mpibcast.so
