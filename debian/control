@@ -392,6 +392,18 @@ Description: thin middleware for humanoid robots and more - yarpdataplayer-gtk
  .
  This package contains yarpdataplayer-gtk.
 
+Package: yarplaserscannergui
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: thin middleware for humanoid robots and more - yarplaserscannergui
+ [TODO add description]
+ .
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
+ lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
+ viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ .
+ This package contains yarplaserscannergui.
+
 ##################### CARRIERS
 
 Package: yarp-carrier-bayer
@@ -630,7 +642,8 @@ Depends: ${misc:Depends},
  yarpmanager (= ${binary:Version}),
  yarpmotorgui (= ${binary:Version}),
  yarpscope (= ${binary:Version}),
- yarpview (= ${binary:Version})
+ yarpview (= ${binary:Version}),
+ yarplaserscannergui (= ${binary:Version})
 Description: thin middleware for humanoid robots and more - Qt5 GUIs
  [TODO add description]
  .
