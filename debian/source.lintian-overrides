@@ -5,3 +5,7 @@ outdated-autotools-helper-file extern/goocanvas/goocanvas/config.guess 2007-05-1
 outdated-autotools-helper-file extern/gtkdataboxmm/gtkdataboxmm/build/config.guess 2012-02-10
 outdated-autotools-helper-file extern/goocanvasmm/goocanvasmm/build/config.sub 2009-11-20
 outdated-autotools-helper-file extern/goocanvasmm/goocanvasmm/build/config.guess 2009-11-20
+source-contains-prebuilt-doxygen-documentation extern/tinyxml/tinyxml/docs/
+source-contains-prebuilt-doxygen-documentation extern/qcustomplot/qcustomplot/documentation/html/
+source-contains-prebuilt-doxygen-documentation extern/goocanvasmm/goocanvasmm/doc/reference/html/
+source-contains-prebuilt-doxygen-documentation extern/gtkdataboxmm/gtkdataboxmm/doc/reference/html/
