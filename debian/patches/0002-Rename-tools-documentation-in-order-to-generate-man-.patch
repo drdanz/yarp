@@ -1,0 +1,3323 @@
+From: "Daniele E. Domenichelli" <ddomenichelli@drdanz.it>
+Date: Wed, 10 Aug 2016 19:38:54 +0200
+Subject: Rename tools documentation in order to generate man pages
+
+---
+ doc/cmd_yarp-config.dox    | 131 +++++++++
+ doc/cmd_yarpdatadumper.dox | 272 ++++++++++++++++++
+ doc/cmd_yarpdataplayer.dox | 124 +++++++++
+ doc/cmd_yarpmanager.dox    | 677 +++++++++++++++++++++++++++++++++++++++++++++
+ doc/cmd_yarpmotorgui.dox   | 143 ++++++++++
+ doc/cmd_yarpscope.dox      | 263 ++++++++++++++++++
+ doc/yarp_yarp-config.dox   | 131 ---------
+ doc/yarpdatadumper.dox     | 272 ------------------
+ doc/yarpdataplayer.dox     | 124 ---------
+ doc/yarpmanager.dox        | 677 ---------------------------------------------
+ doc/yarpmotorgui.dox       | 143 ----------
+ doc/yarpscope.dox          | 263 ------------------
+ 12 files changed, 1610 insertions(+), 1610 deletions(-)
+ create mode 100644 doc/cmd_yarp-config.dox
+ create mode 100644 doc/cmd_yarpdatadumper.dox
+ create mode 100644 doc/cmd_yarpdataplayer.dox
+ create mode 100644 doc/cmd_yarpmanager.dox
+ create mode 100644 doc/cmd_yarpmotorgui.dox
+ create mode 100644 doc/cmd_yarpscope.dox
+ delete mode 100644 doc/yarp_yarp-config.dox
+ delete mode 100644 doc/yarpdatadumper.dox
+ delete mode 100644 doc/yarpdataplayer.dox
+ delete mode 100644 doc/yarpmanager.dox
+ delete mode 100644 doc/yarpmotorgui.dox
+ delete mode 100644 doc/yarpscope.dox
+
+diff --git a/doc/cmd_yarp-config.dox b/doc/cmd_yarp-config.dox
+new file mode 100644
+index 0000000..1fa158d
+--- /dev/null
++++ b/doc/cmd_yarp-config.dox
+@@ -0,0 +1,131 @@
++
++/*
++ * Copyright (C) 2013 iCub Facility Istituto Italiano di Tecnologia
++ * CopyPolicy: Released under the terms of the LGPLv2.1 or later, see LGPL.TXT
++ *
++ */
++
++/**
++ * @page yarp_yarp-config yarp-config
++
++\author Elena Ceseracciu and Lorenzo Natale
++
++The utility yarp-config inspects the system and reports information about installed configuration and data files. In addition, it supports the process of customizing data files by copying them from installation to the user private directories (we call this \e importing).
++
++Some commands related to YARP configuration files are:
++
++\li <EM> yarp-config --version    </EM> report version information
++\li <EM> yarp-config --namespace  </EM> report file that caches the current YARP namespace
++\li <EM> yarp-config --nameserver </EM> report file that caches nameserver contact information
++
++As for data file customization, this tool allows managing \e context and \e robot files (as explained in \ref yarp_data_dirs). This tool knows from the ResourceFinder where all files are located and where to put them given the system and user's environment.
++The main sub-commands are ''context'' to handle files in context directories and ''robot'' to handle robot directories.
++
++\verbatim
++  yarp-config context --list
++\endverbatim
++
++Shows all the contexts visible to the ResourceFinder, <EM> in the order of precedence </EM>. To limit the list to the contexts found in the installed locations you can add:
++
++\verbatim
++  yarp-config context --list --installed
++\endverbatim
++
++To import contexts to the home directory:
++
++\verbatim
++  yarp-config context --import <context-name>
++  yarp-config context --import <context-name> file1 file2
++  yarp-config context --import-all
++\endverbatim
++
++The first two commands affects individual contexts, and allow to import a whole context (first command) or only some specific files (second one); the third command affects all contexts (not recommended).
++After you finish importing a context, you can go to your local private directory (in Linux usually: $HOME/.local/share/yarp/contexts/) and edit it.
++To remove any local changes and restore the default files, one can do:
++
++\verbatim
++  yarp-config context --remove <context-name>
++\endverbatim
++
++The utility works similarly for robot specific files:
++
++\verbatim
++  yarp-config robot --list
++  yarp-config robot --import <robot-name>
++  yarp-config robot --import <robot-name> file1 file2
++  yarp-config robot --remove <robot-name>
++\endverbatim
++
++In any case:
++
++\verbatim
++  yarp-config help
++\endverbatim
++provides an explanation of the commands supported by the yarp-config tool.
++
++\section yarp-config-example An Example
++
++Suppose you have installed both YARP and the example provided in <YARP_SOURCE_CODE>/examples/resourceFinder and described in \ref yarp_resource_finder_installation .
++
++Type:
++
++\verbatim
++  yarp-config context --list
++\endverbatim
++
++The result should be something like:
++
++\verbatim
++ **LOCAL USER DATA:
++ * Directory : /home/nat/.local/share/yarp/contexts
++ **SYSADMIN DATA:
++ **INSTALLED DATA:
++ * Directory : /usr/local/share/yarp/contexts
++ randomMotion
++ yarpscope
++
++\endverbatim
++
++This shows us that:
++
++\li The local user directory /home/nat.local/share/yarp/contexts is empty, i.e. no contexts have been imported
++\li The shared installation directory for YARP /usr/local/share/yarp/contexts contains two contexts: randomMotion and yarpscope
++
++To be able to modify a contexts, for example to customize one parameter, you have to first import it in the user directory. Suppose for example you want to customize the context ''randomMotion'':
++
++\verbatim
++  yarp-config context --import randomMotion
++\endverbatim
++
++This is the output you should get:
++
++\verbatim
++ Copied context randomMotion from
++ /usr/local/share/yarp/contexts/randomMotion to
++ /home/nat/.local/share/yarp/contexts/randomMotion
++
++ Current locations for this context:
++ /home/nat/.local/share/yarp/contexts/randomMotion
++ /usr/local/share/iCub/contexts/randomMotion
++\endverbatim
++
++Now type:
++
++\verbatim
++  yarp-config context --list
++\endverbatim
++
++To verify that ''randomMotion'' is indeed now present in /home/nat/.local/share/yarp/contexts
++
++This means that files from ''randomMotion'' in /home/nat/.local/share/yarp/contexts/ will take precedence over the ones in /usr/local/share/yarp/contexts. This is indeed what we wanted since the latter contains the default values we are going to modify to customize the behavior of the module.
++
++To undo you can remove the context:
++
++\verbatim
++  yarp-config context --remove randomMotion
++\endverbatim
++
++
++ *
++ */
++
+diff --git a/doc/cmd_yarpdatadumper.dox b/doc/cmd_yarpdatadumper.dox
+new file mode 100644
+index 0000000..49055e4
+--- /dev/null
++++ b/doc/cmd_yarpdatadumper.dox
+@@ -0,0 +1,272 @@
++/**
++@ingroup yarp_tools
++
++\defgroup yarpdatadumper yarpdatadumper
++
++Acquires and stores Bottles or Images and Videos from a YARP
++port.
++
++Copyright (C) 2010 RobotCub Consortium
++
++Author: Ugo Pattacini
++
++Date: first release 16/05/2008
++
++CopyPolicy: Released under the terms of the GNU GPL v2.0.
++
++\section intro_sec Description
++
++When launched, the service monitors the presence of incoming
++data (bottles or images) and stores it within a folder called
++with the same name as the service port (or with a proper suffix
++appended if other data is present in the current path). In this
++folder the file 'data.log' contains the information (taken from
++the envelope field of the port) line by line as follows:
++
++\code
++[pck id] [time stamp] [bottle content (or image_file_name)]
++   0       1.234         0 1 2 3 ...
++   1       1.235         4 5 6 7 ...
++   ...     ...           ...
++\endcode
++
++Note that if the envelope is not valid, then the Time Stamp is
++the reference time of the machine where the service is running.
++Anyway, a selection between these two Time Stamps is available
++for the user through --rxTime option.
++
++Moreover, a file called 'info.log' is produced containing
++information about the data type stored within the 'data.log'
++file as well as the name of the yarp ports connected or
++disconnected to the dumper, as in the following:
++
++\code
++Type: [Bottle; | Image; | Image; Video:ext(huffyuv);]
++[local-timestamp] /yarp-port-name [connected]
++[local-timestamp] /yarp-port-name [disconnected]
++\endcode
++
++Finally, a further file called 'timecodes.log' is also generated
++together with the video, which contains the timecode associated
++to each frame given in millisecond precision. The file content
++looks like the following:
++
++\code
++# timecode format v2
++0
++40
++80
++\endcode
++
++This is useful to recover the exact timing while post-processing
++the video relying for example on the \e mkvmerge tool:
++\code
++mkvmerge -o out.mkv --timecodes 0:timecodes.log video.mkv
++\endcode
++To get \e mkvmerge do: sudo apt-get install mkvtoolnix
++
++The module \ref yarpdataplayer can be used to re-play a dump generated
++by the \ref yarpdatadumper.
++
++\section lib_sec Libraries
++- To record videos: OpenCV 2.4 and the <a
++  href="http://wiki.team-mediaportal.com/9_Glossary/Huffyuv">huffyuv</a>
++  codec for lossless data compression.
++
++\section codec_installation Codec Installation
++- Windows: fetch the dll library from the codec website and
++  simply install it.
++
++- Linux: ffmpeg must be properly installed and recognized by
++  OpenCV. The command "sudo apt-get ffmpeg" seemed not to work.
++  This is a possible alterative procedure:
++
++  -# sudo apt-get install libjpeg62-dev libtiff4-dev
++     libjasper-dev libopenexr-dev libeigen2-dev yasm libfaac-dev
++     libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev
++     libvorbis-dev libxvidcore-dev
++  -# svn checkout svn://svn.ffmpeg.org/ffmpeg/trunk ffmpeg
++  -# ./configure --enable-gpl --enable-version3 --enable-nonfree
++     --enable-postproc --enable-libfaac --enable-libopencore-amrnb
++     --enable-libopencore-amrwb --enable-libtheora
++     --enable-libvorbis --enable-libxvid --enable-x11grab
++     --enable-swscale --enable-shared
++  -# sudo make install
++  -# recompile OpenCV through cmake
++
++\section parameters_sec Parameters
++--name \e portname
++- The parameter \e portname identifies the name of the listening
++  port open by the service; if not specified \e /dump is
++  assumed. The leading forward slash will be added if not
++  provided.
++
++--connect \e portname
++- The parameter \e portname specifies the name of the port to
++  connect the dumper to at launch time (\e tcp is used).
++
++--dir \e dirname
++- The parameter \e dirname serves to specify the storage
++  directory explicitely (relative to the location where the
++  module has been launched from).
++
++--overwrite
++- If this option is specified, then a pre-existing storage
++  directory will be overwritten.
++
++--type \e datatype
++- The parameter \e datatype selects the type of items to be
++  stored. It can be \e bottle, \e image or \e video; if not
++  specified \e bottle is assumed. Note that images are stored
++  using the corresponding file formats. The data type \e video
++  is available if OpenCV is found and the codec \e huffyuv is installed.
++
++--addVideo
++- In case images are acquired with this option enabled, a video
++  called 'video.ext' is also produced at the same time. The
++  extension \e ext is determined by the option \e videoType.
++  This option is available if OpenCV is found and the codec
++  \e huffyuv is installed in the system.
++
++--videoType \e ext
++- If it is required to generate a video, the parameter \e ext
++  specifies the type of the video container employed. Available
++  types are: \e mkv (default), \e avi.
++
++--downsample \e n
++- With this option it is possible to reduce the storing rate by
++  a factor \e n, i.e. the parameter \e n specifies how many
++  items (bottles or images) shall be skipped after one
++  acquisition.
++
++--rxTime
++- With this option it is possible to select which Time Stamp to
++  assign to the dumped data: normally the sender time is the
++  reference, but if this option is enabled, the time of the
++  receiving machine on which the service is running will be the
++  reference. However, even if --rxTime is not selected, the
++  receiver time will be taken as reference in case of invalid
++  message envelope.
++
++--txTime
++- Regardless of its availability, the sender time stamp will be
++  inserted in the log straightaway. Moreover, if \e txTime is
++  given in conjunction with the \e rxTime option (or even if
++  \e rxTime is not selected but the sender stamp is invalid),
++    then the following format will be adopted for the logged
++    data:
++
++\code
++[pck id] [tx stamp] [rx stamp] [message content]
++\endcode
++
++\section portsa_sec Ports Accessed
++The port the service is listening to.
++
++\section portsc_sec Ports Created
++
++- \e <portname> (e.g. /dump)
++
++- \e <portname>/rpc which is a remote procedure call port useful
++  to shut down the service remotely by sending to this port the
++  'quit' command.
++
++\section in_files_sec Input Data Files
++None.
++
++\section out_data_sec Output Data Files
++Within the directory \e ./<portname> the file \e data.log is
++created containing the acquisitions. Besides, if \e image type
++has been selected, all the acquired images are also stored. A
++further file called \e info.log is also produced containing
++meta-data relevant for the logging.
++
++Note that in case an acquisition with the same \e <portname> was
++previously carried out, an increasing suffix will be appended
++to the name of the directory.
++
++\section conf_file_sec Configuration Files
++None.
++
++\section tested_os_sec Tested OS
++Linux and Windows.
++
++\section example_sec Example
++By launching the following command:
++
++\code
++yarpdatadumper --name /log --type image --downsample 2
++\endcode
++
++the service will create the listening port /log capable of
++storing images within the subdirectory ./log at a halved rate
++with respect to the rate of the sender.
++
++Then, by connecting the port to the sender with the usual yarp
++command
++
++\code
++yarp connect /grabber /log
++\endcode
++
++the acquisition will start.
++
++By pressing CTRL+C the acquisition is terminated.
++
++So, now, have a look inside the directory ./log
++
++\section application_sec Generate a yarpmanager application
++
++To dump data from several yarp ports, it may be convenient
++to launch several yarpdatadumper instances using the yarpmanager.
++
++If you have Python installed on your machine, you can use the
++yarpdatadumperAppGenerator.py utility script to generate a yarpmanager
++application that will launch and connect as many yarpdatadumper as you need.
++
++If for example you need to read the ports /icub/left_leg/stateExt:o and
++/icub/left_leg/analog:o on the host icub15, you can run the generator
++with the following option:
++
++\code
++yarpdatadumperAppGenerator.py  --ports /icub/left_leg/analog:o /icub/left_leg/stateExt:o  --host icub15 --name leftLegDumper
++\endcode
++
++This will generate the following yarpmanager application in the leftLegDumper.xml file:
++
++\code
++<application>
++    <name>leftLegDumper</name>
++    <dependencies>
++        <port>/icub/left_leg/analog:o</port>
++        <port>/icub/left_leg/stateExt:o</port>
++    </dependencies>
++    <module>
++        <name>yarpdatadumper</name>
++        <parameters>--name /dumper/icub/left_leg/analog:o --type bottle </parameters>
++        <node>icub15</node>
++        <tag>data-dumper-icub-left_leg-analog-o</tag>
++    </module>
++    <connection>
++        <from>/icub/left_leg/analog:o</from>
++        <to>/dumper/icub/left_leg/analog:o</to>
++        <protocol>udp</protocol>
++    </connection>
++    <module>
++        <name>yarpdatadumper</name>
++        <parameters>--name /dumper/icub/left_leg/stateExt:o --type bottle </parameters>
++        <node>icub15</node>
++        <tag>data-dumper-icub-left_leg-stateExt-o</tag>
++    </module>
++    <connection>
++        <from>/icub/left_leg/stateExt:o</from>
++        <to>/dumper/icub/left_leg/stateExt:o</to>
++        <protocol>udp</protocol>
++    </connection>
++</application>
++\endcode
++
++\author Ugo Pattacini
++
++\sa yarpdataplayer
++*/
+diff --git a/doc/cmd_yarpdataplayer.dox b/doc/cmd_yarpdataplayer.dox
+new file mode 100644
+index 0000000..5128d77
+--- /dev/null
++++ b/doc/cmd_yarpdataplayer.dox
+@@ -0,0 +1,124 @@
++/**
++\defgroup yarpdataplayer yarpdataplayer
++@ingroup yarp_guis
++@ingroup yarp_tools
++
++A module that reproduces in a synchronized way, previously acquired data
++(using \ref yarpdatadumper) from a source of input.
++
++\section intro_sec Description
++
++This module uses gtkmm to provide the user a simple but informative
++user-interface in order to manipulate the previously acquired data.
++When playing it uses the timestamps provided from the time of aquisition
++to synchronize the sending of the data as if the robot was present.
++
++\image html datasetplayer.jpg
++\image latex datasetplayer.jpg "The yarpdataplayer GUI running on Windows" width=6cm
++
++\section lib_sec Libraries
++- OpenCV libraries.
++- GTKMM or Qt5 libraries.
++
++\section running_sec Running
++yarpdataplayer can run with or without the GUI (for server use and
++commands are sent via the rpc port)
++For gui run normally \e yarpdataplayer .
++Without GUI run with the extra parameter \e hidden:
++
++\verbatim
++  yarpdataplayer --hidden
++\endverbatim
++
++\section file-sec yarpdatadumper file example
++yarpdatadumper data.log file example:
++
++\verbatim
++  9566    1324373535.040288   -2.32967 0.043956 1.450549 -0.56044 1.704894 4.136408
++  etc...
++\endverbatim
++
++yarpdatadumper info.log file example:
++
++\verbatim
++  Type: Bottle;
++  [1324373535.040288] /foo/state:o [connected]
++  etc...
++\endverbatim
++
++\e Type: is used to identify what kind of data the player is
++   required to send.
++
++\e The names of the ports open up by the player are initially
++   set up based on the content of info.log file. This can be
++   then changed using the GUI.
++
++\section parameters_sec Parameters
++
++--hidden
++- run with or without gui
++
++--withExtraTimeCol index
++- loads the log files created by the datadumper with both rx and tx time.
++  The user must select which timestamp to use (txTime index = 1 or
++  rxTime index = 2)
++
++
++--name \e modName
++- The parameter \e modName identifies the stem-name of the open
++  ports.
++
++ \section portsif_sec Ports Interface
++ The interface to this module is implemented through
++ \ref dataSetPlayer_IDL . \n
++
++- The ports belonging to each of the parts are dynamically created and
++  can be changed using the GUI.
++
++\section in_files_sec Input Data Files
++The player will look, in a recursive way, into directories in order to
++create the parts needed and retreive the data.
++
++The data name is the default \ref yarpdatadumper names: data.log and
++info.log.
++
++An example directory tree containing data (data.log+info.log)
++can be:
++\code
++/experiment1/
++             /head/data.log;info.log
++             /torso/data.log;info.log;
++             /images/leftCamera/data.log;info.log
++             /images/rightCamera/data.log;info.log
++             /left_leg/data.log;info.log
++             /right_leg/data.log;info.log
++\endcode
++
++If the directory indicated is either "experiment1" or within experiment,
++the player will successfully load all required data.
++
++The parts name will be taken from each subdirectory of the /experiment1
++forder.
++
++\note Currently, if the directory selected is (in this example) head,
++torso etc, the player will not load the files as it will not be able to
++find subdirs.
++
++\todo
++ - main slider bar selection. This needs an on-click and on-release
++   event in order not to interfere with update and playback
++ - when the search for a directory has not provided anything (user
++   selected directory containing only *.log files)
++
++\section tested_os_sec Tested OS
++Windows, Linux
++
++\sa yarpdatadumper
++\sa yarpdataplayerExample
++
++Copyright (C) 2010 RobotCub Consortium
++
++\author Vadim Tikhanoff and Ali Paikan
++
++CopyPolicy: Released under the terms of the GNU GPL v2.0.
++*/
+diff --git a/doc/cmd_yarpmanager.dox b/doc/cmd_yarpmanager.dox
+new file mode 100644
+index 0000000..1c2d1a9
+--- /dev/null
++++ b/doc/cmd_yarpmanager.dox
+@@ -0,0 +1,677 @@
++
++/*
++ * Copyright: (C) 2011 Robotics, Brain and Cognitive Sciences - Italian Institute of Technology (IIT)
++ * Copy Policy: Released under the terms of the LGPLv2.1 or later, see LGPL.TXT
++ *
++ */
++
++/**
++\page yarpmanager yarpmanager: a way of running and managing multiple programs on a set of machines
++
++\author Ali Paikan
++
++The command-line utility "yarpmanager-console" and its graphical
++companions "yarpmanager"  are tools for running and managing multiple
++programs on a set of machines.
++
++\image html ymgui.png "yarpmanager-console and (g)yarpmanager"
++
++\section Contents
++\li \ref features
++\li \ref concepts
++\li \ref configuration
++\li \ref examples
++\li \ref application
++\li \ref resource
++\li \ref module
++\li \ref create 
++\li \ref export
++\li \ref faq
++
++\section features Features
++- Running, stopping, killing and monitoring multiple programs on localhost or remote machines.
++- Establishing port's connections manually and automatically.
++- Managing multiple programs which are grouped as different applications.
++- Running programs concerning their dependencies.
++- Recovering programs from failure.
++- Using internal launcher to speed up program execution on localhost.
++- Automatically assigning programs to machines using load balancing and smart resource discovery mechanism for improving performance.
++- Discovering information and status of machines in cluster of computers (e.g. Hardware, platform, CPU load).
++- Allowing users to specify resource dependencies of program using module description file.
++- Allowing users to provide information about specific devices (e.g GPU) of machines using resource description file.
++- Creating new Application, Module and Resource using XML template file.
++- Including multiple instances of an application inside another application.
++- Renaming ports name at run time using port prefix mechanism.
++- Modifying program's parameters from GUI.
++- Modifying and reloading XML description files from GUI.
++
++\section concepts Some Concepts
++- <b>Module</b>, is an executable binary file (program) which is developed using YARP or any other libraries.
++- <b>Application</b>, refers to a collection of modules, connections and other applications.
++- <b>Resource</b> refers to any physical or logical resources which are needed by module. (e.g Computer, Memory, GPU, Platform)
++
++See \ref application, \ref module and \ref resource for more information on how to use XML model to describe each of these concepts.
++
++\section configuration Configuration
++Default configuration file known as "ymanager.ini" can be automatically loaded by (g)yarpmanager from the same folder running the manager; or it can be indicated by parameter "--from" and "--context", following Yarp Resource Finder policies (see \ref yarp_resource_finder_basic). Using the configuration files, one can explicitly indicates the paths where (g)yarpmanager should search for applications, resources or modules. If the configuration file is not provided, then (g)yarpmanager will search for the corresponding XML files in the Yarp data directories (see \ref yarp_data_dirs).
++
++\verbatim
++$ yarpmanager --from <path to my_config_file>
++\endverbatim
++
++The below example shows the syntax of configuration file:
++
++\verbatim
++# Path to the folder which contains application description files
++apppath =  "./xml/applications"
++load_subfolders = yes
++
++# Path to the folder which contains module description files
++modpath =  "./xml/modules"
++
++# Path to the folder which contains module description files
++respath =  "./xml/resources"
++
++# Fault tolerance
++# parameters: yes|No
++watchdog = no
++
++# Module failure awareness (if watchdog is enabled)
++# parameters: Ignore|terminate|prompt|recover
++module_failure = prompt
++
++# Connection failure awareness (if watchdog is enabled)
++# parameters: Ignore|terminate|prompt
++connection_failure = prompt
++
++# Automatically establish all connections
++# parameters: Yes|no
++auto_connect = no
++
++# Appearance (for yarpmanager)
++# parameters: No|dark|light
++color_theme = dark
++
++# External editor (e.g. gedit, notepad)
++external_editor = gvim
++\endverbatim
++
++Items 'apppath', 'modpath' and 'respath' respectively point to the folder where the XML description files of Applications, Modules and Resources can be found. All description file names must have ".xml" extension. If 'load_subfolders=yes', applications description files will be  recursively loaded from sub folders of 'apppath'.
++Set 'external_editor' to your preferable text editor. It will be used by yarpmanager for editing XML file.
++
++
++\section examples Running examples
++First make sure you have a name server running. Open a terminal and type:
++\verbatim
++$ yarpserver
++\endverbatim
++
++\subsection example_y Using yarpmanager
++Open another terminal and try this:
++\verbatim
++$ cd ${YARP_ROOT}/src/yarpmanager/tests
++$ yarpmanager-console
++>> help
++     # a list of yarpmanager-console keywords
++>> list app
++     # you should see EyesViewer-Localhost, FakeEyes, ...
++>> load app EyesViewer-Localhost
++>> run
++>> connect
++     # you should see moving red bar
++>> disconnect
++>> stop
++>> exit
++\endverbatim
++
++\subsection example_g Using (g)yarpmanager
++Open another terminal and try this:
++\verbatim
++$ cd ${YARP_ROOT}/src/yarpmanager/tests
++$ yarpmanager
++\endverbatim
++
++- From "Entities" frame, click the triangle beside Applications, then  double-click "EyesViewer-Localhost".
++- From menu "Manage" press "Run" to run all modules
++- From menu "Manage" press "Connect" to establish all connections.
++- To terminate application, chose "Manage">"Disconnect" and "Manage">"Stop".
++
++To run "EyesViewer-Cluster" using load balancer you need to have yarprun running as server.
++Open a terminal and type:
++\verbatim
++$ yarprun --server /node1
++\endverbatim
++
++Open another one and type:
++\verbatim
++$ yarprun --server /node2
++\endverbatim
++
++Then try this:
++\verbatim
++$ cd ${YARP_ROOT}/src/yarpmanager/tests
++$ yarpmanager
++\endverbatim
++
++- From "Entities" frame, click the triangle beside Applications, then  double-click "EyesViewer-Cluster".
++- From the right side, right-click on the frame where you can see all modules and form the pop-up menu chose "Assign hosts". You will see that modules will be automatically assigned to available nodes. (here /node1 and /node2)
++- From menu "Manage" press "Run" to run all modules
++- From menu "Manage" press "Connect" to establish all connections.
++- To terminate application, chose "Manage">"Disconnect" and "Manage">"Stop".
++
++\note You can use "Assign hosts" whenever all modules are stopped and connections are disconnected.
++
++\section application Application description file
++Application description file is a collection of modules (programs) or other applications and connections.
++
++Here is an example of application description file in XML format:
++\htmlonly
++<div class="fragment"><pre class="fragment">
++<tt><b><font color="#00458A">&lt;application&gt;</font></b>
++
++  <i><font color="#9A1900">&lt;!-- Generic information--&gt;</font></i>
++  <b><font color="#00458A">&lt;name&gt;</font></b>ApplicationName<b><font color="#00458A">&lt;/name&gt;</font></b>
++  <b><font color="#00458A">&lt;description&gt;</font></b>Template Application<b><font color="#00458A">&lt;/description&gt;</font></b>
++  <b><font color="#00458A">&lt;version&gt;&lt;/version&gt;</font></b>
++
++  <b><font color="#00458A">&lt;authors&gt;</font></b>
++      <b><font color="#00458A">&lt;author</font></b> <font color="#009900">email</font><font color="#990000">=</font><font color="#FF0000">""</font><b><font color="#00458A">&gt;</font></b> first author.name <b><font color="#00458A">&lt;/author&gt;</font></b>
++      <b><font color="#00458A">&lt;author</font></b> <font color="#009900">email</font><font color="#990000">=</font><font color="#FF0000">""</font><b><font color="#00458A">&gt;</font></b> second author.name <b><font color="#00458A">&lt;/author&gt;</font></b>
++      ...
++  <b><font color="#00458A">&lt;/authors&gt;</font></b>
++
++  <i><font color="#9A1900">&lt;!-- Required modules. --&gt;</font></i>
++  <b><font color="#00458A">&lt;module&gt;</font></b>
++      <b><font color="#00458A">&lt;name&gt;</font></b>Module_Name<b><font color="#00458A">&lt;/name&gt;</font></b>
++      <b><font color="#00458A">&lt;parameters&gt;&lt;/parameters&gt;</font></b>
++      <b><font color="#00458A">&lt;node&gt;&lt;/node&gt;</font></b>
++      <b><font color="#00458A">&lt;display&gt;&lt;/display&gt;</font></b>
++      <b><font color="#00458A">&lt;stdio&gt;&lt;/stdio&gt;</font></b>
++      <b><font color="#00458A">&lt;prefix&gt;&lt;/prefix&gt;</font></b>
++      <b><font color="#00458A">&lt;dependencies&gt;</font></b>
++          <b><font color="#00458A">&lt;port</font></b> <font color="#009900">timeout</font><font color="#990000">=</font><font color="#FF0000">"5.0"</font><b><font color="#00458A">&gt;&lt;/port&gt;</font></b>
++          <b><font color="#00458A">&lt;port</font></b> <font color="#009900">timeout</font><font color="#990000">=</font><font color="#FF0000">"5.0"</font> <font color="#009900">request</font><font color="#990000">=</font><font color="#FF0000">"ready"</font> <font color="#009900">reply</font><font color="#990000">=</font><font color="#FF0000">"yes"</font><b><font color="#00458A">&gt;&lt;/port&gt;</font></b>
++          ...
++      <b><font color="#00458A">&lt;/dependencies&gt;</font></b>
++      <b><font color="#00458A">&lt;ensure&gt;</font></b>
++          <b><font color="#00458A">&lt;wait&gt;</font></b>10.0<b><font color="#00458A">&lt;/wait&gt;</font></b>
++      <b><font color="#00458A">&lt;/ensure&gt;</font></b>
++  <b><font color="#00458A">&lt;/module&gt;</font></b>
++  ...
++
++  <i><font color="#9A1900">&lt;!-- Embedded applications --&gt;</font></i>
++  <b><font color="#00458A">&lt;application&gt;</font></b>
++      <b><font color="#00458A">&lt;name&gt;</font></b>Application_Name<b><font color="#00458A">&lt;/name&gt;</font></b>
++      <b><font color="#00458A">&lt;prefix&gt;&lt;/prefix&gt;</font></b>
++   <b><font color="#00458A">&lt;/application&gt;</font></b>
++   ...
++
++  <i><font color="#9A1900">&lt;!-- Required connections --&gt;</font></i>
++  <b><font color="#00458A">&lt;connection</font></b> <font color="#009900">persist</font><font color="#990000">=</font><font color="#FF0000">"true"</font><b><font color="#00458A">&gt;</font></b>
++      <b><font color="#00458A">&lt;from</font></b> <font color="#009900">qos</font><font color="#990000">=</font><font color="#FF0000">"level:high; priority:10; policy:1"</font><b><font color="#00458A">&gt;&lt;/from&gt;</font></b>
++      <b><font color="#00458A">&lt;to&gt;&lt;/to&gt;</font></b>
++      <b><font color="#00458A">&lt;protocol&gt;&lt;/protocol&gt;</font></b>
++  <b><font color="#00458A">&lt;/connection&gt;</font></b>
++
++  <b><font color="#00458A">&lt;connection&gt;</font></b>
++      <b><font color="#00458A">&lt;from</font></b> <font color="#009900">external</font><font color="#990000">=</font><font color="#FF0000">"true"</font><b><font color="#00458A">&gt;&lt;/from&gt;</font></b>
++      <b><font color="#00458A">&lt;to&gt;&lt;/to&gt;</font></b>
++      <b><font color="#00458A">&lt;protocol&gt;&lt;/protocol&gt;</font></b>
++  <b><font color="#00458A">&lt;/connection&gt;</font></b>
++  ...
++
++<b><font color="#00458A">&lt;/application&gt;</font></b>
++</tt></pre>
++</div>
++\endhtmlonly
++
++\latexonly
++\noindent
++\mbox{}\textbf{\textless{}application\textgreater{}} \\
++\mbox{} \\
++\mbox{}\ \ \textit{\textless{}!-\/-\ Generic\ information-\/-\textgreater{}} \\
++\mbox{}\ \ \textbf{\textless{}name\textgreater{}}ApplicationName\textbf{\textless{}/name\textgreater{}} \\
++\mbox{}\ \ \textbf{\textless{}description\textgreater{}}Template\ Application\textbf{\textless{}/description\textgreater{}} \\
++\mbox{}\ \ \textbf{\textless{}version\textgreater{}\textless{}/version\textgreater{}} \\
++\mbox{} \\
++\mbox{}\ \ \textbf{\textless{}authors\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \textbf{\textless{}author}\ email=\texttt{"{}"{}}\textbf{\textgreater{}}\ first\ author.name\ \textbf{\textless{}/author\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \textbf{\textless{}author}\ email=\texttt{"{}"{}}\textbf{\textgreater{}}\ second\ author.name\ \textbf{\textless{}/author\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ ... \\
++\mbox{}\ \ \textbf{\textless{}/authors\textgreater{}} \\
++\mbox{} \\
++\mbox{}\ \ \textit{\textless{}!-\/-\ Required\ modules.\ -\/-\textgreater{}} \\
++\mbox{}\ \ \textbf{\textless{}module\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \textbf{\textless{}name\textgreater{}}Module$\_$Name\textbf{\textless{}/name\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \textbf{\textless{}parameters\textgreater{}\textless{}/parameters\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \textbf{\textless{}node\textgreater{}\textless{}/node\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \textbf{\textless{}stdio\textgreater{}\textless{}/stdio\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \textbf{\textless{}prefix\textgreater{}\textless{}/prefix\textgreater{}} \\
++\mbox{}\ \ \textbf{\textless{}/module\textgreater{}} \\
++\mbox{}\ \ ... \\
++\mbox{}\ \ \ \  \\
++\mbox{}\ \ \textit{\textless{}!-\/-\ Embedded\ applications\ -\/-\textgreater{}} \\
++\mbox{}\ \ \textbf{\textless{}application\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \textbf{\textless{}name\textgreater{}}Application$\_$Name\textbf{\textless{}/name\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \textbf{\textless{}prefix\textgreater{}\textless{}/prefix\textgreater{}} \\
++\mbox{}\ \ \ \textbf{\textless{}/application\textgreater{}} \\
++\mbox{}\ \ \ ... \\
++\mbox{}\ \ \ \  \\
++\mbox{}\ \ \textit{\textless{}!-\/-\ Required\ connections\ -\/-\textgreater{}} \\
++\mbox{}\ \ \textbf{\textless{}connection\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \textbf{\textless{}from\textgreater{}\textless{}/from\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \textbf{\textless{}to\textgreater{}\textless{}/to\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \textbf{\textless{}protocol\textgreater{}\textless{}/protocol\textgreater{}} \\
++\mbox{}\ \ \textbf{\textless{}/connection\textgreater{}} \\
++\mbox{}\ \  \\
++\mbox{}\ \ \textbf{\textless{}connection\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \textbf{\textless{}from}\ external=\texttt{"{}true"{}}\textbf{\textgreater{}\textless{}/from\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \textbf{\textless{}to\textgreater{}\textless{}/to\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \textbf{\textless{}protocol\textgreater{}\textless{}/protocol\textgreater{}} \\
++\mbox{}\ \ \textbf{\textless{}/connection\textgreater{}}\ \  \\
++\mbox{}\ \ ... \\
++\mbox{}\ \  \\
++\mbox{}\textbf{\textless{}/application\textgreater{}} \\
++\mbox{}
++\endlatexonly
++
++\subsection app_notes Notes
++ - In application description file, if you set \<node\>\</node\> to "localhost", the manager will use an internal module launcher to run the module on localhost.
++ - Leaving \<node\>\</node\> empty, later you can use the load balancer to automatically assign module to a node for better performance.
++ - \<prefix\> refers to port name's prefix. It will be added to the names of all ports that the module opens. For example, if a module open "/Port1" and \<prefix\>/MyPrefix\</prefix\>, after launching the module, the real port name will be "/Myprefix/Port1".
++ - Other applications can be integrated by indicating their names. Setting \<prefix\> for an included application, port prefix will be applied to all modules and connections which are not set as external.
++ - Persistent connection can be created by setting "persist" property of the corresponding connection tags. They are created by using YARP topics as described in \ref persistent_connections and will be removed when the application is unloaded from manager (i.e. closing the application window in yarpmanager).
++ - The \<port\> tags inside \<dependencies\> indicate that the execution of the current module should be postponed until the ports become available. (g)yarpmanager waits for the ports and continuously checks their availability. If one of the required ports is not available within the time indicated by the "timeout" property, the module will not be launched.   
++ - It is also possible to send a specific RPC request to a port to get status about the internal state of a module. This is useful when launching a module should be postponed until other modules get launched and ready. This can be done by specifying the request using "request" property and the expected reply using "reply" property in a \<port\> tag. The manager sends the request to the relevant port and check if the received reply matches the one indicated in the "reply" property before launching the module. If the reply does not match the expected one, the corresponding module will not launched. 
++ - The \<ensure>\> and \<wait\> tags can be used to enforce an arbitrary wait after launching a module. In this case, the manager waits for that specific time to consider the module successfully launched.  
++ - The \<display\> tag specifies the visibility of the process window:
++  - \--visible_na (default):the window is visible and inactive (it does not get the focus)
++  - \--minimized: the window is minimized 
++  - \--hidden: the process is invisible. This option is useful for console/terminal applications. Notice that on the graphical yarpmanager you can see the standard output using the ''attach to stdout'' functionality (right click on the application and select it from the menu).
++ - It is also possible to configure the Qos properties of a connection directly from the manager. This can be done using the "qos" attribute of \<connection\> tag or independently using \<from\> and \<to\> tags. The Qos properties provided within the \<connection\> tag will be applied to both side of the connection. The attribute accepts a string in form of multiple pairs of "property:value" which are separated using ";". For example, qos="level:high; priority:10; policy:1" configure the connection packet priority level to 'HIGH' and the scheduling policy/priority of the connection-dedicated thread respectively to 1 (i.e. SCHED_FIFO in Linux) and 10. Alternatively the packet priority level can be configured using "dscp:<value>" or "tos:<value>". Please refer to yarp::os::QosStyle and yarp::os::NetworkBase::setConnectionQos APIs for further information. 
++ 
++\section resource Resource description file
++The resource description file can be used to provide a general information of the machines that are part of the cluster. In very simple form, the resource description file is a list of the names of machines in the cluster.
++
++Here is an example of resource description file in XML format:
++\htmlonly
++<div class="fragment"><pre class="fragment">
++<tt><b><font color="#00458A">&lt;resources&gt;</font></b>
++    <i><font color="#9A1900">&lt;!-- Multiple computers can be introduced --&gt;</font></i>
++    <b><font color="#00458A">&lt;computer&gt;</font></b>
++        <b><font color="#00458A">&lt;name&gt;</font></b>hostname1<b><font color="#00458A">&lt;/name&gt;</font></b>
++        <b><font color="#00458A">&lt;description&gt;</font></b>Template resource<b><font color="#00458A">&lt;/description&gt;</font></b>
++
++        <i><font color="#9A1900">&lt;!-- A disabled resource will not be used by load balancer. --&gt;</font></i>
++        <b><font color="#00458A">&lt;disable&gt;</font></b>no<b><font color="#00458A">&lt;/disable&gt;</font></b>
++    <b><font color="#00458A">&lt;/computer&gt;</font></b>
++
++    <b><font color="#00458A">&lt;computer&gt;</font></b>
++        <b><font color="#00458A">&lt;name&gt;</font></b>hostname2<b><font color="#00458A">&lt;/name&gt;</font></b>
++        <b><font color="#00458A">&lt;description&gt;</font></b>a computer with GPU device<b><font color="#00458A">&lt;/description&gt;</font></b>
++        <b><font color="#00458A">&lt;disable&gt;</font></b>no<b><font color="#00458A">&lt;/disable&gt;</font></b>
++        <i><font color="#9A1900">&lt;!-- GPU description section. --&gt;</font></i>
++        <b><font color="#00458A">&lt;gpu&gt;</font></b>
++            <b><font color="#00458A">&lt;name&gt;</font></b>Tesla C1060<b><font color="#00458A">&lt;/name&gt;</font></b>
++            <b><font color="#00458A">&lt;cores&gt;</font></b>240<b><font color="#00458A">&lt;/cores&gt;</font></b>
++            <b><font color="#00458A">&lt;frequency&gt;</font></b>1600<b><font color="#00458A">&lt;/frequency&gt;</font></b>
++            <b><font color="#00458A">&lt;capability&gt;</font></b>1.3<b><font color="#00458A">&lt;/capability&gt;</font></b>
++            <b><font color="#00458A">&lt;registers_block&gt;</font></b>128<b><font color="#00458A">&lt;/registers_block&gt;</font></b>
++            <b><font color="#00458A">&lt;thread_block&gt;</font></b>512<b><font color="#00458A">&lt;/thread_block&gt;</font></b>
++            <b><font color="#00458A">&lt;overlap&gt;</font></b>yes<b><font color="#00458A">&lt;/overlap&gt;</font></b>
++            <b><font color="#00458A">&lt;global_memory&gt;</font></b>
++                <b><font color="#00458A">&lt;total_space&gt;</font></b>4000000<b><font color="#00458A">&lt;/total_space&gt;</font></b>
++            <b><font color="#00458A">&lt;/global_memory&gt;</font></b>
++            <b><font color="#00458A">&lt;shared_memory&gt;</font></b>
++                <b><font color="#00458A">&lt;total_space&gt;</font></b>128<b><font color="#00458A">&lt;/total_space&gt;</font></b>
++            <b><font color="#00458A">&lt;/shared_memory&gt;</font></b>
++            <b><font color="#00458A">&lt;constant_memory&gt;</font></b>
++                <b><font color="#00458A">&lt;total_space&gt;</font></b>16<b><font color="#00458A">&lt;/total_space&gt;</font></b>
++            <b><font color="#00458A">&lt;/constant_memory&gt;</font></b>
++        <b><font color="#00458A">&lt;/gpu&gt;</font></b>
++    <b><font color="#00458A">&lt;/computer&gt;</font></b>
++    ...
++
++<b><font color="#00458A">&lt;/resources&gt;</font></b>
++</tt></pre>
++</div>
++\endhtmlonly
++
++\latexonly
++\noindent
++\mbox{}\textbf{\textless{}resources\textgreater{}} \\
++\mbox{}\ \ \ \ \textit{\textless{}!-\/-\ Multiple\ computers\ can\ be\ introduced\ -\/-\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}computer\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}name\textgreater{}}hostname1\textbf{\textless{}/name\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}description\textgreater{}}Template\ resource\textbf{\textless{}/description\textgreater{}} \\
++\mbox{} \\
++\mbox{}\ \ \ \ \ \ \ \ \textit{\textless{}!-\/-\ A\ disabled\ resource\ will\ not\ be\ used\ by\ load\ balancer.\ -\/-\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}disable\textgreater{}}no\textbf{\textless{}/disable\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}/computer\textgreater{}} \\
++\mbox{} \\
++\mbox{}\ \ \ \ \textbf{\textless{}computer\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}name\textgreater{}}hostname2\textbf{\textless{}/name\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}description\textgreater{}}a\ computer\ with\ GPU\ device\textbf{\textless{}/description\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}disable\textgreater{}}no\textbf{\textless{}/disable\textgreater{}}\  \\
++\mbox{}\ \ \ \ \ \ \ \ \textit{\textless{}!-\/-\ GPU\ description\ section.\ -\/-\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}gpu\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}name\textgreater{}}Tesla\ C1060\textbf{\textless{}/name\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}cores\textgreater{}}240\textbf{\textless{}/cores\textgreater{}}\  \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}frequency\textgreater{}}1600\textbf{\textless{}/frequency\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}capability\textgreater{}}1.3\textbf{\textless{}/capability\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}registers$\_$block\textgreater{}}128\textbf{\textless{}/registers$\_$block\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}thread$\_$block\textgreater{}}512\textbf{\textless{}/thread$\_$block\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}overlap\textgreater{}}yes\textbf{\textless{}/overlap\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}global$\_$memory\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}total$\_$space\textgreater{}}4000000\textbf{\textless{}/total$\_$space\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}/global$\_$memory\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}shared$\_$memory\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}total$\_$space\textgreater{}}128\textbf{\textless{}/total$\_$space\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}/shared$\_$memory\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}constant$\_$memory\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}total$\_$space\textgreater{}}16\textbf{\textless{}/total$\_$space\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}/constant$\_$memory\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}/gpu\textgreater{}}\  \\
++\mbox{}\ \ \ \ \textbf{\textless{}/computer\textgreater{}} \\
++\mbox{}\ \ \ \ ... \\
++\mbox{}\ \ \ \  \\
++\mbox{}\textbf{\textless{}/resources\textgreater{}} \\
++\mbox{}
++\endlatexonly
++
++\subsection res_notes Notes
++ - Platform, Memory, Storage and Processor specification will be discovered automatically by (g)yarpmanager; but, peripherals such as GPU should to be specifically introduced.
++
++
++\section module Module description file
++Module description file can be used to provide general information of module and its dependencies. It is mainly used by load balancer to automatically assign machines to module which satisfy the dependencies. By default, if there is no module description, load balancer assumes that the module can be executed on every available machines. Despite it is \b not \b mandatory, it is always useful to have XML description of each module which shows how it should be used for application building (e.g parameters, inputs, outputs).
++
++Here is an example of module description file in XML format:
++\htmlonly
++<div class="fragment"><pre class="fragment">
++<tt><b><font color="#00458A">&lt;module&gt;</font></b>
++    <b><font color="#00458A">&lt;name&gt;</font></b>module_name<b><font color="#00458A">&lt;/name&gt;</font></b>
++    <b><font color="#00458A">&lt;description&gt;</font></b>Template module<b><font color="#00458A">&lt;/description&gt;</font></b>
++    <b><font color="#00458A">&lt;version&gt;</font></b>1.0<b><font color="#00458A">&lt;/version&gt;</font></b>
++
++    <i><font color="#9A1900">&lt;!-- &lt;arguments&gt; can have multiple &lt;param&gt; tags--&gt;</font></i>
++    <b><font color="#00458A">&lt;arguments&gt;</font></b>
++        <b><font color="#00458A">&lt;param</font></b> <font color="#009900">desc</font><font color="#990000">=</font><font color="#FF0000">"first parameter"</font><b><font color="#00458A">&gt;</font></b> param1 <b><font color="#00458A">&lt;/param&gt;</font></b>
++    <b><font color="#00458A">&lt;/arguments&gt;</font></b>
++
++    <i><font color="#9A1900">&lt;!-- &lt;authors&gt; can have multiple &lt;author&gt; tags. --&gt;</font></i>
++    <b><font color="#00458A">&lt;authors&gt;</font></b>
++        <b><font color="#00458A">&lt;author</font></b> <font color="#009900">email</font><font color="#990000">=</font><font color="#FF0000">""</font><b><font color="#00458A">&gt;</font></b> author1 <b><font color="#00458A">&lt;/author&gt;</font></b>
++    <b><font color="#00458A">&lt;/authors&gt;</font></b>
++
++     <i><font color="#9A1900">&lt;!-- &lt;data&gt; can have multiple &lt;input&gt; or &lt;output&gt; tags. --&gt;</font></i>
++     <b><font color="#00458A">&lt;data&gt;</font></b>
++        <i><font color="#9A1900">&lt;!-- input data if available--&gt;</font></i>
++        <b><font color="#00458A">&lt;input&gt;</font></b>
++            <b><font color="#00458A">&lt;type&gt;</font></b>DataType<b><font color="#00458A">&lt;/type&gt;</font></b>
++
++            <i><font color="#9A1900">&lt;!-- input port which receives the data. --&gt;</font></i>
++            <b><font color="#00458A">&lt;port</font></b> <font color="#009900">carrier</font><font color="#990000">=</font><font color="#FF0000">"tcp"</font><b><font color="#00458A">&gt;</font></b>/portname<b><font color="#00458A">&lt;/port&gt;</font></b>
++            <b><font color="#00458A">&lt;required&gt;</font></b>yes<b><font color="#00458A">&lt;/required&gt;</font></b>
++            <b><font color="#00458A">&lt;priority&gt;</font></b>no<b><font color="#00458A">&lt;/priority&gt;</font></b>
++            <b><font color="#00458A">&lt;description&gt;&lt;/description&gt;</font></b>
++        <b><font color="#00458A">&lt;/input&gt;</font></b>
++        ...
++
++        <i><font color="#9A1900">&lt;!-- output data if available --&gt;</font></i>
++        <b><font color="#00458A">&lt;output&gt;</font></b>
++            <b><font color="#00458A">&lt;type&gt;</font></b>DataType<b><font color="#00458A">&lt;/type&gt;</font></b>
++            <b><font color="#00458A">&lt;port</font></b> <font color="#009900">carrier</font><font color="#990000">=</font><font color="#FF0000">"tcp"</font><b><font color="#00458A">&gt;</font></b>/portname<b><font color="#00458A">&lt;/port&gt;</font></b>
++            <b><font color="#00458A">&lt;description&gt;&lt;/description&gt;</font></b>
++        <b><font color="#00458A">&lt;/output&gt;</font></b>
++        ...
++
++    <b><font color="#00458A">&lt;/data&gt;</font></b>
++
++    <b><font color="#00458A">&lt;dependencies&gt;</font></b>
++        <b><font color="#00458A">&lt;computer&gt;</font></b>
++            <b><font color="#00458A">&lt;gpu&gt;</font></b>
++                <b><font color="#00458A">&lt;capability&gt;</font></b>1.3<b><font color="#00458A">&lt;/capability&gt;</font></b>
++            <b><font color="#00458A">&lt;/gpu&gt;</font></b>
++            ...
++        <b><font color="#00458A">&lt;/computer&gt;</font></b>
++        ...
++    <b><font color="#00458A">&lt;/dependencies&gt;</font></b>
++
++    <i><font color="#9A1900">&lt;!-- specific libraries or header files which are used for development --&gt;</font></i>
++    <b><font color="#00458A">&lt;development&gt;</font></b>
++        <b><font color="#00458A">&lt;header&gt;&lt;/header&gt;</font></b>
++        <b><font color="#00458A">&lt;library&gt;&lt;/library&gt;</font></b>
++    <b><font color="#00458A">&lt;/development&gt;</font></b>
++
++<b><font color="#00458A">&lt;/module&gt;</font></b>
++</tt></pre>
++</div>
++\endhtmlonly
++
++\latexonly
++\noindent
++\mbox{}\textbf{\textless{}module\textgreater{}}\ \ \ \  \\
++\mbox{}\ \ \ \ \textbf{\textless{}name\textgreater{}}module$\_$name\textbf{\textless{}/name\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}description\textgreater{}}Template\ module\textbf{\textless{}/description\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}version\textgreater{}}1.0\textbf{\textless{}/version\textgreater{}} \\
++\mbox{} \\
++\mbox{}\ \ \ \ \textit{\textless{}!-\/-\ \textless{}arguments\textgreater{}\ can\ have\ multiple\ \textless{}param\textgreater{}\ tags-\/-\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}arguments\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}param}\ desc=\texttt{"{}first\ parameter"{}}\textbf{\textgreater{}}\ param1\ \textbf{\textless{}/param\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}/arguments\textgreater{}} \\
++\mbox{} \\
++\mbox{}\ \ \ \ \textit{\textless{}!-\/-\ \textless{}authors\textgreater{}\ can\ have\ multiple\ \textless{}author\textgreater{}\ tags.\ -\/-\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}authors\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}author}\ email=\texttt{"{}"{}}\textbf{\textgreater{}}\ author1\ \textbf{\textless{}/author\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}/authors\textgreater{}} \\
++\mbox{} \\
++\mbox{}\ \ \ \ \ \textit{\textless{}!-\/-\ \textless{}data\textgreater{}\ can\ have\ multiple\ \textless{}input\textgreater{}\ or\ \textless{}output\textgreater{}\ tags.\ -\/-\textgreater{}} \\
++\mbox{}\ \ \ \ \ \textbf{\textless{}data\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \textit{\textless{}!-\/-\ input\ data\ if\ available-\/-\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}input\textgreater{}}\ \ \ \ \ \ \ \ \ \ \ \  \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}type\textgreater{}}DataType\textbf{\textless{}/type\textgreater{}} \\
++\mbox{} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textit{\textless{}!-\/-\ input\ port\ which\ receive\ the\ data.\ -\/-\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}port}\ carrier=\texttt{"{}tcp"{}}\textbf{\textgreater{}}/portname\textbf{\textless{}/port\textgreater{}}\ \ \ \ \ \ \ \ \ \ \ \  \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}required\textgreater{}}yes\textbf{\textless{}/required\textgreater{}}\ \ \ \ \ \ \ \ \ \ \  \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}priority\textgreater{}}no\textbf{\textless{}/priority\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}description\textgreater{}\textless{}/description\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}/input\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ ... \\
++\mbox{}\ \ \ \ \ \ \ \  \\
++\mbox{}\ \ \ \ \ \ \ \ \textit{\textless{}!-\/-\ output\ datas\ if\ available\ -\/-\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}output\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}type\textgreater{}}DataType\textbf{\textless{}/type\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}port}\ carrier=\texttt{"{}tcp"{}}\textbf{\textgreater{}}/portname\textbf{\textless{}/port\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}description\textgreater{}\textless{}/description\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}/output\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ ... \\
++\mbox{}\ \ \ \ \ \ \ \  \\
++\mbox{}\ \ \ \ \textbf{\textless{}/data\textgreater{}} \\
++\mbox{}\ \ \ \  \\
++\mbox{}\ \ \ \ \textbf{\textless{}dependencies\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}computer\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}gpu\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}capability\textgreater{}}1.3\textbf{\textless{}/capability\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}/gpu\textgreater{}}\  \\
++\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ ... \\
++\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}/computer\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ ... \\
++\mbox{}\ \ \ \ \textbf{\textless{}/dependencies\textgreater{}} \\
++\mbox{} \\
++\mbox{}\ \ \ \ \textit{\textless{}!-\/-\ specific\ libraries\ or\ header\ files\ which\ are\ used\ for\ development\ -\/-\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}development\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}header\textgreater{}\textless{}/header\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}library\textgreater{}\textless{}/library\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}/development\textgreater{}} \\
++\mbox{} \\
++\mbox{}\textbf{\textless{}/module\textgreater{}} \\
++\mbox{}
++\endlatexonly
++
++\subsection mode_notes Notes
++
++ - \<name\> should match its executable file name.
++ - \<type> refers to nominal type of data (e.g. ImageFrame, String).
++ - Required input means that execution of module depends on availability of the input data. Notice that not all the input are required for a module to perform its task (e.g. status request input).
++ - \<priority\>yes\</priority\> forces the execution of module to be delayed until the port become available.
++ - Physical and logical resource dependencies can be introduced using \<dependencies\> tag. Dependencies must follow resource conceptional models. Currently available models are 'memory', 'processor', 'storage', 'yarp_port', 'platform' and 'gpu'. All resource dependencies should be introduced inside \<computer\>\</computer\> tags. Resources inside a \<computer\> tag, represent conjunctional dependency.  Resources from different \<computer\> tags can be seen as disjunctions. Meaning that, if a module depends on either resource R1 or R2, they can be introduced inside two different \<computer\> tags. Resource dependencies should be introduced if they are really required. For example, if module's performance drops significantly in case of memory swapping, a memory resource dependency can be introduced with the required memory space.
++ - In a multi-platform cluster of computers, if a module depends on specific platform (Operating system), \<platform\> dependency should be introduced.
++
++ Resource conceptional model which can be used as module's dependency:
++\htmlonly
++<div class="fragment"><pre class="fragment">
++<tt><b><font color="#00458A">&lt;platform&gt;</font></b>
++    <b><font color="#00458A">&lt;name&gt;&lt;/name&gt;</font></b>
++    <b><font color="#00458A">&lt;distribution&gt;&lt;/distribution&gt;</font></b>
++    <b><font color="#00458A">&lt;release&gt;&lt;/release&gt;</font></b>
++<b><font color="#00458A">&lt;/platform&gt;</font></b>
++
++<b><font color="#00458A">&lt;yarp_port&gt;</font></b>
++    <b><font color="#00458A">&lt;name&gt;&lt;/name&gt;</font></b>   <i><font color="#9A1900">&lt;!-- yarp port name --&gt;</font></i>
++<b><font color="#00458A">&lt;yarp_port&gt;</font></b>
++
++<b><font color="#00458A">&lt;memory&gt;</font></b>
++    <b><font color="#00458A">&lt;free_space&gt;&lt;/free_space&gt;</font></b>    <i><font color="#9A1900">&lt;!-- in KB --&gt;</font></i>
++<b><font color="#00458A">&lt;/memory&gt;</font></b>
++
++<b><font color="#00458A">&lt;storage&gt;</font></b>
++    <b><font color="#00458A">&lt;free_space&gt;&lt;/free_space&gt;</font></b>    <i><font color="#9A1900">&lt;!-- in KB --&gt;</font></i>
++<b><font color="#00458A">&lt;/storage&gt;</font></b>
++
++<b><font color="#00458A">&lt;processor&gt;</font></b>
++    <b><font color="#00458A">&lt;architecture&gt;&lt;/architecture&gt;</font></b>
++    <b><font color="#00458A">&lt;cores&gt;&lt;/cores&gt;</font></b>
++    <b><font color="#00458A">&lt;frequency&gt;&lt;/frequency&gt;</font></b>
++    <b><font color="#00458A">&lt;model&gt;&lt;/model&gt;</font></b>
++<b><font color="#00458A">&lt;/processor&gt;</font></b>
++
++<b><font color="#00458A">&lt;gpu&gt;</font></b>
++    <b><font color="#00458A">&lt;name&gt;&lt;/name&gt;</font></b>
++    <b><font color="#00458A">&lt;cores&gt;&lt;/cores&gt;</font></b>
++    <b><font color="#00458A">&lt;capability&gt;&lt;/capability&gt;</font></b>
++    <b><font color="#00458A">&lt;registers_block&gt;&lt;/registers_block&gt;</font></b>
++    <b><font color="#00458A">&lt;thread_block&gt;&lt;/thread_block&gt;</font></b>
++    <b><font color="#00458A">&lt;overlap&gt;&lt;/overlap&gt;</font></b>
++    <b><font color="#00458A">&lt;global_memory&gt;</font></b>
++        <b><font color="#00458A">&lt;total_space&gt;&lt;/total_space&gt;</font></b>     <i><font color="#9A1900">&lt;!-- in KB --&gt;</font></i>
++    <b><font color="#00458A">&lt;/global_memory&gt;</font></b>
++    <b><font color="#00458A">&lt;shared_memory&gt;</font></b>
++        <b><font color="#00458A">&lt;total_space&gt;&lt;/total_space&gt;</font></b>     <i><font color="#9A1900">&lt;!-- in KB --&gt;</font></i>
++    <b><font color="#00458A">&lt;/shared_memory&gt;</font></b>
++    <b><font color="#00458A">&lt;constant_memory&gt;</font></b>
++        <b><font color="#00458A">&lt;total_space&gt;&lt;/total_space&gt;</font></b>     <i><font color="#9A1900">&lt;!-- in KB --&gt;</font></i>
++    <b><font color="#00458A">&lt;/constant_memory&gt;</font></b>
++<b><font color="#00458A">&lt;/gpu&gt;</font></b>
++</tt></pre>
++</div>
++\endhtmlonly
++
++\latexonly
++\noindent
++\mbox{}\textbf{\textless{}platform\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}name\textgreater{}\textless{}/name\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}distribution\textgreater{}\textless{}/distribution\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}release\textgreater{}\textless{}/release\textgreater{}} \\
++\mbox{}\textbf{\textless{}/platform\textgreater{}} \\
++\mbox{} \\
++\mbox{}\textbf{\textless{}yarp$\_$port\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}name\textgreater{}\textless{}/name\textgreater{}}\ \ \ \textit{\textless{}!-\/-\ yarp\ port\ name\ -\/-\textgreater{}} \\
++\mbox{}\textbf{\textless{}yarp$\_$port\textgreater{}}\ \ \ \ \ \ \ \ \ \ \  \\
++\mbox{} \\
++\mbox{}\textbf{\textless{}memory\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}free$\_$space\textgreater{}\textless{}/free$\_$space\textgreater{}}\ \ \ \ \textit{\textless{}!-\/-\ in\ KB\ -\/-\textgreater{}} \\
++\mbox{}\textbf{\textless{}/memory\textgreater{}} \\
++\mbox{} \\
++\mbox{}\textbf{\textless{}storage\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}free$\_$space\textgreater{}\textless{}/free$\_$space\textgreater{}}\ \ \ \ \textit{\textless{}!-\/-\ in\ KB\ -\/-\textgreater{}} \\
++\mbox{}\textbf{\textless{}/storage\textgreater{}} \\
++\mbox{} \\
++\mbox{}\textbf{\textless{}processor\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}architecture\textgreater{}\textless{}/architecture\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}cores\textgreater{}\textless{}/cores\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}frequency\textgreater{}\textless{}/frequency\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}model\textgreater{}\textless{}/model\textgreater{}} \\
++\mbox{}\textbf{\textless{}/processor\textgreater{}} \\
++\mbox{} \\
++\mbox{}\textbf{\textless{}gpu\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}name\textgreater{}\textless{}/name\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}cores\textgreater{}\textless{}/cores\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}capability\textgreater{}\textless{}/capability\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}registers$\_$block\textgreater{}\textless{}/registers$\_$block\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}thread$\_$block\textgreater{}\textless{}/thread$\_$block\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}overlap\textgreater{}\textless{}/overlap\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}global$\_$memory\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}total$\_$space\textgreater{}\textless{}/total$\_$space\textgreater{}}\ \ \ \ \ \textit{\textless{}!-\/-\ in\ KB\ -\/-\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}/global$\_$memory\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}shared$\_$memory\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}total$\_$space\textgreater{}\textless{}/total$\_$space\textgreater{}}\ \ \ \ \ \textit{\textless{}!-\/-\ in\ KB\ -\/-\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}/shared$\_$memory\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}constant$\_$memory\textgreater{}} \\
++\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}total$\_$space\textgreater{}\textless{}/total$\_$space\textgreater{}}\ \ \ \ \ \textit{\textless{}!-\/-\ in\ KB\ -\/-\textgreater{}} \\
++\mbox{}\ \ \ \ \textbf{\textless{}/constant$\_$memory\textgreater{}} \\
++\mbox{}\textbf{\textless{}/gpu\textgreater{}}\ \ \ \ \  \\
++\mbox{}
++\endlatexonly
++
++\section create Create new XML description file
++yarpmanager allows for creating new application, module and resource description file using predifined templates. To create a new XML file, first make sure you set 'external_editor' to your preferable editor (e.g. gedit, notepad) then
++- From "File>New" menu chose "New Application". ("New Module" for module and "New Resource" for resource)
++- Chose your application folder and enter proper name (e.g "my-test-app.xml") to save it. The template file will be open using 'external_editor'.
++- Modify and save it.
++- Open it using yarpmanager.
++
++\subsection create_notes Notes
++- (g)yarpmanager allows for identical application names (they will be listed as MyApp(1), MyApp(2), ...). But it is strongly recommended to have unique proper name for each application. Notice that, duplicate names for modules and resources are not allowed and will be ignored by (g)yarpmanager.
++- If you modify the XML description file, you need to "reopen" it. Identically, you can "remove" and "open" it from GUI.
++
++\section export Generate application dependency graph
++The arrangement of modules and resources within an application can be visualized as dependency graph. For Instance, dependency graph of application "EyesViewer-Localhost" used in above example is shown below.
++\image html app-graph.jpg "EyesViewer-Localhost"
++
++As shown in the graph, application "EyesViewer-Localhost" consists of two instances of "FakeEyes" with their relevant modules. Each module is associated with a node marked as "MultipleResource". It is linked to machines which satisfy its requirements. Notice that here, "localhost" is specifically assigned by user to each modules; Thus there is no link to machines "node1" and "node2".
++ The graph is generated in DOT format which can be visualized using Graphviz tools. To generate the graph:
++ - Open an application using yarpmanager (See above example \ref example_g)
++ - From "Edit" menu chose "Export graph"
++ - Give a name (e.g "MyApp.dot") and save it.
++
++Or open an application using yarpmanager (See above example \ref example_y) and type :
++\verbatim
++>> export MyApp.dot
++\endverbatim
++
++To visualize the graph, Linux users can open a terminal and try this:
++\verbatim
++$ sudo apt-get install graphviz
++$ dot -Tpdf -o MyApp.pdf MyApp.dot
++\endverbatim
++
++Windows users can download Graphviz tools from http://www.graphviz.org/Download_windows.php and in windows console type :
++
++\verbatim
++ C:\...\> dot -Tpdf -o MyApp.pdf MyApp.dot
++\endverbatim
++
++
++
++\section faq Frequently asked questions
++\subsection wait_launch How to postpone launching a module?
++It can very often happen that you need to launch a module after some other modules already launched and are running. This is usually the case where a module needs to access some ports which should be open by other modules. To achieve this behavior, you simply needs to indicate which ports your module needs to be available using \<dependencies\> tag of the corresponding module in the application description file (see \ref app_notes). 
++ 
++\subsection quick_launch How to quickly launch a single application in command line? 
++Imagine you need to run a single application (e.g., eyesviewer-localhost.xml) without using Guis. All you need is to use 'yarpmanager-console', give your application description file as its parameter and ask it to run the modules and connect them: 
++
++\verbatim
++     yarpmanager-console --application my-app.xml --run --connect
++\endverbatim
++  
++If you want to run the application without getting blocked in yarpmanager-console, you can ask it to quit after running the application. 
++
++\verbatim
++     yarpmanager-console --application my-app.xml --run --connect --exit --silent 
++\endverbatim
++
++The '--silent' parameter avoids showing the verbose messages. Try 'yarpmanager-console --help' for further information.  
++
++*/
+diff --git a/doc/cmd_yarpmotorgui.dox b/doc/cmd_yarpmotorgui.dox
+new file mode 100644
+index 0000000..6f6196c
+--- /dev/null
++++ b/doc/cmd_yarpmotorgui.dox
+@@ -0,0 +1,143 @@
++/**
++\defgroup yarpmotorgui yarpmotorgui
++@ingroup yarp_guis
++@ingroup yarp_tools
++
++A simple graphical interface for moving all the joints of a robot with
++sliders.
++Uses remote control boards.
++
++\image html yarpmotorgui.jpg
++\image latex yarpmotorgui.eps "A window of yarpmotorgui running on Linux" width=15cm
++
++\section intro_sec Description
++
++This GUI can be used for the following pouposes:
++
++- continuosly reading the position of the ALL the robot joints
++- running/idling single joints
++- running ALL the robot joints
++- position command of single joints
++- changing the velocity of the position commands
++- performing sequences of position commands with the ALL robot joints
++- calibrating single joints
++- checking if the robot is in position ("@")
++
++\section parameters_sec Parameters
++
++\code
++--name:     name of the robot (used to form port names)
++--parts:    a list of parts to be added.
++--skip:     skips the initial dialog and keeps the default parts.
++--speed:    enables the speed visualisation.
++--calib:    enables the calib buttons.
++--debug:    opens the debugInterfaceClient (for firmware debugging).
++--direct:   enables the position direct mode.
++--openloop: enables the openloop mode.
++--admin:    enables all the previous parameters (debug, direct, openloob, calib).
++\endcode
++Example:
++\code
++yarpmotorgui --name icub --parts (head torso left_arm right_arm left_leg right_leg)
++\endcode
++
++These parameters can be specified in a single file, passed with the
++--from option.
++Example:
++\code
++yarpmotorgui --from yarpmotorgui.ini
++\endcode
++
++By default yarpmotorgui starts using the file yarpmotorgui.ini
++in $ICUB_ROOT/app/default.
++
++An home position can be optionally defined in the supplied file.
++This home position is specified using a group [part_zero] (e.g. [head_zero])
++containing the home position and velocity  that will be commanded when the home
++button is pressed:
++\code
++[head_zero]
++PositionZero      0.0        0.0      0.0       0.0        0.0        0.0
++VelocityZero     10.0       10.0     10.0      10.0       10.0       10.0
++\endcode
++
++A set of calibration parameters can be optionally defined in the
++supplied file. These calibration parameters follow the same standard
++followed by the \ref icub_iCubInterface and can be specified within
++the group [part_calib] (e.g. [head_calib]):
++\code
++[head_calib]
++CalibrationType     0          0        0         0          0          0
++Calibration1    500.0      1000.0    900.0     300.0     1333.0     1333.0
++Calibration2     20.0        20.0     20.0     -20.0        5.0        5.0
++Calibration3      0.0         0.0      0.0       0.0        0.0        0.0
++\endcode
++
++A set of parameters can be optionally specified in order to
++open a set of tabs which allow cartesian movements trough the cartesian
++interfaces (see the tutorial \ref icub_cartesian_interface). These cartesian
++interfaces can be enabled by inserting a group [cartesian] in the
++yarpmotorgui intialization file. This group should contain the name
++of the robot parts which should be controlled in the cartesian space:
++\code
++[cartesian]
++left_arm
++...
++right_leg
++\endcode
++Each part initialized with the cartesian interface should be properly
++configured by specifying the limits for the cartesian workspace.
++\code
++[left_arm_workspace]
++xmin xm
++xmax xM
++
++ymin ym
++ymax yM
++
++zmin zm
++zmax zM
++\endcode
++In order to make the cartesian tabs working you need to be sure that
++that the \ref iKinCartesianSolver "Cartesian Solvers" are running and working.
++
++\section portsa_sec Ports Accessed
++For each part initalized (e.g. right_leg):
++- /icub/right_leg/rpc:i
++- /icub/right_leg/command:i
++- /icub/gui/right_leg/state:i
++
++\section portsc_sec Ports Created
++For each part initalized (e.g. right_leg):
++- /icub/gui/right_leg/rpc:o
++- /icub/gui/right_leg/command:o
++- /icub/right_leg/state:o
++
++\section conf_file_sec Configuration Files
++
++Passed with the paremter --from, configure the layout of the gui.
++\code
++name icub
++parts (head torso right_arm left_arm)
++\endcode
++
++Creates a gui. Connects automatically to:
++
++\code
++/icub/head/*
++/icub/torso/*
++/icub/right_arm/*
++...
++\endcode
++
++\section tested_os_sec Tested OS
++Linux and Windows.
++
++\author Francesco Nori
++
++Copyright (C) 2008 RobotCub Consortium
++
++CopyPolicy: Released under the terms of the GNU GPL v2.0.
++
++This file can be edited at doc/yarpmotorgui.dox.
++*/
+diff --git a/doc/cmd_yarpscope.dox b/doc/cmd_yarpscope.dox
+new file mode 100644
+index 0000000..8e6c570
+--- /dev/null
++++ b/doc/cmd_yarpscope.dox
+@@ -0,0 +1,263 @@
++/*
++ * Copyright (C) 2012  iCub Facility, Istituto Italiano di Tecnologia
++ * Author: Daniele E. Domenichelli <daniele.domenichelli@iit.it>
++ *
++ * CopyPolicy: Released under the terms of the LGPLv2.1 or later, see LGPL.TXT
++ */
++
++/**
++\page yarpscope yarpscope: A simple graphical user interface for visualizing the numerical content of a a port.
++
++\author Daniele E. Domenichelli
++\author The original Qt version of portScope was written by Francesco Nori.
++
++\section intro_sec Description
++This simple graphical user interface allows to visualize on a plot the content
++of a YARP port. The input port is assumed to contain a vector of numbers.
++
++ - The main window can contain one or more plots.
++ - Each plot can contain one or more graphs.
++ - Each graph displays one pair [remote port, index].
++
++\section usage_sec How to initialize the yarpscope
++
++yarpscope supports two different modes: simple mode (one remote, one graph) and
++XML mode (multiple remotes, multiple graph).
++
++The following options are common to both modes:
++
++\code
++ --help                 Print this help and exit.
++
++ --title [string]       Title of the window (default "YARP Port Scope")
++ --x [uint]             Initial X position of the window.
++ --y [uint]             Initial Y position of the window.
++ --dx [uint]            Initial width of the window.
++ --dy [uint]            Initial height of the window.
++
++ --interval [int]       Initial refresh interval in milliseconds. (default = 50ms)
++\endcode
++
++
++\subsection yarpscope_simple_mode Simple Mode
++
++Simple mode can be used for running yarpscope from the command line, connecting
++to a single remote and displaying multiple plots on a single graph.
++
++The syntax is
++
++\code
++--remote [string]      Remote port to connect to.
++ --carrier [string]     YARP Carrier used for connections (default "mcast")
++ --persistent,          Make normal or persistent connections (default persistent)
++   --no-persistent
++ --index [...]          Index(es) of the vector to plot.
++                        It can be an [uint] or an array of [uint]s
++ --plot_title [string]  Plot title (default = remote)
++ --min [float]          Minimum value for the X axis (default -100)
++ --max [float]          Maximum value for the X axis (default 100)
++ --size [uint]          Plot size (Number of samples to plot) (default 201)
++ --bgcolor [string]     Background color.
++ --color [...]          Graph color(s).
++                        Depending on index it must be a [string] or an array of [string]s.
++ --type [...]           Graph type(s). Accepted values are "points", "lines" and "bars" (default = "lines")
++                        Depending on index it must be a [string] or an array of [string]s.
++ --graph_size [...]     Graph size(s) (thickness of the points) (default = 1)
++                        Depending on index it must be a [uint] or an array of [uint]s.
++\endcode
++
++
++
++\subsection yarpscope_xml_mode XML Mode
++
++
++XML mode can be used to start yarpscope by passing an xml that contains the
++configuration of the window. It can connect to multiple remotes and display
++one or more graphs in a grid.
++To invoke XML mode, yarpscope must be started passing the --xml parameter.
++The file is located using the YARP default policy.
++
++Here is an example of portscope description file in XML format:
++
++\code
++<?xml version="1.0" encoding="UTF-8" ?>
++<portscope rows="3" columns="3" carrier="mcast">
++    <plot gridx="0"
++          gridy="0"
++          hspan="1"
++          vspan="1"
++          title="Plot 00"
++          size="60"
++          minval="-100"
++          maxval="100"
++          bgcolor="LightSlateGrey">
++        <graph remote="/icubSim/head/state:o"
++               index="0"
++               color="Red"
++               title="Graph 0"
++               type="lines"
++               size="3" />
++        <graph remote="/icubSim/head/state:o"
++               index="1"
++               color="Green"
++               title="Graph 1"
++               size="3"
++               type="points" />
++        <graph remote="/icubSim/head/state:o"
++               index="2"
++               color="Blue"
++               title="Graph 2"
++               size="1"
++               type="bars" />
++    </plot>
++    <plot gridx="0"
++          gridy="1"
++          hspan="1"
++          vspan="2"
++          title="Plot 01"
++          minval="-100"
++          maxval="100"
++          bgcolor="LightGrey">
++        <graph remote="/icubSim/right_arm/state:o"
++               index="0"
++               color="Red"
++               title="Graph 0"
++               type="bars" />
++        <graph remote="/icubSim/right_arm/state:o"
++               index="1"
++               color="Green"
++               title="Graph 1"
++               type="lines" />
++        <graph remote="/icubSim/left_arm/state:o"
++               index="0"
++               color="Blue"
++               title="Graph 2"
++               type="points" />
++        <graph remote="/icubSim/left_arm/state:o"
++               index="1"
++               color="Magenta"
++               title="Graph 2"
++               type="points" />
++    </plot>
++    <plot gridx="1"
++          gridy="0"
++          hspan="2"
++          vspan="1"
++          title="Plot 10"
++          minval="-100"
++          maxval="100"
++          bgcolor="Yellow">
++        <graph remote="/icubSim/right_leg/state:o"
++               index="0"
++               color="Red"
++               title="Graph 0" />
++        <graph remote="/icubSim/right_leg/state:o"
++               index="1"
++               color="Green"
++               title="Graph 1" />
++        <graph remote="/icubSim/right_leg/state:o"
++               index="2"
++               color="Blue"
++               title="Graph 2" />
++    </plot>
++    <plot gridx="1"
++          gridy="1"
++          hspan="2"
++          vspan="2"
++          title="Plot 11"
++          minval="-100"
++          maxval="100"
++          bgcolor="Pink">
++        <graph remote="/icubSim/torso/state:o"
++               index="0"
++               color="Red"
++               title="Graph 0"
++               type="bars" />
++        <graph remote="/icubSim/torso/state:o"
++               index="1"
++               color="Green"
++               title="Graph 1"
++               type="lines" />
++        <graph remote="/icubSim/torso/state:o"
++               index="2"
++               color="Blue"
++               title="Graph 2"
++               type="points" />
++    </plot>
++</portscope>
++\endcode
++
++This xml will produce a GUI similar to this:
++
++\image html yarpscope.png ""
++
++Details:
++
++\code
++<portscope rows="3" columns="3" carrier="mcast">
++\endcode
++
++- \a rows and \a columns is the size of the main table.
++(Note: rows * columns does not necessarily corresponds to the number of plots,
++since for each plot you can set \a hspan and \a vspan). Also if your grid is
++bigger than what you declare here, it is resized automatically [optional].
++- \a "carrier" is the carrier that will be used for connections (default = mcast) [optional].
++
++
++Now declare a plot:
++
++\code
++    <plot gridx="0"
++          gridy="0"
++          hspan="1"
++          vspan="1"
++          title="Plot 00"
++          size="60"
++          minval="-100"
++          maxval="100"
++          bgcolor="LightSlateGrey">
++\endcode
++
++- \a gridx and \a gridy are the position in the main table of the portscope.
++\a gridx corresponds to the column (the first colums
++index is 0), and \a gridy is corresponds to the row. Columns and rows are
++indexed from zero, therefore (0,0) is the top-left plot [mandatory].
++- \a hspan and \a vspan are the number of cells in the main table that the plot will
++take [optional, default = (1,1)].
++- \a title is the title of the plot [optional, currently unused].
++- \a size is the number of samples that will be shown (i.e. the length of the X
++axes [optional, default = 201].
++- \a minval and \a maxval are the minimum and maximum values on the Y axes
++[optional, default -100, 100].
++- \a bgcolor is the color of the background for the plot. Color names (white, gray,
++etc.) and RGB values (\#FFFFFF, ecc) are accepted [optional, default "white"]
++
++
++In each plot you can have one or more graphs:
++
++\code
++        <graph remote="/icubSim/head/state:o"
++               index="0"
++               color="Red"
++               title="Graph 0"
++               type="lines"
++               size="3" />
++\endcode
++
++
++- \a remote is the YARP port where the data is read. For each port used in the
++xml file, yarpscope will open a port \a $YARP_PORT_PREFIX/yarpscope/\<remote\> and
++connect it to the \a remote port
++- \a index is the index of the data to graph.
++- \a color is the color of the plot. Color names (white, gray, etc.) and RGB values
++(\#FFFFFF, ecc) are accepted [optional, default "black"]
++- \a title is the name of the plot as it will appear on the legend [optional,
++currently unused].
++- \a type is the type of graph. It can be:
++  -# \a points
++  -# \a lines
++  -# \a bars
++[optional, default "lines"]
++- \a size depending on \a type, is the thickness of each point, of the line or
++of the bar [optional, default 1].
++*/
+diff --git a/doc/yarp_yarp-config.dox b/doc/yarp_yarp-config.dox
+deleted file mode 100644
+index 1fa158d..0000000
+--- a/doc/yarp_yarp-config.dox
++++ /dev/null
+@@ -1,131 +0,0 @@
+-
+-/*
+- * Copyright (C) 2013 iCub Facility Istituto Italiano di Tecnologia
+- * CopyPolicy: Released under the terms of the LGPLv2.1 or later, see LGPL.TXT
+- *
+- */
+-
+-/**
+- * @page yarp_yarp-config yarp-config
+-
+-\author Elena Ceseracciu and Lorenzo Natale
+-
+-The utility yarp-config inspects the system and reports information about installed configuration and data files. In addition, it supports the process of customizing data files by copying them from installation to the user private directories (we call this \e importing).
+-
+-Some commands related to YARP configuration files are:
+-
+-\li <EM> yarp-config --version    </EM> report version information
+-\li <EM> yarp-config --namespace  </EM> report file that caches the current YARP namespace
+-\li <EM> yarp-config --nameserver </EM> report file that caches nameserver contact information
+-
+-As for data file customization, this tool allows managing \e context and \e robot files (as explained in \ref yarp_data_dirs). This tool knows from the ResourceFinder where all files are located and where to put them given the system and user's environment.
+-The main sub-commands are ''context'' to handle files in context directories and ''robot'' to handle robot directories.
+-
+-\verbatim
+-  yarp-config context --list
+-\endverbatim
+-
+-Shows all the contexts visible to the ResourceFinder, <EM> in the order of precedence </EM>. To limit the list to the contexts found in the installed locations you can add:
+-
+-\verbatim
+-  yarp-config context --list --installed
+-\endverbatim
+-
+-To import contexts to the home directory:
+-
+-\verbatim
+-  yarp-config context --import <context-name>
+-  yarp-config context --import <context-name> file1 file2
+-  yarp-config context --import-all
+-\endverbatim
+-
+-The first two commands affects individual contexts, and allow to import a whole context (first command) or only some specific files (second one); the third command affects all contexts (not recommended).
+-After you finish importing a context, you can go to your local private directory (in Linux usually: $HOME/.local/share/yarp/contexts/) and edit it.
+-To remove any local changes and restore the default files, one can do:
+-
+-\verbatim
+-  yarp-config context --remove <context-name>
+-\endverbatim
+-
+-The utility works similarly for robot specific files:
+-
+-\verbatim
+-  yarp-config robot --list
+-  yarp-config robot --import <robot-name>
+-  yarp-config robot --import <robot-name> file1 file2
+-  yarp-config robot --remove <robot-name>
+-\endverbatim
+-
+-In any case:
+-
+-\verbatim
+-  yarp-config help
+-\endverbatim
+-provides an explanation of the commands supported by the yarp-config tool.
+-
+-\section yarp-config-example An Example
+-
+-Suppose you have installed both YARP and the example provided in <YARP_SOURCE_CODE>/examples/resourceFinder and described in \ref yarp_resource_finder_installation .
+-
+-Type:
+-
+-\verbatim
+-  yarp-config context --list
+-\endverbatim
+-
+-The result should be something like:
+-
+-\verbatim
+- **LOCAL USER DATA:
+- * Directory : /home/nat/.local/share/yarp/contexts
+- **SYSADMIN DATA:
+- **INSTALLED DATA:
+- * Directory : /usr/local/share/yarp/contexts
+- randomMotion
+- yarpscope
+-
+-\endverbatim
+-
+-This shows us that:
+-
+-\li The local user directory /home/nat.local/share/yarp/contexts is empty, i.e. no contexts have been imported
+-\li The shared installation directory for YARP /usr/local/share/yarp/contexts contains two contexts: randomMotion and yarpscope
+-
+-To be able to modify a contexts, for example to customize one parameter, you have to first import it in the user directory. Suppose for example you want to customize the context ''randomMotion'':
+-
+-\verbatim
+-  yarp-config context --import randomMotion
+-\endverbatim
+-
+-This is the output you should get:
+-
+-\verbatim
+- Copied context randomMotion from
+- /usr/local/share/yarp/contexts/randomMotion to
+- /home/nat/.local/share/yarp/contexts/randomMotion
+-
+- Current locations for this context:
+- /home/nat/.local/share/yarp/contexts/randomMotion
+- /usr/local/share/iCub/contexts/randomMotion
+-\endverbatim
+-
+-Now type:
+-
+-\verbatim
+-  yarp-config context --list
+-\endverbatim
+-
+-To verify that ''randomMotion'' is indeed now present in /home/nat/.local/share/yarp/contexts
+-
+-This means that files from ''randomMotion'' in /home/nat/.local/share/yarp/contexts/ will take precedence over the ones in /usr/local/share/yarp/contexts. This is indeed what we wanted since the latter contains the default values we are going to modify to customize the behavior of the module.
+-
+-To undo you can remove the context:
+-
+-\verbatim
+-  yarp-config context --remove randomMotion
+-\endverbatim
+-
+-
+- *
+- */
+-
+diff --git a/doc/yarpdatadumper.dox b/doc/yarpdatadumper.dox
+deleted file mode 100644
+index 49055e4..0000000
+--- a/doc/yarpdatadumper.dox
++++ /dev/null
+@@ -1,272 +0,0 @@
+-/**
+-@ingroup yarp_tools
+-
+-\defgroup yarpdatadumper yarpdatadumper
+-
+-Acquires and stores Bottles or Images and Videos from a YARP
+-port.
+-
+-Copyright (C) 2010 RobotCub Consortium
+-
+-Author: Ugo Pattacini
+-
+-Date: first release 16/05/2008
+-
+-CopyPolicy: Released under the terms of the GNU GPL v2.0.
+-
+-\section intro_sec Description
+-
+-When launched, the service monitors the presence of incoming
+-data (bottles or images) and stores it within a folder called
+-with the same name as the service port (or with a proper suffix
+-appended if other data is present in the current path). In this
+-folder the file 'data.log' contains the information (taken from
+-the envelope field of the port) line by line as follows:
+-
+-\code
+-[pck id] [time stamp] [bottle content (or image_file_name)]
+-   0       1.234         0 1 2 3 ...
+-   1       1.235         4 5 6 7 ...
+-   ...     ...           ...
+-\endcode
+-
+-Note that if the envelope is not valid, then the Time Stamp is
+-the reference time of the machine where the service is running.
+-Anyway, a selection between these two Time Stamps is available
+-for the user through --rxTime option.
+-
+-Moreover, a file called 'info.log' is produced containing
+-information about the data type stored within the 'data.log'
+-file as well as the name of the yarp ports connected or
+-disconnected to the dumper, as in the following:
+-
+-\code
+-Type: [Bottle; | Image; | Image; Video:ext(huffyuv);]
+-[local-timestamp] /yarp-port-name [connected]
+-[local-timestamp] /yarp-port-name [disconnected]
+-\endcode
+-
+-Finally, a further file called 'timecodes.log' is also generated
+-together with the video, which contains the timecode associated
+-to each frame given in millisecond precision. The file content
+-looks like the following:
+-
+-\code
+-# timecode format v2
+-0
+-40
+-80
+-\endcode
+-
+-This is useful to recover the exact timing while post-processing
+-the video relying for example on the \e mkvmerge tool:
+-\code
+-mkvmerge -o out.mkv --timecodes 0:timecodes.log video.mkv
+-\endcode
+-To get \e mkvmerge do: sudo apt-get install mkvtoolnix
+-
+-The module \ref yarpdataplayer can be used to re-play a dump generated
+-by the \ref yarpdatadumper.
+-
+-\section lib_sec Libraries
+-- To record videos: OpenCV 2.4 and the <a
+-  href="http://wiki.team-mediaportal.com/9_Glossary/Huffyuv">huffyuv</a>
+-  codec for lossless data compression.
+-
+-\section codec_installation Codec Installation
+-- Windows: fetch the dll library from the codec website and
+-  simply install it.
+-
+-- Linux: ffmpeg must be properly installed and recognized by
+-  OpenCV. The command "sudo apt-get ffmpeg" seemed not to work.
+-  This is a possible alterative procedure:
+-
+-  -# sudo apt-get install libjpeg62-dev libtiff4-dev
+-     libjasper-dev libopenexr-dev libeigen2-dev yasm libfaac-dev
+-     libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev
+-     libvorbis-dev libxvidcore-dev
+-  -# svn checkout svn://svn.ffmpeg.org/ffmpeg/trunk ffmpeg
+-  -# ./configure --enable-gpl --enable-version3 --enable-nonfree
+-     --enable-postproc --enable-libfaac --enable-libopencore-amrnb
+-     --enable-libopencore-amrwb --enable-libtheora
+-     --enable-libvorbis --enable-libxvid --enable-x11grab
+-     --enable-swscale --enable-shared
+-  -# sudo make install
+-  -# recompile OpenCV through cmake
+-
+-\section parameters_sec Parameters
+---name \e portname
+-- The parameter \e portname identifies the name of the listening
+-  port open by the service; if not specified \e /dump is
+-  assumed. The leading forward slash will be added if not
+-  provided.
+-
+---connect \e portname
+-- The parameter \e portname specifies the name of the port to
+-  connect the dumper to at launch time (\e tcp is used).
+-
+---dir \e dirname
+-- The parameter \e dirname serves to specify the storage
+-  directory explicitely (relative to the location where the
+-  module has been launched from).
+-
+---overwrite
+-- If this option is specified, then a pre-existing storage
+-  directory will be overwritten.
+-
+---type \e datatype
+-- The parameter \e datatype selects the type of items to be
+-  stored. It can be \e bottle, \e image or \e video; if not
+-  specified \e bottle is assumed. Note that images are stored
+-  using the corresponding file formats. The data type \e video
+-  is available if OpenCV is found and the codec \e huffyuv is installed.
+-
+---addVideo
+-- In case images are acquired with this option enabled, a video
+-  called 'video.ext' is also produced at the same time. The
+-  extension \e ext is determined by the option \e videoType.
+-  This option is available if OpenCV is found and the codec
+-  \e huffyuv is installed in the system.
+-
+---videoType \e ext
+-- If it is required to generate a video, the parameter \e ext
+-  specifies the type of the video container employed. Available
+-  types are: \e mkv (default), \e avi.
+-
+---downsample \e n
+-- With this option it is possible to reduce the storing rate by
+-  a factor \e n, i.e. the parameter \e n specifies how many
+-  items (bottles or images) shall be skipped after one
+-  acquisition.
+-
+---rxTime
+-- With this option it is possible to select which Time Stamp to
+-  assign to the dumped data: normally the sender time is the
+-  reference, but if this option is enabled, the time of the
+-  receiving machine on which the service is running will be the
+-  reference. However, even if --rxTime is not selected, the
+-  receiver time will be taken as reference in case of invalid
+-  message envelope.
+-
+---txTime
+-- Regardless of its availability, the sender time stamp will be
+-  inserted in the log straightaway. Moreover, if \e txTime is
+-  given in conjunction with the \e rxTime option (or even if
+-  \e rxTime is not selected but the sender stamp is invalid),
+-    then the following format will be adopted for the logged
+-    data:
+-
+-\code
+-[pck id] [tx stamp] [rx stamp] [message content]
+-\endcode
+-
+-\section portsa_sec Ports Accessed
+-The port the service is listening to.
+-
+-\section portsc_sec Ports Created
+-
+-- \e <portname> (e.g. /dump)
+-
+-- \e <portname>/rpc which is a remote procedure call port useful
+-  to shut down the service remotely by sending to this port the
+-  'quit' command.
+-
+-\section in_files_sec Input Data Files
+-None.
+-
+-\section out_data_sec Output Data Files
+-Within the directory \e ./<portname> the file \e data.log is
+-created containing the acquisitions. Besides, if \e image type
+-has been selected, all the acquired images are also stored. A
+-further file called \e info.log is also produced containing
+-meta-data relevant for the logging.
+-
+-Note that in case an acquisition with the same \e <portname> was
+-previously carried out, an increasing suffix will be appended
+-to the name of the directory.
+-
+-\section conf_file_sec Configuration Files
+-None.
+-
+-\section tested_os_sec Tested OS
+-Linux and Windows.
+-
+-\section example_sec Example
+-By launching the following command:
+-
+-\code
+-yarpdatadumper --name /log --type image --downsample 2
+-\endcode
+-
+-the service will create the listening port /log capable of
+-storing images within the subdirectory ./log at a halved rate
+-with respect to the rate of the sender.
+-
+-Then, by connecting the port to the sender with the usual yarp
+-command
+-
+-\code
+-yarp connect /grabber /log
+-\endcode
+-
+-the acquisition will start.
+-
+-By pressing CTRL+C the acquisition is terminated.
+-
+-So, now, have a look inside the directory ./log
+-
+-\section application_sec Generate a yarpmanager application
+-
+-To dump data from several yarp ports, it may be convenient
+-to launch several yarpdatadumper instances using the yarpmanager.
+-
+-If you have Python installed on your machine, you can use the
+-yarpdatadumperAppGenerator.py utility script to generate a yarpmanager
+-application that will launch and connect as many yarpdatadumper as you need.
+-
+-If for example you need to read the ports /icub/left_leg/stateExt:o and
+-/icub/left_leg/analog:o on the host icub15, you can run the generator
+-with the following option:
+-
+-\code
+-yarpdatadumperAppGenerator.py  --ports /icub/left_leg/analog:o /icub/left_leg/stateExt:o  --host icub15 --name leftLegDumper
+-\endcode
+-
+-This will generate the following yarpmanager application in the leftLegDumper.xml file:
+-
+-\code
+-<application>
+-    <name>leftLegDumper</name>
+-    <dependencies>
+-        <port>/icub/left_leg/analog:o</port>
+-        <port>/icub/left_leg/stateExt:o</port>
+-    </dependencies>
+-    <module>
+-        <name>yarpdatadumper</name>
+-        <parameters>--name /dumper/icub/left_leg/analog:o --type bottle </parameters>
+-        <node>icub15</node>
+-        <tag>data-dumper-icub-left_leg-analog-o</tag>
+-    </module>
+-    <connection>
+-        <from>/icub/left_leg/analog:o</from>
+-        <to>/dumper/icub/left_leg/analog:o</to>
+-        <protocol>udp</protocol>
+-    </connection>
+-    <module>
+-        <name>yarpdatadumper</name>
+-        <parameters>--name /dumper/icub/left_leg/stateExt:o --type bottle </parameters>
+-        <node>icub15</node>
+-        <tag>data-dumper-icub-left_leg-stateExt-o</tag>
+-    </module>
+-    <connection>
+-        <from>/icub/left_leg/stateExt:o</from>
+-        <to>/dumper/icub/left_leg/stateExt:o</to>
+-        <protocol>udp</protocol>
+-    </connection>
+-</application>
+-\endcode
+-
+-\author Ugo Pattacini
+-
+-\sa yarpdataplayer
+-*/
+diff --git a/doc/yarpdataplayer.dox b/doc/yarpdataplayer.dox
+deleted file mode 100644
+index 5128d77..0000000
+--- a/doc/yarpdataplayer.dox
++++ /dev/null
+@@ -1,124 +0,0 @@
+-/**
+-\defgroup yarpdataplayer yarpdataplayer
+-@ingroup yarp_guis
+-@ingroup yarp_tools
+-
+-A module that reproduces in a synchronized way, previously acquired data
+-(using \ref yarpdatadumper) from a source of input.
+-
+-\section intro_sec Description
+-
+-This module uses gtkmm to provide the user a simple but informative
+-user-interface in order to manipulate the previously acquired data.
+-When playing it uses the timestamps provided from the time of aquisition
+-to synchronize the sending of the data as if the robot was present.
+-
+-\image html datasetplayer.jpg
+-\image latex datasetplayer.jpg "The yarpdataplayer GUI running on Windows" width=6cm
+-
+-\section lib_sec Libraries
+-- OpenCV libraries.
+-- GTKMM or Qt5 libraries.
+-
+-\section running_sec Running
+-yarpdataplayer can run with or without the GUI (for server use and
+-commands are sent via the rpc port)
+-For gui run normally \e yarpdataplayer .
+-Without GUI run with the extra parameter \e hidden:
+-
+-\verbatim
+-  yarpdataplayer --hidden
+-\endverbatim
+-
+-\section file-sec yarpdatadumper file example
+-yarpdatadumper data.log file example:
+-
+-\verbatim
+-  9566    1324373535.040288   -2.32967 0.043956 1.450549 -0.56044 1.704894 4.136408
+-  etc...
+-\endverbatim
+-
+-yarpdatadumper info.log file example:
+-
+-\verbatim
+-  Type: Bottle;
+-  [1324373535.040288] /foo/state:o [connected]
+-  etc...
+-\endverbatim
+-
+-\e Type: is used to identify what kind of data the player is
+-   required to send.
+-
+-\e The names of the ports open up by the player are initially
+-   set up based on the content of info.log file. This can be
+-   then changed using the GUI.
+-
+-\section parameters_sec Parameters
+-
+---hidden
+-- run with or without gui
+-
+---withExtraTimeCol index
+-- loads the log files created by the datadumper with both rx and tx time.
+-  The user must select which timestamp to use (txTime index = 1 or
+-  rxTime index = 2)
+-
+-
+---name \e modName
+-- The parameter \e modName identifies the stem-name of the open
+-  ports.
+-
+- \section portsif_sec Ports Interface
+- The interface to this module is implemented through
+- \ref dataSetPlayer_IDL . \n
+-
+-- The ports belonging to each of the parts are dynamically created and
+-  can be changed using the GUI.
+-
+-\section in_files_sec Input Data Files
+-The player will look, in a recursive way, into directories in order to
+-create the parts needed and retreive the data.
+-
+-The data name is the default \ref yarpdatadumper names: data.log and
+-info.log.
+-
+-An example directory tree containing data (data.log+info.log)
+-can be:
+-\code
+-/experiment1/
+-             /head/data.log;info.log
+-             /torso/data.log;info.log;
+-             /images/leftCamera/data.log;info.log
+-             /images/rightCamera/data.log;info.log
+-             /left_leg/data.log;info.log
+-             /right_leg/data.log;info.log
+-\endcode
+-
+-If the directory indicated is either "experiment1" or within experiment,
+-the player will successfully load all required data.
+-
+-The parts name will be taken from each subdirectory of the /experiment1
+-forder.
+-
+-\note Currently, if the directory selected is (in this example) head,
+-torso etc, the player will not load the files as it will not be able to
+-find subdirs.
+-
+-\todo
+- - main slider bar selection. This needs an on-click and on-release
+-   event in order not to interfere with update and playback
+- - when the search for a directory has not provided anything (user
+-   selected directory containing only *.log files)
+-
+-\section tested_os_sec Tested OS
+-Windows, Linux
+-
+-\sa yarpdatadumper
+-\sa yarpdataplayerExample
+-
+-Copyright (C) 2010 RobotCub Consortium
+-
+-\author Vadim Tikhanoff and Ali Paikan
+-
+-CopyPolicy: Released under the terms of the GNU GPL v2.0.
+-*/
+diff --git a/doc/yarpmanager.dox b/doc/yarpmanager.dox
+deleted file mode 100644
+index 1c2d1a9..0000000
+--- a/doc/yarpmanager.dox
++++ /dev/null
+@@ -1,677 +0,0 @@
+-
+-/*
+- * Copyright: (C) 2011 Robotics, Brain and Cognitive Sciences - Italian Institute of Technology (IIT)
+- * Copy Policy: Released under the terms of the LGPLv2.1 or later, see LGPL.TXT
+- *
+- */
+-
+-/**
+-\page yarpmanager yarpmanager: a way of running and managing multiple programs on a set of machines
+-
+-\author Ali Paikan
+-
+-The command-line utility "yarpmanager-console" and its graphical
+-companions "yarpmanager"  are tools for running and managing multiple
+-programs on a set of machines.
+-
+-\image html ymgui.png "yarpmanager-console and (g)yarpmanager"
+-
+-\section Contents
+-\li \ref features
+-\li \ref concepts
+-\li \ref configuration
+-\li \ref examples
+-\li \ref application
+-\li \ref resource
+-\li \ref module
+-\li \ref create 
+-\li \ref export
+-\li \ref faq
+-
+-\section features Features
+-- Running, stopping, killing and monitoring multiple programs on localhost or remote machines.
+-- Establishing port's connections manually and automatically.
+-- Managing multiple programs which are grouped as different applications.
+-- Running programs concerning their dependencies.
+-- Recovering programs from failure.
+-- Using internal launcher to speed up program execution on localhost.
+-- Automatically assigning programs to machines using load balancing and smart resource discovery mechanism for improving performance.
+-- Discovering information and status of machines in cluster of computers (e.g. Hardware, platform, CPU load).
+-- Allowing users to specify resource dependencies of program using module description file.
+-- Allowing users to provide information about specific devices (e.g GPU) of machines using resource description file.
+-- Creating new Application, Module and Resource using XML template file.
+-- Including multiple instances of an application inside another application.
+-- Renaming ports name at run time using port prefix mechanism.
+-- Modifying program's parameters from GUI.
+-- Modifying and reloading XML description files from GUI.
+-
+-\section concepts Some Concepts
+-- <b>Module</b>, is an executable binary file (program) which is developed using YARP or any other libraries.
+-- <b>Application</b>, refers to a collection of modules, connections and other applications.
+-- <b>Resource</b> refers to any physical or logical resources which are needed by module. (e.g Computer, Memory, GPU, Platform)
+-
+-See \ref application, \ref module and \ref resource for more information on how to use XML model to describe each of these concepts.
+-
+-\section configuration Configuration
+-Default configuration file known as "ymanager.ini" can be automatically loaded by (g)yarpmanager from the same folder running the manager; or it can be indicated by parameter "--from" and "--context", following Yarp Resource Finder policies (see \ref yarp_resource_finder_basic). Using the configuration files, one can explicitly indicates the paths where (g)yarpmanager should search for applications, resources or modules. If the configuration file is not provided, then (g)yarpmanager will search for the corresponding XML files in the Yarp data directories (see \ref yarp_data_dirs).
+-
+-\verbatim
+-$ yarpmanager --from <path to my_config_file>
+-\endverbatim
+-
+-The below example shows the syntax of configuration file:
+-
+-\verbatim
+-# Path to the folder which contains application description files
+-apppath =  "./xml/applications"
+-load_subfolders = yes
+-
+-# Path to the folder which contains module description files
+-modpath =  "./xml/modules"
+-
+-# Path to the folder which contains module description files
+-respath =  "./xml/resources"
+-
+-# Fault tolerance
+-# parameters: yes|No
+-watchdog = no
+-
+-# Module failure awareness (if watchdog is enabled)
+-# parameters: Ignore|terminate|prompt|recover
+-module_failure = prompt
+-
+-# Connection failure awareness (if watchdog is enabled)
+-# parameters: Ignore|terminate|prompt
+-connection_failure = prompt
+-
+-# Automatically establish all connections
+-# parameters: Yes|no
+-auto_connect = no
+-
+-# Appearance (for yarpmanager)
+-# parameters: No|dark|light
+-color_theme = dark
+-
+-# External editor (e.g. gedit, notepad)
+-external_editor = gvim
+-\endverbatim
+-
+-Items 'apppath', 'modpath' and 'respath' respectively point to the folder where the XML description files of Applications, Modules and Resources can be found. All description file names must have ".xml" extension. If 'load_subfolders=yes', applications description files will be  recursively loaded from sub folders of 'apppath'.
+-Set 'external_editor' to your preferable text editor. It will be used by yarpmanager for editing XML file.
+-
+-
+-\section examples Running examples
+-First make sure you have a name server running. Open a terminal and type:
+-\verbatim
+-$ yarpserver
+-\endverbatim
+-
+-\subsection example_y Using yarpmanager
+-Open another terminal and try this:
+-\verbatim
+-$ cd ${YARP_ROOT}/src/yarpmanager/tests
+-$ yarpmanager-console
+->> help
+-     # a list of yarpmanager-console keywords
+->> list app
+-     # you should see EyesViewer-Localhost, FakeEyes, ...
+->> load app EyesViewer-Localhost
+->> run
+->> connect
+-     # you should see moving red bar
+->> disconnect
+->> stop
+->> exit
+-\endverbatim
+-
+-\subsection example_g Using (g)yarpmanager
+-Open another terminal and try this:
+-\verbatim
+-$ cd ${YARP_ROOT}/src/yarpmanager/tests
+-$ yarpmanager
+-\endverbatim
+-
+-- From "Entities" frame, click the triangle beside Applications, then  double-click "EyesViewer-Localhost".
+-- From menu "Manage" press "Run" to run all modules
+-- From menu "Manage" press "Connect" to establish all connections.
+-- To terminate application, chose "Manage">"Disconnect" and "Manage">"Stop".
+-
+-To run "EyesViewer-Cluster" using load balancer you need to have yarprun running as server.
+-Open a terminal and type:
+-\verbatim
+-$ yarprun --server /node1
+-\endverbatim
+-
+-Open another one and type:
+-\verbatim
+-$ yarprun --server /node2
+-\endverbatim
+-
+-Then try this:
+-\verbatim
+-$ cd ${YARP_ROOT}/src/yarpmanager/tests
+-$ yarpmanager
+-\endverbatim
+-
+-- From "Entities" frame, click the triangle beside Applications, then  double-click "EyesViewer-Cluster".
+-- From the right side, right-click on the frame where you can see all modules and form the pop-up menu chose "Assign hosts". You will see that modules will be automatically assigned to available nodes. (here /node1 and /node2)
+-- From menu "Manage" press "Run" to run all modules
+-- From menu "Manage" press "Connect" to establish all connections.
+-- To terminate application, chose "Manage">"Disconnect" and "Manage">"Stop".
+-
+-\note You can use "Assign hosts" whenever all modules are stopped and connections are disconnected.
+-
+-\section application Application description file
+-Application description file is a collection of modules (programs) or other applications and connections.
+-
+-Here is an example of application description file in XML format:
+-\htmlonly
+-<div class="fragment"><pre class="fragment">
+-<tt><b><font color="#00458A">&lt;application&gt;</font></b>
+-
+-  <i><font color="#9A1900">&lt;!-- Generic information--&gt;</font></i>
+-  <b><font color="#00458A">&lt;name&gt;</font></b>ApplicationName<b><font color="#00458A">&lt;/name&gt;</font></b>
+-  <b><font color="#00458A">&lt;description&gt;</font></b>Template Application<b><font color="#00458A">&lt;/description&gt;</font></b>
+-  <b><font color="#00458A">&lt;version&gt;&lt;/version&gt;</font></b>
+-
+-  <b><font color="#00458A">&lt;authors&gt;</font></b>
+-      <b><font color="#00458A">&lt;author</font></b> <font color="#009900">email</font><font color="#990000">=</font><font color="#FF0000">""</font><b><font color="#00458A">&gt;</font></b> first author.name <b><font color="#00458A">&lt;/author&gt;</font></b>
+-      <b><font color="#00458A">&lt;author</font></b> <font color="#009900">email</font><font color="#990000">=</font><font color="#FF0000">""</font><b><font color="#00458A">&gt;</font></b> second author.name <b><font color="#00458A">&lt;/author&gt;</font></b>
+-      ...
+-  <b><font color="#00458A">&lt;/authors&gt;</font></b>
+-
+-  <i><font color="#9A1900">&lt;!-- Required modules. --&gt;</font></i>
+-  <b><font color="#00458A">&lt;module&gt;</font></b>
+-      <b><font color="#00458A">&lt;name&gt;</font></b>Module_Name<b><font color="#00458A">&lt;/name&gt;</font></b>
+-      <b><font color="#00458A">&lt;parameters&gt;&lt;/parameters&gt;</font></b>
+-      <b><font color="#00458A">&lt;node&gt;&lt;/node&gt;</font></b>
+-      <b><font color="#00458A">&lt;display&gt;&lt;/display&gt;</font></b>
+-      <b><font color="#00458A">&lt;stdio&gt;&lt;/stdio&gt;</font></b>
+-      <b><font color="#00458A">&lt;prefix&gt;&lt;/prefix&gt;</font></b>
+-      <b><font color="#00458A">&lt;dependencies&gt;</font></b>
+-          <b><font color="#00458A">&lt;port</font></b> <font color="#009900">timeout</font><font color="#990000">=</font><font color="#FF0000">"5.0"</font><b><font color="#00458A">&gt;&lt;/port&gt;</font></b>
+-          <b><font color="#00458A">&lt;port</font></b> <font color="#009900">timeout</font><font color="#990000">=</font><font color="#FF0000">"5.0"</font> <font color="#009900">request</font><font color="#990000">=</font><font color="#FF0000">"ready"</font> <font color="#009900">reply</font><font color="#990000">=</font><font color="#FF0000">"yes"</font><b><font color="#00458A">&gt;&lt;/port&gt;</font></b>
+-          ...
+-      <b><font color="#00458A">&lt;/dependencies&gt;</font></b>
+-      <b><font color="#00458A">&lt;ensure&gt;</font></b>
+-          <b><font color="#00458A">&lt;wait&gt;</font></b>10.0<b><font color="#00458A">&lt;/wait&gt;</font></b>
+-      <b><font color="#00458A">&lt;/ensure&gt;</font></b>
+-  <b><font color="#00458A">&lt;/module&gt;</font></b>
+-  ...
+-
+-  <i><font color="#9A1900">&lt;!-- Embedded applications --&gt;</font></i>
+-  <b><font color="#00458A">&lt;application&gt;</font></b>
+-      <b><font color="#00458A">&lt;name&gt;</font></b>Application_Name<b><font color="#00458A">&lt;/name&gt;</font></b>
+-      <b><font color="#00458A">&lt;prefix&gt;&lt;/prefix&gt;</font></b>
+-   <b><font color="#00458A">&lt;/application&gt;</font></b>
+-   ...
+-
+-  <i><font color="#9A1900">&lt;!-- Required connections --&gt;</font></i>
+-  <b><font color="#00458A">&lt;connection</font></b> <font color="#009900">persist</font><font color="#990000">=</font><font color="#FF0000">"true"</font><b><font color="#00458A">&gt;</font></b>
+-      <b><font color="#00458A">&lt;from</font></b> <font color="#009900">qos</font><font color="#990000">=</font><font color="#FF0000">"level:high; priority:10; policy:1"</font><b><font color="#00458A">&gt;&lt;/from&gt;</font></b>
+-      <b><font color="#00458A">&lt;to&gt;&lt;/to&gt;</font></b>
+-      <b><font color="#00458A">&lt;protocol&gt;&lt;/protocol&gt;</font></b>
+-  <b><font color="#00458A">&lt;/connection&gt;</font></b>
+-
+-  <b><font color="#00458A">&lt;connection&gt;</font></b>
+-      <b><font color="#00458A">&lt;from</font></b> <font color="#009900">external</font><font color="#990000">=</font><font color="#FF0000">"true"</font><b><font color="#00458A">&gt;&lt;/from&gt;</font></b>
+-      <b><font color="#00458A">&lt;to&gt;&lt;/to&gt;</font></b>
+-      <b><font color="#00458A">&lt;protocol&gt;&lt;/protocol&gt;</font></b>
+-  <b><font color="#00458A">&lt;/connection&gt;</font></b>
+-  ...
+-
+-<b><font color="#00458A">&lt;/application&gt;</font></b>
+-</tt></pre>
+-</div>
+-\endhtmlonly
+-
+-\latexonly
+-\noindent
+-\mbox{}\textbf{\textless{}application\textgreater{}} \\
+-\mbox{} \\
+-\mbox{}\ \ \textit{\textless{}!-\/-\ Generic\ information-\/-\textgreater{}} \\
+-\mbox{}\ \ \textbf{\textless{}name\textgreater{}}ApplicationName\textbf{\textless{}/name\textgreater{}} \\
+-\mbox{}\ \ \textbf{\textless{}description\textgreater{}}Template\ Application\textbf{\textless{}/description\textgreater{}} \\
+-\mbox{}\ \ \textbf{\textless{}version\textgreater{}\textless{}/version\textgreater{}} \\
+-\mbox{} \\
+-\mbox{}\ \ \textbf{\textless{}authors\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \textbf{\textless{}author}\ email=\texttt{"{}"{}}\textbf{\textgreater{}}\ first\ author.name\ \textbf{\textless{}/author\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \textbf{\textless{}author}\ email=\texttt{"{}"{}}\textbf{\textgreater{}}\ second\ author.name\ \textbf{\textless{}/author\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ ... \\
+-\mbox{}\ \ \textbf{\textless{}/authors\textgreater{}} \\
+-\mbox{} \\
+-\mbox{}\ \ \textit{\textless{}!-\/-\ Required\ modules.\ -\/-\textgreater{}} \\
+-\mbox{}\ \ \textbf{\textless{}module\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \textbf{\textless{}name\textgreater{}}Module$\_$Name\textbf{\textless{}/name\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \textbf{\textless{}parameters\textgreater{}\textless{}/parameters\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \textbf{\textless{}node\textgreater{}\textless{}/node\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \textbf{\textless{}stdio\textgreater{}\textless{}/stdio\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \textbf{\textless{}prefix\textgreater{}\textless{}/prefix\textgreater{}} \\
+-\mbox{}\ \ \textbf{\textless{}/module\textgreater{}} \\
+-\mbox{}\ \ ... \\
+-\mbox{}\ \ \ \  \\
+-\mbox{}\ \ \textit{\textless{}!-\/-\ Embedded\ applications\ -\/-\textgreater{}} \\
+-\mbox{}\ \ \textbf{\textless{}application\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \textbf{\textless{}name\textgreater{}}Application$\_$Name\textbf{\textless{}/name\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \textbf{\textless{}prefix\textgreater{}\textless{}/prefix\textgreater{}} \\
+-\mbox{}\ \ \ \textbf{\textless{}/application\textgreater{}} \\
+-\mbox{}\ \ \ ... \\
+-\mbox{}\ \ \ \  \\
+-\mbox{}\ \ \textit{\textless{}!-\/-\ Required\ connections\ -\/-\textgreater{}} \\
+-\mbox{}\ \ \textbf{\textless{}connection\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \textbf{\textless{}from\textgreater{}\textless{}/from\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \textbf{\textless{}to\textgreater{}\textless{}/to\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \textbf{\textless{}protocol\textgreater{}\textless{}/protocol\textgreater{}} \\
+-\mbox{}\ \ \textbf{\textless{}/connection\textgreater{}} \\
+-\mbox{}\ \  \\
+-\mbox{}\ \ \textbf{\textless{}connection\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \textbf{\textless{}from}\ external=\texttt{"{}true"{}}\textbf{\textgreater{}\textless{}/from\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \textbf{\textless{}to\textgreater{}\textless{}/to\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \textbf{\textless{}protocol\textgreater{}\textless{}/protocol\textgreater{}} \\
+-\mbox{}\ \ \textbf{\textless{}/connection\textgreater{}}\ \  \\
+-\mbox{}\ \ ... \\
+-\mbox{}\ \  \\
+-\mbox{}\textbf{\textless{}/application\textgreater{}} \\
+-\mbox{}
+-\endlatexonly
+-
+-\subsection app_notes Notes
+- - In application description file, if you set \<node\>\</node\> to "localhost", the manager will use an internal module launcher to run the module on localhost.
+- - Leaving \<node\>\</node\> empty, later you can use the load balancer to automatically assign module to a node for better performance.
+- - \<prefix\> refers to port name's prefix. It will be added to the names of all ports that the module opens. For example, if a module open "/Port1" and \<prefix\>/MyPrefix\</prefix\>, after launching the module, the real port name will be "/Myprefix/Port1".
+- - Other applications can be integrated by indicating their names. Setting \<prefix\> for an included application, port prefix will be applied to all modules and connections which are not set as external.
+- - Persistent connection can be created by setting "persist" property of the corresponding connection tags. They are created by using YARP topics as described in \ref persistent_connections and will be removed when the application is unloaded from manager (i.e. closing the application window in yarpmanager).
+- - The \<port\> tags inside \<dependencies\> indicate that the execution of the current module should be postponed until the ports become available. (g)yarpmanager waits for the ports and continuously checks their availability. If one of the required ports is not available within the time indicated by the "timeout" property, the module will not be launched.   
+- - It is also possible to send a specific RPC request to a port to get status about the internal state of a module. This is useful when launching a module should be postponed until other modules get launched and ready. This can be done by specifying the request using "request" property and the expected reply using "reply" property in a \<port\> tag. The manager sends the request to the relevant port and check if the received reply matches the one indicated in the "reply" property before launching the module. If the reply does not match the expected one, the corresponding module will not launched. 
+- - The \<ensure>\> and \<wait\> tags can be used to enforce an arbitrary wait after launching a module. In this case, the manager waits for that specific time to consider the module successfully launched.  
+- - The \<display\> tag specifies the visibility of the process window:
+-  - \--visible_na (default):the window is visible and inactive (it does not get the focus)
+-  - \--minimized: the window is minimized 
+-  - \--hidden: the process is invisible. This option is useful for console/terminal applications. Notice that on the graphical yarpmanager you can see the standard output using the ''attach to stdout'' functionality (right click on the application and select it from the menu).
+- - It is also possible to configure the Qos properties of a connection directly from the manager. This can be done using the "qos" attribute of \<connection\> tag or independently using \<from\> and \<to\> tags. The Qos properties provided within the \<connection\> tag will be applied to both side of the connection. The attribute accepts a string in form of multiple pairs of "property:value" which are separated using ";". For example, qos="level:high; priority:10; policy:1" configure the connection packet priority level to 'HIGH' and the scheduling policy/priority of the connection-dedicated thread respectively to 1 (i.e. SCHED_FIFO in Linux) and 10. Alternatively the packet priority level can be configured using "dscp:<value>" or "tos:<value>". Please refer to yarp::os::QosStyle and yarp::os::NetworkBase::setConnectionQos APIs for further information. 
+- 
+-\section resource Resource description file
+-The resource description file can be used to provide a general information of the machines that are part of the cluster. In very simple form, the resource description file is a list of the names of machines in the cluster.
+-
+-Here is an example of resource description file in XML format:
+-\htmlonly
+-<div class="fragment"><pre class="fragment">
+-<tt><b><font color="#00458A">&lt;resources&gt;</font></b>
+-    <i><font color="#9A1900">&lt;!-- Multiple computers can be introduced --&gt;</font></i>
+-    <b><font color="#00458A">&lt;computer&gt;</font></b>
+-        <b><font color="#00458A">&lt;name&gt;</font></b>hostname1<b><font color="#00458A">&lt;/name&gt;</font></b>
+-        <b><font color="#00458A">&lt;description&gt;</font></b>Template resource<b><font color="#00458A">&lt;/description&gt;</font></b>
+-
+-        <i><font color="#9A1900">&lt;!-- A disabled resource will not be used by load balancer. --&gt;</font></i>
+-        <b><font color="#00458A">&lt;disable&gt;</font></b>no<b><font color="#00458A">&lt;/disable&gt;</font></b>
+-    <b><font color="#00458A">&lt;/computer&gt;</font></b>
+-
+-    <b><font color="#00458A">&lt;computer&gt;</font></b>
+-        <b><font color="#00458A">&lt;name&gt;</font></b>hostname2<b><font color="#00458A">&lt;/name&gt;</font></b>
+-        <b><font color="#00458A">&lt;description&gt;</font></b>a computer with GPU device<b><font color="#00458A">&lt;/description&gt;</font></b>
+-        <b><font color="#00458A">&lt;disable&gt;</font></b>no<b><font color="#00458A">&lt;/disable&gt;</font></b>
+-        <i><font color="#9A1900">&lt;!-- GPU description section. --&gt;</font></i>
+-        <b><font color="#00458A">&lt;gpu&gt;</font></b>
+-            <b><font color="#00458A">&lt;name&gt;</font></b>Tesla C1060<b><font color="#00458A">&lt;/name&gt;</font></b>
+-            <b><font color="#00458A">&lt;cores&gt;</font></b>240<b><font color="#00458A">&lt;/cores&gt;</font></b>
+-            <b><font color="#00458A">&lt;frequency&gt;</font></b>1600<b><font color="#00458A">&lt;/frequency&gt;</font></b>
+-            <b><font color="#00458A">&lt;capability&gt;</font></b>1.3<b><font color="#00458A">&lt;/capability&gt;</font></b>
+-            <b><font color="#00458A">&lt;registers_block&gt;</font></b>128<b><font color="#00458A">&lt;/registers_block&gt;</font></b>
+-            <b><font color="#00458A">&lt;thread_block&gt;</font></b>512<b><font color="#00458A">&lt;/thread_block&gt;</font></b>
+-            <b><font color="#00458A">&lt;overlap&gt;</font></b>yes<b><font color="#00458A">&lt;/overlap&gt;</font></b>
+-            <b><font color="#00458A">&lt;global_memory&gt;</font></b>
+-                <b><font color="#00458A">&lt;total_space&gt;</font></b>4000000<b><font color="#00458A">&lt;/total_space&gt;</font></b>
+-            <b><font color="#00458A">&lt;/global_memory&gt;</font></b>
+-            <b><font color="#00458A">&lt;shared_memory&gt;</font></b>
+-                <b><font color="#00458A">&lt;total_space&gt;</font></b>128<b><font color="#00458A">&lt;/total_space&gt;</font></b>
+-            <b><font color="#00458A">&lt;/shared_memory&gt;</font></b>
+-            <b><font color="#00458A">&lt;constant_memory&gt;</font></b>
+-                <b><font color="#00458A">&lt;total_space&gt;</font></b>16<b><font color="#00458A">&lt;/total_space&gt;</font></b>
+-            <b><font color="#00458A">&lt;/constant_memory&gt;</font></b>
+-        <b><font color="#00458A">&lt;/gpu&gt;</font></b>
+-    <b><font color="#00458A">&lt;/computer&gt;</font></b>
+-    ...
+-
+-<b><font color="#00458A">&lt;/resources&gt;</font></b>
+-</tt></pre>
+-</div>
+-\endhtmlonly
+-
+-\latexonly
+-\noindent
+-\mbox{}\textbf{\textless{}resources\textgreater{}} \\
+-\mbox{}\ \ \ \ \textit{\textless{}!-\/-\ Multiple\ computers\ can\ be\ introduced\ -\/-\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}computer\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}name\textgreater{}}hostname1\textbf{\textless{}/name\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}description\textgreater{}}Template\ resource\textbf{\textless{}/description\textgreater{}} \\
+-\mbox{} \\
+-\mbox{}\ \ \ \ \ \ \ \ \textit{\textless{}!-\/-\ A\ disabled\ resource\ will\ not\ be\ used\ by\ load\ balancer.\ -\/-\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}disable\textgreater{}}no\textbf{\textless{}/disable\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}/computer\textgreater{}} \\
+-\mbox{} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}computer\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}name\textgreater{}}hostname2\textbf{\textless{}/name\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}description\textgreater{}}a\ computer\ with\ GPU\ device\textbf{\textless{}/description\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}disable\textgreater{}}no\textbf{\textless{}/disable\textgreater{}}\  \\
+-\mbox{}\ \ \ \ \ \ \ \ \textit{\textless{}!-\/-\ GPU\ description\ section.\ -\/-\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}gpu\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}name\textgreater{}}Tesla\ C1060\textbf{\textless{}/name\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}cores\textgreater{}}240\textbf{\textless{}/cores\textgreater{}}\  \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}frequency\textgreater{}}1600\textbf{\textless{}/frequency\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}capability\textgreater{}}1.3\textbf{\textless{}/capability\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}registers$\_$block\textgreater{}}128\textbf{\textless{}/registers$\_$block\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}thread$\_$block\textgreater{}}512\textbf{\textless{}/thread$\_$block\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}overlap\textgreater{}}yes\textbf{\textless{}/overlap\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}global$\_$memory\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}total$\_$space\textgreater{}}4000000\textbf{\textless{}/total$\_$space\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}/global$\_$memory\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}shared$\_$memory\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}total$\_$space\textgreater{}}128\textbf{\textless{}/total$\_$space\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}/shared$\_$memory\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}constant$\_$memory\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}total$\_$space\textgreater{}}16\textbf{\textless{}/total$\_$space\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}/constant$\_$memory\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}/gpu\textgreater{}}\  \\
+-\mbox{}\ \ \ \ \textbf{\textless{}/computer\textgreater{}} \\
+-\mbox{}\ \ \ \ ... \\
+-\mbox{}\ \ \ \  \\
+-\mbox{}\textbf{\textless{}/resources\textgreater{}} \\
+-\mbox{}
+-\endlatexonly
+-
+-\subsection res_notes Notes
+- - Platform, Memory, Storage and Processor specification will be discovered automatically by (g)yarpmanager; but, peripherals such as GPU should to be specifically introduced.
+-
+-
+-\section module Module description file
+-Module description file can be used to provide general information of module and its dependencies. It is mainly used by load balancer to automatically assign machines to module which satisfy the dependencies. By default, if there is no module description, load balancer assumes that the module can be executed on every available machines. Despite it is \b not \b mandatory, it is always useful to have XML description of each module which shows how it should be used for application building (e.g parameters, inputs, outputs).
+-
+-Here is an example of module description file in XML format:
+-\htmlonly
+-<div class="fragment"><pre class="fragment">
+-<tt><b><font color="#00458A">&lt;module&gt;</font></b>
+-    <b><font color="#00458A">&lt;name&gt;</font></b>module_name<b><font color="#00458A">&lt;/name&gt;</font></b>
+-    <b><font color="#00458A">&lt;description&gt;</font></b>Template module<b><font color="#00458A">&lt;/description&gt;</font></b>
+-    <b><font color="#00458A">&lt;version&gt;</font></b>1.0<b><font color="#00458A">&lt;/version&gt;</font></b>
+-
+-    <i><font color="#9A1900">&lt;!-- &lt;arguments&gt; can have multiple &lt;param&gt; tags--&gt;</font></i>
+-    <b><font color="#00458A">&lt;arguments&gt;</font></b>
+-        <b><font color="#00458A">&lt;param</font></b> <font color="#009900">desc</font><font color="#990000">=</font><font color="#FF0000">"first parameter"</font><b><font color="#00458A">&gt;</font></b> param1 <b><font color="#00458A">&lt;/param&gt;</font></b>
+-    <b><font color="#00458A">&lt;/arguments&gt;</font></b>
+-
+-    <i><font color="#9A1900">&lt;!-- &lt;authors&gt; can have multiple &lt;author&gt; tags. --&gt;</font></i>
+-    <b><font color="#00458A">&lt;authors&gt;</font></b>
+-        <b><font color="#00458A">&lt;author</font></b> <font color="#009900">email</font><font color="#990000">=</font><font color="#FF0000">""</font><b><font color="#00458A">&gt;</font></b> author1 <b><font color="#00458A">&lt;/author&gt;</font></b>
+-    <b><font color="#00458A">&lt;/authors&gt;</font></b>
+-
+-     <i><font color="#9A1900">&lt;!-- &lt;data&gt; can have multiple &lt;input&gt; or &lt;output&gt; tags. --&gt;</font></i>
+-     <b><font color="#00458A">&lt;data&gt;</font></b>
+-        <i><font color="#9A1900">&lt;!-- input data if available--&gt;</font></i>
+-        <b><font color="#00458A">&lt;input&gt;</font></b>
+-            <b><font color="#00458A">&lt;type&gt;</font></b>DataType<b><font color="#00458A">&lt;/type&gt;</font></b>
+-
+-            <i><font color="#9A1900">&lt;!-- input port which receives the data. --&gt;</font></i>
+-            <b><font color="#00458A">&lt;port</font></b> <font color="#009900">carrier</font><font color="#990000">=</font><font color="#FF0000">"tcp"</font><b><font color="#00458A">&gt;</font></b>/portname<b><font color="#00458A">&lt;/port&gt;</font></b>
+-            <b><font color="#00458A">&lt;required&gt;</font></b>yes<b><font color="#00458A">&lt;/required&gt;</font></b>
+-            <b><font color="#00458A">&lt;priority&gt;</font></b>no<b><font color="#00458A">&lt;/priority&gt;</font></b>
+-            <b><font color="#00458A">&lt;description&gt;&lt;/description&gt;</font></b>
+-        <b><font color="#00458A">&lt;/input&gt;</font></b>
+-        ...
+-
+-        <i><font color="#9A1900">&lt;!-- output data if available --&gt;</font></i>
+-        <b><font color="#00458A">&lt;output&gt;</font></b>
+-            <b><font color="#00458A">&lt;type&gt;</font></b>DataType<b><font color="#00458A">&lt;/type&gt;</font></b>
+-            <b><font color="#00458A">&lt;port</font></b> <font color="#009900">carrier</font><font color="#990000">=</font><font color="#FF0000">"tcp"</font><b><font color="#00458A">&gt;</font></b>/portname<b><font color="#00458A">&lt;/port&gt;</font></b>
+-            <b><font color="#00458A">&lt;description&gt;&lt;/description&gt;</font></b>
+-        <b><font color="#00458A">&lt;/output&gt;</font></b>
+-        ...
+-
+-    <b><font color="#00458A">&lt;/data&gt;</font></b>
+-
+-    <b><font color="#00458A">&lt;dependencies&gt;</font></b>
+-        <b><font color="#00458A">&lt;computer&gt;</font></b>
+-            <b><font color="#00458A">&lt;gpu&gt;</font></b>
+-                <b><font color="#00458A">&lt;capability&gt;</font></b>1.3<b><font color="#00458A">&lt;/capability&gt;</font></b>
+-            <b><font color="#00458A">&lt;/gpu&gt;</font></b>
+-            ...
+-        <b><font color="#00458A">&lt;/computer&gt;</font></b>
+-        ...
+-    <b><font color="#00458A">&lt;/dependencies&gt;</font></b>
+-
+-    <i><font color="#9A1900">&lt;!-- specific libraries or header files which are used for development --&gt;</font></i>
+-    <b><font color="#00458A">&lt;development&gt;</font></b>
+-        <b><font color="#00458A">&lt;header&gt;&lt;/header&gt;</font></b>
+-        <b><font color="#00458A">&lt;library&gt;&lt;/library&gt;</font></b>
+-    <b><font color="#00458A">&lt;/development&gt;</font></b>
+-
+-<b><font color="#00458A">&lt;/module&gt;</font></b>
+-</tt></pre>
+-</div>
+-\endhtmlonly
+-
+-\latexonly
+-\noindent
+-\mbox{}\textbf{\textless{}module\textgreater{}}\ \ \ \  \\
+-\mbox{}\ \ \ \ \textbf{\textless{}name\textgreater{}}module$\_$name\textbf{\textless{}/name\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}description\textgreater{}}Template\ module\textbf{\textless{}/description\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}version\textgreater{}}1.0\textbf{\textless{}/version\textgreater{}} \\
+-\mbox{} \\
+-\mbox{}\ \ \ \ \textit{\textless{}!-\/-\ \textless{}arguments\textgreater{}\ can\ have\ multiple\ \textless{}param\textgreater{}\ tags-\/-\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}arguments\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}param}\ desc=\texttt{"{}first\ parameter"{}}\textbf{\textgreater{}}\ param1\ \textbf{\textless{}/param\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}/arguments\textgreater{}} \\
+-\mbox{} \\
+-\mbox{}\ \ \ \ \textit{\textless{}!-\/-\ \textless{}authors\textgreater{}\ can\ have\ multiple\ \textless{}author\textgreater{}\ tags.\ -\/-\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}authors\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}author}\ email=\texttt{"{}"{}}\textbf{\textgreater{}}\ author1\ \textbf{\textless{}/author\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}/authors\textgreater{}} \\
+-\mbox{} \\
+-\mbox{}\ \ \ \ \ \textit{\textless{}!-\/-\ \textless{}data\textgreater{}\ can\ have\ multiple\ \textless{}input\textgreater{}\ or\ \textless{}output\textgreater{}\ tags.\ -\/-\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \textbf{\textless{}data\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \textit{\textless{}!-\/-\ input\ data\ if\ available-\/-\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}input\textgreater{}}\ \ \ \ \ \ \ \ \ \ \ \  \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}type\textgreater{}}DataType\textbf{\textless{}/type\textgreater{}} \\
+-\mbox{} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textit{\textless{}!-\/-\ input\ port\ which\ receive\ the\ data.\ -\/-\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}port}\ carrier=\texttt{"{}tcp"{}}\textbf{\textgreater{}}/portname\textbf{\textless{}/port\textgreater{}}\ \ \ \ \ \ \ \ \ \ \ \  \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}required\textgreater{}}yes\textbf{\textless{}/required\textgreater{}}\ \ \ \ \ \ \ \ \ \ \  \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}priority\textgreater{}}no\textbf{\textless{}/priority\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}description\textgreater{}\textless{}/description\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}/input\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ ... \\
+-\mbox{}\ \ \ \ \ \ \ \  \\
+-\mbox{}\ \ \ \ \ \ \ \ \textit{\textless{}!-\/-\ output\ datas\ if\ available\ -\/-\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}output\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}type\textgreater{}}DataType\textbf{\textless{}/type\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}port}\ carrier=\texttt{"{}tcp"{}}\textbf{\textgreater{}}/portname\textbf{\textless{}/port\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}description\textgreater{}\textless{}/description\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}/output\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ ... \\
+-\mbox{}\ \ \ \ \ \ \ \  \\
+-\mbox{}\ \ \ \ \textbf{\textless{}/data\textgreater{}} \\
+-\mbox{}\ \ \ \  \\
+-\mbox{}\ \ \ \ \textbf{\textless{}dependencies\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}computer\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}gpu\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}capability\textgreater{}}1.3\textbf{\textless{}/capability\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textless{}/gpu\textgreater{}}\  \\
+-\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ ... \\
+-\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}/computer\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ ... \\
+-\mbox{}\ \ \ \ \textbf{\textless{}/dependencies\textgreater{}} \\
+-\mbox{} \\
+-\mbox{}\ \ \ \ \textit{\textless{}!-\/-\ specific\ libraries\ or\ header\ files\ which\ are\ used\ for\ development\ -\/-\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}development\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}header\textgreater{}\textless{}/header\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}library\textgreater{}\textless{}/library\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}/development\textgreater{}} \\
+-\mbox{} \\
+-\mbox{}\textbf{\textless{}/module\textgreater{}} \\
+-\mbox{}
+-\endlatexonly
+-
+-\subsection mode_notes Notes
+-
+- - \<name\> should match its executable file name.
+- - \<type> refers to nominal type of data (e.g. ImageFrame, String).
+- - Required input means that execution of module depends on availability of the input data. Notice that not all the input are required for a module to perform its task (e.g. status request input).
+- - \<priority\>yes\</priority\> forces the execution of module to be delayed until the port become available.
+- - Physical and logical resource dependencies can be introduced using \<dependencies\> tag. Dependencies must follow resource conceptional models. Currently available models are 'memory', 'processor', 'storage', 'yarp_port', 'platform' and 'gpu'. All resource dependencies should be introduced inside \<computer\>\</computer\> tags. Resources inside a \<computer\> tag, represent conjunctional dependency.  Resources from different \<computer\> tags can be seen as disjunctions. Meaning that, if a module depends on either resource R1 or R2, they can be introduced inside two different \<computer\> tags. Resource dependencies should be introduced if they are really required. For example, if module's performance drops significantly in case of memory swapping, a memory resource dependency can be introduced with the required memory space.
+- - In a multi-platform cluster of computers, if a module depends on specific platform (Operating system), \<platform\> dependency should be introduced.
+-
+- Resource conceptional model which can be used as module's dependency:
+-\htmlonly
+-<div class="fragment"><pre class="fragment">
+-<tt><b><font color="#00458A">&lt;platform&gt;</font></b>
+-    <b><font color="#00458A">&lt;name&gt;&lt;/name&gt;</font></b>
+-    <b><font color="#00458A">&lt;distribution&gt;&lt;/distribution&gt;</font></b>
+-    <b><font color="#00458A">&lt;release&gt;&lt;/release&gt;</font></b>
+-<b><font color="#00458A">&lt;/platform&gt;</font></b>
+-
+-<b><font color="#00458A">&lt;yarp_port&gt;</font></b>
+-    <b><font color="#00458A">&lt;name&gt;&lt;/name&gt;</font></b>   <i><font color="#9A1900">&lt;!-- yarp port name --&gt;</font></i>
+-<b><font color="#00458A">&lt;yarp_port&gt;</font></b>
+-
+-<b><font color="#00458A">&lt;memory&gt;</font></b>
+-    <b><font color="#00458A">&lt;free_space&gt;&lt;/free_space&gt;</font></b>    <i><font color="#9A1900">&lt;!-- in KB --&gt;</font></i>
+-<b><font color="#00458A">&lt;/memory&gt;</font></b>
+-
+-<b><font color="#00458A">&lt;storage&gt;</font></b>
+-    <b><font color="#00458A">&lt;free_space&gt;&lt;/free_space&gt;</font></b>    <i><font color="#9A1900">&lt;!-- in KB --&gt;</font></i>
+-<b><font color="#00458A">&lt;/storage&gt;</font></b>
+-
+-<b><font color="#00458A">&lt;processor&gt;</font></b>
+-    <b><font color="#00458A">&lt;architecture&gt;&lt;/architecture&gt;</font></b>
+-    <b><font color="#00458A">&lt;cores&gt;&lt;/cores&gt;</font></b>
+-    <b><font color="#00458A">&lt;frequency&gt;&lt;/frequency&gt;</font></b>
+-    <b><font color="#00458A">&lt;model&gt;&lt;/model&gt;</font></b>
+-<b><font color="#00458A">&lt;/processor&gt;</font></b>
+-
+-<b><font color="#00458A">&lt;gpu&gt;</font></b>
+-    <b><font color="#00458A">&lt;name&gt;&lt;/name&gt;</font></b>
+-    <b><font color="#00458A">&lt;cores&gt;&lt;/cores&gt;</font></b>
+-    <b><font color="#00458A">&lt;capability&gt;&lt;/capability&gt;</font></b>
+-    <b><font color="#00458A">&lt;registers_block&gt;&lt;/registers_block&gt;</font></b>
+-    <b><font color="#00458A">&lt;thread_block&gt;&lt;/thread_block&gt;</font></b>
+-    <b><font color="#00458A">&lt;overlap&gt;&lt;/overlap&gt;</font></b>
+-    <b><font color="#00458A">&lt;global_memory&gt;</font></b>
+-        <b><font color="#00458A">&lt;total_space&gt;&lt;/total_space&gt;</font></b>     <i><font color="#9A1900">&lt;!-- in KB --&gt;</font></i>
+-    <b><font color="#00458A">&lt;/global_memory&gt;</font></b>
+-    <b><font color="#00458A">&lt;shared_memory&gt;</font></b>
+-        <b><font color="#00458A">&lt;total_space&gt;&lt;/total_space&gt;</font></b>     <i><font color="#9A1900">&lt;!-- in KB --&gt;</font></i>
+-    <b><font color="#00458A">&lt;/shared_memory&gt;</font></b>
+-    <b><font color="#00458A">&lt;constant_memory&gt;</font></b>
+-        <b><font color="#00458A">&lt;total_space&gt;&lt;/total_space&gt;</font></b>     <i><font color="#9A1900">&lt;!-- in KB --&gt;</font></i>
+-    <b><font color="#00458A">&lt;/constant_memory&gt;</font></b>
+-<b><font color="#00458A">&lt;/gpu&gt;</font></b>
+-</tt></pre>
+-</div>
+-\endhtmlonly
+-
+-\latexonly
+-\noindent
+-\mbox{}\textbf{\textless{}platform\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}name\textgreater{}\textless{}/name\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}distribution\textgreater{}\textless{}/distribution\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}release\textgreater{}\textless{}/release\textgreater{}} \\
+-\mbox{}\textbf{\textless{}/platform\textgreater{}} \\
+-\mbox{} \\
+-\mbox{}\textbf{\textless{}yarp$\_$port\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}name\textgreater{}\textless{}/name\textgreater{}}\ \ \ \textit{\textless{}!-\/-\ yarp\ port\ name\ -\/-\textgreater{}} \\
+-\mbox{}\textbf{\textless{}yarp$\_$port\textgreater{}}\ \ \ \ \ \ \ \ \ \ \  \\
+-\mbox{} \\
+-\mbox{}\textbf{\textless{}memory\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}free$\_$space\textgreater{}\textless{}/free$\_$space\textgreater{}}\ \ \ \ \textit{\textless{}!-\/-\ in\ KB\ -\/-\textgreater{}} \\
+-\mbox{}\textbf{\textless{}/memory\textgreater{}} \\
+-\mbox{} \\
+-\mbox{}\textbf{\textless{}storage\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}free$\_$space\textgreater{}\textless{}/free$\_$space\textgreater{}}\ \ \ \ \textit{\textless{}!-\/-\ in\ KB\ -\/-\textgreater{}} \\
+-\mbox{}\textbf{\textless{}/storage\textgreater{}} \\
+-\mbox{} \\
+-\mbox{}\textbf{\textless{}processor\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}architecture\textgreater{}\textless{}/architecture\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}cores\textgreater{}\textless{}/cores\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}frequency\textgreater{}\textless{}/frequency\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}model\textgreater{}\textless{}/model\textgreater{}} \\
+-\mbox{}\textbf{\textless{}/processor\textgreater{}} \\
+-\mbox{} \\
+-\mbox{}\textbf{\textless{}gpu\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}name\textgreater{}\textless{}/name\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}cores\textgreater{}\textless{}/cores\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}capability\textgreater{}\textless{}/capability\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}registers$\_$block\textgreater{}\textless{}/registers$\_$block\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}thread$\_$block\textgreater{}\textless{}/thread$\_$block\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}overlap\textgreater{}\textless{}/overlap\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}global$\_$memory\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}total$\_$space\textgreater{}\textless{}/total$\_$space\textgreater{}}\ \ \ \ \ \textit{\textless{}!-\/-\ in\ KB\ -\/-\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}/global$\_$memory\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}shared$\_$memory\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}total$\_$space\textgreater{}\textless{}/total$\_$space\textgreater{}}\ \ \ \ \ \textit{\textless{}!-\/-\ in\ KB\ -\/-\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}/shared$\_$memory\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}constant$\_$memory\textgreater{}} \\
+-\mbox{}\ \ \ \ \ \ \ \ \textbf{\textless{}total$\_$space\textgreater{}\textless{}/total$\_$space\textgreater{}}\ \ \ \ \ \textit{\textless{}!-\/-\ in\ KB\ -\/-\textgreater{}} \\
+-\mbox{}\ \ \ \ \textbf{\textless{}/constant$\_$memory\textgreater{}} \\
+-\mbox{}\textbf{\textless{}/gpu\textgreater{}}\ \ \ \ \  \\
+-\mbox{}
+-\endlatexonly
+-
+-\section create Create new XML description file
+-yarpmanager allows for creating new application, module and resource description file using predifined templates. To create a new XML file, first make sure you set 'external_editor' to your preferable editor (e.g. gedit, notepad) then
+-- From "File>New" menu chose "New Application". ("New Module" for module and "New Resource" for resource)
+-- Chose your application folder and enter proper name (e.g "my-test-app.xml") to save it. The template file will be open using 'external_editor'.
+-- Modify and save it.
+-- Open it using yarpmanager.
+-
+-\subsection create_notes Notes
+-- (g)yarpmanager allows for identical application names (they will be listed as MyApp(1), MyApp(2), ...). But it is strongly recommended to have unique proper name for each application. Notice that, duplicate names for modules and resources are not allowed and will be ignored by (g)yarpmanager.
+-- If you modify the XML description file, you need to "reopen" it. Identically, you can "remove" and "open" it from GUI.
+-
+-\section export Generate application dependency graph
+-The arrangement of modules and resources within an application can be visualized as dependency graph. For Instance, dependency graph of application "EyesViewer-Localhost" used in above example is shown below.
+-\image html app-graph.jpg "EyesViewer-Localhost"
+-
+-As shown in the graph, application "EyesViewer-Localhost" consists of two instances of "FakeEyes" with their relevant modules. Each module is associated with a node marked as "MultipleResource". It is linked to machines which satisfy its requirements. Notice that here, "localhost" is specifically assigned by user to each modules; Thus there is no link to machines "node1" and "node2".
+- The graph is generated in DOT format which can be visualized using Graphviz tools. To generate the graph:
+- - Open an application using yarpmanager (See above example \ref example_g)
+- - From "Edit" menu chose "Export graph"
+- - Give a name (e.g "MyApp.dot") and save it.
+-
+-Or open an application using yarpmanager (See above example \ref example_y) and type :
+-\verbatim
+->> export MyApp.dot
+-\endverbatim
+-
+-To visualize the graph, Linux users can open a terminal and try this:
+-\verbatim
+-$ sudo apt-get install graphviz
+-$ dot -Tpdf -o MyApp.pdf MyApp.dot
+-\endverbatim
+-
+-Windows users can download Graphviz tools from http://www.graphviz.org/Download_windows.php and in windows console type :
+-
+-\verbatim
+- C:\...\> dot -Tpdf -o MyApp.pdf MyApp.dot
+-\endverbatim
+-
+-
+-
+-\section faq Frequently asked questions
+-\subsection wait_launch How to postpone launching a module?
+-It can very often happen that you need to launch a module after some other modules already launched and are running. This is usually the case where a module needs to access some ports which should be open by other modules. To achieve this behavior, you simply needs to indicate which ports your module needs to be available using \<dependencies\> tag of the corresponding module in the application description file (see \ref app_notes). 
+- 
+-\subsection quick_launch How to quickly launch a single application in command line? 
+-Imagine you need to run a single application (e.g., eyesviewer-localhost.xml) without using Guis. All you need is to use 'yarpmanager-console', give your application description file as its parameter and ask it to run the modules and connect them: 
+-
+-\verbatim
+-     yarpmanager-console --application my-app.xml --run --connect
+-\endverbatim
+-  
+-If you want to run the application without getting blocked in yarpmanager-console, you can ask it to quit after running the application. 
+-
+-\verbatim
+-     yarpmanager-console --application my-app.xml --run --connect --exit --silent 
+-\endverbatim
+-
+-The '--silent' parameter avoids showing the verbose messages. Try 'yarpmanager-console --help' for further information.  
+-
+-*/
+diff --git a/doc/yarpmotorgui.dox b/doc/yarpmotorgui.dox
+deleted file mode 100644
+index 6f6196c..0000000
+--- a/doc/yarpmotorgui.dox
++++ /dev/null
+@@ -1,143 +0,0 @@
+-/**
+-\defgroup yarpmotorgui yarpmotorgui
+-@ingroup yarp_guis
+-@ingroup yarp_tools
+-
+-A simple graphical interface for moving all the joints of a robot with
+-sliders.
+-Uses remote control boards.
+-
+-\image html yarpmotorgui.jpg
+-\image latex yarpmotorgui.eps "A window of yarpmotorgui running on Linux" width=15cm
+-
+-\section intro_sec Description
+-
+-This GUI can be used for the following pouposes:
+-
+-- continuosly reading the position of the ALL the robot joints
+-- running/idling single joints
+-- running ALL the robot joints
+-- position command of single joints
+-- changing the velocity of the position commands
+-- performing sequences of position commands with the ALL robot joints
+-- calibrating single joints
+-- checking if the robot is in position ("@")
+-
+-\section parameters_sec Parameters
+-
+-\code
+---name:     name of the robot (used to form port names)
+---parts:    a list of parts to be added.
+---skip:     skips the initial dialog and keeps the default parts.
+---speed:    enables the speed visualisation.
+---calib:    enables the calib buttons.
+---debug:    opens the debugInterfaceClient (for firmware debugging).
+---direct:   enables the position direct mode.
+---openloop: enables the openloop mode.
+---admin:    enables all the previous parameters (debug, direct, openloob, calib).
+-\endcode
+-Example:
+-\code
+-yarpmotorgui --name icub --parts (head torso left_arm right_arm left_leg right_leg)
+-\endcode
+-
+-These parameters can be specified in a single file, passed with the
+---from option.
+-Example:
+-\code
+-yarpmotorgui --from yarpmotorgui.ini
+-\endcode
+-
+-By default yarpmotorgui starts using the file yarpmotorgui.ini
+-in $ICUB_ROOT/app/default.
+-
+-An home position can be optionally defined in the supplied file.
+-This home position is specified using a group [part_zero] (e.g. [head_zero])
+-containing the home position and velocity  that will be commanded when the home
+-button is pressed:
+-\code
+-[head_zero]
+-PositionZero      0.0        0.0      0.0       0.0        0.0        0.0
+-VelocityZero     10.0       10.0     10.0      10.0       10.0       10.0
+-\endcode
+-
+-A set of calibration parameters can be optionally defined in the
+-supplied file. These calibration parameters follow the same standard
+-followed by the \ref icub_iCubInterface and can be specified within
+-the group [part_calib] (e.g. [head_calib]):
+-\code
+-[head_calib]
+-CalibrationType     0          0        0         0          0          0
+-Calibration1    500.0      1000.0    900.0     300.0     1333.0     1333.0
+-Calibration2     20.0        20.0     20.0     -20.0        5.0        5.0
+-Calibration3      0.0         0.0      0.0       0.0        0.0        0.0
+-\endcode
+-
+-A set of parameters can be optionally specified in order to
+-open a set of tabs which allow cartesian movements trough the cartesian
+-interfaces (see the tutorial \ref icub_cartesian_interface). These cartesian
+-interfaces can be enabled by inserting a group [cartesian] in the
+-yarpmotorgui intialization file. This group should contain the name
+-of the robot parts which should be controlled in the cartesian space:
+-\code
+-[cartesian]
+-left_arm
+-...
+-right_leg
+-\endcode
+-Each part initialized with the cartesian interface should be properly
+-configured by specifying the limits for the cartesian workspace.
+-\code
+-[left_arm_workspace]
+-xmin xm
+-xmax xM
+-
+-ymin ym
+-ymax yM
+-
+-zmin zm
+-zmax zM
+-\endcode
+-In order to make the cartesian tabs working you need to be sure that
+-that the \ref iKinCartesianSolver "Cartesian Solvers" are running and working.
+-
+-\section portsa_sec Ports Accessed
+-For each part initalized (e.g. right_leg):
+-- /icub/right_leg/rpc:i
+-- /icub/right_leg/command:i
+-- /icub/gui/right_leg/state:i
+-
+-\section portsc_sec Ports Created
+-For each part initalized (e.g. right_leg):
+-- /icub/gui/right_leg/rpc:o
+-- /icub/gui/right_leg/command:o
+-- /icub/right_leg/state:o
+-
+-\section conf_file_sec Configuration Files
+-
+-Passed with the paremter --from, configure the layout of the gui.
+-\code
+-name icub
+-parts (head torso right_arm left_arm)
+-\endcode
+-
+-Creates a gui. Connects automatically to:
+-
+-\code
+-/icub/head/*
+-/icub/torso/*
+-/icub/right_arm/*
+-...
+-\endcode
+-
+-\section tested_os_sec Tested OS
+-Linux and Windows.
+-
+-\author Francesco Nori
+-
+-Copyright (C) 2008 RobotCub Consortium
+-
+-CopyPolicy: Released under the terms of the GNU GPL v2.0.
+-
+-This file can be edited at doc/yarpmotorgui.dox.
+-*/
+diff --git a/doc/yarpscope.dox b/doc/yarpscope.dox
+deleted file mode 100644
+index 8e6c570..0000000
+--- a/doc/yarpscope.dox
++++ /dev/null
+@@ -1,263 +0,0 @@
+-/*
+- * Copyright (C) 2012  iCub Facility, Istituto Italiano di Tecnologia
+- * Author: Daniele E. Domenichelli <daniele.domenichelli@iit.it>
+- *
+- * CopyPolicy: Released under the terms of the LGPLv2.1 or later, see LGPL.TXT
+- */
+-
+-/**
+-\page yarpscope yarpscope: A simple graphical user interface for visualizing the numerical content of a a port.
+-
+-\author Daniele E. Domenichelli
+-\author The original Qt version of portScope was written by Francesco Nori.
+-
+-\section intro_sec Description
+-This simple graphical user interface allows to visualize on a plot the content
+-of a YARP port. The input port is assumed to contain a vector of numbers.
+-
+- - The main window can contain one or more plots.
+- - Each plot can contain one or more graphs.
+- - Each graph displays one pair [remote port, index].
+-
+-\section usage_sec How to initialize the yarpscope
+-
+-yarpscope supports two different modes: simple mode (one remote, one graph) and
+-XML mode (multiple remotes, multiple graph).
+-
+-The following options are common to both modes:
+-
+-\code
+- --help                 Print this help and exit.
+-
+- --title [string]       Title of the window (default "YARP Port Scope")
+- --x [uint]             Initial X position of the window.
+- --y [uint]             Initial Y position of the window.
+- --dx [uint]            Initial width of the window.
+- --dy [uint]            Initial height of the window.
+-
+- --interval [int]       Initial refresh interval in milliseconds. (default = 50ms)
+-\endcode
+-
+-
+-\subsection yarpscope_simple_mode Simple Mode
+-
+-Simple mode can be used for running yarpscope from the command line, connecting
+-to a single remote and displaying multiple plots on a single graph.
+-
+-The syntax is
+-
+-\code
+---remote [string]      Remote port to connect to.
+- --carrier [string]     YARP Carrier used for connections (default "mcast")
+- --persistent,          Make normal or persistent connections (default persistent)
+-   --no-persistent
+- --index [...]          Index(es) of the vector to plot.
+-                        It can be an [uint] or an array of [uint]s
+- --plot_title [string]  Plot title (default = remote)
+- --min [float]          Minimum value for the X axis (default -100)
+- --max [float]          Maximum value for the X axis (default 100)
+- --size [uint]          Plot size (Number of samples to plot) (default 201)
+- --bgcolor [string]     Background color.
+- --color [...]          Graph color(s).
+-                        Depending on index it must be a [string] or an array of [string]s.
+- --type [...]           Graph type(s). Accepted values are "points", "lines" and "bars" (default = "lines")
+-                        Depending on index it must be a [string] or an array of [string]s.
+- --graph_size [...]     Graph size(s) (thickness of the points) (default = 1)
+-                        Depending on index it must be a [uint] or an array of [uint]s.
+-\endcode
+-
+-
+-
+-\subsection yarpscope_xml_mode XML Mode
+-
+-
+-XML mode can be used to start yarpscope by passing an xml that contains the
+-configuration of the window. It can connect to multiple remotes and display
+-one or more graphs in a grid.
+-To invoke XML mode, yarpscope must be started passing the --xml parameter.
+-The file is located using the YARP default policy.
+-
+-Here is an example of portscope description file in XML format:
+-
+-\code
+-<?xml version="1.0" encoding="UTF-8" ?>
+-<portscope rows="3" columns="3" carrier="mcast">
+-    <plot gridx="0"
+-          gridy="0"
+-          hspan="1"
+-          vspan="1"
+-          title="Plot 00"
+-          size="60"
+-          minval="-100"
+-          maxval="100"
+-          bgcolor="LightSlateGrey">
+-        <graph remote="/icubSim/head/state:o"
+-               index="0"
+-               color="Red"
+-               title="Graph 0"
+-               type="lines"
+-               size="3" />
+-        <graph remote="/icubSim/head/state:o"
+-               index="1"
+-               color="Green"
+-               title="Graph 1"
+-               size="3"
+-               type="points" />
+-        <graph remote="/icubSim/head/state:o"
+-               index="2"
+-               color="Blue"
+-               title="Graph 2"
+-               size="1"
+-               type="bars" />
+-    </plot>
+-    <plot gridx="0"
+-          gridy="1"
+-          hspan="1"
+-          vspan="2"
+-          title="Plot 01"
+-          minval="-100"
+-          maxval="100"
+-          bgcolor="LightGrey">
+-        <graph remote="/icubSim/right_arm/state:o"
+-               index="0"
+-               color="Red"
+-               title="Graph 0"
+-               type="bars" />
+-        <graph remote="/icubSim/right_arm/state:o"
+-               index="1"
+-               color="Green"
+-               title="Graph 1"
+-               type="lines" />
+-        <graph remote="/icubSim/left_arm/state:o"
+-               index="0"
+-               color="Blue"
+-               title="Graph 2"
+-               type="points" />
+-        <graph remote="/icubSim/left_arm/state:o"
+-               index="1"
+-               color="Magenta"
+-               title="Graph 2"
+-               type="points" />
+-    </plot>
+-    <plot gridx="1"
+-          gridy="0"
+-          hspan="2"
+-          vspan="1"
+-          title="Plot 10"
+-          minval="-100"
+-          maxval="100"
+-          bgcolor="Yellow">
+-        <graph remote="/icubSim/right_leg/state:o"
+-               index="0"
+-               color="Red"
+-               title="Graph 0" />
+-        <graph remote="/icubSim/right_leg/state:o"
+-               index="1"
+-               color="Green"
+-               title="Graph 1" />
+-        <graph remote="/icubSim/right_leg/state:o"
+-               index="2"
+-               color="Blue"
+-               title="Graph 2" />
+-    </plot>
+-    <plot gridx="1"
+-          gridy="1"
+-          hspan="2"
+-          vspan="2"
+-          title="Plot 11"
+-          minval="-100"
+-          maxval="100"
+-          bgcolor="Pink">
+-        <graph remote="/icubSim/torso/state:o"
+-               index="0"
+-               color="Red"
+-               title="Graph 0"
+-               type="bars" />
+-        <graph remote="/icubSim/torso/state:o"
+-               index="1"
+-               color="Green"
+-               title="Graph 1"
+-               type="lines" />
+-        <graph remote="/icubSim/torso/state:o"
+-               index="2"
+-               color="Blue"
+-               title="Graph 2"
+-               type="points" />
+-    </plot>
+-</portscope>
+-\endcode
+-
+-This xml will produce a GUI similar to this:
+-
+-\image html yarpscope.png ""
+-
+-Details:
+-
+-\code
+-<portscope rows="3" columns="3" carrier="mcast">
+-\endcode
+-
+-- \a rows and \a columns is the size of the main table.
+-(Note: rows * columns does not necessarily corresponds to the number of plots,
+-since for each plot you can set \a hspan and \a vspan). Also if your grid is
+-bigger than what you declare here, it is resized automatically [optional].
+-- \a "carrier" is the carrier that will be used for connections (default = mcast) [optional].
+-
+-
+-Now declare a plot:
+-
+-\code
+-    <plot gridx="0"
+-          gridy="0"
+-          hspan="1"
+-          vspan="1"
+-          title="Plot 00"
+-          size="60"
+-          minval="-100"
+-          maxval="100"
+-          bgcolor="LightSlateGrey">
+-\endcode
+-
+-- \a gridx and \a gridy are the position in the main table of the portscope.
+-\a gridx corresponds to the column (the first colums
+-index is 0), and \a gridy is corresponds to the row. Columns and rows are
+-indexed from zero, therefore (0,0) is the top-left plot [mandatory].
+-- \a hspan and \a vspan are the number of cells in the main table that the plot will
+-take [optional, default = (1,1)].
+-- \a title is the title of the plot [optional, currently unused].
+-- \a size is the number of samples that will be shown (i.e. the length of the X
+-axes [optional, default = 201].
+-- \a minval and \a maxval are the minimum and maximum values on the Y axes
+-[optional, default -100, 100].
+-- \a bgcolor is the color of the background for the plot. Color names (white, gray,
+-etc.) and RGB values (\#FFFFFF, ecc) are accepted [optional, default "white"]
+-
+-
+-In each plot you can have one or more graphs:
+-
+-\code
+-        <graph remote="/icubSim/head/state:o"
+-               index="0"
+-               color="Red"
+-               title="Graph 0"
+-               type="lines"
+-               size="3" />
+-\endcode
+-
+-
+-- \a remote is the YARP port where the data is read. For each port used in the
+-xml file, yarpscope will open a port \a $YARP_PORT_PREFIX/yarpscope/\<remote\> and
+-connect it to the \a remote port
+-- \a index is the index of the data to graph.
+-- \a color is the color of the plot. Color names (white, gray, etc.) and RGB values
+-(\#FFFFFF, ecc) are accepted [optional, default "black"]
+-- \a title is the name of the plot as it will appear on the legend [optional,
+-currently unused].
+-- \a type is the type of graph. It can be:
+-  -# \a points
+-  -# \a lines
+-  -# \a bars
+-[optional, default "lines"]
+-- \a size depending on \a type, is the thickness of each point, of the line or
+-of the bar [optional, default 1].
+-*/
