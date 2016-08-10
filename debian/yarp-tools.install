@@ -12,4 +12,3 @@ usr/bin/yarprun
 usr/bin/yarpserver
 usr/bin/yarpserver2
 usr/bin/yarpserver3
-usr/lib/*/libYARP_name.so.*
