@@ -7,7 +7,8 @@ usr/share/yarp/applications/eyesviewer-localhost.xml
 usr/share/yarp/applications/yarpdataplayerExample.xml
 usr/share/yarp/applications/fakeye-localhost.xml
 usr/share/yarp/contexts/yarpdataplayer/config.ini
-usr/share/yarp/contexts/yarpscope/test_yarpscope_wbd.xml
 usr/share/yarp/templates/applications/eyesviewer-cluster.xml.template
 usr/share/yarp/templates/applications/yarpdataplayer.xml.template
 usr/share/yarp/templates/applications/yarpdatadumper.xml.template
+src/yarpscope-gtk/examples/test_yarpscope_wbd.xml usr/share/yarp/contexts/yarpscope/
+src/yarpscope-gtk/examples/test_portscope.xml usr/share/yarp/contexts/yarpscope/
