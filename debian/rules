@@ -13,7 +13,6 @@ override_dh_auto_configure:
 	                     -DYARP_COMPILE_TESTS=OFF \
 	                     -DYARP_COMPILE_UNMAINTAINED=OFF \
 	                     -DCREATE_GUIS=ON \
-	                     -DCREATE_YARPBUILDER=ON \
 	                     -DCREATE_LIB_MATH=ON \
 	                     -DCREATE_OPTIONAL_CARRIERS=ON \
 	                     -DENABLE_yarpcar_bayer_carrier=ON \
@@ -34,7 +33,9 @@ override_dh_auto_configure:
 	                     -DENABLE_yarpmod_portaudio=ON \
 	                     -DCREATE_PERL=ON \
 	                     -DYARP_DOXYGEN_HTML=ON \
-	                     -DYARP_DOXYGEN_MAN=ON
+	                     -DYARP_DOXYGEN_MAN=ON \
+	                     -DCREATE_YARPBUILDER=OFF \
+	                     -DYARP_USE_GTK2:BOOL=OFF
 # -DENABLE_yarpmod_KinectDeviceClient=ON \
 # -DENABLE_yarpmod_KinectDeviceLocal=ON \
 # -DENABLE_yarpmod_SerialServoBoard=ON \
