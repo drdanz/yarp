@@ -426,22 +426,22 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZN4yarp3dev7DriversD2Ev@Base 2.3.66
  _ZNK4yarp3dev14PolyDriverList4sizeEv@Base 2.3.66
  _ZNK4yarp3dev14PolyDriverListixEi@Base 2.3.66
- _ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_EET0_T_SA_S9_@Base 2.3.66
- _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS5_S7_EERKS5_@Base 2.3.66
- _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS5_S7_EEmRKS5_@Base 2.3.66
+ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJS5_EEEvDpOT_@Base 2.3.66
+ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_default_appendEm@Base 2.3.66
+ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE19_M_emplace_back_auxIJRKS5_EEEvDpOT_@Base 2.3.66
  _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED1Ev@Base 2.3.66
  _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev@Base 2.3.66
  _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EEaSERKS7_@Base 2.3.66
  _ZNSt6vectorIdSaIdEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPdS1_EEmRKd@Base 2.3.66
- _ZNSt6vectorIdSaIdEE6resizeEmd@Base 2.3.66
+ _ZNSt6vectorIdSaIdEE17_M_default_appendEm@Base 2.3.66
+ _ZNSt6vectorIdSaIdEE6resizeEm@Base 2.3.66
  _ZNSt6vectorIdSaIdEEaSERKS1_@Base 2.3.66
- _ZNSt6vectorIfSaIfEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPfS1_EEmRKf@Base 2.3.66
- _ZNSt6vectorIfSaIfEE6resizeEmf@Base 2.3.66
- _ZNSt6vectorIiSaIiEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPiS1_EEmRKi@Base 2.3.66
- _ZNSt6vectorIiSaIiEE6resizeEmi@Base 2.3.66
+ _ZNSt6vectorIfSaIfEE17_M_default_appendEm@Base 2.3.66
+ _ZNSt6vectorIfSaIfEE6resizeEm@Base 2.3.66
+ _ZNSt6vectorIiSaIiEE17_M_default_appendEm@Base 2.3.66
+ _ZNSt6vectorIiSaIiEE6resizeEm@Base 2.3.66
  _ZNSt6vectorIiSaIiEEaSERKS1_@Base 2.3.66
  _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_@Base 2.3.66
- _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_SA_@Base 2.3.66
  _ZTIN4yarp2os16PortablePairBaseE@Base 2.3.66
  _ZTIN4yarp2os18YarpPluginSelectorE@Base 2.3.66
  _ZTIN4yarp2os19AbstractContactableE@Base 2.3.66
@@ -600,7 +600,6 @@ libYARP_dev.so.1 libyarp-dev1 #MINVER#
  _ZTSN4yarp3dev9TestMotorE@Base 2.3.66
  _ZTSN4yarp3sig7ImageOfINS0_8PixelRgbEEE@Base 2.3.66
  _ZTSN4yarp3sig7ImageOfIhEE@Base 2.3.66
- _ZTVN4yarp2os16PortablePairBaseE@Base 2.3.66
  _ZTVN4yarp2os18YarpPluginSelectorE@Base 2.3.66
  _ZTVN4yarp2os21UnbufferedContactableE@Base 2.3.66
  _ZTVN4yarp2os8PortableE@Base 2.3.66
