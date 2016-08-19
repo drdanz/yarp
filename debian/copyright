@@ -6,7 +6,7 @@ Source: http://yarp.it/
 Files: *
 Copyright: 2006-2011 RobotCub Consortium
  2006-2012, Robotics, Brain and Cognitive Sciences - Italian Institute of Technology (IIT)
- 2012, iCub Facility - Italian Institute of Technology (IIT)
+ 2012-2016, iCub Facility - Italian Institute of Technology (IIT)
 License: LGPL-2.1+
 
 Files: src/idls/thrift/*
@@ -111,11 +111,11 @@ License: LGPL
  Public License can be found in the file
  `/usr/share/common-licenses/LGPL'.
 
-Files: src/libYARP_OS/harness/BottleTest.cpp
- src/libYARP_OS/include/yarp/os/Bottle.h
+Files: src/libYARP_OS/include/yarp/os/Bottle.h
  src/libYARP_OS/include/yarp/os/impl/BottleImpl.h
  src/libYARP_OS/src/Bottle.cpp
  src/libYARP_OS/src/BottleImpl.cpp
+ tests/libYARP_OS/BottleTest.cpp
 Copyright: 2006, 2008 RobotCub Consortium, Arjan Gijsberts
 License: LGPL-2.1+
 
@@ -154,13 +154,6 @@ License: GPL
  On Debian systems, the full text of the GNU General Public
  License can be found in the file
  `/usr/share/common-licenses/GPL'.
-
-Files: src/modules/firewirecamera/FirewireCameraDC1394.h
- src/modules/firewirecamera/FirewireCameraSet.cpp
- src/modules/firewirecamera/FirewireCameraSet.h
- src/modules/firewirecamera/dc1394settings.h
-Copyright: 2007, Alessandro Scalzo
-License: LGPL-2.1+
 
 Files: src/libYARP_dev/include/yarp/dev/SerialInterfaces.h
  src/libYARP_dev/include/yarp/dev/ServerSerial.h
