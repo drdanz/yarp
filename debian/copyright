@@ -1,7 +1,7 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: yarp
 Upstream-Contact: Paul Fitzpatrick, Giorgio Metta, Lorenzo Natale, Alessandro Scalzo
-Source: yarp
+Source: http://yarp.it/
 
 Files: *
 Copyright: 2006-2011 RobotCub Consortium

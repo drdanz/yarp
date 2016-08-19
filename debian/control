@@ -3,7 +3,7 @@ Priority: optional
 Maintainer: Robotology Maintainers <info@icub.org>
 Uploaders: Daniele E. Domenichelli <ddomenichelli@drdanz.it>,
            Matteo Brunettini <matteo.brunettini@iit.it>
-Homepage: http://wiki.icub.org/yarp/
+Homepage: http://yarp.it/
 Build-Depends: debhelper (>= 9),
                quilt,
                cmake (>= 2.8.9),
