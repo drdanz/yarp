@@ -34,12 +34,18 @@ Vcs-Browser: https://anonscm.debian.org/cgit/debian-science/packages/yarp.git
 Package: yarp-data
 Architecture: all
 Depends: ${misc:Depends}
+Multi-Arch: foreign
 Description: thin middleware for humanoid robots and more - data
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains architecture-independent supporting data files
  required for use with yarp, such as such as documentation, icons,
@@ -55,11 +61,16 @@ Depends: ${misc:Depends}, ${shlibs:Depends},
  yarp-data (= ${source:Version})
 Multi-Arch: same
 Description: thin middleware for humanoid robots and more - [os] shared libraries
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the [os] shared library.
 
@@ -70,11 +81,16 @@ Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Multi-Arch: same
 Description: thin middleware for humanoid robots and more - [sig] shared libraries
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the [sig] shared library.
 
@@ -85,11 +101,16 @@ Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Multi-Arch: same
 Description: thin middleware for humanoid robots and more - [math] shared libraries
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the [math] shared library.
 
@@ -100,11 +121,16 @@ Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Multi-Arch: same
 Description: thin middleware for humanoid robots and more - [dev] shared libraries
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the [dev] shared library.
 
@@ -116,11 +142,16 @@ Architecture: any
 Depends: ${misc:Depends},
  libyarp-os1 (= ${binary:Version})
 Description: thin middleware for humanoid robots and more - [os] development files
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the [os] development files.
 
@@ -130,11 +161,16 @@ Architecture: any
 Depends: ${misc:Depends},
  libyarp-os-dev (= ${binary:Version})
 Description: thin middleware for humanoid robots and more - [os] private development files
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the [os] private development files.
 
@@ -144,11 +180,16 @@ Architecture: any
 Depends: ${misc:Depends},
  libyarp-sig1 (= ${binary:Version})
 Description: thin middleware for humanoid robots and more - [sig] development files
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the [sig] development files.
 
@@ -158,11 +199,16 @@ Architecture: any
 Depends: ${misc:Depends},
  libyarp-sig-dev (= ${binary:Version})
 Description: thin middleware for humanoid robots and more - [sig] private development files
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the [sig] private development files.
 
@@ -172,11 +218,16 @@ Architecture: any
 Depends: ${misc:Depends},
  libyarp-math1 (= ${binary:Version})
 Description: thin middleware for humanoid robots and more - [math] development files
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the [math] development files.
 
@@ -186,11 +237,16 @@ Architecture: any
 Depends: ${misc:Depends},
  libyarp-dev1 (= ${binary:Version})
 Description: thin middleware for humanoid robots and more - [dev] development files
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the [dev] development files.
 
@@ -206,11 +262,16 @@ Depends: ${misc:Depends},
  libyarp-dev1 (= ${binary:Version}) |
  libyarp-math1 (= ${binary:Version})
 Description: thin middleware for humanoid robots and more - debug symbols
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the [os] debugging symbols.
 
@@ -223,11 +284,16 @@ Depends: ${misc:Depends},
  lynx | www-browser, doc-base, libjs-jquery
 Multi-Arch: foreign
 Description: thin middleware for humanoid robots and more - documentation and examples
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the documentation and example files.
 
@@ -238,11 +304,16 @@ Package: yarp-tools
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: thin middleware for humanoid robots and more - command line tools
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the command line tools.
 
@@ -250,11 +321,16 @@ Package: yarpview
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: thin middleware for humanoid robots and more - yarpview
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains yarpview.
 
@@ -262,11 +338,16 @@ Package: yarpscope
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: thin middleware for humanoid robots and more - yarpscope
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains yarpscope.
 
@@ -274,11 +355,16 @@ Package: yarpmotorgui
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: thin middleware for humanoid robots and more - yarpmotorgui
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains yarpmotorgui.
 
@@ -286,11 +372,16 @@ Package: yarpmanager
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: thin middleware for humanoid robots and more - yarpmanager
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains yarpmanager.
 
@@ -298,11 +389,16 @@ Package: yarplogger
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: thin middleware for humanoid robots and more - yarplogger
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains yarplogger.
 
@@ -310,11 +406,16 @@ Package: yarpdatadumper
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: thin middleware for humanoid robots and more - yarpdatadumper
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains yarpdatadumper.
 
@@ -322,23 +423,31 @@ Package: yarpdataplayer
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: thin middleware for humanoid robots and more - yarpdataplayer
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
- .
- This package contains yarpdataplayer.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
 
 Package: yarplaserscannergui
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: thin middleware for humanoid robots and more - yarplaserscannergui
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains yarplaserscannergui.
 
@@ -346,11 +455,16 @@ Package: yarpbatterygui
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: thin middleware for humanoid robots and more - yarpbatterygui
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains yarpbatterygui.
 
@@ -360,11 +474,16 @@ Package: yarp-carrier-bayer
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: bayer carrier
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the bayer carrier plugin.
 
@@ -372,11 +491,16 @@ Package: yarp-carrier-human
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: human carrier
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the human carrier plugin.
 
@@ -384,11 +508,16 @@ Package: yarp-carrier-mjpeg
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: mjpeg carrier
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the mjpeg carrier plugin.
 
@@ -396,11 +525,16 @@ Package: yarp-carrier-mpi
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: mpi carrier
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the mpi and mpibcast carrier plugins.
 
@@ -408,11 +542,16 @@ Package: yarp-carrier-portmonitor
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: portmonitor carrier
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the portmonitor carrier plugin.
 
@@ -420,11 +559,16 @@ Package: yarp-carrier-priority
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: priority carrier
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the priority carrier plugin.
 
@@ -432,11 +576,16 @@ Package: yarp-carrier-tcpros
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: tcpros carrier
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the tcpros carrier plugin.
 
@@ -444,11 +593,16 @@ Package: yarp-carrier-xmlrpc
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: xmlrpc carrier
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the xmlrpc carrier plugin.
 
@@ -458,11 +612,16 @@ Package: yarp-device-fakebot
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: fakebot device
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the fakebot device plugin.
 
@@ -470,11 +629,16 @@ Package: yarp-device-opencv
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: opencv_grabber device
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the opencv_grabber device plugin.
 
@@ -482,11 +646,16 @@ Package: yarp-device-portaudio
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: portaudio device
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the portaudio device plugin.
 
@@ -494,11 +663,16 @@ Package: yarp-device-serial
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: serial and serialport devices
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the serial and serialport devices plugin.
 
@@ -512,11 +686,16 @@ Depends: ${misc:Depends}, ${shlibs:Depends}, ${perl:Depends},
  yarp-data (= ${source:Version})
 Multi-Arch: same
 Description: thin middleware for humanoid robots and more - perl bindings
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This package contains the Perl 5 bindings.
 
@@ -546,11 +725,16 @@ Depends: ${misc:Depends},
  libyarp-sig-dev (= ${binary:Version})
 Suggests: cmake-curses-gui, cmake-qt-gui
 Description: thin middleware for humanoid robots and more - development files
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This metapackage installs the development files.
 
@@ -566,11 +750,16 @@ Depends: ${misc:Depends},
  yarplaserscannergui (= ${binary:Version}),
  yarpbatterygui (= ${binary:Version})
 Description: thin middleware for humanoid robots and more - GUIs
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This metapackage installs all GUIs.
 
@@ -586,11 +775,16 @@ Depends: ${misc:Depends},
  yarp-carrier-tcpros (= ${binary:Version}),
  yarp-carrier-xmlrpc (= ${binary:Version})
 Description: thin middleware for humanoid robots and more - optional carriers
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This metapackage installs the optional carriers.
 
@@ -602,11 +796,16 @@ Depends: ${misc:Depends},
  yarp-device-portaudio (= ${binary:Version}),
  yarp-device-serial (= ${binary:Version})
 Description: thin middleware for humanoid robots and more - optional devices
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This metapackage installs the optional devices.
 
@@ -616,11 +815,16 @@ Depends: ${misc:Depends},
  yarp-tools (= ${binary:Version}),
  yarp-carrier-tcpros (= ${binary:Version}),
 Description: thin middleware for humanoid robots and more - ROS integration
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This metapackage installs the ROS integration.
 
@@ -631,11 +835,16 @@ Depends: ${misc:Depends},
  yarp-tools (= ${binary:Version}),
  yarpdatadumper (= ${binary:Version})
 Description: thin middleware for humanoid robots and more
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This metapackage installs all libraries and tools.
 
@@ -645,10 +854,15 @@ Depends: ${misc:Depends},
  yarp (= ${binary:Version}),
  yarp-dev (= ${binary:Version})
 Description: thin middleware for humanoid robots and more - full
- [TODO add description]
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
  .
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam
- lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam
- viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
  .
  This metapackage installs all libraries, tools, and development files
