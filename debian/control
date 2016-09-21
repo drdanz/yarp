@@ -24,7 +24,7 @@ Build-Depends: debhelper (>= 9),
                libdc1394-22-dev,
                swig,
                perl
-Standards-Version: 3.9.6
+Standards-Version: 3.9.8
 Section: science
 Vcs-Git: https://anonscm.debian.org/git/debian-science/packages/yarp.git
 Vcs-Browser: https://anonscm.debian.org/cgit/debian-science/packages/yarp.git
