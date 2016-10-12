@@ -5,6 +5,8 @@ Uploaders: Daniele E. Domenichelli <ddomenichelli@drdanz.it>,
            Matteo Brunettini <matteo.brunettini@iit.it>
 Homepage: http://yarp.it/
 Build-Depends: debhelper (>= 9),
+               dh-python,
+               python,
                quilt,
                cmake (>= 2.8.9),
                pkg-config,
@@ -404,7 +406,7 @@ Description: thin middleware for humanoid robots and more - yarplogger
 
 Package: yarpdatadumper
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}, ${python:Depends}
 Description: thin middleware for humanoid robots and more - yarpdatadumper
  YARP stands for Yet Another Robot Platform. It is a library and toolkit
  for communication and device interfaces, used on everything from
