@@ -32,6 +32,7 @@ override_dh_auto_configure:
 	                     -DENABLE_yarpmod_serial=ON \
 	                     -DENABLE_yarpmod_serialport=ON \
 	                     -DENABLE_yarpmod_fakebot=ON \
+	                     -DENABLE_yarpmod_fakeIMU=ON \
 	                     -DENABLE_yarpmod_opencv_grabber=ON \
 	                     -DENABLE_yarpmod_portaudio=ON \
 	                     -DCREATE_PERL=ON \
