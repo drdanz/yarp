@@ -303,9 +303,45 @@ Description: thin middleware for humanoid robots and more - documentation and ex
 
 ##################### TOOLS
 
-Package: yarp-tools
+Package: yarpserver
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: thin middleware for humanoid robots and more - yarpserver
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
+ .
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
+ .
+ This package contains yarpserver.
+
+Package: yarprun
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: thin middleware for humanoid robots and more - yarprun
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
+ .
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
+ .
+ This package contains yarprun.
+
+Package: yarp-tools
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends},
+ yarpserver (= ${binary:Version}),
+ yarprun (= ${binary:Version})
 Description: thin middleware for humanoid robots and more - command line tools
  YARP stands for Yet Another Robot Platform. It is a library and toolkit
  for communication and device interfaces, used on everything from
