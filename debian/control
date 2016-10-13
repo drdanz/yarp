@@ -6,7 +6,7 @@ Uploaders: Daniele E. Domenichelli <ddomenichelli@drdanz.it>,
 Homepage: http://yarp.it/
 Build-Depends: debhelper (>= 9),
                dh-python,
-               python,
+               python-dev,
                quilt,
                cmake (>= 2.8.9),
                pkg-config,
@@ -30,6 +30,7 @@ Standards-Version: 3.9.8
 Section: science
 Vcs-Git: https://anonscm.debian.org/git/debian-science/packages/yarp.git
 Vcs-Browser: https://anonscm.debian.org/cgit/debian-science/packages/yarp.git
+X-Python-Version: >= 2.6
 
 ##################### DATA
 
@@ -734,6 +735,27 @@ Description: thin middleware for humanoid robots and more - perl bindings
  with hardware devices.
  .
  This package contains the Perl 5 bindings.
+
+Package: python-yarp
+Section: python
+Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}, ${python:Depends},
+ yarp-data (= ${source:Version})
+Multi-Arch: same
+Description: thin middleware for humanoid robots and more - Python 2 bindings
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
+ .
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
+ .
+ This package contains the Python 2 bindings.
 
 #Package: libyarp-bindings-tmp
 #Section: libdevel
