@@ -475,7 +475,7 @@ Description: thin middleware for humanoid robots and more - yarpbatterygui
 Package: yarp-carrier-bayer
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: bayer carrier
+Description: thin middleware for humanoid robots and more - bayer carrier
  YARP stands for Yet Another Robot Platform. It is a library and toolkit
  for communication and device interfaces, used on everything from
  humanoids to embedded devices.
@@ -492,7 +492,7 @@ Description: bayer carrier
 Package: yarp-carrier-human
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: human carrier
+Description: thin middleware for humanoid robots and more - human carrier
  YARP stands for Yet Another Robot Platform. It is a library and toolkit
  for communication and device interfaces, used on everything from
  humanoids to embedded devices.
@@ -509,7 +509,7 @@ Description: human carrier
 Package: yarp-carrier-mjpeg
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: mjpeg carrier
+Description: thin middleware for humanoid robots and more - mjpeg carrier
  YARP stands for Yet Another Robot Platform. It is a library and toolkit
  for communication and device interfaces, used on everything from
  humanoids to embedded devices.
@@ -526,7 +526,7 @@ Description: mjpeg carrier
 Package: yarp-carrier-mpi
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: mpi carrier
+Description: thin middleware for humanoid robots and more - mpi carrier
  YARP stands for Yet Another Robot Platform. It is a library and toolkit
  for communication and device interfaces, used on everything from
  humanoids to embedded devices.
@@ -543,7 +543,7 @@ Description: mpi carrier
 Package: yarp-carrier-portmonitor
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: portmonitor carrier
+Description: thin middleware for humanoid robots and more - portmonitor carrier
  YARP stands for Yet Another Robot Platform. It is a library and toolkit
  for communication and device interfaces, used on everything from
  humanoids to embedded devices.
@@ -560,7 +560,7 @@ Description: portmonitor carrier
 Package: yarp-carrier-priority
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: priority carrier
+Description: thin middleware for humanoid robots and more - priority carrier
  YARP stands for Yet Another Robot Platform. It is a library and toolkit
  for communication and device interfaces, used on everything from
  humanoids to embedded devices.
@@ -577,7 +577,7 @@ Description: priority carrier
 Package: yarp-carrier-tcpros
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: tcpros carrier
+Description: thin middleware for humanoid robots and more - tcpros carrier
  YARP stands for Yet Another Robot Platform. It is a library and toolkit
  for communication and device interfaces, used on everything from
  humanoids to embedded devices.
@@ -594,7 +594,7 @@ Description: tcpros carrier
 Package: yarp-carrier-xmlrpc
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: xmlrpc carrier
+Description: thin middleware for humanoid robots and more - xmlrpc carrier
  YARP stands for Yet Another Robot Platform. It is a library and toolkit
  for communication and device interfaces, used on everything from
  humanoids to embedded devices.
@@ -613,7 +613,7 @@ Description: xmlrpc carrier
 Package: yarp-device-fakebot
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: fakebot device
+Description: thin middleware for humanoid robots and more - fakebot device
  YARP stands for Yet Another Robot Platform. It is a library and toolkit
  for communication and device interfaces, used on everything from
  humanoids to embedded devices.
@@ -630,7 +630,7 @@ Description: fakebot device
 Package: yarp-device-opencv
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: opencv_grabber device
+Description: thin middleware for humanoid robots and more - opencv_grabber device
  YARP stands for Yet Another Robot Platform. It is a library and toolkit
  for communication and device interfaces, used on everything from
  humanoids to embedded devices.
@@ -647,7 +647,7 @@ Description: opencv_grabber device
 Package: yarp-device-portaudio
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: portaudio device
+Description: thin middleware for humanoid robots and more - portaudio device
  YARP stands for Yet Another Robot Platform. It is a library and toolkit
  for communication and device interfaces, used on everything from
  humanoids to embedded devices.
@@ -664,7 +664,7 @@ Description: portaudio device
 Package: yarp-device-serial
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: serial and serialport devices
+Description: thin middleware for humanoid robots and more - serial and serialport devices
  YARP stands for Yet Another Robot Platform. It is a library and toolkit
  for communication and device interfaces, used on everything from
  humanoids to embedded devices.
