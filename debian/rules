@@ -10,58 +10,58 @@ include /usr/share/dpkg/architecture.mk
 
 override_dh_auto_configure:
 	dh_auto_configure -- \
-	                     -DYARP_CLEAN_API=ON \
-	                     -DYARP_COMPILE_EXECUTABLES=ON \
-	                     -DYARP_COMPILE_BINDINGS=ON \
-	                     -DYARP_COMPILE_TESTS=OFF \
-	                     -DYARP_COMPILE_UNMAINTAINED=OFF \
-	                     -DCREATE_GUIS=ON \
-	                     -DCREATE_LIB_MATH=ON \
-	                     -DCREATE_OPTIONAL_CARRIERS=ON \
-	                     -DENABLE_yarpcar_bayer_carrier=ON \
-	                     -DENABLE_yarpcar_human_carrier=ON \
-	                     -DENABLE_yarpcar_mjpeg_carrier=ON \
-	                     -DENABLE_yarpcar_mpi_carrier=ON \
-	                     -DENABLE_yarpcar_mpibcast_carrier=ON \
-	                     -DENABLE_yarpcar_portmonitor_carrier=ON \
-	                     -DENABLE_yarpcar_priority_carrier=ON \
-	                     -DENABLE_yarpcar_rossrv_carrier=ON \
-	                     -DENABLE_yarpcar_tcpros_carrier=ON \
-	                     -DENABLE_yarpcar_xmlrpc_carrier=ON \
-	                     -DCREATE_DEVICE_LIBRARY_MODULES=ON \
-	                     -DENABLE_yarpmod_serial=ON \
-	                     -DENABLE_yarpmod_serialport=ON \
-	                     -DENABLE_yarpmod_fakebot=ON \
-	                     -DENABLE_yarpmod_fakeIMU=ON \
-	                     -DENABLE_yarpmod_fakeMotionControl=ON \
-	                     -DENABLE_yarpmod_opencv_grabber=ON \
-	                     -DENABLE_yarpmod_portaudio=ON \
-	                     -DCREATE_PERL=ON \
-	                     -DCREATE_PYTHON=ON \
-	                     -DYARP_DOXYGEN_HTML=ON \
-	                     -DYARP_DOXYGEN_MAN=ON \
-	                     -DCREATE_YARPBUILDER=OFF \
-	                     -DYARP_USE_GTK2:BOOL=OFF
-# -DENABLE_yarpmod_KinectDeviceClient=ON \
-# -DENABLE_yarpmod_KinectDeviceLocal=ON \
-# -DENABLE_yarpmod_SerialServoBoard=ON \
-# -DENABLE_yarpmod_cuda=ON \
-# -DENABLE_yarpmod_dimax_u2c=ON \
-# -DENABLE_yarpmod_dynamixelAX12Ft=ON \
-# -DENABLE_yarpmod_ffmpeg_grabber=ON \
-# -DENABLE_yarpmod_ffmpeg_writer=ON \
-# -DENABLE_yarpmod_jrkerr=ON \
-# -DENABLE_yarpmod_laserHokuyo=ON \
-# -DENABLE_yarpmod_nvidia=ON \
-# -DENABLE_yarpmod_stage=ON \
-# -DENABLE_yarpmod_urbtc=ON \
-# -DENABLE_yarpmod_vfw_grabber=ON \
-# -DENABLE_yarpmod_wxsdl=ON \
+	                     -DYARP_CLEAN_API:BOOL=ON \
+	                     -DYARP_COMPILE_EXECUTABLES:BOOL=ON \
+	                     -DYARP_COMPILE_BINDINGS:BOOL=ON \
+	                     -DYARP_COMPILE_TESTS:BOOL=OFF \
+	                     -DYARP_COMPILE_UNMAINTAINED:BOOL=OFF \
+	                     -DCREATE_GUIS:BOOL=ON \
+	                     -DCREATE_LIB_MATH:BOOL=ON \
+	                     -DCREATE_OPTIONAL_CARRIERS:BOOL=ON \
+	                     -DENABLE_yarpcar_bayer_carrier:BOOL=ON \
+	                     -DENABLE_yarpcar_human_carrier:BOOL=ON \
+	                     -DENABLE_yarpcar_mjpeg_carrier:BOOL=ON \
+	                     -DENABLE_yarpcar_mpi_carrier:BOOL=ON \
+	                     -DENABLE_yarpcar_mpibcast_carrier:BOOL=ON \
+	                     -DENABLE_yarpcar_portmonitor_carrier:BOOL=ON \
+	                     -DENABLE_yarpcar_priority_carrier:BOOL=ON \
+	                     -DENABLE_yarpcar_rossrv_carrier:BOOL=ON \
+	                     -DENABLE_yarpcar_tcpros_carrier:BOOL=ON \
+	                     -DENABLE_yarpcar_xmlrpc_carrier:BOOL=ON \
+	                     -DCREATE_DEVICE_LIBRARY_MODULES:BOOL=ON \
+	                     -DENABLE_yarpmod_serial:BOOL=ON \
+	                     -DENABLE_yarpmod_serialport:BOOL=ON \
+	                     -DENABLE_yarpmod_fakebot:BOOL=ON \
+	                     -DENABLE_yarpmod_fakeIMU:BOOL=ON \
+	                     -DENABLE_yarpmod_fakeMotionControl:BOOL=ON \
+	                     -DENABLE_yarpmod_opencv_grabber:BOOL=ON \
+	                     -DENABLE_yarpmod_portaudio:BOOL=ON \
+	                     -DCREATE_PERL:BOOL=ON \
+	                     -DCREATE_PYTHON:BOOL=ON \
+	                     -DYARP_DOXYGEN_HTML:BOOL=ON \
+	                     -DYARP_DOXYGEN_MAN:BOOL=ON \
+	                     -DCREATE_YARPBUILDER:BOOL=OFF \
+	                     -DYARP_USE_GTK2:BOOL:BOOL=OFF
+# -DENABLE_yarpmod_KinectDeviceClient:BOOL=ON \
+# -DENABLE_yarpmod_KinectDeviceLocal:BOOL=ON \
+# -DENABLE_yarpmod_SerialServoBoard:BOOL=ON \
+# -DENABLE_yarpmod_cuda:BOOL=ON \
+# -DENABLE_yarpmod_dimax_u2c:BOOL=ON \
+# -DENABLE_yarpmod_dynamixelAX12Ft:BOOL=ON \
+# -DENABLE_yarpmod_ffmpeg_grabber:BOOL=ON \
+# -DENABLE_yarpmod_ffmpeg_writer:BOOL=ON \
+# -DENABLE_yarpmod_jrkerr:BOOL=ON \
+# -DENABLE_yarpmod_laserHokuyo:BOOL=ON \
+# -DENABLE_yarpmod_nvidia:BOOL=ON \
+# -DENABLE_yarpmod_stage:BOOL=ON \
+# -DENABLE_yarpmod_urbtc:BOOL=ON \
+# -DENABLE_yarpmod_vfw_grabber:BOOL=ON \
+# -DENABLE_yarpmod_wxsdl:BOOL=ON \
 
 
 # Not building in YARP 2.3.64
-# 	                     -DENABLE_yarpmod_firewirecamera=ON
-# 	                     -DENABLE_yarpmod_microphone=ON
+# 	                     -DENABLE_yarpmod_firewirecamera:BOOL=ON
+# 	                     -DENABLE_yarpmod_microphone:BOOL=ON
 
 
 
