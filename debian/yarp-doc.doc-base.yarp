@@ -1,0 +1,9 @@
+Document: yarp
+Title: YARP Manual
+Author: Paul Fitzpatrick, Giorgio Metta, Lorenzo Natale, Alessandro Scalzo, and others
+Abstract: This manual describes the usage of "Yet Another Robot Platform" (YARP).
+Section: Network/Remote Access
+
+Format: HTML
+Index: /usr/share/doc/yarp-doc/html/index.html
+Files: /usr/share/doc/yarp-doc/html/*.html

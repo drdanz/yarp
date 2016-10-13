@@ -75,11 +75,11 @@ override_dh_auto_build-indep:
 override_dh_auto_test:
 
 override_dh_strip:
-	dh_strip --dbg-package=libyarp-dbg
+	dh_strip --dbg-package=yarp-dbg
 
 override_dh_install:
 	dh_install --list-missing
 
 override_dh_installdocs:
-	dh_installdocs --link-doc=libyarp-doc
-	dh_doxygen --package=libyarp-doc
+	dh_installdocs --link-doc=yarp-doc
+	dh_doxygen --package=yarp-doc

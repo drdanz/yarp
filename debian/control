@@ -255,7 +255,7 @@ Description: thin middleware for humanoid robots and more - [dev] development fi
 
 ##################### DEBUG
 
-Package: libyarp-dbg
+Package: yarp-dbg
 Section: debug
 Priority: extra
 Architecture: any
@@ -276,11 +276,11 @@ Description: thin middleware for humanoid robots and more - debug symbols
  match your needs. It also supports similarly flexible interfacing
  with hardware devices.
  .
- This package contains the [os] debugging symbols.
+ This package contains the debugging symbols.
 
 ##################### DOCS
 
-Package: libyarp-doc
+Package: yarp-doc
 Section: doc
 Architecture: all
 Depends: ${misc:Depends},
