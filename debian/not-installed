@@ -1,67 +1,46 @@
 # libYARP_serversql
-usr/lib/x86_64-linux-gnu/libYARP_serversql.a
+./debian/tmp/usr/lib/x86_64-linux-gnu/libYARP_serversql.a
 
 # libYARP_wire_rep_utils
-usr/lib/x86_64-linux-gnu/libYARP_wire_rep_utils.a
+./debian/tmp/usr/lib/x86_64-linux-gnu/libYARP_wire_rep_utils.a
 
 # libYARP_logger
-usr/include/yarp/logger/*.h
-usr/lib/x86_64-linux-gnu/libYARP_logger.a
+./debian/tmp/usr/include/yarp/logger/*.h
+./debian/tmp/usr/lib/x86_64-linux-gnu/libYARP_logger.a
 
 # libYARP_manager
-usr/include/yarp/manager/*.h
-usr/lib/x86_64-linux-gnu/libYARP_manager.a
+./debian/tmp/usr/include/yarp/manager/*.h
+./debian/tmp/usr/lib/x86_64-linux-gnu/libYARP_manager.a
 
 # libyarpcar and libyarpmod
-usr/lib/x86_64-linux-gnu/libyarpcar.so
-usr/lib/x86_64-linux-gnu/libyarpmod.so
+./debian/tmp/usr/lib/x86_64-linux-gnu/libyarpcar.so
+./debian/tmp/usr/lib/x86_64-linux-gnu/libyarpmod.so
 
 # libYARP_name
-usr/include/yarp/name/*.h
-usr/lib/*/libYARP_name.so
+./debian/tmp/usr/include/yarp/name/*.h
+./debian/tmp/usr/lib/*/libYARP_name.so
 
+# yarpserver2 and yarpserver3
+usr/bin/yarpserver2
+usr/bin/yarpserver3
 
 # TODO
 
-
-usr/share/yarp/plugins/cuda.ini
-usr/share/yarp/plugins/jrkerr.ini
-usr/share/yarp/plugins/openni2.ini
-usr/share/yarp/plugins/stage.ini
-usr/share/yarp/plugins/dynamixelAX12Ftdi.ini
-usr/share/yarp/plugins/ffmpeg.ini
-usr/share/yarp/plugins/firewirecamera.ini
-usr/share/yarp/plugins/laserHokuyo.ini
-usr/share/yarp/plugins/nvidia.ini
-usr/share/yarp/plugins/kinect.ini
-usr/share/yarp/plugins/vfw.ini
-usr/share/yarp/plugins/wxsdl.ini
-
-
-
-
-#usr/share/yarp/bindings/example.scm
-#usr/share/yarp/bindings/README
-#usr/share/yarp/bindings/yarp.i
-#usr/share/yarp/bindings/example.pl
-#usr/share/yarp/bindings/example_img.m
-#usr/share/yarp/bindings/example.rb
-#usr/share/yarp/bindings/example_server.py
-#usr/share/yarp/bindings/example.tcl
-#usr/share/yarp/bindings/example.m
-#usr/share/yarp/bindings/example.py
-#usr/share/yarp/bindings/example2.pl
-#usr/share/yarp/bindings/example_img.py
-#usr/share/yarp/bindings/swig-allegro-and-chicken-fix.patch
-#usr/share/yarp/bindings/CMakeLists.txt
-#usr/share/yarp/bindings/example.lisp
-#usr/share/yarp/bindings/example.lua
-#usr/share/yarp/bindings/example2.lua
-#usr/share/yarp/bindings/example.cs
-#usr/share/yarp/bindings/compat.h
-#usr/share/yarp/bindings/src/YarpImageHelper.java
-#usr/share/yarp/bindings/src/Example4.java
-#usr/share/yarp/bindings/src/Example2.java
-#usr/share/yarp/bindings/src/Example1.java
-#usr/share/yarp/bindings/src/LoadYarp.java
-#usr/share/yarp/bindings/src/Example3.java
+./debian/tmp/usr/share/yarp/plugins/cuda.ini
+./debian/tmp/usr/share/yarp/plugins/jrkerr.ini
+./debian/tmp/usr/share/yarp/plugins/openni2.ini
+./debian/tmp/usr/share/yarp/plugins/stage.ini
+./debian/tmp/usr/share/yarp/plugins/dynamixelAX12Ftdi.ini
+./debian/tmp/usr/share/yarp/plugins/ffmpeg.ini
+./debian/tmp/usr/share/yarp/plugins/firewirecamera.ini
+./debian/tmp/usr/share/yarp/plugins/laserHokuyo.ini
+./debian/tmp/usr/share/yarp/plugins/nvidia.ini
+./debian/tmp/usr/share/yarp/plugins/kinect.ini
+./debian/tmp/usr/share/yarp/plugins/vfw.ini
+./debian/tmp/usr/share/yarp/plugins/wxsdl.ini
+./debian/tmp/usr/share/yarp/modules/opencv_grabber.xml
+./debian/tmp/usr/share/yarp/plugins/fakeLaser.ini
+./debian/tmp/usr/share/yarp/plugins/rpLidar.ini
+./debian/tmp/usr/share/yarp/plugins/ovrheadset.ini
+./debian/tmp/usr/share/yarp/plugins/microphone.ini
+./debian/tmp/usr/share/yarp/plugins/fakeMotionControl.ini
