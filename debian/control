@@ -24,6 +24,11 @@ Build-Depends: debhelper (>= 9),
                liblua5.2-dev,
                portaudio19-dev,
                libdc1394-22-dev,
+               libavcodec-dev,
+               libavdevice-dev,
+               libavformat-dev,
+               libavutil-dev,
+               libswscale-dev,
                swig,
                perl
 Standards-Version: 3.9.8
@@ -715,6 +720,23 @@ Description: thin middleware for humanoid robots and more - fakeMotionControl de
  .
  This package contains the fakeMotionControl device plugin.
 
+Package: yarp-device-ffmpeg
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: thin middleware for humanoid robots and more - ffmpeg devices
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
+ .
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
+ .
+ This package contains the ffmpeg_grabber and ffmpeg_writer devices plugin.
+
 Package: yarp-device-opencv
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
@@ -906,6 +928,7 @@ Depends: ${misc:Depends},
  yarp-device-fakeimu (= ${binary:Version}),
  yarp-device-fakelaser (= ${binary:Version}),
  yarp-device-fakemotioncontrol (= ${binary:Version}),
+ yarp-device-ffmpeg (= ${binary:Version}),
  yarp-device-opencv (= ${binary:Version}),
  yarp-device-portaudio (= ${binary:Version}),
  yarp-device-serial (= ${binary:Version})

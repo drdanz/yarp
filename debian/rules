@@ -35,6 +35,8 @@ override_dh_auto_configure:
 	                     -DENABLE_yarpmod_fakeIMU:BOOL=ON \
 	                     -DENABLE_yarpmod_fakeLaser:BOOL=ON \
 	                     -DENABLE_yarpmod_fakeMotionControl:BOOL=ON \
+	                     -DENABLE_yarpmod_ffmpeg_grabber:BOOL=ON \
+	                     -DENABLE_yarpmod_ffmpeg_writer:BOOL=ON \
 	                     -DENABLE_yarpmod_opencv_grabber:BOOL=ON \
 	                     -DENABLE_yarpmod_portaudio:BOOL=ON \
 	                     -DCREATE_PERL:BOOL=ON \
@@ -49,8 +51,6 @@ override_dh_auto_configure:
 # -DENABLE_yarpmod_cuda:BOOL=ON \
 # -DENABLE_yarpmod_dimax_u2c:BOOL=ON \
 # -DENABLE_yarpmod_dynamixelAX12Ft:BOOL=ON \
-# -DENABLE_yarpmod_ffmpeg_grabber:BOOL=ON \
-# -DENABLE_yarpmod_ffmpeg_writer:BOOL=ON \
 # -DENABLE_yarpmod_jrkerr:BOOL=ON \
 # -DENABLE_yarpmod_laserHokuyo:BOOL=ON \
 # -DENABLE_yarpmod_nvidia:BOOL=ON \
