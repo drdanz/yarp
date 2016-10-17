@@ -1,2 +1,3 @@
+usr/share/yarp/modules/opencv_grabber.xml
 usr/share/yarp/plugins/opencv.ini
 usr/lib/x86_64-linux-gnu/yarp/yarp_opencv.so
