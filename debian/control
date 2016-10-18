@@ -737,6 +737,23 @@ Description: thin middleware for humanoid robots and more - ffmpeg devices
  .
  This package contains the ffmpeg_grabber and ffmpeg_writer devices plugin.
 
+Package: yarp-device-imubosch
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: thin middleware for humanoid robots and more - imuBosch_BNO055 device
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
+ .
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
+ .
+ This package contains the imuBosch_BNO055 device plugin.
+
 Package: yarp-device-laserhokuyo
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
@@ -787,6 +804,23 @@ Description: thin middleware for humanoid robots and more - portaudio device
  with hardware devices.
  .
  This package contains the portaudio device plugin.
+
+Package: yarp-device-rplidar
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: thin middleware for humanoid robots and more - rpLidar device
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
+ .
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
+ .
+ This package contains the rpLidar device plugin.
 
 Package: yarp-device-serial
 Architecture: any
@@ -946,9 +980,11 @@ Depends: ${misc:Depends},
  yarp-device-fakelaser (= ${binary:Version}),
  yarp-device-fakemotioncontrol (= ${binary:Version}),
  yarp-device-ffmpeg (= ${binary:Version}),
+ yarp-device-imubosch (= ${binary:Version}),
  yarp-device-laserhokuyo (= ${binary:Version}),
  yarp-device-opencv (= ${binary:Version}),
  yarp-device-portaudio (= ${binary:Version}),
+ yarp-device-rplidar (= ${binary:Version}),
  yarp-device-serial (= ${binary:Version})
 Description: thin middleware for humanoid robots and more - optional devices
  YARP stands for Yet Another Robot Platform. It is a library and toolkit
