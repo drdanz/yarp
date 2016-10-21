@@ -1,2 +1,3 @@
 usr/bin/yarpdatadumper
-usr/bin/yarpdatadumperAppGenerator.py
+usr/bin/yarpdatadumperAppGenerator
+usr/share/yarp/scripts/yarpdatadumperAppGenerator.py
