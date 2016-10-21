@@ -1,5 +1,5 @@
 From: "Daniele E. Domenichelli" <ddomenichelli@drdanz.it>
-Date: Wed, 10 Aug 2016 18:45:29 +0200
+Date: Thu, 18 Aug 2016 19:39:39 +0200
 Subject: Make private libraries static and do not install the libraries and
  the headers
 
@@ -14,10 +14,10 @@ Subject: Make private libraries static and do not install the libraries and
  7 files changed, 70 insertions(+), 70 deletions(-)
 
 diff --git a/src/carriers/CMakeLists.txt b/src/carriers/CMakeLists.txt
-index 8a61948..7848185 100644
+index b8d22db..ae98b98 100644
 --- a/src/carriers/CMakeLists.txt
 +++ b/src/carriers/CMakeLists.txt
-@@ -17,15 +17,15 @@ if(CREATE_OPTIONAL_CARRIERS)
+@@ -26,15 +26,15 @@ if(CREATE_OPTIONAL_CARRIERS)
      add_subdirectory(priority_carrier)
      add_subdirectory(portmonitor_carrier)
    YARP_END_PLUGIN_LIBRARY(yarpcar)
@@ -201,32 +201,32 @@ index ea835e5..4a1a177 100644
                                                            ${YARP_OS_INCLUDE_DIRS})
  
 diff --git a/src/modules/CMakeLists.txt b/src/modules/CMakeLists.txt
-index ba8d7ba..ce8619e 100644
+index 38c0b1c..c0c6616 100644
 --- a/src/modules/CMakeLists.txt
 +++ b/src/modules/CMakeLists.txt
-@@ -80,15 +80,15 @@ YARP_BEGIN_PLUGIN_LIBRARY(yarpmod)
+@@ -81,15 +81,15 @@ if (CREATE_DEVICE_LIBRARY_MODULES)
  
- YARP_END_PLUGIN_LIBRARY(yarpmod)
+   YARP_END_PLUGIN_LIBRARY(yarpmod)
  
--install(TARGETS yarpmod
--        EXPORT YARP
--        COMPONENT runtime
--        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
--        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
--        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+-  install(TARGETS yarpmod
+-          EXPORT YARP
+-          COMPONENT runtime
+-          RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+-          LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+-          ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 -
--if (YARP_LINK_PLUGINS)
--  set_property(GLOBAL APPEND PROPERTY YARP_LIBS yarpmod ${yarpmod_LIBRARIES})
--endif()
-+# install(TARGETS yarpmod
-+#         EXPORT YARP
-+#         COMPONENT runtime
-+#         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-+#         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-+#         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+-  if (YARP_LINK_PLUGINS)
+-    set_property(GLOBAL APPEND PROPERTY YARP_LIBS yarpmod ${yarpmod_LIBRARIES})
+-  endif()
++#   install(TARGETS yarpmod
++#           EXPORT YARP
++#           COMPONENT runtime
++#           RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
++#           LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
++#           ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 +#
-+# if (YARP_LINK_PLUGINS)
-+#   set_property(GLOBAL APPEND PROPERTY YARP_LIBS yarpmod ${yarpmod_LIBRARIES})
-+# endif()
++#   if (YARP_LINK_PLUGINS)
++#     set_property(GLOBAL APPEND PROPERTY YARP_LIBS yarpmod ${yarpmod_LIBRARIES})
++#   endif()
  
- endif (CREATE_DEVICE_LIBRARY_MODULES)
+ endif()
