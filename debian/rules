@@ -88,5 +88,5 @@ override_dh_install:
 	dh_install --list-missing
 
 override_dh_installdocs:
-	dh_installdocs --link-doc=yarp-doc
+	dh_installdocs #--link-doc=yarp-doc
 	dh_doxygen --package=yarp-doc
