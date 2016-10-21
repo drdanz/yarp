@@ -1,0 +1,301 @@
+From: "Daniele E. Domenichelli" <ddomenichelli@drdanz.it>
+Date: Fri, 21 Oct 2016 10:40:22 +0200
+Subject: Allow to create python2 and python3 bindings at the same time
+
+---
+ bindings/CMakeLists.txt | 241 +++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 210 insertions(+), 31 deletions(-)
+
+diff --git a/bindings/CMakeLists.txt b/bindings/CMakeLists.txt
+index 2e915d2..996ee0d 100644
+--- a/bindings/CMakeLists.txt
++++ b/bindings/CMakeLists.txt
+@@ -25,7 +25,8 @@ option(YARP_COMPILE_BINDINGS "Compile optional language bindings" ${YARP_COMPILE
+ ## look at e.g. ruby code below for how to do it.
+ 
+ foreach(lang "Java"
+-             "Python"
++             "Python2"
++             "Python3"
+              "Perl"
+              "Chicken Scheme"
+              "CSharp"
+@@ -177,31 +178,125 @@ endif(CREATE_JAVA)
+ 
+ 
+ 
++
+ #############################################################################
+-## Create Python bindings
+ 
+-if(CREATE_PYTHON)
+-  set(CMAKE_SWIG_FLAGS "-Wall;-module;yarp;-threads;${SWIG_COMMON_FLAGS}")
+-  if(CREATE_PYTHON_VERSION)
+-    message(WARNING "CREATE_PYTHON_VERSION was renamed YARP_USE_PYTHON_VERSION")
+-    set(YARP_USE_PYTHON_VERSION "${CREATE_PYTHON_VERSION}" CACHE STRING "Specify python version to use" )
+-    unset(CREATE_PYTHON_VERSION CACHE)
+-  else()
+-    set(YARP_USE_PYTHON_VERSION "" CACHE STRING "Specify python version to use" )
+-  endif()
+-  find_package(PythonInterp ${YARP_USE_PYTHON_VERSION} REQUIRED)
+-  set(YARP_USE_PYTHON_VERSION_ARGS)
+-  if(NOT YARP_USE_PYTHON_VERSION)
+-    set (YARP_USE_PYTHON_VERSION ${PYTHON_VERSION_STRING})
+-  endif()
+-  find_package(PythonLibs ${YARP_USE_PYTHON_VERSION} EXACT)
+-  include_directories(SYSTEM ${PYTHON_INCLUDE_PATH})
++macro(find_python _py)
++  set(_cache_vars _EXECUTABLE
++                  _DEBUG_LIBRARY
++                  _LIBRARY
++                  _INCLUDE_DIR)
++
++  set(_non_cache_vars _VERSION_STRING
++                      _VERSION_MAJOR
++                      _VERSION_MINOR
++                      _VERSION_PATCH
++                      INTERP_FOUND
++                      LIBS_FOUND
++                      _LIBRARIES
++                      _INCLUDE_PATH
++                      _INCLUDE_DIRS
++                      _DEBUG_LIBRARIES
++                      LIBS_VERSION_STRING)
++
++  foreach(_var ${_cache_vars})
++    set(PYTHON${_var} "${PYTHON${_py}${_var}}" CACHE "" INTERNAL FORCE)
++    foreach(_prop ADVANCED
++                  HELPSTRING
++                  MODIFIED
++                  STRINGS
++                  TYPE
++                  VALUE)
++      if(DEFINED PYTHON${_py}${_var})
++        get_property(_prop_set CACHE PYTHON${_py}${_var} PROPERTY ${_prop} SET)
++        if(_prop_set)
++          get_property(_prop_value CACHE PYTHON${_py}${_var} PROPERTY ${_prop})
++          set_property(CACHE PYTHON${_var} PROPERTY ${_prop} ${_prop_value})
++        endif()
++      else()
++        unset(PYTHON${_var} CACHE)
++        unset(PYTHON${_var})
++      endif()
++    endforeach()
++  endforeach()
++
++  foreach(_var ${_non_cache_vars})
++    if(DEFINED PYTHON${_py}${_var})
++      set(PYTHON${_var} "${PYTHON${_py}${_var}}")
++    else()
++      unset(PYTHON${_var})
++    endif()
++  endforeach()
++
++  find_package(PythonInterp ${_py} REQUIRED QUIET)
++  find_package(PythonLibs ${PYTHON_VERSION_STRING} EXACT REQUIRED QUIET)
++
++  foreach(_var ${_cache_vars})
++    if(DEFINED PYTHON${_var})
++      foreach(_prop ADVANCED
++                    HELPSTRING
++                    MODIFIED
++                    STRINGS
++                    TYPE
++                    VALUE)
++        set(PYTHON${_py}${_var} ${PYTHON${_var}} CACHE "" INTERNAL)
++        get_property(_prop_set CACHE PYTHON${_var} PROPERTY ${_prop} SET)
++        if(_prop_set)
++          get_property(_prop_value CACHE PYTHON${_var} PROPERTY ${_prop})
++          set_property(CACHE PYTHON${_py}${_var} PROPERTY ${_prop} ${_prop_value})
++        endif()
++        unset(PYTHON${_var} CACHE)
++        unset(PYTHON${_var})
++      endforeach()
++    else()
++      unset(PYTHON${_py}${_var} CACHE)
++      unset(PYTHON${_py}${_var})
++    endif()
++  endforeach()
++
++  foreach(_var ${_non_cache_vars})
++    if(DEFINED PYTHON${_var})
++      set(PYTHON${_py}${_var} "${PYTHON${_var}}")
++      unset(PYTHON${_var})
++    else()
++      unset(PYTHON${_py}${_var})
++    endif()
++  endforeach()
++
++  include(FindPackageHandleStandardArgs)
++  find_package_handle_standard_args(Python${_py}Interp REQUIRED_VARS PYTHON${_py}_EXECUTABLE
++                                                 VERSION_VAR PYTHON${_py}_VERSION_STRING)
++  find_package_handle_standard_args(Python${_py}Libs REQUIRED_VARS PYTHON${_py}_LIBRARIES PYTHON${_py}_INCLUDE_DIRS
++                                                VERSION_VAR PYTHON${_py}LIBS_VERSION_STRING)
++endmacro()
++
+ 
+-  ## in Windows it seems necessary to declare explictly the link_directory
+-  if(WIN32)
+-    get_filename_component(PYTHON_DIR ${PYTHON_LIBRARY} PATH)
+-    link_directories(${PYTHON_DIR})
+-  endif()
++
++
++#############################################################################
++## Create Python 2 bindings
++
++if(CREATE_PYTHON2)
++
++  find_python(2)
++
++#   if(CREATE_PYTHON_VERSION)
++#     message(WARNING "CREATE_PYTHON_VERSION was renamed YARP_USE_PYTHON_VERSION")
++#     set(YARP_USE_PYTHON_VERSION "${CREATE_PYTHON_VERSION}" CACHE STRING "Specify python version to use" )
++#     unset(CREATE_PYTHON_VERSION CACHE)
++#   else()
++#     set(YARP_USE_PYTHON_VERSION "" CACHE STRING "Specify python version to use" )
++#   endif()
++#   set(Python_ADDITIONAL_VERSIONS 2 3)
++#   find_package(PythonInterp ${YARP_USE_PYTHON_VERSION} REQUIRED)
++#   set(YARP_USE_PYTHON_VERSION_ARGS)
++#   if(NOT YARP_USE_PYTHON_VERSION)
++#     set (YARP_USE_PYTHON_VERSION ${PYTHON_VERSION_STRING})
++#   endif()
++#   find_package(PythonLibs ${YARP_USE_PYTHON_VERSION} EXACT)
++
++
++  set(CMAKE_SWIG_FLAGS "-Wall;-module;yarp;-threads;${SWIG_COMMON_FLAGS}")
+ 
+   set(target_name yarp)
+   if(YARP_COLLISION_AVOIDANCE)
+@@ -210,29 +305,45 @@ if(CREATE_PYTHON)
+     set(CMAKE_SWIG_OUTDIR "${CMAKE_BINARY_DIR}/lib/python")
+   endif()
+   swig_add_module(${target_name} python yarp.i)
+-  target_link_libraries(_${target_name} ${PYTHON_LIBRARY})
+   # uncomment if we want a debug version of the library
+   #add_definitions(-DPy_DEBUG)
+ 
++  target_include_directories(_${target_name} SYSTEM PRIVATE ${PYTHON2_INCLUDE_PATH})
++
+   set_target_properties(_${target_name} PROPERTIES OUTPUT_NAME "_yarp")
+   if(YARP_COLLISION_AVOIDANCE)
+     set_target_properties(_${target_name} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/python")
+   endif()
+ 
+   # installation path is determined reliably on most platforms using distutils
+-  execute_process(COMMAND ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_python_lib(1,0,prefix=''))"
+-                  OUTPUT_VARIABLE PYTHON_INSTDIR
++  execute_process(COMMAND ${PYTHON2_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_python_lib(1,0,prefix=''))"
++                  OUTPUT_VARIABLE PYTHON2_INSTDIR
+                   OUTPUT_STRIP_TRAILING_WHITESPACE )
+   if(YARP_COLLISION_AVOIDANCE)
+     install(FILES ${CMAKE_BINARY_DIR}/lib/python/yarp.py
+-            DESTINATION ${PYTHON_INSTDIR})
++            DESTINATION ${PYTHON2_INSTDIR}/yarp
++            RENAME __init__.py)
+   else()
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/yarp.py
+-            DESTINATION ${PYTHON_INSTDIR})
++            DESTINATION ${PYTHON2_INSTDIR}/yarp
++            RENAME __init__.py)
+   endif()
+   install(TARGETS _${target_name}
+-          DESTINATION ${PYTHON_INSTDIR})
+-
++          DESTINATION ${PYTHON2_INSTDIR}/yarp)
++  file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/yarp-${YARP_VERSION}.egg-info"
++"Metadata-Version: 1.0
++Name: yarp
++Version: ${YARP_VERSION}
++Summary: Python bindings for \"Yet Another Robot Platform\" (YARP)
++Home-page: http://yarp.it
++Author: YARP Developers
++Author-email: yarp0-devel@lists.sourceforge.net
++License: LGPLv2.1+
++Description: thin middleware for humanoid robots and more
++Platform: UNKNOWN
++")
++  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/yarp-${YARP_VERSION}.egg-info"
++          DESTINATION ${PYTHON2_INSTDIR})
+   if(WIN32)
+     set_target_properties(_${target_name} PROPERTIES SUFFIX ".pyd")
+   endif(WIN32)
+@@ -242,8 +353,76 @@ if(CREATE_PYTHON)
+   else()
+     set(YARP_COLLISION_AVOIDANCE TRUE)
+   endif()
+-endif(CREATE_PYTHON)
++endif()
++
++
++#############################################################################
++## Create Python 3 bindings
++
++
+ 
++if(CREATE_PYTHON3)
++
++  find_python(3)
++
++  set(CMAKE_SWIG_FLAGS "-Wall;-module;yarp;-threads;${SWIG_COMMON_FLAGS}")
++
++  set(target_name yarp)
++  if(YARP_COLLISION_AVOIDANCE)
++    set(target_name yarp_python3)
++    set(CMAKE_SWIG_OUTDIR_SAVE ${CMAKE_SWIG_OUTDIR})
++    set(CMAKE_SWIG_OUTDIR "${CMAKE_BINARY_DIR}/lib/python3")
++  endif()
++  swig_add_module(${target_name} python yarp.i)
++  # uncomment if we want a debug version of the library
++  #add_definitions(-DPy_DEBUG)
++
++  target_include_directories(_${target_name} SYSTEM PRIVATE ${PYTHON3_INCLUDE_PATH})
++
++  set_target_properties(_${target_name} PROPERTIES OUTPUT_NAME "_yarp")
++  if(YARP_COLLISION_AVOIDANCE)
++    set_target_properties(_${target_name} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/python3")
++  endif()
++
++  # installation path is determined reliably on most platforms using distutils
++  execute_process(COMMAND ${PYTHON3_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_python_lib(1,0,prefix=''))"
++                  OUTPUT_VARIABLE PYTHON3_INSTDIR
++                  OUTPUT_STRIP_TRAILING_WHITESPACE )
++  if(YARP_COLLISION_AVOIDANCE)
++    install(FILES ${CMAKE_BINARY_DIR}/lib/python3/yarp.py
++            DESTINATION ${PYTHON3_INSTDIR}/yarp
++            RENAME __init__.py)
++  else()
++    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/yarp.py
++            DESTINATION ${PYTHON3_INSTDIR}/yarp
++            RENAME __init__.py)
++  endif()
++  install(TARGETS _${target_name}
++          DESTINATION ${PYTHON3_INSTDIR}/yarp)
++  file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/yarp-${YARP_VERSION}.egg-info"
++"Metadata-Version: 1.0
++Name: yarp
++Version: ${YARP_VERSION}
++Summary: Python 3 bindings for \"Yet Another Robot Platform\" (YARP)
++Home-page: http://yarp.it
++Author: YARP Developers
++Author-email: yarp0-devel@lists.sourceforge.net
++License: LGPLv2.1+
++Description: thin middleware for humanoid robots and more
++Platform: UNKNOWN
++")
++  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/yarp-${YARP_VERSION}.egg-info"
++          DESTINATION ${PYTHON3_INSTDIR})
++  if(WIN32)
++    set_target_properties(_${target_name} PROPERTIES SUFFIX ".pyd")
++  endif(WIN32)
++
++  if(YARP_COLLISION_AVOIDANCE)
++    set(CMAKE_SWIG_OUTDIR ${CMAKE_SWIG_OUTDIR_SAVE})
++  else()
++    set(YARP_COLLISION_AVOIDANCE TRUE)
++  endif()
++endif()
+ 
+ 
+ #############################################################################

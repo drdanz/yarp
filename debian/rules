@@ -6,7 +6,7 @@ include /usr/share/dpkg/buildflags.mk
 include /usr/share/dpkg/architecture.mk
 
 %:
-	dh $@ --parallel --with python2
+	dh $@ --parallel --with python2,python3
 
 override_dh_auto_configure:
 	dh_auto_configure -- \
@@ -45,7 +45,8 @@ override_dh_auto_configure:
 	                     -DENABLE_yarpmod_rpLidar:BOOL=ON \
 	                     -DENABLE_yarpmod_SerialServoBoard:BOOL=ON \
 	                     -DCREATE_PERL:BOOL=ON \
-	                     -DCREATE_PYTHON:BOOL=ON \
+	                     -DCREATE_PYTHON2:BOOL=ON \
+	                     -DCREATE_PYTHON3:BOOL=ON \
 	                     -DYARP_DOXYGEN_HTML:BOOL=ON \
 	                     -DYARP_DOXYGEN_MAN:BOOL=ON \
 	                     -DCREATE_YARPBUILDER:BOOL=OFF \
