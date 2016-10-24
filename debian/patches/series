@@ -1,2 +1,3 @@
 0001-Make-private-libraries-static-and-do-not-install-the.patch
 0002-Allow-to-create-python2-and-python3-bindings-at-the-.patch
+0003-Fix-libyarp-sig1-shlib-calls-exit-usr-lib-x86_64-lin.patch

@@ -1,0 +1,54 @@
+From: "Daniele E. Domenichelli" <ddomenichelli@drdanz.it>
+Date: Mon, 24 Oct 2016 09:33:39 +0200
+Subject: Fix "libyarp-sig1: shlib-calls-exit
+ usr/lib/x86_64-linux-gnu/libYARP_sig.so.2.3.66.1"
+
+---
+ src/libYARP_sig/src/Image.cpp     | 6 +++---
+ src/libYARP_sig/src/ImageCopy.cpp | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/libYARP_sig/src/Image.cpp b/src/libYARP_sig/src/Image.cpp
+index 7f139dd..f5d34d1 100644
+--- a/src/libYARP_sig/src/Image.cpp
++++ b/src/libYARP_sig/src/Image.cpp
+@@ -531,7 +531,7 @@ void ImageStorage::_set_ipl_header(int x, int y, int pixel_type, int quantum,
+         case VOCAB_PIXEL_INVALID:
+             // not a type!
+             printf ("*** Trying to allocate an invalid pixel type image\n");
+-            exit(1);
++            yAssert(false);
+             break;
+ 
+         case -2:
+@@ -772,7 +772,7 @@ void Image::wrapIplImage(void *iplImage) {
+                    str.c_str());
+             printf("Try RGB, BGR, or \n");
+             printf("Or fix code at %s line %d\n",__FILE__,__LINE__);
+-            exit(1);
++            yAssert(false);
+         }
+     }
+ 
+@@ -800,7 +800,7 @@ void Image::wrapIplImage(void *iplImage) {
+         case VOCAB_PIXEL_RGB:
+         case VOCAB_PIXEL_BGR:
+             fprintf(stderr,"No translation currently available for this pixel type\n");
+-            exit(1);
++            yAssert(false);
+             break;
+         }
+     } else if (p->depth == IPL_DEPTH_32S) {
+diff --git a/src/libYARP_sig/src/ImageCopy.cpp b/src/libYARP_sig/src/ImageCopy.cpp
+index 159ef48..8e569ff 100644
+--- a/src/libYARP_sig/src/ImageCopy.cpp
++++ b/src/libYARP_sig/src/ImageCopy.cpp
+@@ -723,7 +723,7 @@ void Image::copyPixels(const unsigned char *src, int id1,
+ 
+         default:
+             printf("*** Tried to copy type %d to %d\n", id1, id2);
+-            exit(1);
++            yAssert(false);
+             break;
+         }
+ 
