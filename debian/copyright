@@ -106,10 +106,6 @@ License: LGPL
  object against this software used by the military, in the
  bio-industry, for animal experimentation, or anything that
  violates the Universal Declaration of Human Rights.
- .
- On Debian systems, the full text of the GNU Lesser General
- Public License can be found in the file
- `/usr/share/common-licenses/LGPL'.
 
 Files: src/libYARP_OS/include/yarp/os/Bottle.h
  src/libYARP_OS/include/yarp/os/impl/BottleImpl.h
@@ -150,10 +146,6 @@ License: GPL
  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
  PURPOSE.  See the GNU General Public License for more
  details.
- .
- On Debian systems, the full text of the GNU General Public
- License can be found in the file
- `/usr/share/common-licenses/GPL'.
 
 Files: src/libYARP_dev/include/yarp/dev/SerialInterfaces.h
  src/libYARP_dev/include/yarp/dev/ServerSerial.h
