@@ -17,17 +17,18 @@ override_dh_auto_configure:
 	                     -DYARP_COMPILE_UNMAINTAINED:BOOL=OFF \
 	                     -DCREATE_GUIS:BOOL=ON \
 	                     -DCREATE_LIB_MATH:BOOL=ON \
+	                     -DCREATE_LIB_MATH_USING_GSL:BOOL=ON \
 	                     -DCREATE_OPTIONAL_CARRIERS:BOOL=ON \
-	                     -DENABLE_yarpcar_bayer_carrier:BOOL=ON \
-	                     -DENABLE_yarpcar_human_carrier:BOOL=ON \
-	                     -DENABLE_yarpcar_mjpeg_carrier:BOOL=ON \
-	                     -DENABLE_yarpcar_mpi_carrier:BOOL=ON \
-	                     -DENABLE_yarpcar_mpibcast_carrier:BOOL=ON \
-	                     -DENABLE_yarpcar_portmonitor_carrier:BOOL=ON \
-	                     -DENABLE_yarpcar_priority_carrier:BOOL=ON \
-	                     -DENABLE_yarpcar_rossrv_carrier:BOOL=ON \
-	                     -DENABLE_yarpcar_tcpros_carrier:BOOL=ON \
-	                     -DENABLE_yarpcar_xmlrpc_carrier:BOOL=ON \
+	                     -DENABLE_yarpcar_bayer:BOOL=ON \
+	                     -DENABLE_yarpcar_human:BOOL=ON \
+	                     -DENABLE_yarpcar_mjpeg:BOOL=ON \
+	                     -DENABLE_yarpcar_mpi:BOOL=ON \
+	                     -DENABLE_yarpcar_mpibcast:BOOL=ON \
+	                     -DENABLE_yarpcar_portmonitor:BOOL=ON \
+	                     -DENABLE_yarpcar_priority:BOOL=ON \
+	                     -DENABLE_yarpcar_rossrv:BOOL=ON \
+	                     -DENABLE_yarpcar_tcpros:BOOL=ON \
+	                     -DENABLE_yarpcar_xmlrpc:BOOL=ON \
 	                     -DCREATE_DEVICE_LIBRARY_MODULES:BOOL=ON \
 	                     -DENABLE_yarpmod_serial:BOOL=ON \
 	                     -DENABLE_yarpmod_serialport:BOOL=ON \
@@ -49,8 +50,6 @@ override_dh_auto_configure:
 	                     -DCREATE_PYTHON3:BOOL=ON \
 	                     -DYARP_DOXYGEN_HTML:BOOL=ON \
 	                     -DYARP_DOXYGEN_MAN:BOOL=ON \
-	                     -DCREATE_YARPBUILDER:BOOL=OFF \
-	                     -DYARP_USE_GTK2:BOOL:BOOL=OFF
 # -DENABLE_yarpmod_KinectDeviceClient:BOOL=ON \
 # -DENABLE_yarpmod_KinectDeviceLocal:BOOL=ON \
 # -DENABLE_yarpmod_SerialServoBoard:BOOL=ON \
@@ -58,7 +57,6 @@ override_dh_auto_configure:
 # -DENABLE_yarpmod_dimax_u2c:BOOL=ON \
 # -DENABLE_yarpmod_dynamixelAX12Ft:BOOL=ON \
 # -DENABLE_yarpmod_jrkerr:BOOL=ON \
-# -DENABLE_yarpmod_laserHokuyo:BOOL=ON \
 # -DENABLE_yarpmod_nvidia:BOOL=ON \
 # -DENABLE_yarpmod_stage:BOOL=ON \
 # -DENABLE_yarpmod_urbtc:BOOL=ON \
@@ -68,7 +66,6 @@ override_dh_auto_configure:
 
 # Not building in YARP 2.3.64
 # 	                     -DENABLE_yarpmod_firewirecamera:BOOL=ON
-# 	                     -DENABLE_yarpmod_microphone:BOOL=ON
 
 
 
