@@ -3,11 +3,11 @@ Date: Fri, 21 Oct 2016 10:40:22 +0200
 Subject: Allow to create python2 and python3 bindings at the same time
 
 ---
- bindings/CMakeLists.txt | 241 +++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 210 insertions(+), 31 deletions(-)
+ bindings/CMakeLists.txt | 244 ++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 213 insertions(+), 31 deletions(-)
 
 diff --git a/bindings/CMakeLists.txt b/bindings/CMakeLists.txt
-index 2e915d2..996ee0d 100644
+index 909d2b6..4938067 100644
 --- a/bindings/CMakeLists.txt
 +++ b/bindings/CMakeLists.txt
 @@ -25,7 +25,8 @@ option(YARP_COMPILE_BINDINGS "Compile optional language bindings" ${YARP_COMPILE
@@ -20,30 +20,15 @@ index 2e915d2..996ee0d 100644
               "Perl"
               "Chicken Scheme"
               "CSharp"
-@@ -177,31 +178,125 @@ endif(CREATE_JAVA)
+@@ -183,31 +184,126 @@ endif(CREATE_JAVA)
  
  
  
 +
  #############################################################################
 -## Create Python bindings
- 
--if(CREATE_PYTHON)
--  set(CMAKE_SWIG_FLAGS "-Wall;-module;yarp;-threads;${SWIG_COMMON_FLAGS}")
--  if(CREATE_PYTHON_VERSION)
--    message(WARNING "CREATE_PYTHON_VERSION was renamed YARP_USE_PYTHON_VERSION")
--    set(YARP_USE_PYTHON_VERSION "${CREATE_PYTHON_VERSION}" CACHE STRING "Specify python version to use" )
--    unset(CREATE_PYTHON_VERSION CACHE)
--  else()
--    set(YARP_USE_PYTHON_VERSION "" CACHE STRING "Specify python version to use" )
--  endif()
--  find_package(PythonInterp ${YARP_USE_PYTHON_VERSION} REQUIRED)
--  set(YARP_USE_PYTHON_VERSION_ARGS)
--  if(NOT YARP_USE_PYTHON_VERSION)
--    set (YARP_USE_PYTHON_VERSION ${PYTHON_VERSION_STRING})
--  endif()
--  find_package(PythonLibs ${YARP_USE_PYTHON_VERSION} EXACT)
--  include_directories(SYSTEM ${PYTHON_INCLUDE_PATH})
++## A macro to support different verisons of Python
++
 +macro(find_python _py)
 +  set(_cache_vars _EXECUTABLE
 +                  _DEBUG_LIBRARY
@@ -134,12 +119,28 @@ index 2e915d2..996ee0d 100644
 +endmacro()
 +
  
+-if(CREATE_PYTHON)
+-  set(CMAKE_SWIG_FLAGS "-Wall;-module;yarp;-threads;${SWIG_COMMON_FLAGS}")
+-  if(CREATE_PYTHON_VERSION)
+-    message(WARNING "CREATE_PYTHON_VERSION was renamed YARP_USE_PYTHON_VERSION")
+-    set(YARP_USE_PYTHON_VERSION "${CREATE_PYTHON_VERSION}" CACHE STRING "Specify python version to use" )
+-    unset(CREATE_PYTHON_VERSION CACHE)
+-  else()
+-    set(YARP_USE_PYTHON_VERSION "" CACHE STRING "Specify python version to use" )
+-  endif()
+-  find_package(PythonInterp ${YARP_USE_PYTHON_VERSION} REQUIRED)
+-  set(YARP_USE_PYTHON_VERSION_ARGS)
+-  if(NOT YARP_USE_PYTHON_VERSION)
+-    set (YARP_USE_PYTHON_VERSION ${PYTHON_VERSION_STRING})
+-  endif()
+-  find_package(PythonLibs ${YARP_USE_PYTHON_VERSION} EXACT)
+-  include_directories(SYSTEM ${PYTHON_INCLUDE_PATH})
+ 
 -  ## in Windows it seems necessary to declare explictly the link_directory
 -  if(WIN32)
 -    get_filename_component(PYTHON_DIR ${PYTHON_LIBRARY} PATH)
 -    link_directories(${PYTHON_DIR})
 -  endif()
-+
 +
 +#############################################################################
 +## Create Python 2 bindings
@@ -168,10 +169,10 @@ index 2e915d2..996ee0d 100644
  
    set(target_name yarp)
    if(YARP_COLLISION_AVOIDANCE)
-@@ -210,29 +305,45 @@ if(CREATE_PYTHON)
-     set(CMAKE_SWIG_OUTDIR "${CMAKE_BINARY_DIR}/lib/python")
-   endif()
-   swig_add_module(${target_name} python yarp.i)
+@@ -218,29 +314,45 @@ if(CREATE_PYTHON)
+   swig_add_library(${target_name}
+                    LANGUAGE python
+                    SOURCES yarp.i)
 -  target_link_libraries(_${target_name} ${PYTHON_LIBRARY})
    # uncomment if we want a debug version of the library
    #add_definitions(-DPy_DEBUG)
@@ -209,7 +210,7 @@ index 2e915d2..996ee0d 100644
 +Name: yarp
 +Version: ${YARP_VERSION}
 +Summary: Python bindings for \"Yet Another Robot Platform\" (YARP)
-+Home-page: http://yarp.it
++Home-page: http://yarp.it/
 +Author: YARP Developers
 +Author-email: yarp0-devel@lists.sourceforge.net
 +License: LGPLv2.1+
@@ -221,7 +222,7 @@ index 2e915d2..996ee0d 100644
    if(WIN32)
      set_target_properties(_${target_name} PROPERTIES SUFFIX ".pyd")
    endif(WIN32)
-@@ -242,8 +353,76 @@ if(CREATE_PYTHON)
+@@ -250,8 +362,78 @@ if(CREATE_PYTHON)
    else()
      set(YARP_COLLISION_AVOIDANCE TRUE)
    endif()
@@ -233,7 +234,7 @@ index 2e915d2..996ee0d 100644
 +## Create Python 3 bindings
 +
 +
- 
++
 +if(CREATE_PYTHON3)
 +
 +  find_python(3)
@@ -246,7 +247,9 @@ index 2e915d2..996ee0d 100644
 +    set(CMAKE_SWIG_OUTDIR_SAVE ${CMAKE_SWIG_OUTDIR})
 +    set(CMAKE_SWIG_OUTDIR "${CMAKE_BINARY_DIR}/lib/python3")
 +  endif()
-+  swig_add_module(${target_name} python yarp.i)
++  swig_add_library(${target_name}
++                   LANGUAGE python
++                   SOURCES yarp.i)
 +  # uncomment if we want a debug version of the library
 +  #add_definitions(-DPy_DEBUG)
 +
@@ -256,7 +259,7 @@ index 2e915d2..996ee0d 100644
 +  if(YARP_COLLISION_AVOIDANCE)
 +    set_target_properties(_${target_name} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/python3")
 +  endif()
-+
+ 
 +  # installation path is determined reliably on most platforms using distutils
 +  execute_process(COMMAND ${PYTHON3_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_python_lib(1,0,prefix=''))"
 +                  OUTPUT_VARIABLE PYTHON3_INSTDIR

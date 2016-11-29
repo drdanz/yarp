@@ -9,7 +9,7 @@ Subject: Fix "libyarp-sig1: shlib-calls-exit
  2 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/src/libYARP_sig/src/Image.cpp b/src/libYARP_sig/src/Image.cpp
-index 7f139dd..f5d34d1 100644
+index 5010e23..fe4138e 100644
 --- a/src/libYARP_sig/src/Image.cpp
 +++ b/src/libYARP_sig/src/Image.cpp
 @@ -531,7 +531,7 @@ void ImageStorage::_set_ipl_header(int x, int y, int pixel_type, int quantum,
