@@ -112,9 +112,9 @@ matrix:
       env: TRAVIS_WITH_ACE=false TRAVIS_WITH_CXX11=true TRAVIS_WITH_VALGRIND=true
 
     # Normal build with Coverage (linux, gcc)
-#    - os: linux
-#      compiler: gcc
-#      env: TRAVIS_WITH_ACE=true TRAVIS_WITH_CXX11=false TRAVIS_BUILD_TYPE=Profile
+    - os: linux
+      compiler: gcc
+      env: TRAVIS_WITH_ACE=true TRAVIS_WITH_CXX11=false TRAVIS_BUILD_TYPE=Profile
 
     # Normal build with Xcode 7.3 (osx, clang)
     - os: osx
