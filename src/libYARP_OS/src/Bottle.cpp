@@ -11,7 +11,7 @@
 #include <yarp/os/impl/BottleImpl.h>
 #include <yarp/os/impl/Logger.h>
 
-
+    
 using yarp::os::Bottle;
 using yarp::os::ConstString;
 using yarp::os::ConnectionReader;
@@ -24,7 +24,7 @@ using yarp::os::impl::Storable;
 class NullBottle : public Bottle
 {
 public:
-    NullBottle() : Bottle() { setReadOnly(true); }
+	NullBottle() : Bottle() { setReadOnly(true); }
     virtual bool isNull() const { return true; }
     static NullBottle* bottleNull;
 };

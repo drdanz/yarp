@@ -40,6 +40,19 @@ YARP can be compiled without ACE by adding "-DSKIP_ACE=TRUE"
 when running cmake.
 
 
+as
+   asgasg    
+   sajt
+   kj
+   
+   
+   apapa
+   
+   - warta
+   
+   laesgjipoe
+   
+   
 Tutorials
 ---------
 

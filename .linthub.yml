@@ -1,0 +1,11 @@
+analyzers:
+ - cpplint: true
+   path: ./src/
+   style: webkit
+
+ - polysquare-cmake: true
+
+ - markdownlint: true
+
+ - shellcheck: true
+   interpreter: sh
