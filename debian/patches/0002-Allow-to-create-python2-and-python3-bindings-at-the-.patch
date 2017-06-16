@@ -7,7 +7,7 @@ Subject: Allow to create python2 and python3 bindings at the same time
  1 file changed, 213 insertions(+), 31 deletions(-)
 
 diff --git a/bindings/CMakeLists.txt b/bindings/CMakeLists.txt
-index 909d2b6..4938067 100644
+index bba8742..36de7be 100644
 --- a/bindings/CMakeLists.txt
 +++ b/bindings/CMakeLists.txt
 @@ -25,7 +25,8 @@ option(YARP_COMPILE_BINDINGS "Compile optional language bindings" ${YARP_COMPILE
@@ -20,7 +20,7 @@ index 909d2b6..4938067 100644
               "Perl"
               "Chicken Scheme"
               "CSharp"
-@@ -183,31 +184,126 @@ endif(CREATE_JAVA)
+@@ -194,31 +195,126 @@ endif(CREATE_JAVA)
  
  
  
@@ -169,7 +169,7 @@ index 909d2b6..4938067 100644
  
    set(target_name yarp)
    if(YARP_COLLISION_AVOIDANCE)
-@@ -218,29 +314,45 @@ if(CREATE_PYTHON)
+@@ -229,25 +325,28 @@ if(CREATE_PYTHON)
    swig_add_library(${target_name}
                     LANGUAGE python
                     SOURCES yarp.i)
@@ -201,6 +201,11 @@ index 909d2b6..4938067 100644
 +            DESTINATION ${PYTHON2_INSTDIR}/yarp
 +            RENAME __init__.py)
    endif()
+ 
+   set(_CMAKE_INSTALL_PYTHONDIR "${PYTHON_INSTDIR}")
+@@ -272,8 +371,21 @@ if(CREATE_PYTHON)
+   endif()
+ 
    install(TARGETS _${target_name}
 -          DESTINATION ${PYTHON_INSTDIR})
 -
@@ -222,7 +227,7 @@ index 909d2b6..4938067 100644
    if(WIN32)
      set_target_properties(_${target_name} PROPERTIES SUFFIX ".pyd")
    endif(WIN32)
-@@ -250,8 +362,78 @@ if(CREATE_PYTHON)
+@@ -283,8 +395,78 @@ if(CREATE_PYTHON)
    else()
      set(YARP_COLLISION_AVOIDANCE TRUE)
    endif()
