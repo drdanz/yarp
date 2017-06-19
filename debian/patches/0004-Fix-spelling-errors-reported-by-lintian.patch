@@ -1,0 +1,812 @@
+From: "Daniele E. Domenichelli" <ddomenichelli@drdanz.it>
+Date: Tue, 20 Jun 2017 11:24:01 +0200
+Subject: Fix spelling errors reported by lintian
+
+---
+ .../tests/xml/modules/logpolarTransform.xml        |  2 +-
+ doc/cmd_yarpdev.dox                                |  2 +-
+ doc/device_invocation/grabber_basic.dox            |  4 ++--
+ doc/device_invocation/test_grabber_basic.dox       |  4 ++--
+ doc/release/v2_3_70.md                             |  4 ++--
+ src/devices/SDLJoypad/SDLJoypad.cpp                |  2 +-
+ src/devices/depthCamera/depthCameraDriver.cpp      |  6 ++---
+ .../fakeMotionControl/fakeMotionControl.cpp        |  2 +-
+ src/devices/meiMotionControl/MEIMotionControl.cpp  |  4 ++--
+ src/devices/ovrheadset/OVRHeadset.cpp              |  2 +-
+ src/devices/rpLidar2/rpLidar2.cpp                  |  4 ++--
+ src/devices/test_grabber/TestFrameGrabber.cpp      |  4 ++--
+ src/libYARP_OS/include/yarp/os/Route.h             |  2 +-
+ src/libYARP_OS/src/Run.cpp                         |  4 ++--
+ src/libYARP_dev/include/yarp/dev/ControlBoardPid.h |  2 +-
+ .../include/yarp/dev/IJoypadController.h           | 26 +++++++++++-----------
+ src/libYARP_dev/include/yarp/dev/IVisualParams.h   |  4 ++--
+ src/libYARP_dev/src/IJoypadController.cpp          |  2 +-
+ .../src/devices/ControlBoardWrapper/SubDevice.cpp  |  2 +-
+ .../FrameTransformClient/FrameTransformClient.cpp  | 14 ++++++------
+ .../FrameTransformServer/FrameTransformServer.cpp  |  2 +-
+ .../JoypadControlClient/JoypadControlClient.cpp    |  2 +-
+ .../Localization2DClient/Localization2DClient.cpp  |  2 +-
+ .../devices/LocationsServer/LocationsServer.cpp    |  2 +-
+ .../src/devices/Map2DServer/Map2DServer.cpp        |  2 +-
+ .../Navigation2DClient/Navigation2DClient.cpp      |  8 +++----
+ .../devices/RGBDSensorClient/RGBDSensorClient.cpp  |  4 ++--
+ .../RGBDSensorWrapper/RGBDSensorWrapper.cpp        |  4 ++--
+ .../src/devices/ServerGrabber/ServerGrabber.cpp    |  4 ++--
+ src/libYARP_rtf/include/yarp/rtf/TestAsserter.h    |  8 +++----
+ src/libYARP_rtf/src/TestAsserter.cpp               |  8 +++----
+ .../src-manager/newapplicationwizard.cpp           |  2 +-
+ tests/libYARP_OS/ThreadTest.cpp                    |  8 +++----
+ tests/libYARP_dev/AnalogWrapperTest.cpp            |  2 +-
+ tests/libYARP_dev/MapGrid2DTest.cpp                |  2 +-
+ 35 files changed, 78 insertions(+), 78 deletions(-)
+
+diff --git a/data/yarpmanager/tests/xml/modules/logpolarTransform.xml b/data/yarpmanager/tests/xml/modules/logpolarTransform.xml
+index 8d78a21..bf395b2 100644
+--- a/data/yarpmanager/tests/xml/modules/logpolarTransform.xml
++++ b/data/yarpmanager/tests/xml/modules/logpolarTransform.xml
+@@ -8,7 +8,7 @@
+     <arguments>
+         <param desc="specifies the configuration file"> from </param>
+         <param desc="specifies the sub-path from $ICUB_ROOT/app to the configuration file"> context </param>
+-        <param default="CARTESIAN2LOGPOLAR" desc="specifies the direction of the tranform; the alternative direction is LOGPOLAR2CARTESIAN">direction</param>
++        <param default="CARTESIAN2LOGPOLAR" desc="specifies the direction of the transform; the alternative direction is LOGPOLAR2CARTESIAN">direction</param>
+         <param default="252" desc="specifies the number of receptive fields per ring (i.e. the number of samples in the theta/angular dimension); required for CARTESIAN2LOGPOLAR transform direction">angles</param>
+         <param default="152" desc="specifies the number of rings (i.e. the number of samples in the r dimension); required for CARTESIAN2LOGPOLAR transform direction">rings</param>
+         <param default="320" desc="specifies the number of samples in the X dimension; required for LOGPOLAR2CARTESIAN transform direction">xsize </param>
+diff --git a/doc/cmd_yarpdev.dox b/doc/cmd_yarpdev.dox
+index adeeab9..baaca72 100644
+--- a/doc/cmd_yarpdev.dox
++++ b/doc/cmd_yarpdev.dox
+@@ -207,7 +207,7 @@ do to make the device match our system.
+ 
+ \section devices_parameters Detailed parameters description
+ 
+-Each device class has a description page where input parameters are desribed in
++Each device class has a description page where input parameters are described in
+ more detail. You can find a list of devices in \ref dev_impl "Device implementation page" subdivided by type.
+ 
+ For example the description for the
+diff --git a/doc/device_invocation/grabber_basic.dox b/doc/device_invocation/grabber_basic.dox
+index c79d282..4f35714 100644
+--- a/doc/device_invocation/grabber_basic.dox
++++ b/doc/device_invocation/grabber_basic.dox
+@@ -39,8 +39,8 @@ Here is a list of properties checked when starting up a device based on this con
+ <tr><td>test_grabber.horizontalFov</td><td>desired horizontal fov of test image</td><td>1.0</td></tr>
+ <tr><td>test_grabber.verticalFov</td><td>desired vertical fov of test image</td><td>2.0</td></tr>
+ <tr><td>test_grabber.mirror</td><td>mirroring disabled by default</td><td>0</td></tr>
+-<tr><td>test_grabber.focalLengthX</td><td>Horizontal component of the focal lenght of the test_grabber</td><td>4.0</td></tr>
+-<tr><td>test_grabber.focalLengthY</td><td>Vertical component of the focal lenght of the test_grabber</td><td>5.0</td></tr>
++<tr><td>test_grabber.focalLengthX</td><td>Horizontal component of the focal length of the test_grabber</td><td>4.0</td></tr>
++<tr><td>test_grabber.focalLengthY</td><td>Vertical component of the focal length of the test_grabber</td><td>5.0</td></tr>
+ <tr><td>test_grabber.principalPointX</td><td>X coordinate of the principal point of the test_grabber</td><td>6.0</td></tr>
+ <tr><td>test_grabber.principalPointY</td><td>Y coordinate of the principal point of the test_grabber</td><td>7.0</td></tr>
+ <tr><td>test_grabber.retificationMatrix</td><td>Matrix that describes the lens' distortion(fake)</td><td>1.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 1.0</td></tr>
+diff --git a/doc/device_invocation/test_grabber_basic.dox b/doc/device_invocation/test_grabber_basic.dox
+index 3890450..de73f94 100644
+--- a/doc/device_invocation/test_grabber_basic.dox
++++ b/doc/device_invocation/test_grabber_basic.dox
+@@ -34,8 +34,8 @@ Here is a list of properties checked when starting up a device based on this con
+ <tr><td>horizontalFov</td><td>desired horizontal fov of test image</td><td>1.0</td></tr>
+ <tr><td>verticalFov</td><td>desired vertical fov of test image</td><td>2.0</td></tr>
+ <tr><td>mirror</td><td>mirroring disabled by default</td><td>0</td></tr>
+-<tr><td>focalLengthX</td><td>Horizontal component of the focal lenght of the test_grabber</td><td>4.0</td></tr>
+-<tr><td>focalLengthY</td><td>Vertical component of the focal lenght of the test_grabber</td><td>5.0</td></tr>
++<tr><td>focalLengthX</td><td>Horizontal component of the focal length of the test_grabber</td><td>4.0</td></tr>
++<tr><td>focalLengthY</td><td>Vertical component of the focal length of the test_grabber</td><td>5.0</td></tr>
+ <tr><td>principalPointX</td><td>X coordinate of the principal point of the test_grabber</td><td>6.0</td></tr>
+ <tr><td>principalPointY</td><td>Y coordinate of the principal point of the test_grabber</td><td>7.0</td></tr>
+ <tr><td>retificationMatrix</td><td>Matrix that describes the lens' distortion(fake)</td><td>1.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 1.0</td></tr>
+diff --git a/doc/release/v2_3_70.md b/doc/release/v2_3_70.md
+index 68d786c..dce7b93 100644
+--- a/doc/release/v2_3_70.md
++++ b/doc/release/v2_3_70.md
+@@ -172,8 +172,8 @@ New Features
+ * Added rpc port to dialogue with FrameTransformClient.
+   The implemented commands are:
+   - `get_transform`: print the transform from src to dst
+-  - `list_frames`: print all the available refence frames
+-  - `list_ports`: print all the opened ports for tranform broadcasting
++  - `list_frames`: print all the available reference frames
++  - `list_ports`: print all the opened ports for transform broadcasting
+   - `publish_transform`: opens a port to publish transform from src to dst
+   - `unpublish_transform`: closes a previously opened port to publish a
+     transform
+diff --git a/src/devices/SDLJoypad/SDLJoypad.cpp b/src/devices/SDLJoypad/SDLJoypad.cpp
+index 37416a4..db7ec5e 100644
+--- a/src/devices/SDLJoypad/SDLJoypad.cpp
++++ b/src/devices/SDLJoypad/SDLJoypad.cpp
+@@ -142,7 +142,7 @@ bool SDLJoypad::open(yarp::os::Searchable& rf)
+                 yError() << "SDLJoypad:" << SDL_GetError();
+                 return false;
+             }
+-            yInfo() << "SDLJoypad: Actions succesfully parsed and linked to the joypad";
++            yInfo() << "SDLJoypad: Actions successfully parsed and linked to the joypad";
+         }
+     }
+     else
+diff --git a/src/devices/depthCamera/depthCameraDriver.cpp b/src/devices/depthCamera/depthCameraDriver.cpp
+index 963b3c0..f4f5947 100644
+--- a/src/devices/depthCamera/depthCameraDriver.cpp
++++ b/src/devices/depthCamera/depthCameraDriver.cpp
+@@ -195,7 +195,7 @@ bool depthCameraDriver::initializeOpeNIDevice()
+         {
+             if (m_device.setImageRegistrationMode(IMAGE_REGISTRATION_DEPTH_TO_COLOR) == STATUS_OK)
+             {
+-                yInfo() << "DepthCameraDriver:Depth succesfully registered on rgb sensor";
++                yInfo() << "DepthCameraDriver:Depth successfully registered on rgb sensor";
+             }
+             else
+             {
+@@ -405,7 +405,7 @@ bool depthCameraDriver::setParams()
+             yarp::os::Time::delay(0.5);
+             if (setRgbMirroring(v.asBool()))
+             {
+-                yInfo() << "depthCamera: rgb mirroring parameter set succesfully";
++                yInfo() << "depthCamera: rgb mirroring parameter set successfully";
+                 mirrorOk = true;
+                 break;
+             }
+@@ -435,7 +435,7 @@ bool depthCameraDriver::setParams()
+             yarp::os::Time::delay(0.5);
+             if (setDepthMirroring(v.asBool()))
+             {
+-                yInfo() << "depthCamera: depth mirroring parameter setted succesfully";
++                yInfo() << "depthCamera: depth mirroring parameter setted successfully";
+                 mirrorOk = true;
+                 break;
+             }
+diff --git a/src/devices/fakeMotionControl/fakeMotionControl.cpp b/src/devices/fakeMotionControl/fakeMotionControl.cpp
+index 6349833..c795f9a 100644
+--- a/src/devices/fakeMotionControl/fakeMotionControl.cpp
++++ b/src/devices/fakeMotionControl/fakeMotionControl.cpp
+@@ -1258,7 +1258,7 @@ bool FakeMotionControl::fromConfig(yarp::os::Searchable &config)
+             //return false;
+         }
+         // current limit
+-        if (!extractGroup(coupling, xtmp, "kinematic_mj","the kinematic matrix 4x4 which tranforms from joint space to motor space", 16))
++        if (!extractGroup(coupling, xtmp, "kinematic_mj","the kinematic matrix 4x4 which transforms from joint space to motor space", 16))
+         {
+             for(i=1; i<xtmp.size(); i++) _kinematic_mj[i-1]=0.0;
+         }
+diff --git a/src/devices/meiMotionControl/MEIMotionControl.cpp b/src/devices/meiMotionControl/MEIMotionControl.cpp
+index 9a4dc04..c82e78e 100644
+--- a/src/devices/meiMotionControl/MEIMotionControl.cpp
++++ b/src/devices/meiMotionControl/MEIMotionControl.cpp
+@@ -1194,7 +1194,7 @@ bool MEIMotionControl::setVelocityMode()
+ }
+ 
+ 
+-/*it sets the reference postion and gives the command to move*/
++/*it sets the reference position and gives the command to move*/
+ bool MEIMotionControl::positionMoveRaw(int axis, double ref)
+ {
+ 	MEIResources& r = RES(system_resources);
+@@ -1218,7 +1218,7 @@ bool MEIMotionControl::positionMoveRaw(int axis, double ref)
+ 	return true;
+ }
+ 
+-/*it sets the reference postion withou giving the command to move
++/*it sets the reference position withou giving the command to move
+ if you want to move you have to call the setPositionMode function*/
+ bool MEIMotionControl::positionMoveRaw(const double *refs)				//revisionata Mattia
+ {
+diff --git a/src/devices/ovrheadset/OVRHeadset.cpp b/src/devices/ovrheadset/OVRHeadset.cpp
+index a079efb..7e68156 100644
+--- a/src/devices/ovrheadset/OVRHeadset.cpp
++++ b/src/devices/ovrheadset/OVRHeadset.cpp
+@@ -303,7 +303,7 @@ bool yarp::dev::OVRHeadset::open(yarp::os::Searchable& cfg)
+         {
+             if (!cfg.check(p.first) || !(cfg.find(p.first).*isFunctionMap[p.second])())
+             {
+-                std::string err_type = err_msgs.find(p.second) == err_msgs.end() ? "[unknow type]" : err_msgs[p.second];
++                std::string err_type = err_msgs.find(p.second) == err_msgs.end() ? "[unknown type]" : err_msgs[p.second];
+                 yError() << "ovrHeadset: parameter" << p.first << "not found or not" << err_type << "in configuration file";
+                 return false;
+             }
+diff --git a/src/devices/rpLidar2/rpLidar2.cpp b/src/devices/rpLidar2/rpLidar2.cpp
+index 00bb6d6..3b0fba6 100644
+--- a/src/devices/rpLidar2/rpLidar2.cpp
++++ b/src/devices/rpLidar2/rpLidar2.cpp
+@@ -137,14 +137,14 @@ bool RpLidar2::open(yarp::os::Searchable& config)
+         handleError(result);
+         return false;
+     }
+-    yInfo() << "Motor started succesfully";
++    yInfo() << "Motor started successfully";
+     result = drv->startScan();
+     if (result != RESULT_OK)
+     {
+         handleError(result);
+         return false;
+     }
+-    yInfo() << "Scan started succesfully";
++    yInfo() << "Scan started successfully";
+ 
+     yInfo() << "Device info:" << info;
+     yInfo("max_angle %f, min_angle %f", max_angle, min_angle);
+diff --git a/src/devices/test_grabber/TestFrameGrabber.cpp b/src/devices/test_grabber/TestFrameGrabber.cpp
+index 681e316..d19a3c1 100644
+--- a/src/devices/test_grabber/TestFrameGrabber.cpp
++++ b/src/devices/test_grabber/TestFrameGrabber.cpp
+@@ -58,8 +58,8 @@ bool TestFrameGrabber::open(yarp::os::Searchable& config) {
+                                "desired vertical fov of test image").asDouble();
+     mirror=config.check("mirror",Value(false),
+                         "mirroring disabled by default").asBool();
+-    intrinsic.put("focalLengthX",config.check("focalLengthX",Value(4.0),"Horizontal component of the focal lenght of the test_grabber").asDouble());
+-    intrinsic.put("focalLengthY",config.check("focalLengthY",Value(5.0),"Vertical component of the focal lenght of the test_grabber").asDouble());
++    intrinsic.put("focalLengthX",config.check("focalLengthX",Value(4.0),"Horizontal component of the focal length of the test_grabber").asDouble());
++    intrinsic.put("focalLengthY",config.check("focalLengthY",Value(5.0),"Vertical component of the focal length of the test_grabber").asDouble());
+     intrinsic.put("principalPointX",config.check("principalPointX",Value(6.0),"X coordinate of the principal point of the test_grabber").asDouble());
+     intrinsic.put("principalPointY",config.check("principalPointY",Value(7.0),"Y coordinate of the principal point of the test_grabber").asDouble());
+     intrinsic.put("retificationMatrix",config.check("retificationMatrix",*retM,"Matrix that describes the lens' distortion(fake)"));
+diff --git a/src/libYARP_OS/include/yarp/os/Route.h b/src/libYARP_OS/include/yarp/os/Route.h
+index 7553d20..1162b40 100644
+--- a/src/libYARP_OS/include/yarp/os/Route.h
++++ b/src/libYARP_OS/include/yarp/os/Route.h
+@@ -127,7 +127,7 @@ public:
+ /** @{ */
+ 
+     /**
+-     * @brief Get the destination contact of the route, if avaiable
++     * @brief Get the destination contact of the route, if available
+      *
+      * @return the destination of the route as a contact
+      */
+diff --git a/src/libYARP_OS/src/Run.cpp b/src/libYARP_OS/src/Run.cpp
+index a6e25d9..76d5d6d 100644
+--- a/src/libYARP_OS/src/Run.cpp
++++ b/src/libYARP_OS/src/Run.cpp
+@@ -498,7 +498,7 @@ int yarp::os::Run::server()
+         yError() << "Yarprun failed to open port: " << mPortName.c_str();
+         return YARPRUN_ERROR;
+     }
+-    yInfo() << "Yarprun succesfully started on port: " << mPortName.c_str();
++    yInfo() << "Yarprun successfully started on port: " << mPortName.c_str();
+ 
+     pServerPort=&port;
+ 
+@@ -878,7 +878,7 @@ int yarp::os::Run::server()
+             if (mPortName[0]!='/') yError("Invalid port name '%s', it should start with '/'\n", mPortName.c_str());
+             return YARPRUN_ERROR;
+         }
+-        yInfo() << "Yarprun succesfully started on port: " << mPortName.c_str();
++        yInfo() << "Yarprun successfully started on port: " << mPortName.c_str();
+ 
+         pServerPort=&port;
+ 
+diff --git a/src/libYARP_dev/include/yarp/dev/ControlBoardPid.h b/src/libYARP_dev/include/yarp/dev/ControlBoardPid.h
+index eca6526..6fd7758 100644
+--- a/src/libYARP_dev/include/yarp/dev/ControlBoardPid.h
++++ b/src/libYARP_dev/include/yarp/dev/ControlBoardPid.h
+@@ -147,7 +147,7 @@ public:
+     bool operator==(const yarp::dev::Pid &p);
+ 
+     /*!
+-    * \brief Set all pid paramters to zero
++    * \brief Set all pid parameters to zero
+     *
+     */
+     void clear();
+diff --git a/src/libYARP_dev/include/yarp/dev/IJoypadController.h b/src/libYARP_dev/include/yarp/dev/IJoypadController.h
+index 0b64b09..1f81396 100644
+--- a/src/libYARP_dev/include/yarp/dev/IJoypadController.h
++++ b/src/libYARP_dev/include/yarp/dev/IJoypadController.h
+@@ -44,7 +44,7 @@ public:
+       Get number of Axes
+      * @brief getAxisCount
+      * @param axes_count unsigned int reference that will contain the result
+-     * @return true if succeded. false otherwise
++     * @return true if succeeded. false otherwise
+      */
+     virtual bool getAxisCount(unsigned int& axis_count) = 0;
+ 
+@@ -52,7 +52,7 @@ public:
+       Get number of Buttons
+      * @brief getButtonCount
+      * @param button_count unsigned int reference that will contain the result
+-     * @return true if succeded. false otherwise
++     * @return true if succeeded. false otherwise
+      */
+     virtual bool getButtonCount(unsigned int& button_count) = 0;
+ 
+@@ -60,7 +60,7 @@ public:
+       Get number of trackballs
+      * @brief getTrackballCount
+      * @param Trackball_count unsigned int reference that will contain the result
+-     * @return true if succeded. false otherwise
++     * @return true if succeeded. false otherwise
+      */
+     virtual bool getTrackballCount(unsigned int& Trackball_count) = 0;
+ 
+@@ -68,7 +68,7 @@ public:
+       Get number of Hats
+      * @brief getHatsCount
+      * @param Hat_count unsigned int reference that will contain the result
+-     * @return true if succeded. false otherwise
++     * @return true if succeeded. false otherwise
+      */
+     virtual bool getHatCount(unsigned int& Hat_count) = 0;
+ 
+@@ -77,7 +77,7 @@ public:
+       or a combination of the two
+      * @brief hasTouchSurface
+      * @param touch_count unsigned int reference that will contain the result
+-     * @return true if succeded. false otherwise
++     * @return true if succeeded. false otherwise
+      */
+     virtual bool getTouchSurfaceCount(unsigned int& touch_count) = 0;
+ 
+@@ -85,7 +85,7 @@ public:
+       get the number of the sticks
+      * @brief getStickCount
+      * @param stick_count unsigned int reference that will contain the result
+-     * @return bool if succeded, false otherwise
++     * @return bool if succeeded, false otherwise
+      */
+     virtual bool getStickCount(unsigned int& stick_count) = 0;
+ 
+@@ -94,7 +94,7 @@ public:
+     * @brief getStickDoF
+     * @param stick_id Id of the stick. must be > -1 && < getStickCount(), return false otherwise
+     * @param DoF an unsigned int reference that will contain the value.
+-    * @return true if succeded, false otherwise
++    * @return true if succeeded, false otherwise
+     */
+     virtual bool getStickDoF(unsigned int stick_id, unsigned int& DoF) = 0;
+ 
+@@ -103,7 +103,7 @@ public:
+     * @brief getButton
+     * @param button_id Id of the button to get. Must be > -1 && < getButtonCount(), return false otherwise
+     * @param value reference to be valued. The value will be from 0.0 (not even touched) to 1.0 (fully pressed)
+-    * @return true if succeded, false otherwise
++    * @return true if succeeded, false otherwise
+     */
+     virtual bool getButton(unsigned int button_id, float& value) = 0;
+ 
+@@ -112,7 +112,7 @@ public:
+     * @brief getTrackball
+     * @param trackball_id Id of the Trackball to get. Must be > -1 && < getTrackballCount(), return false otherwise
+     * @param value reference to be valued. the value will be from 0.0 (not moving) to 1.0 (full velocity)
+-    * @return true if succeded, false otherwise
++    * @return true if succeeded, false otherwise
+     */
+     virtual bool getTrackball(unsigned int trackball_id, yarp::sig::Vector& value) = 0;
+ 
+@@ -121,7 +121,7 @@ public:
+     * @brief getHat
+     * @param hat_id Id of the POV hat to get. Must be > -1 && < getHatCount(), return false otherwise
+     * @param value reference to be valued. use the YRPJOY_HAT_ macro series to get the currently pressed directions
+-    * @return true if succeded, false otherwise
++    * @return true if succeeded, false otherwise
+     */
+     virtual bool getHat(unsigned int hat_id, unsigned char& value) = 0;
+ 
+@@ -132,7 +132,7 @@ public:
+     * @param value reference to be valued. the absolute boundaries for the values should be -1.0 and 1.0 However
+     * the actual range depends on the physical device (example: analog trigger does not have a central position thus can
+     * give a value from 0.0 to 0.1)
+-    * @return true if succeded, false otherwise
++    * @return true if succeeded, false otherwise
+     */
+     virtual bool getAxis(unsigned int axis_id, double& value) = 0;
+ 
+@@ -143,7 +143,7 @@ public:
+     * @param value a vector that will contain the joystick position. the size of the vector will give you the Number of degrees of freedom
+     * and the value will be from -1.0 to 1.0
+     * @param coordinate_mode to get data in cartesian mode or polar (spheric in 3 dof position cases) mode
+-    * @return true if succeded, false otherwise
++    * @return true if succeeded, false otherwise
+     */
+     virtual bool getStick(unsigned int stick_id, yarp::sig::Vector& value, JoypadCtrl_coordinateMode coordinate_mode) = 0;
+ 
+@@ -151,7 +151,7 @@ public:
+      Get the value of a touch if present, return false otherwise
+     * @brief getTouch
+     * @param value a vector that will contain the touch values normalized from 0.0 to 1.0.
+-    * @return true if succeded, false otherwise
++    * @return true if succeeded, false otherwise
+     */
+     virtual bool getTouch(unsigned int touch_id, yarp::sig::Vector& value) = 0;
+ };
+diff --git a/src/libYARP_dev/include/yarp/dev/IVisualParams.h b/src/libYARP_dev/include/yarp/dev/IVisualParams.h
+index dd5ff1f..c8c7780 100644
+--- a/src/libYARP_dev/include/yarp/dev/IVisualParams.h
++++ b/src/libYARP_dev/include/yarp/dev/IVisualParams.h
+@@ -143,8 +143,8 @@ public:
+      *
+      * |  Parameter name              | SubParameter        | Type                | Units          | Default Value | Required                         | Description                                                                            | Notes                                                                 |
+      * |:----------------------------:|:-------------------:|:-------------------:|:--------------:|:-------------:|:--------------------------------:|:--------------------------------------------------------------------------------------:|:---------------------------------------------------------------------:|
+-     * |  focalLengthX                |      -              | double              | mm             |   -           |   Yes                            |  Horizontal component of the focal lenght                                              |                                                                       |
+-     * |  focalLengthY                |      -              | double              | mm             |   -           |   Yes                            |  Vertical component of the focal lenght                                                |                                                                       |
++     * |  focalLengthX                |      -              | double              | mm             |   -           |   Yes                            |  Horizontal component of the focal length                                              |                                                                       |
++     * |  focalLengthY                |      -              | double              | mm             |   -           |   Yes                            |  Vertical component of the focal length                                                |                                                                       |
+      * |  principalPointX             |      -              | double              | pixel          |   -           |   Yes                            |  X coordinate of the principal point                                                   |                                                                       |
+      * |  principalPointY             |      -              | double              | pixel          |   -           |   Yes                            |  Y coordinate of the principal point                                                   |                                                                       |
+      * |  retificationMatrix          |      -              | 4x4 double matrix   | -              |   -           |   Yes                            |  Matrix that describes the lens' distortion                                            |                                                                       |
+diff --git a/src/libYARP_dev/src/IJoypadController.cpp b/src/libYARP_dev/src/IJoypadController.cpp
+index 5bdc65b..59900de 100644
+--- a/src/libYARP_dev/src/IJoypadController.cpp
++++ b/src/libYARP_dev/src/IJoypadController.cpp
+@@ -76,6 +76,6 @@ bool yarp::dev::IJoypadController::parseActions(const yarp::os::Searchable& cfg,
+     }
+ 
+     actCount = i;
+-    myInfo() << actCount << "action parsed succesfully";
++    myInfo() << actCount << "action parsed successfully";
+     return true;
+ }
+diff --git a/src/libYARP_dev/src/devices/ControlBoardWrapper/SubDevice.cpp b/src/libYARP_dev/src/devices/ControlBoardWrapper/SubDevice.cpp
+index f98e4ce..5a1ed5d 100644
+--- a/src/libYARP_dev/src/devices/ControlBoardWrapper/SubDevice.cpp
++++ b/src/libYARP_dev/src/devices/ControlBoardWrapper/SubDevice.cpp
+@@ -131,7 +131,7 @@ bool SubDevice::attach(yarp::dev::PolyDriver *d, const std::string &k)
+ 
+     if (id!=k)
+     {
+-        yError("ControlBoardWrapper for part <%s>: Wrong or unknow device %s. Cannot attach to it.", parentName.c_str(), k.c_str());
++        yError("ControlBoardWrapper for part <%s>: Wrong or unknown device %s. Cannot attach to it.", parentName.c_str(), k.c_str());
+         return false;
+     }
+ 
+diff --git a/src/libYARP_dev/src/devices/FrameTransformClient/FrameTransformClient.cpp b/src/libYARP_dev/src/devices/FrameTransformClient/FrameTransformClient.cpp
+index 488bd18..ab7ba1d 100644
+--- a/src/libYARP_dev/src/devices/FrameTransformClient/FrameTransformClient.cpp
++++ b/src/libYARP_dev/src/devices/FrameTransformClient/FrameTransformClient.cpp
+@@ -191,8 +191,8 @@ bool yarp::dev::FrameTransformClient::read(yarp::os::ConnectionReader& connectio
+     {
+         out.addVocab(Vocab::encode("many"));
+         out.addString("'get_transform <src> <dst>: print the transform from <src> to <dst>");
+-        out.addString("'list_frames: print all the available refence frames");
+-        out.addString("'list_ports: print all the opened ports for tranform broadcasting");
++        out.addString("'list_frames: print all the available reference frames");
++        out.addString("'list_ports: print all the opened ports for transform broadcasting");
+         out.addString("'publish_transform <src> <dst> <portname> <format>: opens a port to publish transform from src to dst");
+         out.addString("'unpublish_transform <portname>: closes a previously opened port to publish a transform");
+         out.addString("'unpublish_all <portname>: closes a all previously opened ports to publish a transform");
+@@ -218,7 +218,7 @@ bool yarp::dev::FrameTransformClient::read(yarp::os::ConnectionReader& connectio
+         out.addVocab(Vocab::encode("many"));
+         yarp::sig::Matrix m;
+         this->getTransform(src, dst, m);
+-        out.addString("Tranform from " + src + " to " + dst + " is: ");
++        out.addString("Transform from " + src + " to " + dst + " is: ");
+         out.addString(m.toString());
+     }
+     else if (request == "list_ports")
+@@ -501,7 +501,7 @@ bool yarp::dev::FrameTransformClient::clear()
+     {
+         if (resp.get(0).asVocab() != VOCAB_OK)
+         {
+-            yError() << "FrameTransformClient::clear() recived error from server";
++            yError() << "FrameTransformClient::clear() received error from server";
+             return false;
+         }
+     }
+@@ -677,7 +677,7 @@ bool yarp::dev::FrameTransformClient::setTransform(const std::string& target_fra
+     {
+         if (resp.get(0).asVocab() != VOCAB_OK)
+         {
+-            yError() << "FrameTransformClient::setTransform() recived error from server on creating frame between " + source_frame_id + " and " + target_frame_id;
++            yError() << "FrameTransformClient::setTransform() received error from server on creating frame between " + source_frame_id + " and " + target_frame_id;
+             return false;
+         }
+     }
+@@ -724,7 +724,7 @@ bool yarp::dev::FrameTransformClient::setTransformStatic(const std::string &targ
+     {
+         if (resp.get(0).asVocab() != VOCAB_OK)
+         {
+-            yError() << "FrameTransformClient::setTransform() recived error from server on creating frame between " + source_frame_id + " and " + target_frame_id;
++            yError() << "FrameTransformClient::setTransform() received error from server on creating frame between " + source_frame_id + " and " + target_frame_id;
+             return false;
+         }
+     }
+@@ -749,7 +749,7 @@ bool yarp::dev::FrameTransformClient::deleteTransform(const std::string &target_
+     {
+         if (resp.get(0).asVocab()!=VOCAB_OK)
+         {
+-            yError() << "recived error from server on deleting frame between "+source_frame_id+" and "+target_frame_id;
++            yError() << "received error from server on deleting frame between "+source_frame_id+" and "+target_frame_id;
+             return false;
+         }
+     }
+diff --git a/src/libYARP_dev/src/devices/FrameTransformServer/FrameTransformServer.cpp b/src/libYARP_dev/src/devices/FrameTransformServer/FrameTransformServer.cpp
+index 83062b0..f727f86 100644
+--- a/src/libYARP_dev/src/devices/FrameTransformServer/FrameTransformServer.cpp
++++ b/src/libYARP_dev/src/devices/FrameTransformServer/FrameTransformServer.cpp
+@@ -507,7 +507,7 @@ bool FrameTransformServer::parseStartingTf(yarp::os::Searchable &config)
+ 
+             if(m_yarp_static_transform_storage->set_transform(t))
+             {
+-                yInfo() << tfName << "from" << t.src_frame_id << "to" << t.dst_frame_id << "succesfully set";
++                yInfo() << tfName << "from" << t.src_frame_id << "to" << t.dst_frame_id << "successfully set";
+             }
+         }
+         return true;
+diff --git a/src/libYARP_dev/src/devices/JoypadControlClient/JoypadControlClient.cpp b/src/libYARP_dev/src/devices/JoypadControlClient/JoypadControlClient.cpp
+index 3ed3694..f81561b 100644
+--- a/src/libYARP_dev/src/devices/JoypadControlClient/JoypadControlClient.cpp
++++ b/src/libYARP_dev/src/devices/JoypadControlClient/JoypadControlClient.cpp
+@@ -122,7 +122,7 @@ bool JoypadControlClient::open(yarp::os::Searchable& config)
+         return false;
+     }
+ 
+-    yInfo() << "handshake succeded! retrieving info";
++    yInfo() << "handshake succeeded! retrieving info";
+ 
+     if(!getJoypadInfo())
+     {
+diff --git a/src/libYARP_dev/src/devices/Localization2DClient/Localization2DClient.cpp b/src/libYARP_dev/src/devices/Localization2DClient/Localization2DClient.cpp
+index 3fa77ca..41dbc92 100644
+--- a/src/libYARP_dev/src/devices/Localization2DClient/Localization2DClient.cpp
++++ b/src/libYARP_dev/src/devices/Localization2DClient/Localization2DClient.cpp
+@@ -119,7 +119,7 @@ bool  yarp::dev::Localization2DClient::getCurrentPosition(Map2DLocation& loc)
+     {
+         if (resp.get(0).asVocab() != VOCAB_OK || resp.size() != 5)
+         {
+-            yError() << "Navigation2DClient::getCurrentPosition() recived error from localization server";
++            yError() << "Navigation2DClient::getCurrentPosition() received error from localization server";
+             return false;
+         }
+         else
+diff --git a/src/libYARP_dev/src/devices/LocationsServer/LocationsServer.cpp b/src/libYARP_dev/src/devices/LocationsServer/LocationsServer.cpp
+index a3a1e55..bfd8033 100644
+--- a/src/libYARP_dev/src/devices/LocationsServer/LocationsServer.cpp
++++ b/src/libYARP_dev/src/devices/LocationsServer/LocationsServer.cpp
+@@ -194,7 +194,7 @@ bool yarp::dev::LocationsServer::read(yarp::os::ConnectionReader& connection)
+         }
+         else
+         {
+-            out.addString("request not undestood, call 'help' to see a list of avaiable commands");
++            out.addString("request not understood, call 'help' to see a list of available commands");
+         }
+ 
+         yarp::os::ConnectionWriter *returnToSender = connection.getWriter();
+diff --git a/src/libYARP_dev/src/devices/Map2DServer/Map2DServer.cpp b/src/libYARP_dev/src/devices/Map2DServer/Map2DServer.cpp
+index 4c40386..7dfa296 100644
+--- a/src/libYARP_dev/src/devices/Map2DServer/Map2DServer.cpp
++++ b/src/libYARP_dev/src/devices/Map2DServer/Map2DServer.cpp
+@@ -285,7 +285,7 @@ bool Map2DServer::open(yarp::os::Searchable &config)
+         string collection_file = m_rf_mapCollection.findFile("maps_collection.ini");
+         if (loadMaps(collection_file))
+         {
+-            yInfo() << "Map collection:" << collection_file << "succesfully loaded";
++            yInfo() << "Map collection:" << collection_file << "successfully loaded";
+         }
+         else
+         {
+diff --git a/src/libYARP_dev/src/devices/Navigation2DClient/Navigation2DClient.cpp b/src/libYARP_dev/src/devices/Navigation2DClient/Navigation2DClient.cpp
+index ea1cc7b..de84350 100644
+--- a/src/libYARP_dev/src/devices/Navigation2DClient/Navigation2DClient.cpp
++++ b/src/libYARP_dev/src/devices/Navigation2DClient/Navigation2DClient.cpp
+@@ -220,7 +220,7 @@ bool yarp::dev::Navigation2DClient::gotoTargetByLocationName(yarp::os::ConstStri
+     {
+         if (resp_loc.get(0).asVocab() != VOCAB_OK || resp_loc.size() != 5)
+         {
+-            yError() << "Navigation2DClient::gotoTargetByLocationName() recived error from locations server";
++            yError() << "Navigation2DClient::gotoTargetByLocationName() received error from locations server";
+             return false;
+         }
+     }
+@@ -248,7 +248,7 @@ bool yarp::dev::Navigation2DClient::gotoTargetByLocationName(yarp::os::ConstStri
+     {
+         if (resp_nav.get(0).asVocab() != VOCAB_OK)
+         {
+-            yError() << "Navigation2DClient::gotoTargetByLocationName() recived error from navigation server";
++            yError() << "Navigation2DClient::gotoTargetByLocationName() received error from navigation server";
+             return false;
+         }
+     }
+@@ -330,7 +330,7 @@ bool  yarp::dev::Navigation2DClient::getCurrentPosition(Map2DLocation& loc)
+     {
+         if (resp.get(0).asVocab() != VOCAB_OK || resp.size() != 5)
+         {
+-            yError() << "Navigation2DClient::getCurrentPosition() recived error from localization server";
++            yError() << "Navigation2DClient::getCurrentPosition() received error from localization server";
+             return false;
+         }
+         else
+@@ -421,7 +421,7 @@ bool yarp::dev::Navigation2DClient::getNameOfCurrentTarget(yarp::os::ConstString
+     {
+         if (resp.get(0).asVocab() != VOCAB_OK)
+         {
+-            yError() << "Navigation2DClient::getNameOfCurrentTarget() recived error from server";
++            yError() << "Navigation2DClient::getNameOfCurrentTarget() received error from server";
+             return false;
+         }
+         else
+diff --git a/src/libYARP_dev/src/devices/RGBDSensorClient/RGBDSensorClient.cpp b/src/libYARP_dev/src/devices/RGBDSensorClient/RGBDSensorClient.cpp
+index 0a828cd..0bee82b 100644
+--- a/src/libYARP_dev/src/devices/RGBDSensorClient/RGBDSensorClient.cpp
++++ b/src/libYARP_dev/src/devices/RGBDSensorClient/RGBDSensorClient.cpp
+@@ -48,7 +48,7 @@ bool RGBDSensorClient::open(yarp::os::Searchable& config)
+ 
+     if(!fromConfig(config))
+     {
+-        yError() << "Device RGBDSensorClient failed to open, check previous log for error messsages.";
++        yError() << "Device RGBDSensorClient failed to open, check previous log for error messages.";
+         return false;
+     }
+ 
+@@ -75,7 +75,7 @@ bool RGBDSensorClient::fromConfig(yarp::os::Searchable &config)
+     if(rosGroup.isNull())
+     {
+         if(verbose >= 3)
+-            yInfo() << "RGBDSensorClient: ROS configuration paramters are not set, skipping ROS topic initialization.";
++            yInfo() << "RGBDSensorClient: ROS configuration parameters are not set, skipping ROS topic initialization.";
+         use_ROS  = false;
+     }
+     else
+diff --git a/src/libYARP_dev/src/devices/RGBDSensorWrapper/RGBDSensorWrapper.cpp b/src/libYARP_dev/src/devices/RGBDSensorWrapper/RGBDSensorWrapper.cpp
+index fe72f91..37879db 100644
+--- a/src/libYARP_dev/src/devices/RGBDSensorWrapper/RGBDSensorWrapper.cpp
++++ b/src/libYARP_dev/src/devices/RGBDSensorWrapper/RGBDSensorWrapper.cpp
+@@ -189,7 +189,7 @@ bool RGBDSensorWrapper::open(yarp::os::Searchable &config)
+ 
+     if(!fromConfig(config))
+     {
+-        yError() << "Device RGBDSensorWrapper failed to open, check previous log for error messsages.\n";
++        yError() << "Device RGBDSensorWrapper failed to open, check previous log for error messages.\n";
+         return false;
+     }
+ 
+@@ -240,7 +240,7 @@ bool RGBDSensorWrapper::fromConfig(yarp::os::Searchable &config)
+     if(rosGroup.isNull())
+     {
+         if(verbose >= 3)
+-            yInfo() << "RGBDSensorWrapper: ROS configuration paramters are not set, skipping ROS topic initialization.";
++            yInfo() << "RGBDSensorWrapper: ROS configuration parameters are not set, skipping ROS topic initialization.";
+         use_ROS  = false;
+         use_YARP = true;
+     }
+diff --git a/src/libYARP_dev/src/devices/ServerGrabber/ServerGrabber.cpp b/src/libYARP_dev/src/devices/ServerGrabber/ServerGrabber.cpp
+index dc7e370..a36d021 100644
+--- a/src/libYARP_dev/src/devices/ServerGrabber/ServerGrabber.cpp
++++ b/src/libYARP_dev/src/devices/ServerGrabber/ServerGrabber.cpp
+@@ -328,7 +328,7 @@ bool ServerGrabber::open(yarp::os::Searchable& config) {
+ 
+     if(!fromConfig(config))
+     {
+-        yError() << "Device ServerGrabber failed to open, check previous log for error messsages.\n";
++        yError() << "Device ServerGrabber failed to open, check previous log for error messages.\n";
+         return false;
+     }
+ 
+@@ -413,7 +413,7 @@ bool ServerGrabber::fromConfig(yarp::os::Searchable &config)
+             param.cap=RAW;
+     }
+     else
+-        yWarning()<<"ServerGrabber: 'capabilities' parameter not found or mispelled, the option available are COLOR(default) and RAW, using default";
++        yWarning()<<"ServerGrabber: 'capabilities' parameter not found or misspelled, the option available are COLOR(default) and RAW, using default";
+     param.canDrop = !config.check("no_drop","if present, use strict policy for sending data");
+     param.addStamp = config.check("stamp","if present, add timestamps to data");
+ 
+diff --git a/src/libYARP_rtf/include/yarp/rtf/TestAsserter.h b/src/libYARP_rtf/include/yarp/rtf/TestAsserter.h
+index bc2d83f..000fe18 100644
+--- a/src/libYARP_rtf/include/yarp/rtf/TestAsserter.h
++++ b/src/libYARP_rtf/include/yarp/rtf/TestAsserter.h
+@@ -39,14 +39,14 @@ public:
+      *                      checking equality of corresponding elements of the
+      *                      left and right vectors. It specifies the upper bound
+      *                      of the interval.
+-     * @param lenght: specifies the lengths of all vectors
++     * @param length: specifies the lengths of all vectors
+      * @return: the result of the comparison
+      */
+     static bool isApproxEqual(const double *left,
+                               const double *right,
+                               const double *l_thresholds,
+                               const double *h_thresholds,
+-                              int lenght);
++                              int length);
+ 
+     /**
+      * Element-wise compare two vectors to determine if they are approximately
+@@ -57,13 +57,13 @@ public:
+      * @param thresholds: a vector of thresholds whose elements are used when
+      *                    checking equality of corresponding elements of the
+      *                    left and right vectors
+-     * @param lenght: specifies the lengths of all vectors
++     * @param length: specifies the lengths of all vectors
+      * @return: the result of comparison
+      */
+     static bool isApproxEqual(const double *left,
+                               const double *right,
+                               const double *thresholds,
+-                              int lenght);
++                              int length);
+ 
+     /**
+      * Element-wise compare two vectors to determine if they are approximately
+diff --git a/src/libYARP_rtf/src/TestAsserter.cpp b/src/libYARP_rtf/src/TestAsserter.cpp
+index 3c404ed..2847615 100644
+--- a/src/libYARP_rtf/src/TestAsserter.cpp
++++ b/src/libYARP_rtf/src/TestAsserter.cpp
+@@ -27,19 +27,19 @@ yarp::rtf::TestAsserter::~TestAsserter()
+ bool yarp::rtf::TestAsserter::isApproxEqual(const double *left,
+                                             const double *right,
+                                             const double *thresholds,
+-                                            int lenght)
++                                            int length)
+ {
+-    return isApproxEqual(left, right, thresholds, thresholds, lenght);
++    return isApproxEqual(left, right, thresholds, thresholds, length);
+ }
+ 
+ bool yarp::rtf::TestAsserter::isApproxEqual(const double *left,
+                                             const double *right,
+                                             const double *l_thresholds,
+                                             const double *h_thresholds,
+-                                            int lenght)
++                                            int length)
+ {
+     bool reached = true;
+-    for(int j = 0; j < lenght; j++)
++    for(int j = 0; j < length; j++)
+     {
+         if (left[j]<(right[j]-fabs(l_thresholds[j])) || left[j]>(right[j]+fabs(h_thresholds[j]))) {
+             reached=false;
+diff --git a/src/yarpmanager/src-manager/newapplicationwizard.cpp b/src/yarpmanager/src-manager/newapplicationwizard.cpp
+index bda2fc6..189ad0a 100644
+--- a/src/yarpmanager/src-manager/newapplicationwizard.cpp
++++ b/src/yarpmanager/src-manager/newapplicationwizard.cpp
+@@ -244,7 +244,7 @@ void NewApplicationWizard::accept()
+     if (alreadyExists)
+     {
+         QMessageBox::StandardButton reply;
+-        reply = QMessageBox::question(this, "Quit", "The file choosen already exists, do you want to overwrite it?", QMessageBox::Yes|QMessageBox::No);
++        reply = QMessageBox::question(this, "Quit", "The file chosen already exists, do you want to overwrite it?", QMessageBox::Yes|QMessageBox::No);
+         if (reply == QMessageBox::No)
+         {
+             QDialog::reject();
+diff --git a/tests/libYARP_OS/ThreadTest.cpp b/tests/libYARP_OS/ThreadTest.cpp
+index fbc0345..21b5e4b 100644
+--- a/tests/libYARP_OS/ThreadTest.cpp
++++ b/tests/libYARP_OS/ThreadTest.cpp
+@@ -314,10 +314,10 @@ public:
+         Time::delay(0.05);
+         t2.start();
+         checkEqual(ThreadImpl::getCount(), tct+3, "thread count");
+-        checkEqual(t1.join(), 0, "thread t1 joined succesfully");
+-        checkEqual(t2.join(), 0, "thread t1 joined succesfully");
++        checkEqual(t1.join(), 0, "thread t1 joined successfully");
++        checkEqual(t2.join(), 0, "thread t1 joined successfully");
+         burper.close();
+-        checkEqual(burper.join(), 0, "thread burper joined succesfully");
++        checkEqual(burper.join(), 0, "thread burper joined successfully");
+         report(0, "... done threads");
+         checkEqual(expectCount, gotCount, "thread event counts");
+         checkEqual(true, expectCount==11, "thread event counts");
+@@ -462,7 +462,7 @@ public:
+         ThreadDelay t(0.1,true);
+         checkTrue(t.active,"flag starts out ok");
+         t.start();
+-        checkEqual(t.join(1), 0, "thread t joined succesfully before 1 second timeout");
++        checkEqual(t.join(1), 0, "thread t joined successfully before 1 second timeout");
+         checkTrue(t.active,"timeout join returns before thread stops");
+         t.mutex.wait();
+         t.hold = false;
+diff --git a/tests/libYARP_dev/AnalogWrapperTest.cpp b/tests/libYARP_dev/AnalogWrapperTest.cpp
+index 530c124..4951b1e 100644
+--- a/tests/libYARP_dev/AnalogWrapperTest.cpp
++++ b/tests/libYARP_dev/AnalogWrapperTest.cpp
+@@ -113,7 +113,7 @@ public:
+             result&=Network::exists("/testAnalogWrapperMultip/left_forearm/rpc:i");
+             result&=Network::exists("/testAnalogWrapperMultip/left_arm");
+             result&=Network::exists("/testAnalogWrapperMultip/left_arm/rpc:i");
+-            checkTrue(result,"All the ports required has been opened succesfully");
++            checkTrue(result,"All the ports required has been opened successfully");
+             result = dd3.close();
+             checkTrue(result,"close reported successful");
+         }
+diff --git a/tests/libYARP_dev/MapGrid2DTest.cpp b/tests/libYARP_dev/MapGrid2DTest.cpp
+index 968d24c..1247b24 100644
+--- a/tests/libYARP_dev/MapGrid2DTest.cpp
++++ b/tests/libYARP_dev/MapGrid2DTest.cpp
+@@ -168,7 +168,7 @@ public:
+         //closing the drivers
+         bool bclose1 = ddmapclient.close();
+         bool bclose2 = ddmapserver.close();
+-        checkTrue(bclose1 && bclose2, "map2DServer and map2DClient polydrivers closed succesfully");
++        checkTrue(bclose1 && bclose2, "map2DServer and map2DClient polydrivers closed successfully");
+ 
+         return true;
+     }

@@ -1,0 +1,2 @@
+# False positives
+yarp-carrier-human: hardening-no-fortify-functions usr/lib/*/yarp/yarp_human.so

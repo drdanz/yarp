@@ -28,40 +28,40 @@ License: LGPL-2.1+
 Files: example/cuda/*
  example/nvidia/*
  src/libYARP_dev/include/yarp/dev/GPUInterface.h
- src/modules/SerialServoBoard/SerialServoBoard.cpp
- src/modules/SerialServoBoard/SerialServoBoard.h
- src/modules/cuda/CUDADeviceDriver.cpp
- src/modules/cuda/CUDADeviceDriver.h
- src/modules/cuda/FunctionClass.h
- src/modules/nvidia/FBO_Filter.h
- src/modules/nvidia/NVIDIADeviceDriver.cpp
- src/modules/nvidia/NVIDIADeviceDriver.h
+ src/devices/SerialServoBoard/SerialServoBoard.cpp
+ src/devices/SerialServoBoard/SerialServoBoard.h
+ src/devices/cuda/CUDADeviceDriver.cpp
+ src/devices/cuda/CUDADeviceDriver.h
+ src/devices/cuda/FunctionClass.h
+ src/devices/nvidia/FBO_Filter.h
+ src/devices/nvidia/NVIDIADeviceDriver.cpp
+ src/devices/nvidia/NVIDIADeviceDriver.h
 Copyright: 2007, 2008 Giacomo Spigler
 License: LGPL-2.1+
 
-Files: src/carriers/xmlrpc_carrier/xmlrpc/XmlRpcClient.cpp
- src/carriers/xmlrpc_carrier/xmlrpc/XmlRpcClient.h
- src/carriers/xmlrpc_carrier/xmlrpc/XmlRpcException.h
- src/carriers/xmlrpc_carrier/xmlrpc/XmlRpcServer.cpp
- src/carriers/xmlrpc_carrier/xmlrpc/XmlRpcServer.h
- src/carriers/xmlrpc_carrier/xmlrpc/XmlRpcServerConnection.cpp
- src/carriers/xmlrpc_carrier/xmlrpc/XmlRpcServerConnection.h
- src/carriers/xmlrpc_carrier/xmlrpc/XmlRpcServerMethod.cpp
- src/carriers/xmlrpc_carrier/xmlrpc/XmlRpcServerMethod.h
- src/carriers/xmlrpc_carrier/xmlrpc/XmlRpcSource.cpp
- src/carriers/xmlrpc_carrier/xmlrpc/XmlRpcSource.h
- src/carriers/xmlrpc_carrier/xmlrpc/XmlRpcUtil.cpp
- src/carriers/xmlrpc_carrier/xmlrpc/XmlRpcUtil.h
- src/carriers/xmlrpc_carrier/xmlrpc/XmlRpcValue.cpp
- src/carriers/xmlrpc_carrier/xmlrpc/XmlRpcValue.h
+Files: extern/xmlrpcpp/xmlrpcpp/src/XmlRpcClient.cpp
+ extern/xmlrpcpp/xmlrpcpp/src/XmlRpcClient.h
+ extern/xmlrpcpp/xmlrpcpp/src/XmlRpcException.h
+ extern/xmlrpcpp/xmlrpcpp/src/XmlRpcServer.cpp
+ extern/xmlrpcpp/xmlrpcpp/src/XmlRpcServer.h
+ extern/xmlrpcpp/xmlrpcpp/src/XmlRpcServerConnection.cpp
+ extern/xmlrpcpp/xmlrpcpp/src/XmlRpcServerConnection.h
+ extern/xmlrpcpp/xmlrpcpp/src/XmlRpcServerMethod.cpp
+ extern/xmlrpcpp/xmlrpcpp/src/XmlRpcServerMethod.h
+ extern/xmlrpcpp/xmlrpcpp/src/XmlRpcSource.cpp
+ extern/xmlrpcpp/xmlrpcpp/src/XmlRpcSource.h
+ extern/xmlrpcpp/xmlrpcpp/src/XmlRpcUtil.cpp
+ extern/xmlrpcpp/xmlrpcpp/src/XmlRpcUtil.h
+ extern/xmlrpcpp/xmlrpcpp/src/XmlRpcValue.cpp
+ extern/xmlrpcpp/xmlrpcpp/src/XmlRpcValue.h
 Copyright: 2002-2003, Chris Morley
 License: LGPL-2.1+
 
 Files: src/libYARP_dev/include/yarp/dev/IKinectDeviceDriver.h
- src/modules/kinect/OpenNI/KinectYarpDeviceClientLib/*
- src/modules/kinect/OpenNI/TEST/GLWindow.cpp
- src/modules/kinect/OpenNI/TEST/GLWindow.h
- src/modules/kinect/OpenNI/TEST/main.cpp
+ src/devices/kinect/OpenNI/KinectYarpDeviceClientLib/*
+ src/devices/kinect/OpenNI/TEST/GLWindow.cpp
+ src/devices/kinect/OpenNI/TEST/GLWindow.h
+ src/devices/kinect/OpenNI/TEST/main.cpp
 Copyright: 2011, Duarte Aragao
 License: LGPL-2.1+
 
@@ -69,12 +69,6 @@ Files: src/libYARP_dev/include/yarp/dev/RemoteFrameGrabber.h
  src/libYARP_dev/include/yarp/dev/RemoteFrameGrabberDC1394.h
  src/libYARP_dev/src/RemoteFrameGrabber.cpp
  src/libYARP_dev/src/RemoteFrameGrabberDC1394.cpp
- src/yarpview-gtk/FpsStats.h
- src/yarpview-gtk/ImagePort.cpp
- src/yarpview-gtk/ImagePort.h
- src/yarpview-gtk/ViewerResources.h
- src/yarpview-gtk/YarpImage2Pixbuf.cpp
- src/yarpview-gtk/YarpImage2Pixbuf.h
 Copyright: 2006, 2009, 2010 RobotCub Consortium, European Commission FP6 Project IST-004370
 License: LGPL-2.1+
 
@@ -115,12 +109,12 @@ Files: src/libYARP_OS/include/yarp/os/Bottle.h
 Copyright: 2006, 2008 RobotCub Consortium, Arjan Gijsberts
 License: LGPL-2.1+
 
-Files: src/modules/jrkerr/nmccom.cpp
- src/modules/jrkerr/nmccom.h
- src/modules/jrkerr/picservo.cpp
- src/modules/jrkerr/picservo.h
- src/modules/jrkerr/sio_util.cpp
- src/modules/jrkerr/sio_util.h
+Files: src/devices/jrkerr/nmccom.cpp
+ src/devices/jrkerr/nmccom.h
+ src/devices/jrkerr/picservo.cpp
+ src/devices/jrkerr/picservo.h
+ src/devices/jrkerr/sio_util.cpp
+ src/devices/jrkerr/sio_util.h
 Copyright: 2007, Jeffrey Kerr LLC
 License: BSD-3-clause
 
@@ -131,10 +125,10 @@ Files: src/libYARP_OS/include/yarp/os/impl/hmac/hmac_sha2.h
 Copyright: 2005, 2007 Olivier Gay <olivier.gay@a3.epfl.ch>
 License: BSD-3-clause
 
-Files: src/modules/dimax_u2c/I2c.cpp
- src/modules/dimax_u2c/I2c.h
- src/modules/dimax_u2c/i2cbridge.h
- src/modules/dimax_u2c/u2c_common_func.h
+Files: src/devices/dimax_u2c/I2c.cpp
+ src/devices/dimax_u2c/I2c.h
+ src/devices/dimax_u2c/i2cbridge.h
+ src/devices/dimax_u2c/u2c_common_func.h
 Copyright: 2004, Dimax ( http://www.xdimax.com )
 License: GPL
  This program is free software; you can redistribute it
@@ -152,17 +146,17 @@ Files: src/libYARP_dev/include/yarp/dev/SerialInterfaces.h
 Copyright: 2006, Alex Bernardino & Carlos Beltran-Gonzalez
 License: LGPL-2.1+
 
-Files: src/modules/PumaCalibrator/PumaCalibrator.cpp
- src/modules/PumaCalibrator/PumaCalibrator.h
- src/modules/meiMotionControl/MEIMotionControl.cpp
- src/modules/meiMotionControl/MEIMotionControl.h
+Files: src/devices/PumaCalibrator/PumaCalibrator.cpp
+ src/devices/PumaCalibrator/PumaCalibrator.h
+ src/devices/meiMotionControl/MEIMotionControl.cpp
+ src/devices/meiMotionControl/MEIMotionControl.h
 Copyright: 2007, Mattia Castelnovi
 License: LGPL-2.1+
 
-Files: src/modules/kinect/freenect/KinectDeviceDriver.cpp
- src/modules/kinect/freenect/KinectDeviceDriver.h
- src/modules/kinect/freenect/KinectExample.cpp
- src/modules/kinect/freenect/ServerKinect.h
+Files: src/devices/kinect/freenect/KinectDeviceDriver.cpp
+ src/devices/kinect/freenect/KinectDeviceDriver.h
+ src/devices/kinect/freenect/KinectExample.cpp
+ src/devices/kinect/freenect/ServerKinect.h
 Copyright: 2010, Philipp Robbel
 License: GPL-2
 
@@ -172,10 +166,6 @@ Files: src/yarpfs/link.cpp
  src/yarpfs/yarputils.h
 Copyright: 2007, RobotCub Consortium, Giacomo Spigler
 License: LGPL-2.1+
-
-Files: example/gtk/gtkdemo.cpp
-Copyright: 1995-1997, Peter Mattis, Spencer Kimball and Josh MacDonald
-License: LGPL-2+
 
 Files: src/idls/thrift/msvc/inttypes.h
  src/idls/thrift/msvc/stdint.h
@@ -188,23 +178,23 @@ Files: src/idls/thrift/src_gen/parser.cc
 Copyright: 1984, 1989-1990, 2000-2006 Free Software Foundation, Inc.
 License: GPL-3+
 
-Files: src/modules/serial/SerialDeviceDriver.cpp
- src/modules/serial/SerialDeviceDriver.h
+Files: src/devices/serial/SerialDeviceDriver.cpp
+ src/devices/serial/SerialDeviceDriver.h
 Copyright: 2007, Alex Bernardino, Carlos Beltran-Gonzalez
 License: LGPL-2.1+
 
-Files: src/modules/jrkerr/JrkerrMotionControl.cpp
- src/modules/jrkerr/JrkerrMotionControl.h
+Files: src/devices/jrkerr/JrkerrMotionControl.cpp
+ src/devices/jrkerr/JrkerrMotionControl.h
 Copyright: 2006, Alexandre Bernardino, Julio Gomes
 License: LGPL-2.1+
 
-Files: src/modules/dimax_u2c/DimaxU2C.cpp
- src/modules/dimax_u2c/DimaxU2C.h
+Files: src/devices/dimax_u2c/DimaxU2C.cpp
+ src/devices/dimax_u2c/DimaxU2C.h
 Copyright: 2006, Assif Mirza
 License: LGPL-2.1+
 
-Files: src/modules/opencv/OpenCVGrabber.cpp
- src/modules/opencv/OpenCVGrabber.h
+Files: src/devices/opencv/OpenCVGrabber.cpp
+ src/devices/opencv/OpenCVGrabber.h
 Copyright: 2006, Eric Mislivec and RobotCub Consortium
 License: LGPL-2.1+
 
@@ -216,8 +206,8 @@ Files: src/libYARP_sig/include/yarp/sig/IplImage.h
 Copyright: 2000, Intel Corporation
 License: BSD-3-clause
 
-Files: src/modules/urbtc/UrbtcControl.cpp
- src/modules/urbtc/UrbtcControl.h
+Files: src/devices/urbtc/UrbtcControl.cpp
+ src/devices/urbtc/UrbtcControl.h
 Copyright: 2007, Jonas Ruesch
 License: LGPL-2.1+
 
@@ -225,27 +215,22 @@ Files: src/libYARP_dev/include/yarp/dev/ServerSoundGrabber.h
 Copyright: 2006, Julio Gomes
 License: LGPL-2.1+
 
-Files: src/modules/laserHokuyo/laserHokuyo.cpp
- src/modules/laserHokuyo/laserHokuyo.h
+Files: src/devices/laserHokuyo/laserHokuyo.cpp
+ src/devices/laserHokuyo/laserHokuyo.h
 Copyright: 2010, Marco Randazzo
 License: LGPL-2.1+
 
-Files: src/yarpview-gtk/yarpview.cpp
- src/yarpview-gtk/yarpview.h
-Copyright: 2006, Matteo Brunettini
-License: LGPL-2.1+
-
-Files: src/modules/dimax_u2c/Servo.cpp
- src/modules/dimax_u2c/Servo.h
+Files: src/devices/dimax_u2c/Servo.cpp
+ src/devices/dimax_u2c/Servo.h
 Copyright: 2005-2006, Mike P. Blow, Lars Olsson, Assif Mirza
 License: LGPL-2.1+
 
-Files: src/modules/DynamixelAX12Ftdi/*
+Files: src/devices/DynamixelAX12Ftdi/*
 Copyright: 2010, Ze Ji
 License: LGPL-2.1+
 
-Files: src/modules/urbtc/kernel_module/urbtc.h
- src/modules/urbtc/kernel_module/urobotc.h
+Files: src/devices/urbtc/kernel_module/urbtc.h
+ src/devices/urbtc/kernel_module/urobotc.h
 Copyright: 2007, iXs Research Corp
 License: GPL-2
 
@@ -254,7 +239,7 @@ Files: src/idls/thrift/src_thrift/md5.c
 Copyright: 1999-2000, 2002 Aladdin Enterprises.
 License: zlib/libpng
 
-Files: src/modules/vfw/vfw_extra_from_australia.h
+Files: src/devices/vfw/vfw_extra_from_australia.h
 Copyright: 2006, The University of Queensland, Australia <www.uq.edu.au>
 License: GPL-2+
 
@@ -292,19 +277,19 @@ License: CeCILL
  you have had knowledge of the CeCILL license and that you
  accept its terms.
 
-Files: src/modules/urbtc/kernel_module/urbtc.c
+Files: src/devices/urbtc/kernel_module/urbtc.c
 Copyright: 2001-2004, Greg Kroah-Hartman (greg@kroah.com)
 License: GPL-2
 
-Files: src/carriers/xmlrpc_carrier/xmlrpc/XmlRpc.h
+Files: extern/xmlrpcpp/xmlrpcpp/src/XmlRpc.h
 Copyright: 2002-2003, Chris Morley
 License: LGPL-2.1+
 
-Files: src/modules/vfw/vfw_extra_from_wine.h
+Files: src/devices/vfw/vfw_extra_from_wine.h
 Copyright: 2007, the Wine project
 License: LGPL-2.1+
 
-Files: src/modules/ffmpeg/FfmpegWriter.cpp
+Files: src/devices/ffmpeg/FfmpegWriter.cpp
 Copyright: 2003, Fabrice Bellard
   2006, RobotCub Consortium
 License: LGPL-2.1+
@@ -320,12 +305,12 @@ Files: src/libYARP_OS/src/DummyConnector.cpp
 Copyright: 2007, Freyr Magnusson and RobotCub Consortium
 License: LGPL-2.1+
 
-Files: src/modules/vfw/VfwGrabber.cpp
+Files: src/devices/vfw/VfwGrabber.cpp
 Copyright: 2000, Intel Corporation
   2007, RobotCub Consortium
 License: LGPL-2.1+
 
-Files: src/modules/microphone/WindowsMicrophoneDeviceDriver.cpp
+Files: src/devices/microphone/WindowsMicrophoneDeviceDriver.cpp
 Copyright: 2006, Julio Gomes, Alexandre Bernardino
 License: LGPL-2.1+
 
@@ -337,7 +322,7 @@ Files: src/libYARP_OS/src/TcpFace.cpp
 Copyright: 2006, 2010 RobotCub Consortium, Daniel Krieg
 License: LGPL-2.1+
 
-Files: src/modules/ffmpeg/FfmpegGrabber.cpp
+Files: src/devices/ffmpeg/FfmpegGrabber.cpp
 Copyright: 2006, RobotCub Consortium, Jonas Ruesch, Arjan Gijsberts
 License: LGPL-2.1+
 
@@ -369,11 +354,6 @@ Files: extern/tinyxml/tinyxml/*
 Copyright: Lee Thomason, Yves Berquin, Andrew Ellerton
 License: zlib/libpng
 
-Files: extern/gtkdatabox/gtkdatabox/gtk/gtkdatabox_ruler.c
- extern/gtkdatabox/gtkdatabox/gtk/gtkdatabox_ruler.h
-Copyright: 1995-1997, Peter Mattis, Spencer Kimball and Josh MacDonald
-License: LGPL-2+
-
 
 License: LGPL-2.1+
  This library is free software; you can redistribute it
@@ -396,28 +376,6 @@ License: LGPL-2.1+
  On Debian systems, the full text of the GNU Lesser General
  Public License version 2.1 can be found in the file
  `/usr/share/common-licenses/LGPL-2.1'.
-
-License: LGPL-2+
- This library is free software; you can redistribute it
- and/or modify it under the terms of the GNU Lesser General
- Public License as published by the Free Software
- Foundation; either version 2 of the License, or (at your
- option) any later version.
- .
- This library is distributed in the hope that it will be
- useful, but WITHOUT ANY WARRANTY; without even the implied
- warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- PURPOSE.  See the GNU Lesser General Public License for
- more details.
- .
- You should have received a copy of the GNU Lesser General
- Public License along with this library; if not, write to
- the Free Software Foundation, Inc., 51 Franklin Street,
- Fifth Floor, Boston, MA  02110-1301  USA
- .
- On Debian systems, the full text of the GNU Lesser General
- Public License version 2 can be found in the file
- `/usr/share/common-licenses/LGPL-2'.
 
 License: GPL-2
  This library is free software; you can redistribute it

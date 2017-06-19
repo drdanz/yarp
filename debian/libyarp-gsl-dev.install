@@ -1,0 +1,2 @@
+usr/include/yarp/gsl/*.h
+usr/lib/*/libYARP_gsl.so

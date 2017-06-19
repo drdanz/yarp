@@ -1,2 +1,4 @@
 0001-Make-private-libraries-static-and-do-not-install-the.patch
 0002-Allow-to-create-python2-and-python3-bindings-at-the-.patch
+0003-Do-not-install-xmlrcpp-lib.patch
+0004-Fix-spelling-errors-reported-by-lintian.patch

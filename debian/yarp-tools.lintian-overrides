@@ -1,0 +1,11 @@
+# False positives
+binary-without-manpage usr/bin/yarp
+binary-without-manpage usr/bin/yarp-config
+binary-without-manpage usr/bin/yarpdev
+binary-without-manpage usr/bin/yarphear
+binary-without-manpage usr/bin/yarpidl_rosmsg
+binary-without-manpage usr/bin/yarpidl_thrift
+binary-without-manpage usr/bin/yarplogger-console
+binary-without-manpage usr/bin/yarpmanager-console
+binary-without-manpage usr/bin/yarprobotinterface
+binary-without-manpage usr/bin/yarpros

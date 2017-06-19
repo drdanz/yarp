@@ -1,0 +1,3 @@
+# False positives
+yarpdatadumper: binary-without-manpage usr/bin/yarpdatadumper
+yarpdatadumper: binary-without-manpage usr/bin/yarpdatadumperAppGenerator

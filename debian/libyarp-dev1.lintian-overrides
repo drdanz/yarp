@@ -1,1 +1,5 @@
-spelling-error-in-binary usr/lib/x86_64-linux-gnu/libYARP_dev.so.2.3.66 whitH with
+# False positives
+spelling-error-in-binary usr/lib/*/libYARP_dev.so.* whitH with
+
+# From ROS messages
+spelling-error-in-binary usr/lib/*/libYARP_dev.so.* postion position

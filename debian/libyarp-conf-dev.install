@@ -1,0 +1,3 @@
+usr/include/yarp/conf/*.h
+usr/lib/*/YARP/*.cmake
+usr/share/yarp/cmake/*

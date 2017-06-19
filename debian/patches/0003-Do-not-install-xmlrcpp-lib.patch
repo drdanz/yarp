@@ -1,0 +1,32 @@
+From: "Daniele E. Domenichelli" <ddomenichelli@drdanz.it>
+Date: Mon, 19 Jun 2017 17:59:07 +0200
+Subject: Do not install xmlrcpp lib
+
+---
+ extern/xmlrpcpp/CMakeLists.txt | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/extern/xmlrpcpp/CMakeLists.txt b/extern/xmlrpcpp/CMakeLists.txt
+index e0a0e71..2714868 100644
+--- a/extern/xmlrpcpp/CMakeLists.txt
++++ b/extern/xmlrpcpp/CMakeLists.txt
+@@ -33,11 +33,11 @@ set_property(TARGET YARP_priv_xmlrpcpp PROPERTY FOLDER "Libraries/External")
+ set(xmlrpcpp_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/xmlrpcpp/src PARENT_SCOPE)
+ set(xmlrpcpp_LIBRARIES "YARP_priv_xmlrpcpp" PARENT_SCOPE)
+ 
+-install(TARGETS YARP_priv_xmlrpcpp
+-        EXPORT YARP
+-        COMPONENT runtime
+-        RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+-        LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+-        ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}")
+-
+-set_property(GLOBAL APPEND PROPERTY YARP_LIBS YARP_priv_xmlrpcpp)
++#install(TARGETS YARP_priv_xmlrpcpp
++#        EXPORT YARP
++#        COMPONENT runtime
++#        RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
++#        LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
++#        ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}")
++#
++#set_property(GLOBAL APPEND PROPERTY YARP_LIBS YARP_priv_xmlrpcpp)

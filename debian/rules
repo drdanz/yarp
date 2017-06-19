@@ -10,14 +10,15 @@ include /usr/share/dpkg/architecture.mk
 
 override_dh_auto_configure:
 	dh_auto_configure -- \
-	                     -DYARP_CLEAN_API:BOOL=ON \
+	                     -DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON \
 	                     -DYARP_COMPILE_EXECUTABLES:BOOL=ON \
 	                     -DYARP_COMPILE_BINDINGS:BOOL=ON \
 	                     -DYARP_COMPILE_TESTS:BOOL=OFF \
 	                     -DYARP_COMPILE_UNMAINTAINED:BOOL=OFF \
-	                     -DCREATE_GUIS:BOOL=ON \
 	                     -DCREATE_LIB_MATH:BOOL=ON \
-	                     -DCREATE_LIB_MATH_USING_GSL:BOOL=ON \
+	                     -DCREATE_GUIS:BOOL=ON \
+	                     -DCREATE_YARPLASERSCANNERGUI:BOOL=ON \
+	                     -DCREATE_YARPBATTERYGUI:BOOL=ON \
 	                     -DCREATE_OPTIONAL_CARRIERS:BOOL=ON \
 	                     -DENABLE_yarpcar_bayer:BOOL=ON \
 	                     -DENABLE_yarpcar_human:BOOL=ON \
@@ -45,11 +46,18 @@ override_dh_auto_configure:
 	                     -DENABLE_yarpmod_portaudio:BOOL=ON \
 	                     -DENABLE_yarpmod_rpLidar:BOOL=ON \
 	                     -DENABLE_yarpmod_SerialServoBoard:BOOL=ON \
+	                     -DENABLE_yarpmod_test_grabber:BOOL=ON \
 	                     -DCREATE_PERL:BOOL=ON \
 	                     -DCREATE_PYTHON2:BOOL=ON \
 	                     -DCREATE_PYTHON3:BOOL=ON \
 	                     -DYARP_DOXYGEN_HTML:BOOL=ON \
 	                     -DYARP_DOXYGEN_MAN:BOOL=ON \
+# -DENABLE_yarpcar_depthimage:BOOL=ON \
+# -DENABLE_yarpmod_fakeDepthCamera:BOOL=ON \
+# -DENABLE_yarpmod_fakeAnalogSensor:BOOL=ON \
+# -DENABLE_yarpmod_laserFromDepth:BOOL=ON \
+# -DENABLE_yarpmod_rpLidar2:BOOL=ON \
+# -DENABLE_yarpmod_yarpmod_SDLJoypad:BOOL=ON \
 # -DENABLE_yarpmod_KinectDeviceClient:BOOL=ON \
 # -DENABLE_yarpmod_KinectDeviceLocal:BOOL=ON \
 # -DENABLE_yarpmod_SerialServoBoard:BOOL=ON \
@@ -62,11 +70,6 @@ override_dh_auto_configure:
 # -DENABLE_yarpmod_urbtc:BOOL=ON \
 # -DENABLE_yarpmod_vfw_grabber:BOOL=ON \
 # -DENABLE_yarpmod_wxsdl:BOOL=ON \
-
-
-# Not building in YARP 2.3.64
-# 	                     -DENABLE_yarpmod_firewirecamera:BOOL=ON
-
 
 
 override_dh_auto_build-arch:

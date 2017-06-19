@@ -1,0 +1,25 @@
+# Bug in doxygen 1.8.13
+# See https://bugzilla.gnome.org/show_bug.cgi?id=784032
+manpage-has-bad-whatis-entry usr/share/man/man1/yarp-config.1.gz
+manpage-has-bad-whatis-entry usr/share/man/man1/yarp.1.gz
+manpage-has-bad-whatis-entry usr/share/man/man1/yarpbatterygui.1.gz
+manpage-has-bad-whatis-entry usr/share/man/man1/yarpdatadumper.1.gz
+manpage-has-bad-whatis-entry usr/share/man/man1/yarpdatadumperAppGenerator.1.gz
+manpage-has-bad-whatis-entry usr/share/man/man1/yarpdataplayer.1.gz
+manpage-has-bad-whatis-entry usr/share/man/man1/yarpdev.1.gz
+manpage-has-bad-whatis-entry usr/share/man/man1/yarphear.1.gz
+manpage-has-bad-whatis-entry usr/share/man/man1/yarpidl_rosmsg.1.gz
+manpage-has-bad-whatis-entry usr/share/man/man1/yarpidl_thrift.1.gz
+manpage-has-bad-whatis-entry usr/share/man/man1/yarplaserscannergui.1.gz
+manpage-has-bad-whatis-entry usr/share/man/man1/yarplogger-console.1.gz
+manpage-has-bad-whatis-entry usr/share/man/man1/yarplogger.1.gz
+manpage-has-bad-whatis-entry usr/share/man/man1/yarpmanager-console.1.gz
+manpage-has-bad-whatis-entry usr/share/man/man1/yarpmanager.1.gz
+manpage-has-bad-whatis-entry usr/share/man/man1/yarpmotorgui.1.gz
+manpage-has-bad-whatis-entry usr/share/man/man1/yarprobotinterface.1.gz
+manpage-has-bad-whatis-entry usr/share/man/man1/yarpros.1.gz
+manpage-has-bad-whatis-entry usr/share/man/man1/yarprun.1.gz
+manpage-has-bad-whatis-entry usr/share/man/man1/yarpscope.1.gz
+manpage-has-bad-whatis-entry usr/share/man/man1/yarpserver.1.gz
+manpage-has-bad-whatis-entry usr/share/man/man1/yarpview.1.gz
+

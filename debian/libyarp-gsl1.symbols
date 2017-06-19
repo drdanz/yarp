@@ -1,0 +1,13 @@
+libYARP_gsl.so.1 libyarp-gsl1 #MINVER#
+ _ZN4yarp3gsl9GslMatrix12getGslMatrixEv@Base 2.3.70
+ _ZN4yarp3gsl9GslMatrixC1ERKNS_3sig6MatrixE@Base 2.3.70
+ _ZN4yarp3gsl9GslMatrixC2ERKNS_3sig6MatrixE@Base 2.3.70
+ _ZN4yarp3gsl9GslMatrixD1Ev@Base 2.3.70
+ _ZN4yarp3gsl9GslMatrixD2Ev@Base 2.3.70
+ _ZN4yarp3gsl9GslVector12getGslVectorEv@Base 2.3.70
+ _ZN4yarp3gsl9GslVectorC1ERKNS_3sig6VectorE@Base 2.3.70
+ _ZN4yarp3gsl9GslVectorC2ERKNS_3sig6VectorE@Base 2.3.70
+ _ZN4yarp3gsl9GslVectorD1Ev@Base 2.3.70
+ _ZN4yarp3gsl9GslVectorD2Ev@Base 2.3.70
+ _ZNK4yarp3gsl9GslMatrix12getGslMatrixEv@Base 2.3.70
+ _ZNK4yarp3gsl9GslVector12getGslVectorEv@Base 2.3.70

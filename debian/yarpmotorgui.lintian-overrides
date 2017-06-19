@@ -1,0 +1,3 @@
+# False positives
+hardening-no-fortify-functions usr/bin/yarpmotorgui
+binary-without-manpage usr/bin/yarpmotorgui

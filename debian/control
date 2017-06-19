@@ -144,13 +144,52 @@ Description: thin middleware for humanoid robots and more - [dev] shared librari
  .
  This package contains the [dev] shared library.
 
+Package: libyarp-gsl1
+Section: libs
+Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Description: thin middleware for humanoid robots and more - [gsl] shared libraries
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
+ .
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
+ .
+ This package contains the [gsl] shared library.
+
 ##################### DEV
+
+Package: libyarp-conf-dev
+Section: libdevel
+Architecture: any
+Depends: ${misc:Depends}
+Description: thin middleware for humanoid robots and more - [conf] development files
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
+ .
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
+ .
+ This package contains the [conf] development files.
 
 Package: libyarp-os-dev
 Section: libdevel
 Architecture: any
 Depends: ${misc:Depends},
- libyarp-os1 (= ${binary:Version})
+ libyarp-os1 (= ${binary:Version}),
+ libyarp-conf-dev (= ${binary:Version})
 Description: thin middleware for humanoid robots and more - [os] development files
  YARP stands for Yet Another Robot Platform. It is a library and toolkit
  for communication and device interfaces, used on everything from
@@ -184,10 +223,12 @@ Description: thin middleware for humanoid robots and more - [os] private develop
  .
  This package contains the [os] private development files.
 
+# FIXME Check deps
 Package: libyarp-sig-dev
 Section: libdevel
 Architecture: any
 Depends: ${misc:Depends},
+ libyarp-conf-dev (= ${binary:Version}),
  libyarp-sig1 (= ${binary:Version})
 Description: thin middleware for humanoid robots and more - [sig] development files
  YARP stands for Yet Another Robot Platform. It is a library and toolkit
@@ -222,10 +263,12 @@ Description: thin middleware for humanoid robots and more - [sig] private develo
  .
  This package contains the [sig] private development files.
 
+# FIXME Check deps
 Package: libyarp-math-dev
 Section: libdevel
 Architecture: any
 Depends: ${misc:Depends},
+ libyarp-conf-dev (= ${binary:Version}),
  libyarp-math1 (= ${binary:Version})
 Description: thin middleware for humanoid robots and more - [math] development files
  YARP stands for Yet Another Robot Platform. It is a library and toolkit
@@ -241,10 +284,31 @@ Description: thin middleware for humanoid robots and more - [math] development f
  .
  This package contains the [math] development files.
 
+Package: libyarp-math-private-dev
+Section: libdevel
+Architecture: any
+Depends: ${misc:Depends},
+ libyarp-math-dev (= ${binary:Version})
+Description: thin middleware for humanoid robots and more - [math] private development files
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
+ .
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
+ .
+ This package contains the [math] private development files.
+
+# FIXME Check deps
 Package: libyarp-dev-dev
 Section: libdevel
 Architecture: any
 Depends: ${misc:Depends},
+ libyarp-conf-dev (= ${binary:Version}),
  libyarp-dev1 (= ${binary:Version})
 Description: thin middleware for humanoid robots and more - [dev] development files
  YARP stands for Yet Another Robot Platform. It is a library and toolkit
@@ -259,6 +323,66 @@ Description: thin middleware for humanoid robots and more - [dev] development fi
  with hardware devices.
  .
  This package contains the [dev] development files.
+
+# FIXME Check deps
+Package: libyarp-gsl-dev
+Section: libdevel
+Architecture: any
+Depends: ${misc:Depends},
+ libyarp-conf-dev (= ${binary:Version}),
+ libyarp-gsl1 (= ${binary:Version})
+Description: thin middleware for humanoid robots and more - [gsl] development files
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
+ .
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
+ .
+ This package contains the [gsl] development files.
+
+Package: libyarp-gsl-private-dev
+Section: libdevel
+Architecture: any
+Depends: ${misc:Depends},
+ libyarp-gsl-dev (= ${binary:Version})
+Description: thin middleware for humanoid robots and more - [gsl] private development files
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
+ .
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
+ .
+ This package contains the [gsl] private development files.
+
+# FIXME Check deps
+Package: libyarp-eigen-dev
+Section: libdevel
+Architecture: any
+Depends: ${misc:Depends},
+ libyarp-conf-dev (= ${binary:Version}),
+Description: thin middleware for humanoid robots and more - [eigen] development files
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
+ .
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
+ .
+ This package contains the [eigen] development files.
 
 ##################### DEBUG
 
@@ -875,6 +999,23 @@ Description: thin middleware for humanoid robots and more - SerialServoBoard dev
  .
  This package contains the SerialServoBoard device plugin.
 
+Package: yarp-device-testgrabber
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: thin middleware for humanoid robots and more - test_grabber device
+ YARP stands for Yet Another Robot Platform. It is a library and toolkit
+ for communication and device interfaces, used on everything from
+ humanoids to embedded devices.
+ .
+ More specifically, YARP supports building a robot control system as a
+ "collection of programs" communicating in a peer-to-peer way, with an
+ extensible family of connection types (tcp, udp, multicast, local, MPI,
+ mjpg-over-http, XML/RPC, tcpros, ...) that can be swapped in and out to
+ match your needs. It also supports similarly flexible interfacing
+ with hardware devices.
+ .
+ This package contains the test_grabber device plugin.
+
 ##################### BINDINGS
 
 Package: libyarp-perl
@@ -960,10 +1101,13 @@ Package: yarp-dev
 Section: libdevel
 Architecture: any
 Depends: ${misc:Depends},
+ libyarp-conf-dev (= ${binary:Version}),
  libyarp-os-dev (= ${binary:Version}),
  libyarp-dev-dev (= ${binary:Version}),
  libyarp-math-dev (= ${binary:Version}),
- libyarp-sig-dev (= ${binary:Version})
+ libyarp-sig-dev (= ${binary:Version}),
+ libyarp-gsl-dev (= ${binary:Version}),
+ libyarp-eigen-dev (= ${binary:Version})
 Suggests: cmake-curses-gui, cmake-qt-gui
 Description: thin middleware for humanoid robots and more - development files
  YARP stands for Yet Another Robot Platform. It is a library and toolkit
