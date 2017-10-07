@@ -1,6 +1,6 @@
-yarp (2.3.70-0r1) UNRELEASED; urgency=low
+yarp (2.3.70.1-0r1) UNRELEASED; urgency=low
 
   [ Daniele E. Domenichelli ]
   * Initial release. (Closes: #682756)
 
- -- Daniele E. Domenichelli <ddomenichelli@drdanz.it>  Fri, 16 Oct 2015 18:40:26 +0200
+ -- Daniele E. Domenichelli <ddomenichelli@drdanz.it>  Sat, 07 Oct 2017 16:53:17 +0200
