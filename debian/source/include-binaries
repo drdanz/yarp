@@ -1,0 +1,4 @@
+src/devices/dimax_u2c/blob/I2cBrdg.dll
+src/devices/dimax_u2c/blob/I2cBrdg.lib
+src/devices/dimax_u2c/blob/U2CCommon.dll
+src/devices/dimax_u2c/blob/U2CCommon.lib
