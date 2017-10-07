@@ -1,0 +1,11 @@
+#include <yarp/os/Network.h>
+#include <yarp/dev/Drivers.h>
+
+
+@YARP_CODE_PRE@
+
+int main(int argc, char *argv[]) {
+    yarp::os::Network yarp;
+@YARP_CODE_POST@
+    return yarp::dev::Drivers::yarpdev(argc,argv);
+}

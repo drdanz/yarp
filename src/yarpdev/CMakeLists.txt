@@ -1,0 +1,15 @@
+# Copyright: (C) 2009 RobotCub Consortium
+# Authors: Paul Fitzpatrick, Giorgio Metta, Lorenzo Natale
+# CopyPolicy: Released under the terms of the LGPLv2.1 or later, see LGPL.TXT
+
+
+get_property(YARP_TREE_INCLUDE_DIRS TARGET YARP_dev PROPERTY INCLUDE_DIRS)
+include_directories(${YARP_TREE_INCLUDE_DIRS})
+add_executable(yarpdev yarpdev.cpp)
+target_link_libraries(yarpdev YARP_init YARP_dev)
+
+install(TARGETS yarpdev
+        COMPONENT utilities
+        DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+set_property(TARGET yarpdev PROPERTY FOLDER "Command Line Tools")

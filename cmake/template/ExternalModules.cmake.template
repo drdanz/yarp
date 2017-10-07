@@ -1,0 +1,11 @@
+# ExternalModules.cmake template file.
+
+# List all modules here (this is a symbolic name):
+# set(EXTERNAL_MODULES mod1 mod2 mod3)
+
+# For each MODULE above add a variable named MODULE_DIR
+# which specifies its location on your disk.
+
+# set(mod1_DIR "/usr/local/mod1")
+# set(mod2_DIR "/usr/local/mod2")
+# set(mod3_DIR "c:/mod3")

@@ -1,0 +1,34 @@
+/*
+ * Copyright (C) 2006, 2008, 2009 RobotCub Consortium
+ * Authors: Lorenzo Natale
+ * CopyPolicy: Released under the terms of the LGPLv2.1 or later, see LGPL.TXT
+ *
+ */
+
+#ifndef YARP_DEV_CONTROLBOARDINTERFACESIMPL_H
+#define YARP_DEV_CONTROLBOARDINTERFACESIMPL_H
+
+#include <yarp/dev/ControlBoardInterfaces.h>
+
+#include <yarp/dev/ImplementEncodersTimed.h>
+#include <yarp/dev/ImplementMotorEncoders.h>
+#include <yarp/dev/ImplementMotor.h>
+#include <yarp/dev/ImplementRemoteVariables.h>
+#include <yarp/dev/ImplementControlMode.h>
+#include <yarp/dev/ImplementControlMode2.h>
+#include <yarp/dev/ImplementTorqueControl.h>
+#include <yarp/dev/ImplementCurrentControl.h>
+#include <yarp/dev/ImplementPWMControl.h>
+#include <yarp/dev/ImplementImpedanceControl.h>
+#include <yarp/dev/ImplementAxisInfo.h>
+#include <yarp/dev/IPidControlImpl.h>
+#include <yarp/dev/IPositionControl2Impl.h>
+#include <yarp/dev/IVelocityControl2Impl.h>
+#include <yarp/dev/IControlLimits2Impl.h>
+#include <yarp/dev/IPositionDirectImpl.h>
+#include <yarp/dev/IInteractionModeImpl.h>
+
+// old interface implementation file
+#include <yarp/dev/ImplementControlBoardInterfaces.h>
+
+#endif // YARP_DEV_CONTROLBOARDINTERFACESIMPL_H
