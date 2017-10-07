@@ -97,7 +97,7 @@ index 3890450..de73f94 100644
  <tr><td>principalPointY</td><td>Y coordinate of the principal point of the test_grabber</td><td>7.0</td></tr>
  <tr><td>retificationMatrix</td><td>Matrix that describes the lens' distortion(fake)</td><td>1.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 1.0</td></tr>
 diff --git a/doc/release/v2_3_70.md b/doc/release/v2_3_70.md
-index 68d786c..dce7b93 100644
+index 5a3ff25..488fd1b 100644
 --- a/doc/release/v2_3_70.md
 +++ b/doc/release/v2_3_70.md
 @@ -172,8 +172,8 @@ New Features
@@ -204,26 +204,27 @@ index a079efb..7e68156 100644
                  return false;
              }
 diff --git a/src/devices/rpLidar2/rpLidar2.cpp b/src/devices/rpLidar2/rpLidar2.cpp
-index 00bb6d6..3b0fba6 100644
+index 9e5b80d..bcf4b99 100644
 --- a/src/devices/rpLidar2/rpLidar2.cpp
 +++ b/src/devices/rpLidar2/rpLidar2.cpp
-@@ -137,14 +137,14 @@ bool RpLidar2::open(yarp::os::Searchable& config)
+@@ -154,7 +154,7 @@ bool RpLidar2::open(yarp::os::Searchable& config)
          handleError(result);
          return false;
      }
 -    yInfo() << "Motor started succesfully";
 +    yInfo() << "Motor started successfully";
-     result = drv->startScan();
-     if (result != RESULT_OK)
+ 
+     if (m_pwm_val!=0)
      {
+@@ -187,7 +187,7 @@ bool RpLidar2::open(yarp::os::Searchable& config)
          handleError(result);
          return false;
      }
 -    yInfo() << "Scan started succesfully";
 +    yInfo() << "Scan started successfully";
  
-     yInfo() << "Device info:" << info;
-     yInfo("max_angle %f, min_angle %f", max_angle, min_angle);
+     yInfo() << "Device info:" << m_info;
+     yInfo("max_angle %f, min_angle %f", m_max_angle, m_min_angle);
 diff --git a/src/devices/test_grabber/TestFrameGrabber.cpp b/src/devices/test_grabber/TestFrameGrabber.cpp
 index 681e316..d19a3c1 100644
 --- a/src/devices/test_grabber/TestFrameGrabber.cpp
@@ -522,7 +523,7 @@ index 83062b0..f727f86 100644
          }
          return true;
 diff --git a/src/libYARP_dev/src/devices/JoypadControlClient/JoypadControlClient.cpp b/src/libYARP_dev/src/devices/JoypadControlClient/JoypadControlClient.cpp
-index 3ed3694..f81561b 100644
+index 126a751..28304e1 100644
 --- a/src/libYARP_dev/src/devices/JoypadControlClient/JoypadControlClient.cpp
 +++ b/src/libYARP_dev/src/devices/JoypadControlClient/JoypadControlClient.cpp
 @@ -122,7 +122,7 @@ bool JoypadControlClient::open(yarp::os::Searchable& config)
