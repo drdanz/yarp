@@ -1563,7 +1563,6 @@ libYARP_OS.so.1 libyarp-os1 #MINVER#
  _ZN4yarp2os9SemaphoreD0Ev@Base 2.3.70.1
  _ZN4yarp2os9SemaphoreD1Ev@Base 2.3.70.1
  _ZN4yarp2os9SemaphoreD2Ev@Base 2.3.70.1
- _ZN6ACE_OS8hostnameEPcm@Base 2.3.70.1
  _ZNK10ACE_VectorIPN4yarp2os4impl8UnitTestELm32EE4dumpEv@Base 2.3.70.1
  _ZNK10ACE_VectorIPN4yarp2os4impl8UnitTestELm32EE4sizeEv@Base 2.3.70.1
  _ZNK10ACE_VectorIPN4yarp2os4impl8UnitTestELm32EE8capacityEv@Base 2.3.70.1
