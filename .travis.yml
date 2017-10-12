@@ -16,11 +16,11 @@ before_deploy:
 
 deploy:
   provider: packagecloud
-  repository: "drdanz/test"
-  username: "drdanz"
+  repository: test
+  username: drdanz
   token:
     secure: pl8kwDdTW4NCHhDFuOhEe/3HCYQB2JFOw0tS8w9lxIclfP6Z3NWUD/Q4dR6q2SCsaxKsDyTouOHPzl+sWTOGXC6AbgkcQsnxbdcqrPRe3aOSouz50qEJ3V/1Zb8nMy6FyEVb0TMJOV+t8LE8lse5g54TI4r991oMyksI6FzZIUU=
-  dist: "debian/buster"
+  dist: debian/buster
   on:
     branch: debian/sid
   local-dir: /home/travis/build/drdanz
