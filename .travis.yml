@@ -23,7 +23,7 @@ branches:
 env:
   global:
     - TRAVIS_CMAKE_GENERATOR="Unix Makefiles"
-    - TRAVIS_BUILD_TYPE=Release
+    - TRAVIS_BUILD_TYPE=Profile
     - TRAVIS_WITH_INTEGRATION_TESTS=false
     - TRAVIS_WITH_ACE=true
     - TRAVIS_WITH_MATH=true
@@ -391,11 +391,13 @@ script:
 
 
 after_success:
+
+after_success:
   # Capture coverage info for Profile builds
   - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; lcov --directory . --capture --output-file coverage.info); fi
   # Filter out system and test code
-  - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; lcov --remove coverage.info '/usr/*' 'tests/*' 'example/*' 'extern/*' 'idls/*' '*/harness/*' 'yarp/build/*' 'src/libYARP_serversql/*' 'src/libYARP_name/*' --output-file coverage.info); fi
+  - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; lcov --remove coverage.info '/usr/*' 'tests/*' 'example/*' 'extern/*' --output-file coverage.info); fi
   # Debug before upload
   - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; lcov --list coverage.info); fi
-  # Uploads to coveralls
-  - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; coveralls-lcov --source-encoding=ISO-8859-1 coverage.info); fi
+  # Uploads to codecov.io
+  - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; bash <(curl -s https://codecov.io/bash) -t uuid-repo-token); fi
