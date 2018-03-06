@@ -293,6 +293,10 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then swig3.0 -version; fi
   - which javac
   - javac -version
+  - which gcov
+  - gcov --version
+  - which lcov
+  - lcov --version
   - echo "--------------------  END SYSTEM INFORMATION  --------------------"
 
 
@@ -400,4 +404,4 @@ after_success:
   # Debug before upload
   - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; lcov --list coverage.info); fi
   # Uploads to codecov.io
-  - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; bash <(curl -s https://codecov.io/bash) -t uuid-repo-token); fi
+  - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; bash <(curl -s https://codecov.io/bash)); fi
