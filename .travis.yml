@@ -264,6 +264,7 @@ before_install:
 
   # Force gcc-7
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then if [ "$CC" == "gcc" ]; then export CC=gcc-7; export CXX=g++-7; fi; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then if [ "$CC" == "gcc" ]; then sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-5 90; fi; fi
 
   # Force clang-5.0
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then if [ "$CC" == "clang" ]; then export CC=clang-5.0; export CXX=clang++-5.0; fi; fi
