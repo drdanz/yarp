@@ -405,7 +405,9 @@ after_success:
   # Filter out tests and examples
   - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; lcov --remove coverage.info '*/yarp/tests/*' '*/yarp/example/*'  --output-file coverage.info); fi
   # Filter out carriers and devices
-  - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; lcov --remove coverage.info '*/yarp/src/carriers/*' '*/yarp/src/devices/*' --output-file coverage.info); fi
+  - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; lcov --remove coverage.info '*/yarp/src/carriers/*' '*/yarp/src/devices/*' '/yarp/src/libYARP_dev/src/devices' --output-file coverage.info); fi
+  # Filter out idl generators
+  - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; lcov --remove coverage.info '*/yarp/src/idls/*' --output-file coverage.info); fi
   # Filter out auto-generated files
   - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; lcov --remove coverage.info '*/yarp/build/*' --output-file coverage.info); fi
   # Debug before upload
