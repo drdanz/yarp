@@ -400,8 +400,14 @@ after_success:
 after_success:
   # Capture coverage info for Profile builds
   - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; lcov --directory . --capture --output-file coverage.info); fi
-  # Filter out system and test code
-  - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; lcov --remove coverage.info '/usr/*' '*/yarp/tests/*' '*/yarp/example/*' '*/yarp/extern/*' '*/build/*' '*/yarp/src/carriers/*' '*/yarp/src/devices/*' --output-file coverage.info); fi
+  # Filter out system and extern code
+  - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; lcov --remove coverage.info '/usr/*' '*/yarp/extern/*' --output-file coverage.info); fi
+  # Filter out tests and examples
+  - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; lcov --remove coverage.info '*/yarp/tests/*' '*/yarp/example/*'  --output-file coverage.info); fi
+  # Filter out carriers and devices
+  - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; lcov --remove coverage.info '*/yarp/src/carriers/*' '*/yarp/src/devices/*' --output-file coverage.info); fi
+  # Filter out auto-generated files
+  - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; lcov --remove coverage.info '*/yarp/build/*' --output-file coverage.info); fi
   # Debug before upload
   - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; lcov --list coverage.info); fi
   # Uploads to codecov.io
