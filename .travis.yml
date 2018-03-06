@@ -411,4 +411,4 @@ after_success:
   # Debug before upload
   - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; lcov --list coverage.info); fi
   # Uploads to codecov.io
-  - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; bash <(curl -s https://codecov.io/bash)); fi
+  - if [ "$TRAVIS_BUILD_TYPE" == "Profile" ]; then (cd build; bash <(curl -s https://codecov.io/bash) -X gcov); fi
