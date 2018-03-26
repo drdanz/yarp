@@ -18,6 +18,7 @@ compiler:
 branches:
   except:
     - /^.*appveyor.*$/
+    - /^.*gitlab.*$/
 
 env:
   global:
