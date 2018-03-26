@@ -1,3 +1,7 @@
+variables:
+  CC: gcc
+  CXX: g++
+
 before_script:
   - apt-get update -qq
   - apt-get dist-upgrade -y -qq
