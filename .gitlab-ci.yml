@@ -2,6 +2,7 @@ before_script:
   - apt-get update -qq
   #- apt-get install -y -qq gcc-7 g++-7 clang-5.0
   - apt-get install -y -qq ninja-build lcov valgrind ccache
+  - apt-get install -y -qq cmake
   - apt-get install -y -qq libace-dev libsqlite3-dev libtinyxml-dev libedit-dev
   - apt-get install -y -qq qtbase5-dev qtdeclarative5-dev qtmultimedia5-dev libqt5opengl5-dev libqcustomplot-dev
   - apt-get install -y -qq libopencv-dev libeigen3-dev libgraphviz-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
