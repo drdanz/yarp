@@ -15,6 +15,7 @@ before_script:
   - apt-get install -y -qq swig3.0 mono-mcs liblua5.1-0-dev lua5.1 tcl-dev tk-dev python3-dev liboctave-dev default-jdk ruby-dev
   # Print some more system information after installing all build tools
   - echo "-------------------- BEGIN SYSTEM INFORMATION --------------------"
+  - echo $0
   - hostname
   - uname -a
   - lsb_release -a
