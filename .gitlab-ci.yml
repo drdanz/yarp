@@ -5,6 +5,7 @@ variables:
 before_script:
   - apt-get update -qq
   - apt-get dist-upgrade -y -qq
+  - apt-get install -y -qq lsb-release
   #- apt-get install -y -qq gcc-7 g++-7 clang-5.0
   - apt-get install -y -qq ninja-build lcov valgrind ccache
   - apt-get install -y -qq cmake
@@ -15,7 +16,7 @@ before_script:
   # Print some more system information after installing all build tools
   - echo "-------------------- BEGIN SYSTEM INFORMATION --------------------"
   - uname -a
-  #- lsb_release -a
+  - lsb_release -a
   - env
   - cat /etc/apt/sources.list
   - ls /etc/apt/sources.list.d
