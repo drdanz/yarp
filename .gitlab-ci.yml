@@ -15,6 +15,7 @@ before_script:
   - apt-get install -y -qq swig3.0 mono-mcs liblua5.1-0-dev lua5.1 tcl-dev tk-dev python3-dev liboctave-dev default-jdk ruby-dev
   # Print some more system information after installing all build tools
   - echo "-------------------- BEGIN SYSTEM INFORMATION --------------------"
+  - hostname
   - uname -a
   - lsb_release -a
   - env
@@ -37,26 +38,34 @@ before_script:
   - echo "--------------------  END SYSTEM INFORMATION  --------------------"
   # Prepare build directory
   - mkdir -p build
-  # Prepare cmake options
-  - source scripts/admin/generate-cmake-options.sh $(hostname) $(lsb_release -cs) continuous
-  - export YARP_INSTALL_PREFIX="${PWD}/install"
-  - export YARP_CMAKE_OPTIONS="${CMAKE_OPTIONS} -DCMAKE_INSTALL_PREFIX=${YARP_INSTALL_PREFIX}"
-  - export YARP_CMAKE_OPTIONS="${YARP_CMAKE_OPTIONS} -DENABLE_yarpcar_h264:BOOL=ON"
-  - export YARP_CMAKE_OPTIONS="${YARP_CMAKE_OPTIONS} -DYARP_COMPILE_BINDINGS=ON -DCREATE_LUA=ON -DCREATE_PYTHON=ON -DCREATE_TCL=ON -DCREATE_JAVA=ON -DCREATE_CSHARP=ON"
-  # Print cmake flags
-  - echo "--------------------     BEGIN CMAKE FLAGS    --------------------"
-  - echo -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS}
-  - echo "--------------------      END CMAKE FLAGS     --------------------"
-  # Run CMake
-  - (cd build; cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS} ..)
-  # Print cmake cache
-  - echo "--------------------     BEGIN CMAKE CACHE    --------------------"
-  - (cd build; cat CMakeCache.txt)
-  - echo "--------------------      END CMAKE CACHE     --------------------"
 
 job1:
   image: debian:testing
   script:
+    # Prepare cmake options
+    - source scripts/admin/generate-cmake-options.sh $(hostname) $(lsb_release -cs) continuous
+    - export YARP_INSTALL_PREFIX="${PWD}/install"
+    - export YARP_CMAKE_OPTIONS="${CMAKE_OPTIONS} -DCMAKE_INSTALL_PREFIX=${YARP_INSTALL_PREFIX}"
+    - export YARP_CMAKE_OPTIONS="${YARP_CMAKE_OPTIONS} -DENABLE_yarpcar_h264:BOOL=ON"
+    - export YARP_CMAKE_OPTIONS="${YARP_CMAKE_OPTIONS} -DYARP_COMPILE_BINDINGS=ON -DCREATE_LUA=ON -DCREATE_PYTHON=ON -DCREATE_TCL=ON -DCREATE_JAVA=ON -DCREATE_CSHARP=ON"
+    # Print cmake flags
+    - echo "--------------------     BEGIN CMAKE FLAGS    --------------------"
+    - echo -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS}
+    - echo "--------------------      END CMAKE FLAGS     --------------------"
+
+    # Run CMake
+    - (cd build; cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS} ..)
+
+    # Print cmake cache
+    - echo "--------------------     BEGIN CMAKE CACHE    --------------------"
+    - (cd build; cat CMakeCache.txt)
+    - echo "--------------------      END CMAKE CACHE     --------------------"
+
+    # Build
     - (cd build; cmake --build . --config Release)
+
+    # Test
     - (cd build; ctest --output-on-failure --build . -C Release)
+
+    # Install
     - (cd build; cmake --build . --config Release --target install)
