@@ -38,7 +38,7 @@ before_script:
   # Prepare build directory
   - mkdir -p build
   # Prepare cmake options
-  - . scripts/admin/generate-cmake-options.sh $(hostname) $(lsb_release -cs) continuous
+  - source scripts/admin/generate-cmake-options.sh $(hostname) $(lsb_release -cs) continuous
   - export YARP_INSTALL_PREFIX="${PWD}/install"
   - export YARP_CMAKE_OPTIONS="${CMAKE_OPTIONS} -DCMAKE_INSTALL_PREFIX=${YARP_INSTALL_PREFIX}"
   - export YARP_CMAKE_OPTIONS="${YARP_CMAKE_OPTIONS} -DENABLE_yarpcar_h264:BOOL=ON"
