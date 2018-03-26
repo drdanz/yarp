@@ -48,6 +48,7 @@ before_script:
   - echo "--------------------      END CMAKE CACHE     --------------------"
 
 job1:
+  image: debian:testing
   script:
     - (cd build; cmake --build . --config Release)
     - (cd build; ctest --output-on-failure --build . -C Release)
