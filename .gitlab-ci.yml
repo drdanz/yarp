@@ -3,17 +3,6 @@ variables:
   CXX: g++
 
 before_script:
-  - apt-get update -qq
-  - apt-get dist-upgrade -y -qq
-  - apt-get install -y -qq lsb-release hostname
-  #- apt-get install -y -qq gcc-7 g++-7 clang-5.0
-  - apt-get install -y -qq ninja-build lcov valgrind ccache
-  - apt-get install -y -qq cmake
-  - apt-get install -y -qq libace-dev libsqlite3-dev libtinyxml-dev libedit-dev
-  - apt-get install -y -qq qtbase5-dev qtdeclarative5-dev qtmultimedia5-dev libqt5opengl5-dev libqcustomplot-dev
-  - apt-get install -y -qq libopencv-dev libeigen3-dev libgraphviz-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
-  - apt-get install -y -qq swig3.0 mono-mcs liblua5.1-0-dev lua5.1 tcl-dev tk-dev python3-dev liboctave-dev default-jdk ruby-dev
-  # Print some more system information after installing all build tools
   - echo "-------------------- BEGIN SYSTEM INFORMATION --------------------"
   - echo $0
   - pwd
@@ -41,34 +30,120 @@ before_script:
   - echo "--------------------  END SYSTEM INFORMATION  --------------------"
   # Prepare build directory
   - mkdir -p build
+  # Prepare cmake options
+  - scripts/admin/generate-cmake-options.sh $(hostname) $(lsb_release -cs) continuous
+  - export YARP_INSTALL_PREFIX="${PWD}/install"
+  - export YARP_CMAKE_OPTIONS="${CMAKE_OPTIONS} -DCMAKE_INSTALL_PREFIX=${YARP_INSTALL_PREFIX}"
+  - export YARP_CMAKE_OPTIONS="${YARP_CMAKE_OPTIONS} -DENABLE_yarpcar_h264:BOOL=ON"
+  - export YARP_CMAKE_OPTIONS="${YARP_CMAKE_OPTIONS} -DYARP_COMPILE_BINDINGS=ON -DCREATE_LUA=ON -DCREATE_PYTHON=ON -DCREATE_TCL=ON -DCREATE_JAVA=ON -DCREATE_CSHARP=ON"
+  # Print cmake flags
+  - echo "--------------------     BEGIN CMAKE FLAGS    --------------------"
+  - echo -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS}
+  - echo "--------------------      END CMAKE FLAGS     --------------------"
 
-job1:
-  image: debian:testing
+stages:
+  - configure
+  - build
+
+configure-cmake-3.1:
+  stage: configure
+  image: drdanz/yarp-builder-debian-testing:latest
   script:
-    # Prepare cmake options
-    - scripts/admin/generate-cmake-options.sh $(hostname) $(lsb_release -cs) continuous
-    - export YARP_INSTALL_PREFIX="${PWD}/install"
-    - export YARP_CMAKE_OPTIONS="${CMAKE_OPTIONS} -DCMAKE_INSTALL_PREFIX=${YARP_INSTALL_PREFIX}"
-    - export YARP_CMAKE_OPTIONS="${YARP_CMAKE_OPTIONS} -DENABLE_yarpcar_h264:BOOL=ON"
-    - export YARP_CMAKE_OPTIONS="${YARP_CMAKE_OPTIONS} -DYARP_COMPILE_BINDINGS=ON -DCREATE_LUA=ON -DCREATE_PYTHON=ON -DCREATE_TCL=ON -DCREATE_JAVA=ON -DCREATE_CSHARP=ON"
-    # Print cmake flags
-    - echo "--------------------     BEGIN CMAKE FLAGS    --------------------"
-    - echo -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS}
-    - echo "--------------------      END CMAKE FLAGS     --------------------"
-
     # Run CMake
+    - update-alternatives --set cmake /opt/cmake-3.1.3/bin/cmake
     - (cd build; cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS} ..)
 
+configure-cmake-3.2:
+  stage: configure
+  image: drdanz/yarp-builder-debian-testing:latest
+  script:
+    # Run CMake
+    - update-alternatives --set cmake /opt/cmake-3.2.3/bin/cmake
+    - (cd build; cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS} ..)
+
+configure-cmake-3.3:
+  stage: configure
+  image: drdanz/yarp-builder-debian-testing:latest
+  script:
+    # Run CMake
+    - update-alternatives --set cmake /opt/cmake-3.3.2/bin/cmake
+    - (cd build; cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS} ..)
+
+configure-cmake-3.4:
+  stage: configure
+  image: drdanz/yarp-builder-debian-testing:latest
+  script:
+    # Run CMake
+    - update-alternatives --set cmake /opt/cmake-3.4.3/bin/cmake
+    - (cd build; cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS} ..)
+
+configure-cmake-3.5:
+  stage: configure
+  image: drdanz/yarp-builder-debian-testing:latest
+  script:
+    # Run CMake
+    - update-alternatives --set cmake /opt/cmake-3.5.2/bin/cmake
+    - (cd build; cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS} ..)
+
+configure-cmake-3.6:
+  stage: configure
+  image: drdanz/yarp-builder-debian-testing:latest
+  script:
+    # Run CMake
+    - update-alternatives --set cmake /opt/cmake-3.6.3/bin/cmake
+    - (cd build; cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS} ..)
+
+configure-cmake-3.7:
+  stage: configure
+  image: drdanz/yarp-builder-debian-testing:latest
+  script:
+    # Run CMake
+    - update-alternatives --set cmake /opt/cmake-3.7.2/bin/cmake
+    - (cd build; cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS} ..)
+
+configure-cmake-3.8:
+  stage: configure
+  image: drdanz/yarp-builder-debian-testing:latest
+  script:
+    # Run CMake
+    - update-alternatives --set cmake /opt/cmake-3.8.2/bin/cmake
+    - (cd build; cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS} ..)
+
+configure-cmake-3.9:
+  stage: configure
+  image: drdanz/yarp-builder-debian-testing:latest
+  script:
+    # Run CMake
+    - update-alternatives --set cmake /opt/cmake-3.9.6/bin/cmake
+    - (cd build; cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS} ..)
+
+configure-cmake-3.10:
+  stage: configure
+  image: drdanz/yarp-builder-debian-testing:latest
+  script:
+    # Run CMake
+    - update-alternatives --set cmake /opt/cmake-3.10.2/bin/cmake
+    - (cd build; cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS} ..)
+
+configure-cmake-3.11:
+  stage: configure
+  image: drdanz/yarp-builder-debian-testing:latest
+  script:
+    # Run CMake
+    - update-alternatives --set cmake /opt/cmake-3.11-rc4/bin/cmake
+    - (cd build; cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS} ..)
+
+build-debian-testing:
+  stage: build
+  script:
     # Print cmake cache
+    - (cd build; cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS} ..)
     - echo "--------------------     BEGIN CMAKE CACHE    --------------------"
     - (cd build; cat CMakeCache.txt)
     - echo "--------------------      END CMAKE CACHE     --------------------"
-
     # Build
     - (cd build; cmake --build . --config Release)
-
     # Test
     - (cd build; ctest --output-on-failure --build . -C Release)
-
     # Install
     - (cd build; cmake --build . --config Release --target install)
