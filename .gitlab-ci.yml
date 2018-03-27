@@ -137,8 +137,77 @@ build-debian-testing:
   stage: build
   image: drdanz/yarp-builder-debian-testing:latest
   script:
-    # Print cmake cache
+    # Run CMake
     - (cd build; cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS} ..)
+    # Print cmake cache
+    - echo "--------------------     BEGIN CMAKE CACHE    --------------------"
+    - (cd build; cat CMakeCache.txt)
+    - echo "--------------------      END CMAKE CACHE     --------------------"
+    # Build
+    - (cd build; cmake --build . --config Release)
+    # Test
+    - (cd build; ctest --output-on-failure --build . -C Release)
+    # Install
+    - (cd build; cmake --build . --config Release --target install)
+
+build-debian-stretch:
+  stage: build
+  image: drdanz/yarp-builder-debian-stretch:latest
+  script:
+    # Run CMake
+    - (cd build; cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS} ..)
+    # Print cmake cache
+    - echo "--------------------     BEGIN CMAKE CACHE    --------------------"
+    - (cd build; cat CMakeCache.txt)
+    - echo "--------------------      END CMAKE CACHE     --------------------"
+    # Build
+    - (cd build; cmake --build . --config Release)
+    # Test
+    - (cd build; ctest --output-on-failure --build . -C Release)
+    # Install
+    - (cd build; cmake --build . --config Release --target install)
+
+build-ubuntu-bionic:
+  stage: build
+  image: drdanz/yarp-builder-ubuntu-bionic:latest
+  script:
+    # Run CMake
+    - (cd build; cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS} ..)
+    # Print cmake cache
+    - echo "--------------------     BEGIN CMAKE CACHE    --------------------"
+    - (cd build; cat CMakeCache.txt)
+    - echo "--------------------      END CMAKE CACHE     --------------------"
+    # Build
+    - (cd build; cmake --build . --config Release)
+    # Test
+    - (cd build; ctest --output-on-failure --build . -C Release)
+    # Install
+    - (cd build; cmake --build . --config Release --target install)
+
+build-ubuntu-artful:
+  stage: build
+  image: drdanz/yarp-builder-ubuntu-artful:latest
+  script:
+    # Run CMake
+    - (cd build; cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS} ..)
+    # Print cmake cache
+    - echo "--------------------     BEGIN CMAKE CACHE    --------------------"
+    - (cd build; cat CMakeCache.txt)
+    - echo "--------------------      END CMAKE CACHE     --------------------"
+    # Build
+    - (cd build; cmake --build . --config Release)
+    # Test
+    - (cd build; ctest --output-on-failure --build . -C Release)
+    # Install
+    - (cd build; cmake --build . --config Release --target install)
+
+build-ubuntu-xenial:
+  stage: build
+  image: drdanz/yarp-builder-ubuntu-xenial:latest
+  script:
+    # Run CMake
+    - (cd build; cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ${YARP_CMAKE_OPTIONS} ..)
+    # Print cmake cache
     - echo "--------------------     BEGIN CMAKE CACHE    --------------------"
     - (cd build; cat CMakeCache.txt)
     - echo "--------------------      END CMAKE CACHE     --------------------"
