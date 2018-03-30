@@ -1,37 +1,10 @@
-variables:
-  CC: gcc
-  CXX: g++
-
 before_script:
-  - echo "-------------------- BEGIN SYSTEM INFORMATION --------------------"
-  - echo $0
-  - pwd
-  - ls
-  - hostname
-  - uname -a
-  - lsb_release -a
-  - env
-  - cat /etc/apt/sources.list
-  - ls /etc/apt/sources.list.d
-  - which cmake
-  - cmake --version
-  - which $CC
-  - $CC --version
-  - which $CXX
-  - $CXX --version
-  - which ccache
-  - ccache --version
-  - ccache -s
-  - ls -la /usr/lib/ccache
-  - which swig3.0
-  - swig3.0 -version
-  - which javac
-  - javac -version
-  - echo "--------------------  END SYSTEM INFORMATION  --------------------"
+  - .ci/system-info.sh
 
 stages:
   - configure
-  - build
+  - build-distro
+  - build-compiler
 
 configure-cmake-3.0:
   stage: configure
@@ -118,36 +91,90 @@ configure-cmake-3.11:
     - .ci/configure.sh
 
 build-debian-testing:
-  stage: build
+  stage: build-distro
   image: drdanz/yarp-builder-debian-testing:latest
   script:
     - .ci/configure.sh
     - .ci/build.sh
 
 build-debian-stretch:
-  stage: build
+  stage: build-distro
   image: drdanz/yarp-builder-debian-stretch:latest
   script:
     - .ci/configure.sh
     - .ci/build.sh
 
 build-ubuntu-bionic:
-  stage: build
+  stage: build-distro
   image: drdanz/yarp-builder-ubuntu-bionic:latest
   script:
     - .ci/configure.sh
     - .ci/build.sh
 
 build-ubuntu-artful:
-  stage: build
+  stage: build-distro
   image: drdanz/yarp-builder-ubuntu-artful:latest
   script:
     - .ci/configure.sh
     - .ci/build.sh
 
 build-ubuntu-xenial:
-  stage: build
+  stage: build-distro
   image: drdanz/yarp-builder-ubuntu-xenial:latest
   script:
+    - .ci/configure.sh
+    - .ci/build.sh
+
+build-gcc-6:
+  stage: build-compiler
+  image: drdanz/yarp-builder-debian-testing:latest
+  script:
+    - update-alternatives --set gcc /usr/bin/gcc-6
+    - .ci/configure.sh
+    - .ci/build.sh
+
+build-gcc-7:
+  stage: build-compiler
+  image: drdanz/yarp-builder-debian-testing:latest
+  script:
+    - update-alternatives --set gcc /usr/bin/gcc-7
+    - .ci/configure.sh
+    - .ci/build.sh
+
+build-gcc-8:
+  stage: build-compiler
+  image: drdanz/yarp-builder-debian-testing:latest
+  script:
+    - update-alternatives --set gcc /usr/bin/gcc-8
+    - .ci/configure.sh
+    - .ci/build.sh
+
+build-clang-4.0:
+  stage: build-compiler
+  image: drdanz/yarp-builder-debian-testing:latest
+  script:
+    - update-alternatives --set cc /usr/bin/clang
+    - update-alternatives --set c++ /usr/bin/clang++
+    - update-alternatives --set clang /usr/bin/clang-4.0
+    - .ci/configure.sh
+    - .ci/build.sh
+
+build-clang-5.0:
+  stage: build-compiler
+  image: drdanz/yarp-builder-debian-testing:latest
+  script:
+    - update-alternatives --set cc /usr/bin/clang
+    - update-alternatives --set c++ /usr/bin/clang++
+    - update-alternatives --set clang /usr/bin/clang-5.0
+    - .ci/configure.sh
+    - .ci/build.sh
+
+build-clang-6.0:
+  stage: build-compiler
+  image: drdanz/yarp-builder-debian-testing:latest
+  script:
+    - update-alternatives --set cc /usr/bin/clang
+    - update-alternatives --set c++ /usr/bin/clang++
+    - update-alternatives --set clang /usr/bin/clang-6.0
     - .ci/configure.sh
     - .ci/build.sh
