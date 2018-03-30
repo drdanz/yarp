@@ -149,7 +149,7 @@ build-gcc-8:
     - .ci/configure.sh
     - .ci/build.sh
 
-build-clang-4.0:
+build-clang-4_0:
   stage: build-compiler
   image: drdanz/yarp-builder-debian-testing:latest
   script:
@@ -169,7 +169,7 @@ build-clang-5_0:
     - .ci/configure.sh
     - .ci/build.sh
 
-build-clang-6.0:
+build-clang-6_0:
   stage: build-compiler
   image: drdanz/yarp-builder-debian-testing:latest
   script:
