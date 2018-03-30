@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ### parameters are
 # $1: hostname (could be also buildtype)
 # $2: os (macos, winxp, lenny, etch, karmic ...)
@@ -81,5 +79,3 @@ case $3 in
       fi
      ;;
 esac
-
-export CMAKE_OPTIONS

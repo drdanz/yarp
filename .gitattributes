@@ -6,6 +6,8 @@
 .appveyor.yml                   export-ignore
 .coveralls.yml                  export-ignore
 .travis.yml                     export-ignore
+.gitlab-ci.yml                  export-ignore
+/.ci/                           export-ignore
 
 *.c                             whitespace=tab-in-indent
 *.h                             whitespace=tab-in-indent
