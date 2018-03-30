@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "-------------------- BEGIN SYSTEM INFORMATION --------------------"
-echo $0
+set -o xtrace
 pwd
 ls
 hostname
@@ -24,4 +24,5 @@ which swig3.0
 swig3.0 -version
 which javac
 javac -version
+set +o xtrace
 echo "--------------------  END SYSTEM INFORMATION  --------------------"

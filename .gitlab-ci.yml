@@ -155,7 +155,7 @@ build-clang-4_0:
   script:
     - update-alternatives --set cc /usr/bin/clang
     - update-alternatives --set c++ /usr/bin/clang++
-    - update-alternatives --set clang /usr/bin/clang-4.0
+    - update-alternatives --set clang /lib/llvm-4.0/bin/clang
     - .ci/configure.sh
     - .ci/build.sh
 
@@ -165,7 +165,7 @@ build-clang-5_0:
   script:
     - update-alternatives --set cc /usr/bin/clang
     - update-alternatives --set c++ /usr/bin/clang++
-    - update-alternatives --set clang /usr/bin/clang-5.0
+    - update-alternatives --set clang /lib/llvm-5.0/bin/clang
     - .ci/configure.sh
     - .ci/build.sh
 
@@ -175,6 +175,6 @@ build-clang-6_0:
   script:
     - update-alternatives --set cc /usr/bin/clang
     - update-alternatives --set c++ /usr/bin/clang++
-    - update-alternatives --set clang /usr/bin/clang-6.0
+    - update-alternatives --set clang /lib/llvm-6.0/bin/clang
     - .ci/configure.sh
     - .ci/build.sh
