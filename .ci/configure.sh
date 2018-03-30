@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir build
+
 # Prepare cmake options
 export YARP_CMAKE_GENERATOR="Unix Makefiles"
 export YARP_CMAKE_BUILD_TYPE="Release"
