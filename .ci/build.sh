@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Build
 (cd build; cmake --build . --config Release)

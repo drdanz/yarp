@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Prepare cmake options
 export YARP_CMAKE_GENERATOR="Unix Makefiles"

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "-------------------- BEGIN SYSTEM INFORMATION --------------------"
 echo $0
