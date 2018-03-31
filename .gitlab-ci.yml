@@ -42,6 +42,7 @@ stages:
 
 .configure_and_build_template: &configure_and_build_definition
   stage: build
+  dependencies: []
   script:
     - .ci/configure.sh
     - (cd build; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE})
@@ -145,18 +146,21 @@ configure-cmake-3_11:
 build-gcc-6:
   <<: *configure_and_build_definition
   before_script:
+    - apt-get install g++-6 gfortran-6
     - update-alternatives --set gcc /usr/bin/gcc-6
     - .ci/system_info.sh
 
 build-gcc-7:
   <<: *configure_and_build_definition
   before_script:
+    - apt-get install g++-7 gfortran-7
     - update-alternatives --set gcc /usr/bin/gcc-7
     - .ci/system_info.sh
 
 build-gcc-8:
   <<: *configure_and_build_definition
   before_script:
+    - apt-get install g++-8 gfortran-8
     - update-alternatives --set gcc /usr/bin/gcc-8
     - .ci/system_info.sh
 
