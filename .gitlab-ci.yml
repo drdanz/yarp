@@ -227,39 +227,99 @@ dox-debian-testing:
 ################################################################################
 # debian stretch
 
-#build-debian-stretch:
-  #stage: build
-  #image: drdanz/yarp-builder-debian-stretch:latest
-  #script:
-    #- .ci/configure.sh
-    #- .ci/build.sh
+configure-debian-stretch:
+  <<: *configure_definition
+  image: drdanz/yarp-builder-debian-stretch:latest
+
+build-debian-stretch:
+  <<: *build_definition
+  image: drdanz/yarp-builder-debian-stretch:latest
+  dependencies:
+    - configure-debian-stretch
+
+test-debian-stretch:
+  <<: *test_definition
+  image: drdanz/yarp-builder-debian-stretch:latest
+  dependencies:
+    - build-debian-stretch
+
+install-debian-stretch:
+  <<: *install_definition
+  image: drdanz/yarp-builder-debian-stretch:latest
+  dependencies:
+    - build-debian-stretch
 
 ################################################################################
 # ubuntu bionic
 
-#build-ubuntu-bionic:
-  #stage: build
-  #image: drdanz/yarp-builder-ubuntu-bionic:latest
-  #script:
-    #- .ci/configure.sh
-    #- .ci/build.sh
+configure-ubuntu-bionic:
+  <<: *configure_definition
+  image: drdanz/yarp-builder-ubuntu-bionic:latest
+
+build-ubuntu-bionic:
+  <<: *build_definition
+  image: drdanz/yarp-builder-ubuntu-bionic:latest
+  dependencies:
+    - configure-ubuntu-bionic
+
+test-ubuntu-bionic:
+  <<: *test_definition
+  image: drdanz/yarp-builder-ubuntu-bionic:latest
+  dependencies:
+    - build-ubuntu-bionic
+
+install-ubuntu-bionic:
+  <<: *install_definition
+  image: drdanz/yarp-builder-ubuntu-bionic:latest
+  dependencies:
+    - build-ubuntu-bionic
 
 ################################################################################
 # ubuntu artful
 
-#build-ubuntu-artful:
-  #stage: build
-  #image: drdanz/yarp-builder-ubuntu-artful:latest
-  #script:
-    #- .ci/configure.sh
-    #- .ci/build.sh
+configure-ubuntu-artful:
+  <<: *configure_definition
+  image: drdanz/yarp-builder-ubuntu-artful:latest
+
+build-ubuntu-artful:
+  <<: *build_definition
+  image: drdanz/yarp-builder-ubuntu-artful:latest
+  dependencies:
+    - configure-ubuntu-artful
+
+test-ubuntu-artful:
+  <<: *test_definition
+  image: drdanz/yarp-builder-ubuntu-artful:latest
+  dependencies:
+    - build-ubuntu-artful
+
+install-ubuntu-artful:
+  <<: *install_definition
+  image: drdanz/yarp-builder-ubuntu-artful:latest
+  dependencies:
+    - build-ubuntu-artful
 
 ################################################################################
 # ubuntu xenial
 
-#build-ubuntu-xenial:
-  #stage: build
-  #image: drdanz/yarp-builder-ubuntu-xenial:latest
-  #script:
-    #- .ci/configure.sh
-    #- .ci/build.sh
+configure-ubuntu-xenial:
+  <<: *configure_definition
+  image: drdanz/yarp-builder-ubuntu-xenial:latest
+
+build-ubuntu-xenial:
+  <<: *build_definition
+  image: drdanz/yarp-builder-ubuntu-xenial:latest
+  dependencies:
+    - configure-ubuntu-xenial
+
+test-ubuntu-xenial:
+  <<: *test_definition
+  image: drdanz/yarp-builder-ubuntu-xenial:latest
+  dependencies:
+    - build-ubuntu-xenial
+
+install-ubuntu-xenial:
+  <<: *install_definition
+  image: drdanz/yarp-builder-ubuntu-xenial:latest
+  dependencies:
+    - build-ubuntu-xenial

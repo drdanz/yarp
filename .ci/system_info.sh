@@ -9,7 +9,7 @@ lsb_release -a
 env
 cat /etc/apt/sources.list
 ls /etc/apt/sources.list.d
-update-alternatives --get-selections
+update-alternatives --get-selections | grep manual
 # update-alternatives --query cc
 # update-alternatives --query gcc
 # update-alternatives --query clang
