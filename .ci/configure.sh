@@ -11,7 +11,7 @@ export YARP_CMAKE_OPTIONS="${YARP_CMAKE_OPTIONS} -DYARP_COMPILE_BINDINGS=ON -DCR
 
 # Print cmake build flags
 echo "--------------------     BEGIN CMAKE FLAGS    --------------------"
-echo cmake -G"${YARP_CMAKE_GENERATOR}" -DCMAKE_BUILD_TYPE=${YARP_CMAKE_BUILD_TYPE} ${YARP_CMAKE_OPTIONS}
+echo cmake -G"${YARP_CMAKE_GENERATOR}" -DCMAKE_BUILD_TYPE=${YARP_CMAKE_BUILD_TYPE} ${YARP_CMAKE_OPTIONS} | sed 's/ -/ \\\n  -/g'
 echo "--------------------      END CMAKE FLAGS     --------------------"
 
 (cd build; cmake -G"${YARP_CMAKE_GENERATOR}" -DCMAKE_BUILD_TYPE=${YARP_CMAKE_BUILD_TYPE} ${YARP_CMAKE_OPTIONS} ..)

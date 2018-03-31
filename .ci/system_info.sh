@@ -11,10 +11,10 @@ env
 cat /etc/apt/sources.list
 ls /etc/apt/sources.list.d
 update-alternatives --get-selections
-update-alternatives --query cc
-update-alternatives --query gcc
-update-alternatives --query clang
-update-alternatives --query cmake
+# update-alternatives --query cc
+# update-alternatives --query gcc
+# update-alternatives --query clang
+# update-alternatives --query cmake
 which cmake
 cmake --version
 which $CC
