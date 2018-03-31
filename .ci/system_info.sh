@@ -3,7 +3,6 @@
 echo "-------------------- BEGIN SYSTEM INFORMATION --------------------"
 set -o xtrace
 pwd
-ls
 hostname
 uname -a
 lsb_release -a
