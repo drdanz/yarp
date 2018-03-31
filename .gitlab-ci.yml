@@ -1,3 +1,9 @@
+image: drdanz/yarp-builder-debian-testing:latest
+
+variables:
+  YARP_CMAKE_GENERATOR: "Unix Makefiles"
+  YARP_CMAKE_BUILD_TYPE: "Release"
+
 before_script:
   - .ci/system_info.sh
 
@@ -6,144 +12,211 @@ stages:
   - build
   - test
   - install
+  - dox
 
-configure-cmake-3_0:
+################################################################################
+# Job templates
+
+.configure_template: &configure_definition
   stage: configure
-  image: drdanz/yarp-builder-debian-testing:latest
-  before_script:
-    - update-alternatives --set cmake /opt/cmake-3.0/bin/cmake
-    - .ci/system_info.sh
   script:
     - .ci/configure.sh
-
-configure-cmake-3_1:
-  stage: configure
-  image: drdanz/yarp-builder-debian-testing:latest
-  before_script:
-    - update-alternatives --set cmake /opt/cmake-3.1/bin/cmake
-    - .ci/system_info.sh
-  script:
-    - .ci/configure.sh
-
-configure-cmake-3_2:
-  stage: configure
-  image: drdanz/yarp-builder-debian-testing:latest
-  before_script:
-    - update-alternatives --set cmake /opt/cmake-3.2/bin/cmake
-    - .ci/system_info.sh
-  script:
-    - .ci/configure.sh
-
-configure-cmake-3_3:
-  stage: configure
-  image: drdanz/yarp-builder-debian-testing:latest
-  before_script:
-    - update-alternatives --set cmake /opt/cmake-3.3/bin/cmake
-    - .ci/system_info.sh
-  script:
-    - .ci/configure.sh
-
-configure-cmake-3_4:
-  stage: configure
-  image: drdanz/yarp-builder-debian-testing:latest
-  before_script:
-    - update-alternatives --set cmake /opt/cmake-3.4/bin/cmake
-    - .ci/system_info.sh
-  script:
-    - .ci/configure.sh
-
-configure-cmake-3_5:
-  stage: configure
-  image: drdanz/yarp-builder-debian-testing:latest
-  before_script:
-    - update-alternatives --set cmake /opt/cmake-3.5/bin/cmake
-    - .ci/system_info.sh
-  script:
-    - .ci/configure.sh
-
-configure-cmake-3_6:
-  stage: configure
-  image: drdanz/yarp-builder-debian-testing:latest
-  before_script:
-    - update-alternatives --set cmake /opt/cmake-3.6/bin/cmake
-    - .ci/system_info.sh
-  script:
-    - .ci/configure.sh
-
-configure-cmake-3_7:
-  stage: configure
-  image: drdanz/yarp-builder-debian-testing:latest
-  before_script:
-    - .ci/system_info.sh
-    - update-alternatives --set cmake /opt/cmake-3.7/bin/cmake
-  script:
-    - .ci/configure.sh
-
-configure-cmake-3_8:
-  stage: configure
-  image: drdanz/yarp-builder-debian-testing:latest
-  before_script:
-    - update-alternatives --set cmake /opt/cmake-3.8/bin/cmake
-    - .ci/system_info.sh
-  script:
-    - .ci/configure.sh
-
-configure-cmake-3_9:
-  stage: configure
-  image: drdanz/yarp-builder-debian-testing:latest
-  before_script:
-    - update-alternatives --set cmake /opt/cmake-3.9/bin/cmake
-    - .ci/system_info.sh
-  script:
-    - .ci/configure.sh
-
-configure-cmake-3_10:
-  stage: configure
-  image: drdanz/yarp-builder-debian-testing:latest
-  before_script:
-    - update-alternatives --set cmake /opt/cmake-3.10/bin/cmake
-    - .ci/system_info.sh
-  script:
-    - .ci/configure.sh
-
-configure-cmake-3_11:
-  stage: configure
-  image: drdanz/yarp-builder-debian-testing:latest
-  before_script:
-    - update-alternatives --set cmake /opt/cmake-3.11/bin/cmake
-    - .ci/system_info.sh
-  script:
-    - .ci/configure.sh
-
-configure-debian-testing:
-  stage: configure
-  image: drdanz/yarp-builder-debian-testing:latest
-  script: .ci/configure.sh
+  after_script:
+    # Print cmake cache
+    - echo "--------------------     BEGIN CMAKE CACHE    --------------------"
+    - (cd build; cat CMakeCache.txt)
+    - echo "--------------------      END CMAKE CACHE     --------------------"
   artifacts:
     paths:
       - build/
-    expire_in: 2 hrs
+    expire_in: 3 hrs
+
+.build_template: &build_definition
+  stage: build
+  script:
+    - (cd build; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE})
+  artifacts:
+    paths:
+      - build/
+    expire_in: 3 hrs
+
+.configure_and_build_template: &configure_and_build_definition
+  stage: build
+  script:
+    - .ci/configure.sh
+    - (cd build; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE})
+
+.test_template: &test_definition
+  stage: test
+  script:
+    - (cd build; ctest --output-on-failure --build . -C ${YARP_CMAKE_BUILD_TYPE})
+  retry: 2
+
+.install_template: &install_definition
+  stage: install
+  script:
+    - (cd build; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE} --target install)
+
+
+.dox_template: &dox_definition
+  stage: dox
+  script:
+    - (cd build; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE} --target dox)
+
+################################################################################
+# Test configuration with all available CMake
+
+
+configure-cmake-3_0:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.0/bin/cmake
+    - .ci/system_info.sh
+
+configure-cmake-3_1:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.1/bin/cmake
+    - .ci/system_info.sh
+
+configure-cmake-3_2:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.2/bin/cmake
+    - .ci/system_info.sh
+
+configure-cmake-3_3:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.3/bin/cmake
+    - .ci/system_info.sh
+
+configure-cmake-3_4:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.4/bin/cmake
+    - .ci/system_info.sh
+
+configure-cmake-3_5:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.5/bin/cmake
+    - .ci/system_info.sh
+
+configure-cmake-3_6:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.6/bin/cmake
+    - .ci/system_info.sh
+
+configure-cmake-3_7:
+  <<: *configure_definition
+  before_script:
+    - .ci/system_info.sh
+    - update-alternatives --set cmake /opt/cmake-3.7/bin/cmake
+
+configure-cmake-3_8:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.8/bin/cmake
+    - .ci/system_info.sh
+
+configure-cmake-3_9:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.9/bin/cmake
+    - .ci/system_info.sh
+
+configure-cmake-3_10:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.10/bin/cmake
+    - .ci/system_info.sh
+
+configure-cmake-3_11:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.11/bin/cmake
+    - .ci/system_info.sh
+
+################################################################################
+# Test build with all available compilers
+
+build-gcc-6:
+  <<: *configure_and_build_definition
+  before_script:
+    - update-alternatives --set gcc /usr/bin/gcc-6
+    - .ci/system_info.sh
+
+build-gcc-7:
+  <<: *configure_and_build_definition
+  before_script:
+    - update-alternatives --set gcc /usr/bin/gcc-7
+    - .ci/system_info.sh
+
+build-gcc-8:
+  <<: *configure_and_build_definition
+  before_script:
+    - update-alternatives --set gcc /usr/bin/gcc-8
+    - .ci/system_info.sh
+
+build-clang-4_0:
+  <<: *configure_and_build_definition
+  before_script:
+    - update-alternatives --set cc /usr/bin/clang
+    - update-alternatives --set c++ /usr/bin/clang++
+    - update-alternatives --set clang /lib/llvm-4.0/bin/clang
+    - .ci/system_info.sh
+
+build-clang-5_0:
+  <<: *configure_and_build_definition
+  before_script:
+    - update-alternatives --set cc /usr/bin/clang
+    - update-alternatives --set c++ /usr/bin/clang++
+    - update-alternatives --set clang /lib/llvm-5.0/bin/clang
+    - .ci/system_info.sh
+
+build-clang-6_0:
+  <<: *configure_and_build_definition
+  before_script:
+    - update-alternatives --set cc /usr/bin/clang
+    - update-alternatives --set c++ /usr/bin/clang++
+    - update-alternatives --set clang /lib/llvm-6.0/bin/clang
+    - .ci/system_info.sh
+
+################################################################################
+# debian testing
+
+configure-debian-testing:
+  <<: *configure_definition
+  image: drdanz/yarp-builder-debian-testing:latest
 
 build-debian-testing:
-  stage: build
+  <<: *build_definition
   image: drdanz/yarp-builder-debian-testing:latest
   dependencies:
     - configure-debian-testing
-  script: .ci/build.sh
 
 test-debian-testing:
-  stage: test
+  <<: *test_definition
   image: drdanz/yarp-builder-debian-testing:latest
   dependencies:
     - build-debian-testing
-  script: .ci/test.sh
 
 install-debian-testing:
-  stage: install
+  <<: *install_definition
   image: drdanz/yarp-builder-debian-testing:latest
   dependencies:
     - build-debian-testing
-  script: .ci/test.sh
+
+dox-debian-testing:
+  <<: *install_definition
+  image: drdanz/yarp-builder-debian-testing:latest
+  dependencies:
+    - build-debian-testing
+
+################################################################################
+# debian stretch
 
 #build-debian-stretch:
   #stage: build
@@ -152,12 +225,18 @@ install-debian-testing:
     #- .ci/configure.sh
     #- .ci/build.sh
 
+################################################################################
+# ubuntu bionic
+
 #build-ubuntu-bionic:
   #stage: build
   #image: drdanz/yarp-builder-ubuntu-bionic:latest
   #script:
     #- .ci/configure.sh
     #- .ci/build.sh
+
+################################################################################
+# ubuntu artful
 
 #build-ubuntu-artful:
   #stage: build
@@ -166,75 +245,12 @@ install-debian-testing:
     #- .ci/configure.sh
     #- .ci/build.sh
 
+################################################################################
+# ubuntu xenial
+
 #build-ubuntu-xenial:
   #stage: build
   #image: drdanz/yarp-builder-ubuntu-xenial:latest
-  #script:
-    #- .ci/configure.sh
-    #- .ci/build.sh
-
-#build-gcc-6:
-  #stage: build
-  #image: drdanz/yarp-builder-debian-testing:latest
-  #before_script:
-    #- update-alternatives --set gcc /usr/bin/gcc-6
-    #- .ci/system_info.sh
-  #script:
-    #- .ci/configure.sh
-    #- .ci/build.sh
-
-#build-gcc-7:
-  #stage: build
-  #image: drdanz/yarp-builder-debian-testing:latest
-  #before_script:
-    #- update-alternatives --set gcc /usr/bin/gcc-7
-    #- .ci/system_info.sh
-  #script:
-    #- .ci/configure.sh
-    #- .ci/build.sh
-
-#build-gcc-8:
-  #stage: build
-  #image: drdanz/yarp-builder-debian-testing:latest
-  #before_script:
-    #- update-alternatives --set gcc /usr/bin/gcc-8
-    #- .ci/system_info.sh
-  #script:
-    #- .ci/configure.sh
-    #- .ci/build.sh
-
-#build-clang-4_0:
-  #stage: build
-  #image: drdanz/yarp-builder-debian-testing:latest
-  #before_script:
-    #- update-alternatives --set cc /usr/bin/clang
-    #- update-alternatives --set c++ /usr/bin/clang++
-    #- update-alternatives --set clang /lib/llvm-4.0/bin/clang
-    #- .ci/system_info.sh
-  #script:
-    #- .ci/configure.sh
-    #- .ci/build.sh
-
-#build-clang-5_0:
-  #stage: build
-  #image: drdanz/yarp-builder-debian-testing:latest
-  #before_script:
-    #- update-alternatives --set cc /usr/bin/clang
-    #- update-alternatives --set c++ /usr/bin/clang++
-    #- update-alternatives --set clang /lib/llvm-5.0/bin/clang
-    #- .ci/system_info.sh
-  #script:
-    #- .ci/configure.sh
-    #- .ci/build.sh
-
-#build-clang-6_0:
-  #stage: build
-  #image: drdanz/yarp-builder-debian-testing:latest
-  #before_script:
-    #- update-alternatives --set cc /usr/bin/clang
-    #- update-alternatives --set c++ /usr/bin/clang++
-    #- update-alternatives --set clang /lib/llvm-6.0/bin/clang
-    #- .ci/system_info.sh
   #script:
     #- .ci/configure.sh
     #- .ci/build.sh

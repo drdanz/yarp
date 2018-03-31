@@ -2,10 +2,6 @@
 
 mkdir build
 
-# Prepare cmake options
-export YARP_CMAKE_GENERATOR="Unix Makefiles"
-export YARP_CMAKE_BUILD_TYPE="Release"
-
 . scripts/admin/generate-cmake-options.sh $(hostname) $(lsb_release -cs) continuous
 
 export YARP_INSTALL_PREFIX="${PWD}/install"
@@ -19,8 +15,3 @@ echo cmake -G"${YARP_CMAKE_GENERATOR}" -DCMAKE_BUILD_TYPE=${YARP_CMAKE_BUILD_TYP
 echo "--------------------      END CMAKE FLAGS     --------------------"
 
 (cd build; cmake -G"${YARP_CMAKE_GENERATOR}" -DCMAKE_BUILD_TYPE=${YARP_CMAKE_BUILD_TYPE} ${YARP_CMAKE_OPTIONS} ..)
-
-# Print cmake cache
-echo "--------------------     BEGIN CMAKE CACHE    --------------------"
-(cd build; cat CMakeCache.txt)
-echo "--------------------      END CMAKE CACHE     --------------------"
