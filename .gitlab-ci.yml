@@ -219,7 +219,7 @@ install-debian-testing:
     - build-debian-testing
 
 dox-debian-testing:
-  <<: *install_definition
+  <<: *dox_definition
   image: drdanz/yarp-builder-debian-testing:latest
   dependencies:
     - build-debian-testing
