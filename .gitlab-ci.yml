@@ -121,24 +121,28 @@ configure-debian-testing:
   script: .ci/configure.sh
   artifacts:
     paths:
-    - build/
+      - build/
+    expire_in: 2 hrs
 
 build-debian-testing:
   stage: build
   image: drdanz/yarp-builder-debian-testing:latest
-  depends: configure-debian-testing
+  dependencies:
+    - configure-debian-testing
   script: .ci/build.sh
 
 test-debian-testing:
   stage: test
   image: drdanz/yarp-builder-debian-testing:latest
-  depends: build-debian-testing
+  dependencies:
+    - build-debian-testing
   script: .ci/test.sh
 
 install-debian-testing:
   stage: install
   image: drdanz/yarp-builder-debian-testing:latest
-  depends: build-debian-testing
+  dependencies:
+    - build-debian-testing
   script: .ci/test.sh
 
 #build-debian-stretch:
