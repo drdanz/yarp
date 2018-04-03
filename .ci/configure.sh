@@ -15,7 +15,7 @@ echo "cmake -G"${YARP_CMAKE_GENERATOR}" \
             .." | sed 's/ -/ \\\n  -/g'
 echo "--------------------      END CMAKE FLAGS     --------------------"
 
-echo mkdir build
+mkdir build
 (cd build; cmake -G"${YARP_CMAKE_GENERATOR}" \
                  -DCMAKE_BUILD_TYPE=${YARP_CMAKE_BUILD_TYPE} \
                  ${YARP_CMAKE_OPTIONS} \
