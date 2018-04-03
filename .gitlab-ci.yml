@@ -86,6 +86,7 @@ stages:
 .bindings_python_template: &bindings_python_definition
   stage: test
   script:
+    - apt-get install -y -qq libpython3-dev
     - .ci/test_bindings.sh python
 
 .dox_template: &dox_definition
@@ -272,11 +273,11 @@ build-debian-testing:
   dependencies:
     - configure-debian-testing
 
-test-debian-testing:
-  <<: *debian_testing_definition
-  <<: *test_definition
-  dependencies:
-    - build-debian-testing
+#test-debian-testing:
+  #<<: *debian_testing_definition
+  #<<: *test_definition
+  #dependencies:
+    #- build-debian-testing
 
 test-valgrind-debian-testing:
   <<: *debian_testing_definition
