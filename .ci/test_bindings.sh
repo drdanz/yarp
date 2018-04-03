@@ -14,5 +14,5 @@ echo "Nested build"
 
 echo "Out of source build"
 mkdir -p bindings/build
-(cd bindings/build; cmake -G"${YARP_CMAKE_GENERATOR}" -DCMAKE_BUILD_TYPE=${YARP_CMAKE_BUILD_TYPE} -DYARP_DIR=${PWD}/../../build ${YARP_BINDINGS_CMAKE_OPTIONS})
+(cd bindings/build; cmake -G"${YARP_CMAKE_GENERATOR}" -DCMAKE_BUILD_TYPE=${YARP_CMAKE_BUILD_TYPE} -DYARP_DIR=${PWD}/../../build ${YARP_BINDINGS_CMAKE_OPTIONS} ..)
 (cd bindings/build; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE})

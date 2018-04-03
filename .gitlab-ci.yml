@@ -56,7 +56,9 @@ stages:
 .test_valgrind_template: &test_valgrind_definition
   stage: test
   script:
-    - (cd build; cmake . -DYARP_VALGRIND_TESTS=ON -DYARP_VALGRIND_DRD_TESTS=OFF -DYARP_VALGRIND_HELGRIND_TESTS=OFF)
+    - (cd build; cmake . -DYARP_VALGRIND_TESTS=ON -DYARP_VALGRIND_DRD_TESTS=OFF -DYARP_VALGRIND_HELGRIND_TESTS=OFF YARP_VALGRIND_MEMCHECK_TESTS=ON YARP_VALGRIND_SGCHECK_TESTS=OFF)
+    # For now, disable tests with race conditions
+    - (cd build; cmake . -DYARP_DISABLE_FAILING_TESTS=ON)
     - (cd build; ctest --output-on-failure --build . -C ${YARP_CMAKE_BUILD_TYPE})
   retry: 2
 
@@ -238,6 +240,19 @@ stages:
     #- update-alternatives --set clang /usr/lib/llvm-6.0/bin/clang
     #- .ci/setup_ccache.sh
     #- .ci/system_info.sh
+
+################################################################################
+# Builds with special parameters
+
+build-skip-ace:
+  <<: *configure_and_build_definition
+  variables:
+    YARP_EXTRA_CMAKE_OPTIONS: "-DSKIP_ACE=ON -DYARP_TEST_HEAP=ON"
+
+build-no-deprecated:
+  <<: *configure_and_build_definition
+  variables:
+    YARP_EXTRA_CMAKE_OPTIONS: "-DYARP_NO_DEPRECATED=ON"
 
 ################################################################################
 # debian testing
