@@ -19,7 +19,6 @@ stages:
   - configure
   - build
   - test
-  - install
   - dox
 
 ################################################################################
@@ -48,117 +47,120 @@ stages:
       - build/
     expire_in: 3 hrs
 
-.configure_and_build_template: &configure_and_build_definition
-  stage: build
-  dependencies: []
-  script:
-    - .ci/configure.sh
-    - (cd build; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE})
-
 .test_template: &test_definition
   stage: test
   script:
     - (cd build; ctest --output-on-failure --build . -C ${YARP_CMAKE_BUILD_TYPE})
   retry: 2
 
-.install_template: &install_definition
-  stage: install
+.test_valgrind_template: &test_valgrind_definition
+  stage: test
   script:
-    - (cd build; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE} --target install)
-
+    - (cd build; cmake . -DYARP_VALGRIND_TESTS=ON -DYARP_VALGRIND_DRD_TESTS=OFF -DYARP_VALGRIND_HELGRIND_TESTS=OFF)
+    - (cd build; ctest --output-on-failure --build . -C ${YARP_CMAKE_BUILD_TYPE})
+  retry: 2
 
 .dox_template: &dox_definition
   stage: dox
   script:
     - (cd build; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE} --target dox)
 
+.configure_and_build_template: &configure_and_build_definition
+  stage: build
+  dependencies: []
+  script:
+    - .ci/configure.sh
+    - (cd build; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE})
+    - (cd build; ctest --output-on-failure --build . -C ${YARP_CMAKE_BUILD_TYPE})
+    - (cd build; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE} --target install)
+
 ################################################################################
 # Test configuration with all available CMake
 
 
-#configure-cmake-3_0:
-  #<<: *configure_definition
-  #before_script:
-    #- update-alternatives --set cmake /opt/cmake-3.0/bin/cmake
-    #- .ci/setup_ccache.sh
-    #- .ci/system_info.sh
+configure-cmake-3_0:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.0/bin/cmake
+    - .ci/setup_ccache.sh
+    - .ci/system_info.sh
 
-#configure-cmake-3_1:
-  #<<: *configure_definition
-  #before_script:
-    #- update-alternatives --set cmake /opt/cmake-3.1/bin/cmake
-    #- .ci/setup_ccache.sh
-    #- .ci/system_info.sh
+configure-cmake-3_1:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.1/bin/cmake
+    - .ci/setup_ccache.sh
+    - .ci/system_info.sh
 
-#configure-cmake-3_2:
-  #<<: *configure_definition
-  #before_script:
-    #- update-alternatives --set cmake /opt/cmake-3.2/bin/cmake
-    #- .ci/setup_ccache.sh
-    #- .ci/system_info.sh
+configure-cmake-3_2:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.2/bin/cmake
+    - .ci/setup_ccache.sh
+    - .ci/system_info.sh
 
-#configure-cmake-3_3:
-  #<<: *configure_definition
-  #before_script:
-    #- update-alternatives --set cmake /opt/cmake-3.3/bin/cmake
-    #- .ci/setup_ccache.sh
-    #- .ci/system_info.sh
+configure-cmake-3_3:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.3/bin/cmake
+    - .ci/setup_ccache.sh
+    - .ci/system_info.sh
 
-#configure-cmake-3_4:
-  #<<: *configure_definition
-  #before_script:
-    #- update-alternatives --set cmake /opt/cmake-3.4/bin/cmake
-    #- .ci/setup_ccache.sh
-    #- .ci/system_info.sh
+configure-cmake-3_4:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.4/bin/cmake
+    - .ci/setup_ccache.sh
+    - .ci/system_info.sh
 
-#configure-cmake-3_5:
-  #<<: *configure_definition
-  #before_script:
-    #- update-alternatives --set cmake /opt/cmake-3.5/bin/cmake
-    #- .ci/setup_ccache.sh
-    #- .ci/system_info.sh
+configure-cmake-3_5:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.5/bin/cmake
+    - .ci/setup_ccache.sh
+    - .ci/system_info.sh
 
-#configure-cmake-3_6:
-  #<<: *configure_definition
-  #before_script:
-    #- update-alternatives --set cmake /opt/cmake-3.6/bin/cmake
-    #- .ci/setup_ccache.sh
-    #- .ci/system_info.sh
+configure-cmake-3_6:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.6/bin/cmake
+    - .ci/setup_ccache.sh
+    - .ci/system_info.sh
 
-#configure-cmake-3_7:
-  #<<: *configure_definition
-  #before_script:
-    #- update-alternatives --set cmake /opt/cmake-3.7/bin/cmake
-    #- .ci/setup_ccache.sh
-    #- .ci/system_info.sh
+configure-cmake-3_7:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.7/bin/cmake
+    - .ci/setup_ccache.sh
+    - .ci/system_info.sh
 
-#configure-cmake-3_8:
-  #<<: *configure_definition
-  #before_script:
-    #- update-alternatives --set cmake /opt/cmake-3.8/bin/cmake
-    #- .ci/setup_ccache.sh
-    #- .ci/system_info.sh
+configure-cmake-3_8:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.8/bin/cmake
+    - .ci/setup_ccache.sh
+    - .ci/system_info.sh
 
-#configure-cmake-3_9:
-  #<<: *configure_definition
-  #before_script:
-    #- update-alternatives --set cmake /opt/cmake-3.9/bin/cmake
-    #- .ci/setup_ccache.sh
-    #- .ci/system_info.sh
+configure-cmake-3_9:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.9/bin/cmake
+    - .ci/setup_ccache.sh
+    - .ci/system_info.sh
 
-#configure-cmake-3_10:
-  #<<: *configure_definition
-  #before_script:
-    #- update-alternatives --set cmake /opt/cmake-3.10/bin/cmake
-    #- .ci/setup_ccache.sh
-    #- .ci/system_info.sh
+configure-cmake-3_10:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.10/bin/cmake
+    - .ci/setup_ccache.sh
+    - .ci/system_info.sh
 
-#configure-cmake-3_11:
-  #<<: *configure_definition
-  #before_script:
-    #- update-alternatives --set cmake /opt/cmake-3.11/bin/cmake
-    #- .ci/setup_ccache.sh
-    #- .ci/system_info.sh
+configure-cmake-3_11:
+  <<: *configure_definition
+  before_script:
+    - update-alternatives --set cmake /opt/cmake-3.11/bin/cmake
+    - .ci/setup_ccache.sh
+    - .ci/system_info.sh
 
 ################################################################################
 # Test build with all available compilers
@@ -214,130 +216,131 @@ build-clang-6_0:
 ################################################################################
 # debian testing
 
-configure-debian-testing:
-  <<: *configure_definition
+.debian_testing_template: &debian_testing_definition
   image: registry.gitlab.com/drdanz/yarp/yarp-builder-debian-testing:latest
+  cache:
+    key: "debian-testing"
+
+configure-debian-testing:
+  <<: *debian_testing_definition
+  <<: *configure_definition
 
 build-debian-testing:
+  <<: *debian_testing_definition
   <<: *build_definition
-  image: registry.gitlab.com/drdanz/yarp/yarp-builder-debian-testing:latest
   dependencies:
     - configure-debian-testing
 
 test-debian-testing:
+  <<: *debian_testing_definition
   <<: *test_definition
-  image: registry.gitlab.com/drdanz/yarp/yarp-builder-debian-testing:latest
   dependencies:
     - build-debian-testing
 
-install-debian-testing:
-  <<: *install_definition
-  image: registry.gitlab.com/drdanz/yarp/yarp-builder-debian-testing:latest
+test-valgrind-debian-testing:
+  <<: *debian_testing_definition
+  <<: *test_valgrind_definition
   dependencies:
     - build-debian-testing
 
 dox-debian-testing:
+  <<: *debian_testing_definition
   <<: *dox_definition
-  image: registry.gitlab.com/drdanz/yarp/yarp-builder-debian-testing:latest
   dependencies:
     - build-debian-testing
 
 ################################################################################
 # debian stretch
 
-configure-debian-stretch:
-  <<: *configure_definition
+.debian_stretch_template: &debian_stretch_definition
   image: registry.gitlab.com/drdanz/yarp/yarp-builder-debian-stretch:latest
+  cache:
+    key: "debian-stretch"
+
+configure-debian-stretch:
+  <<: *debian_stretch_definition
+  <<: *configure_definition
 
 build-debian-stretch:
+  <<: *debian_stretch_definition
   <<: *build_definition
-  image: registry.gitlab.com/drdanz/yarp/yarp-builder-debian-stretch:latest
   dependencies:
     - configure-debian-stretch
 
 test-debian-stretch:
+  <<: *debian_stretch_definition
   <<: *test_definition
-  image: registry.gitlab.com/drdanz/yarp/yarp-builder-debian-stretch:latest
-  dependencies:
-    - build-debian-stretch
-
-install-debian-stretch:
-  <<: *install_definition
-  image: registry.gitlab.com/drdanz/yarp/yarp-builder-debian-stretch:latest
   dependencies:
     - build-debian-stretch
 
 ################################################################################
 # ubuntu bionic
 
-configure-ubuntu-bionic:
-  <<: *configure_definition
+.ubuntu_bionic_template: &ubuntu_bionic_definition
   image: registry.gitlab.com/drdanz/yarp/yarp-builder-ubuntu-bionic:latest
+  cache:
+    key: "ubuntu-bionic"
+
+configure-ubuntu-bionic:
+  <<: *ubuntu_bionic_definition
+  <<: *configure_definition
 
 build-ubuntu-bionic:
+  <<: *ubuntu_bionic_definition
   <<: *build_definition
-  image: registry.gitlab.com/drdanz/yarp/yarp-builder-ubuntu-bionic:latest
   dependencies:
     - configure-ubuntu-bionic
 
 test-ubuntu-bionic:
+  <<: *ubuntu_bionic_definition
   <<: *test_definition
-  image: registry.gitlab.com/drdanz/yarp/yarp-builder-ubuntu-bionic:latest
-  dependencies:
-    - build-ubuntu-bionic
-
-install-ubuntu-bionic:
-  <<: *install_definition
-  image: registry.gitlab.com/drdanz/yarp/yarp-builder-ubuntu-bionic:latest
   dependencies:
     - build-ubuntu-bionic
 
 ################################################################################
 # ubuntu artful
 
-configure-ubuntu-artful:
-  <<: *configure_definition
+.ubuntu_artful_template: &ubuntu_artful_definition
   image: registry.gitlab.com/drdanz/yarp/yarp-builder-ubuntu-artful:latest
+  cache:
+    key: "ubuntu-artful"
+
+configure-ubuntu-artful:
+  <<: *ubuntu_artful_definition
+  <<: *configure_definition
 
 build-ubuntu-artful:
+  <<: *ubuntu_artful_definition
   <<: *build_definition
-  image: registry.gitlab.com/drdanz/yarp/yarp-builder-ubuntu-artful:latest
   dependencies:
     - configure-ubuntu-artful
 
 test-ubuntu-artful:
+  <<: *ubuntu_artful_definition
   <<: *test_definition
-  image: registry.gitlab.com/drdanz/yarp/yarp-builder-ubuntu-artful:latest
-  dependencies:
-    - build-ubuntu-artful
-
-install-ubuntu-artful:
-  <<: *install_definition
-  image: registry.gitlab.com/drdanz/yarp/yarp-builder-ubuntu-artful:latest
   dependencies:
     - build-ubuntu-artful
 
 ################################################################################
 # ubuntu xenial
 
-configure-ubuntu-xenial:
-  <<: *configure_definition
+.ubuntu_xenial_template: &ubuntu_xenial_definition
   image: registry.gitlab.com/drdanz/yarp/yarp-builder-ubuntu-xenial:latest
+  cache:
+    key: "ubuntu-xenial"
+
+configure-ubuntu-xenial:
+  <<: *ubuntu_xenial_definition
+  <<: *configure_definition
 
 build-ubuntu-xenial:
+  <<: *ubuntu_xenial_definition
   <<: *build_definition
-  image: registry.gitlab.com/drdanz/yarp/yarp-builder-ubuntu-xenial:latest
   dependencies:
     - configure-ubuntu-xenial
 
 test-ubuntu-xenial:
+  <<: *ubuntu_xenial_definition
   <<: *test_definition
-  image: registry.gitlab.com/drdanz/yarp/yarp-builder-ubuntu-xenial:latest
-  dependencies:
-    - build-ubuntu-xenial
-
-install-ubuntu-xenial:
-  <<: *install_definition
-  image: registry.gitlab.com/drdanz/yarp/yarp-builder-ubuntu-xenial:latest
   dependencies:
     - build-ubuntu-xenial
