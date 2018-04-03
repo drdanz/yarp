@@ -3,7 +3,6 @@ image: drdanz/yarp-builder-debian-testing:latest
 variables:
   CC: "cc"
   CXX: "c++"
-  CCACHE_CPP2: "yes"
   YARP_CMAKE_GENERATOR: "Unix Makefiles"
   YARP_CMAKE_BUILD_TYPE: "Release"
 
@@ -13,6 +12,7 @@ cache:
     - ccache/
 
 before_script:
+  - .ci/setup_ccache.sh
   - .ci/system_info.sh
 
 stages:
@@ -80,72 +80,84 @@ stages:
   #<<: *configure_definition
   #before_script:
     #- update-alternatives --set cmake /opt/cmake-3.0/bin/cmake
+    #- .ci/setup_ccache.sh
     #- .ci/system_info.sh
 
 #configure-cmake-3_1:
   #<<: *configure_definition
   #before_script:
     #- update-alternatives --set cmake /opt/cmake-3.1/bin/cmake
+    #- .ci/setup_ccache.sh
     #- .ci/system_info.sh
 
 #configure-cmake-3_2:
   #<<: *configure_definition
   #before_script:
     #- update-alternatives --set cmake /opt/cmake-3.2/bin/cmake
+    #- .ci/setup_ccache.sh
     #- .ci/system_info.sh
 
 #configure-cmake-3_3:
   #<<: *configure_definition
   #before_script:
     #- update-alternatives --set cmake /opt/cmake-3.3/bin/cmake
+    #- .ci/setup_ccache.sh
     #- .ci/system_info.sh
 
 #configure-cmake-3_4:
   #<<: *configure_definition
   #before_script:
     #- update-alternatives --set cmake /opt/cmake-3.4/bin/cmake
+    #- .ci/setup_ccache.sh
     #- .ci/system_info.sh
 
 #configure-cmake-3_5:
   #<<: *configure_definition
   #before_script:
     #- update-alternatives --set cmake /opt/cmake-3.5/bin/cmake
+    #- .ci/setup_ccache.sh
     #- .ci/system_info.sh
 
 #configure-cmake-3_6:
   #<<: *configure_definition
   #before_script:
     #- update-alternatives --set cmake /opt/cmake-3.6/bin/cmake
+    #- .ci/setup_ccache.sh
     #- .ci/system_info.sh
 
 #configure-cmake-3_7:
   #<<: *configure_definition
   #before_script:
-    #- .ci/system_info.sh
     #- update-alternatives --set cmake /opt/cmake-3.7/bin/cmake
+    #- .ci/setup_ccache.sh
+    #- .ci/system_info.sh
 
 #configure-cmake-3_8:
   #<<: *configure_definition
   #before_script:
     #- update-alternatives --set cmake /opt/cmake-3.8/bin/cmake
+    #- .ci/setup_ccache.sh
     #- .ci/system_info.sh
 
 #configure-cmake-3_9:
   #<<: *configure_definition
   #before_script:
     #- update-alternatives --set cmake /opt/cmake-3.9/bin/cmake
+    #- .ci/setup_ccache.sh
     #- .ci/system_info.sh
 
 #configure-cmake-3_10:
   #<<: *configure_definition
   #before_script:
     #- update-alternatives --set cmake /opt/cmake-3.10/bin/cmake
+    #- .ci/setup_ccache.sh
     #- .ci/system_info.sh
 
 #configure-cmake-3_11:
   #<<: *configure_definition
   #before_script:
     #- update-alternatives --set cmake /opt/cmake-3.11/bin/cmake
+    #- .ci/setup_ccache.sh
     #- .ci/system_info.sh
 
 ################################################################################
@@ -154,49 +166,49 @@ stages:
 build-gcc-6:
   <<: *configure_and_build_definition
   before_script:
-    - apt-get install -y -qq g++-6 gfortran-6 libstdc++-6-dev
     - update-alternatives --set gcc /usr/bin/gcc-6
+    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 build-gcc-7:
   <<: *configure_and_build_definition
   before_script:
-    - apt-get install -y -qq g++-7 gfortran-7 libstdc++-7-dev
     - update-alternatives --set gcc /usr/bin/gcc-7
+    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 build-gcc-8:
   <<: *configure_and_build_definition
   before_script:
-    - apt-get install -y -qq g++-8 gfortran-8 libstdc++-8-dev
     - update-alternatives --set gcc /usr/bin/gcc-8
+    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 build-clang-4_0:
   <<: *configure_and_build_definition
   before_script:
-    - apt-get install -y -qq libstdc++-6-dev libstdc++-7-dev libstdc++-8-dev libc++-dev
     - update-alternatives --set cc /usr/bin/clang
     - update-alternatives --set c++ /usr/bin/clang++
     - update-alternatives --set clang /usr/lib/llvm-4.0/bin/clang
+    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 build-clang-5_0:
   <<: *configure_and_build_definition
   before_script:
-    - apt-get install -y -qq libstdc++-6-dev libstdc++-7-dev libstdc++-8-dev libc++-dev
     - update-alternatives --set cc /usr/bin/clang
     - update-alternatives --set c++ /usr/bin/clang++
     - update-alternatives --set clang /usr/lib/llvm-5.0/bin/clang
+    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 build-clang-6_0:
   <<: *configure_and_build_definition
   before_script:
-    - apt-get install -y -qq libstdc++-6-dev libstdc++-7-dev libstdc++-8-dev libc++-dev
     - update-alternatives --set cc /usr/bin/clang
     - update-alternatives --set c++ /usr/bin/clang++
     - update-alternatives --set clang /usr/lib/llvm-6.0/bin/clang
+    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 ################################################################################
