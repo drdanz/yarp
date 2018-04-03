@@ -3,9 +3,6 @@ image: drdanz/yarp-builder-debian-testing:latest
 variables:
   CC: "cc"
   CXX: "c++"
-  PATH: "/usr/lib/ccache/:$PATH"
-  CCACHE_BASEDIR: "${PWD}"
-  CCACHE_DIR: "${PWD}/ccache"
   CCACHE_CPP2: "yes"
   YARP_CMAKE_GENERATOR: "Unix Makefiles"
   YARP_CMAKE_BUILD_TYPE: "Release"
