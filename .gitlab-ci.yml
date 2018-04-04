@@ -260,6 +260,8 @@ stages:
   image: registry.gitlab.com/drdanz/yarp/yarp-builder-debian-testing:latest
   cache:
     key: "debian-testing-$CI_COMMIT_REF_NAME"
+    paths:
+      - ccache/
 
 configure-debian-testing:
   <<: *debian_testing_definition
@@ -360,6 +362,8 @@ bindings-octave-debian-testing:
   image: registry.gitlab.com/drdanz/yarp/yarp-builder-debian-stretch:latest
   cache:
     key: "debian-stretch-$CI_COMMIT_REF_NAME"
+    paths:
+      - ccache/
 
 .configure-debian-stretch:
   <<: *debian_stretch_definition
@@ -384,6 +388,8 @@ bindings-octave-debian-testing:
   image: registry.gitlab.com/drdanz/yarp/yarp-builder-ubuntu-bionic:latest
   cache:
     key: "ubuntu-bionic-$CI_COMMIT_REF_NAME"
+    paths:
+      - ccache/
 
 .configure-ubuntu-bionic:
   <<: *ubuntu_bionic_definition
@@ -408,6 +414,8 @@ bindings-octave-debian-testing:
   image: registry.gitlab.com/drdanz/yarp/yarp-builder-ubuntu-artful:latest
   cache:
     key: "ubuntu-artful-$CI_COMMIT_REF_NAME"
+    paths:
+      - ccache/
 
 .configure-ubuntu-artful:
   <<: *ubuntu_artful_definition
@@ -432,6 +440,8 @@ bindings-octave-debian-testing:
   image: registry.gitlab.com/drdanz/yarp/yarp-builder-ubuntu-xenial:latest
   cache:
     key: "ubuntu-xenial-$CI_COMMIT_REF_NAME"
+    paths:
+      - ccache/
 
 .configure-ubuntu-xenial:
   <<: *ubuntu_xenial_definition
