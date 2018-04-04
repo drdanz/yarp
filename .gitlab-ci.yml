@@ -262,7 +262,7 @@ build-no-deprecated:
 build-static:
   <<: *configure_and_build_definition
   variables:
-    YARP_EXTRA_CMAKE_OPTIONS: "-DCREATE_SHARED_LIBRARY=OFF"
+    YARP_EXTRA_CMAKE_OPTIONS: "-DCREATE_SHARED_LIBRARY=OFF -DENABLE_yarpcar_h264:BOOL=OFF"
 
 build-clean-api:
   <<: *configure_and_build_definition
