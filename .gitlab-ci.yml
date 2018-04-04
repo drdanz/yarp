@@ -5,6 +5,13 @@ variables:
   CXX: "c++"
   YARP_CMAKE_GENERATOR: "Unix Makefiles"
   YARP_CMAKE_BUILD_TYPE: "Release"
+  YARP_SOURCE_DIR: "$CI_PROJECT_DIR"
+  YARP_BINARY_DIR: "$CI_PROJECT_DIR/build"
+  YARP_INSTALL_PREFIX: "$CI_PROJECT_DIR/install"
+  CCACHE_BASEDIR: "$CI_PROJECT_DIR"
+  CCACHE_DIR: "$CI_PROJECT_DIR/ccache"
+  CCACHE_CPP2: "yes"
+  PATH: "/usr/lib/ccache/:$PATH"
 
 cache:
   key: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
@@ -12,7 +19,6 @@ cache:
     - ccache/
 
 before_script:
-  - .ci/setup_ccache.sh
   - .ci/system_info.sh
 
 stages:
@@ -31,7 +37,7 @@ stages:
   after_script:
     # Print cmake cache
     - echo "--------------------     BEGIN CMAKE CACHE    --------------------"
-    - (cd build; cat CMakeCache.txt)
+    - (cd ${YARP_BUILD_DIR}; cat CMakeCache.txt)
     - echo "--------------------      END CMAKE CACHE     --------------------"
   artifacts:
     paths:
@@ -41,7 +47,8 @@ stages:
 .build_template: &build_definition
   stage: build
   script:
-    - (cd build; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE})
+    - (cd ${YARP_BUILD_DIR}; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE})
+    - (cd ${YARP_BUILD_DIR}; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE} --target install)
   artifacts:
     paths:
       - build/
@@ -50,16 +57,16 @@ stages:
 .test_template: &test_definition
   stage: test
   script:
-    - (cd build; ctest --output-on-failure --build . -C ${YARP_CMAKE_BUILD_TYPE})
+    - (cd ${YARP_BUILD_DIR}; ctest --output-on-failure --build . -C ${YARP_CMAKE_BUILD_TYPE})
   retry: 2
 
 .test_valgrind_template: &test_valgrind_definition
   stage: test
   script:
-    - (cd build; cmake . -DYARP_VALGRIND_TESTS=ON -DYARP_VALGRIND_DRD_TESTS=OFF -DYARP_VALGRIND_HELGRIND_TESTS=OFF YARP_VALGRIND_MEMCHECK_TESTS=ON YARP_VALGRIND_SGCHECK_TESTS=OFF)
+    - (cd ${YARP_BUILD_DIR}; cmake . -DYARP_VALGRIND_TESTS=ON -DYARP_VALGRIND_DRD_TESTS=OFF -DYARP_VALGRIND_HELGRIND_TESTS=OFF YARP_VALGRIND_MEMCHECK_TESTS=ON YARP_VALGRIND_SGCHECK_TESTS=OFF)
     # For now, disable tests with race conditions
-    - (cd build; cmake . -DYARP_DISABLE_FAILING_TESTS=ON)
-    - (cd build; ctest --output-on-failure --build . -C ${YARP_CMAKE_BUILD_TYPE})
+    - (cd ${YARP_BUILD_DIR}; cmake . -DYARP_DISABLE_FAILING_TESTS=ON)
+    - (cd ${YARP_BUILD_DIR}; ctest --output-on-failure --build . -C ${YARP_CMAKE_BUILD_TYPE})
   retry: 2
 
 .bindings_lua_template: &bindings_lua_definition
@@ -92,16 +99,21 @@ stages:
 .dox_template: &dox_definition
   stage: dox
   script:
-    - (cd build; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE} --target dox)
+    - (cd ${YARP_BUILD_DIR}; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE} --target dox)
+
+.examples_template: &examples_definition
+  stage: test
+  script:
+    - .ci/examples.sh
 
 .configure_and_build_template: &configure_and_build_definition
   stage: build
   dependencies: []
   script:
     - .ci/configure.sh
-    - (cd build; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE})
-    - (cd build; ctest --output-on-failure --build . -C ${YARP_CMAKE_BUILD_TYPE})
-    - (cd build; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE} --target install)
+    - (cd ${YARP_BUILD_DIR}; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE})
+    - (cd ${YARP_BUILD_DIR}; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE} --target install)
+    - (cd ${YARP_BUILD_DIR}; ctest --output-on-failure --build . -C ${YARP_CMAKE_BUILD_TYPE})
 
 ################################################################################
 # Test configuration with all available CMake
@@ -110,84 +122,72 @@ stages:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.0/bin/cmake
-    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 .configure-cmake-3_1:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.1/bin/cmake
-    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 .configure-cmake-3_2:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.2/bin/cmake
-    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 .configure-cmake-3_3:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.3/bin/cmake
-    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 .configure-cmake-3_4:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.4/bin/cmake
-    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 .configure-cmake-3_5:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.5/bin/cmake
-    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 .configure-cmake-3_6:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.6/bin/cmake
-    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 .configure-cmake-3_7:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.7/bin/cmake
-    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 .configure-cmake-3_8:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.8/bin/cmake
-    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 .configure-cmake-3_9:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.9/bin/cmake
-    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 .configure-cmake-3_10:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.10/bin/cmake
-    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 .configure-cmake-3_11:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.11/bin/cmake
-    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 ################################################################################
@@ -197,21 +197,18 @@ stages:
   <<: *configure_and_build_definition
   before_script:
     - update-alternatives --set gcc /usr/bin/gcc-6
-    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 .build-gcc-7:
   <<: *configure_and_build_definition
   before_script:
     - update-alternatives --set gcc /usr/bin/gcc-7
-    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 .build-gcc-8:
   <<: *configure_and_build_definition
   before_script:
     - update-alternatives --set gcc /usr/bin/gcc-8
-    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 .build-clang-4_0:
@@ -220,7 +217,6 @@ stages:
     - update-alternatives --set cc /usr/bin/clang
     - update-alternatives --set c++ /usr/bin/clang++
     - update-alternatives --set clang /usr/lib/llvm-4.0/bin/clang
-    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 .build-clang-5_0:
@@ -229,7 +225,6 @@ stages:
     - update-alternatives --set cc /usr/bin/clang
     - update-alternatives --set c++ /usr/bin/clang++
     - update-alternatives --set clang /usr/lib/llvm-5.0/bin/clang
-    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 .build-clang-6_0:
@@ -238,7 +233,6 @@ stages:
     - update-alternatives --set cc /usr/bin/clang
     - update-alternatives --set c++ /usr/bin/clang++
     - update-alternatives --set clang /usr/lib/llvm-6.0/bin/clang
-    - .ci/setup_ccache.sh
     - .ci/system_info.sh
 
 ################################################################################
