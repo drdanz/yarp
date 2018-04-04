@@ -50,6 +50,7 @@ stages:
     - ${YARP_SOURCE_DIR}/.ci/configure.sh
   artifacts:
     paths:
+      - ccache/
       - build/
     expire_in: 4 hrs
 
@@ -61,6 +62,7 @@ stages:
     - cmake --build ${YARP_BINARY_DIR} --config ${YARP_CMAKE_BUILD_TYPE} --target install
   artifacts:
     paths:
+      - ccache/
       - build/
       - install/
     expire_in: 4 hrs
