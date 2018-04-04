@@ -22,7 +22,7 @@ variables:
   YARP_PORT_RANGE: "20000"
 
 cache:
-  key: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
+  key: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
   paths:
     - ${CCACHE_DIR}/
 
@@ -259,7 +259,7 @@ stages:
 .debian_testing_template: &debian_testing_definition
   image: registry.gitlab.com/drdanz/yarp/yarp-builder-debian-testing:latest
   cache:
-    key: "debian-testing-$CI_COMMIT_REF_NAME"
+    key: "debian-testing-$CI_COMMIT_REF_SLUG"
     paths:
       - ${CCACHE_DIR}/
 
@@ -361,7 +361,7 @@ bindings-octave-debian-testing:
 .debian_stretch_template: &debian_stretch_definition
   image: registry.gitlab.com/drdanz/yarp/yarp-builder-debian-stretch:latest
   cache:
-    key: "debian-stretch-$CI_COMMIT_REF_NAME"
+    key: "debian-stretch-$CI_COMMIT_REF_SLUG"
     paths:
       - ${CCACHE_DIR}/
 
@@ -387,7 +387,7 @@ bindings-octave-debian-testing:
 .ubuntu_bionic_template: &ubuntu_bionic_definition
   image: registry.gitlab.com/drdanz/yarp/yarp-builder-ubuntu-bionic:latest
   cache:
-    key: "ubuntu-bionic-$CI_COMMIT_REF_NAME"
+    key: "ubuntu-bionic-$CI_COMMIT_REF_SLUG"
     paths:
       - ${CCACHE_DIR}/
 
@@ -413,7 +413,7 @@ bindings-octave-debian-testing:
 .ubuntu_artful_template: &ubuntu_artful_definition
   image: registry.gitlab.com/drdanz/yarp/yarp-builder-ubuntu-artful:latest
   cache:
-    key: "ubuntu-artful-$CI_COMMIT_REF_NAME"
+    key: "ubuntu-artful-$CI_COMMIT_REF_SLUG"
     paths:
       - ${CCACHE_DIR}/
 
@@ -439,7 +439,7 @@ bindings-octave-debian-testing:
 .ubuntu_xenial_template: &ubuntu_xenial_definition
   image: registry.gitlab.com/drdanz/yarp/yarp-builder-ubuntu-xenial:latest
   cache:
-    key: "ubuntu-xenial-$CI_COMMIT_REF_NAME"
+    key: "ubuntu-xenial-$CI_COMMIT_REF_SLUG"
     paths:
       - ${CCACHE_DIR}/
 
