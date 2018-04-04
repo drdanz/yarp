@@ -13,8 +13,7 @@ if [ "${language}" = "PYTHON" -o "${language}" = "PYTHON2" ]; then
 elif [ "${language}" = "PYTHON3" ]; then
     export YARP_BINDINGS_CMAKE_OPTIONS="${YARP_BINDINGS_CMAKE_OPTIONS} -DYARP_USE_PYTHON_VERSION=3"
 fi
-echo ${YARP_BINDINGS_CMAKE_OPTIONS}
-exit 0;
+
 
 ################################################################################
 echo "Building ${language} bindings - Out of source build (build tree)"

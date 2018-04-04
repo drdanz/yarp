@@ -16,6 +16,7 @@ variables:
   YARP_INSTALL_PREFIX: "$CI_PROJECT_DIR/install"
   YARP_INSTALL_DIR: "$CI_PROJECT_DIR/install/lib/cmake/YARP"
   YARP_VERBOSE: "1"
+  YARP_PORT_RANGE: "20000"
 
 cache:
   key: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
@@ -224,30 +225,30 @@ stages:
 ################################################################################
 # Builds with special parameters
 
-build-skip-ace:
+.build-skip-ace:
   <<: *configure_and_build_definition
   variables:
     YARP_EXTRA_CMAKE_OPTIONS: "-DSKIP_ACE=ON -DYARP_TEST_HEAP=ON"
 
-build-no-math:
+.build-no-math:
   <<: *configure_and_build_definition
   variables:
     YARP_EXTRA_CMAKE_OPTIONS: "-DCREATE_LIB_MATH:BOOL=OFF -DENABLE_yarpmod_fakeIMU:BOOL=OFF -DENABLE_yarpmod_fakeLaser:BOOL=OFF"
 
-build-no-deprecated:
+.build-no-deprecated:
   <<: *configure_and_build_definition
   variables:
     YARP_EXTRA_CMAKE_OPTIONS: "-DYARP_NO_DEPRECATED=ON"
 
-build-static:
+.build-static:
   <<: *configure_and_build_definition
   variables:
     YARP_EXTRA_CMAKE_OPTIONS: "-DCREATE_SHARED_LIBRARY=OFF -DENABLE_yarpcar_h264:BOOL=OFF"
 
-build-clean-api:
-  <<: *configure_and_build_definition
-  variables:
-    YARP_EXTRA_CMAKE_OPTIONS: "-DYARP_CLEAN_API=ON -DYARP_COMPILE_TESTS=OFF"
+#build-clean-api:
+  #<<: *configure_and_build_definition
+  #variables:
+    #YARP_EXTRA_CMAKE_OPTIONS: "-DYARP_CLEAN_API=ON -DYARP_COMPILE_TESTS=OFF"
 
 ################################################################################
 # debian testing
