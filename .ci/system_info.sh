@@ -6,7 +6,7 @@ pwd
 hostname
 uname -a
 lsb_release -a
-env
+env | sort
 cat /etc/apt/sources.list
 ls /etc/apt/sources.list.d
 update-alternatives --get-selections | grep manual
