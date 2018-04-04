@@ -11,7 +11,7 @@ variables:
   CCACHE_BASEDIR: "$CI_PROJECT_DIR"
   CCACHE_DIR: "$CI_PROJECT_DIR/ccache"
   CCACHE_CPP2: "yes"
-  PATH: "/usr/lib/ccache/:$PATH"
+  PATH: "/usr/lib/ccache/:/usr/sbin:/usr/bin:/sbin:/bin"
 
 cache:
   key: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
@@ -95,6 +95,16 @@ stages:
   script:
     - apt-get install -y -qq libpython3-dev
     - .ci/test_bindings.sh python
+
+.bindings_ruby_template: &bindings_ruby_definition
+  stage: test
+  script:
+    - .ci/test_bindings.sh ruby
+
+.bindings_octave_template: &bindings_octave_definition
+  stage: test
+  script:
+    - .ci/test_bindings.sh octave
 
 .dox_template: &dox_definition
   stage: dox
@@ -320,6 +330,18 @@ bindings-csharp-debian-testing:
 bindings-python-debian-testing:
   <<: *debian_testing_definition
   <<: *bindings_python_definition
+  dependencies:
+    - build-debian-testing
+
+bindings-ruby-debian-testing:
+  <<: *debian_testing_definition
+  <<: *bindings_ruby_definition
+  dependencies:
+    - build-debian-testing
+
+bindings-octave-debian-testing:
+  <<: *debian_testing_definition
+  <<: *bindings_octave_definition
   dependencies:
     - build-debian-testing
 
