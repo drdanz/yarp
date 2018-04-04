@@ -31,9 +31,9 @@ stages:
   - test
   - dox
 
-except:
-  - /^.*appveyor.*$/
-  - /^.*travis.*$/
+#except:
+  #- /^.*appveyor.*$/
+  #- /^.*travis.*$/
 
 
 ################################################################################
@@ -46,7 +46,7 @@ except:
   after_script:
     # Print cmake cache
     - echo "--------------------     BEGIN CMAKE CACHE    --------------------"
-    - (cd ${YARP_BINARY_DIR}; cat CMakeCache.txt)
+    - cat ${YARP_BINARY_DIR}/CMakeCache.txt
     - echo "--------------------      END CMAKE CACHE     --------------------"
   artifacts:
     paths:
@@ -73,9 +73,7 @@ except:
 .test_valgrind_template: &test_valgrind_definition
   stage: test
   script:
-    - cmake ${YARP_BINARY_DIR} -DYARP_VALGRIND_TESTS=ON -DYARP_VALGRIND_DRD_TESTS=OFF -DYARP_VALGRIND_HELGRIND_TESTS=OFF YARP_VALGRIND_MEMCHECK_TESTS=ON YARP_VALGRIND_SGCHECK_TESTS=OFF
-    # For now, disable tests with race conditions
-    - cmake ${YARP_BINARY_DIR} -DYARP_DISABLE_FAILING_TESTS=ON
+    - ${YARP_SOURCE_DIR}/.ci/enable_valgrind.sh
     - cmake --build ${YARP_BINARY_DIR} --config ${YARP_CMAKE_BUILD_TYPE} --target test
   #retry: 2
 
