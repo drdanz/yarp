@@ -1,18 +1,21 @@
 image: registry.gitlab.com/drdanz/yarp/yarp-builder-debian-testing:latest
 
 variables:
+  PATH: "/usr/lib/ccache/:/usr/sbin:/usr/bin:/sbin:/bin"
   CC: "cc"
   CXX: "c++"
+  CCACHE_BASEDIR: "$CI_PROJECT_DIR"
+  CCACHE_DIR: "$CI_PROJECT_DIR/ccache"
+  CCACHE_CPP2: "yes"
+  CTEST_OUTPUT_ON_FAILURE: "1"
+  CTEST_PARALLEL_LEVEL: "1"
   YARP_CMAKE_GENERATOR: "Unix Makefiles"
   YARP_CMAKE_BUILD_TYPE: "Release"
   YARP_SOURCE_DIR: "$CI_PROJECT_DIR"
   YARP_BINARY_DIR: "$CI_PROJECT_DIR/build"
   YARP_INSTALL_PREFIX: "$CI_PROJECT_DIR/install"
   YARP_INSTALL_DIR: "$CI_PROJECT_DIR/install/lib/cmake/YARP"
-  CCACHE_BASEDIR: "$CI_PROJECT_DIR"
-  CCACHE_DIR: "$CI_PROJECT_DIR/ccache"
-  CCACHE_CPP2: "yes"
-  PATH: "/usr/lib/ccache/:/usr/sbin:/usr/bin:/sbin:/bin"
+  YARP_VERBOSE: "1"
 
 cache:
   key: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
@@ -20,7 +23,7 @@ cache:
     - ccache/
 
 before_script:
-  - .ci/system_info.sh
+  - ${YARP_SOURCE_DIR}/.ci/system_info.sh
 
 stages:
   - configure
@@ -28,13 +31,18 @@ stages:
   - test
   - dox
 
+except:
+  - /^.*appveyor.*$/
+  - /^.*travis.*$/
+
+
 ################################################################################
 # Job templates
 
 .configure_template: &configure_definition
   stage: configure
   script:
-    - .ci/configure.sh
+    - ${YARP_SOURCE_DIR}/.ci/configure.sh
   after_script:
     # Print cmake cache
     - echo "--------------------     BEGIN CMAKE CACHE    --------------------"
@@ -48,83 +56,52 @@ stages:
 .build_template: &build_definition
   stage: build
   script:
-    - (cd ${YARP_BINARY_DIR}; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE})
-    - (cd ${YARP_BINARY_DIR}; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE} --target install)
+    - cmake --build ${YARP_BINARY_DIR} --config ${YARP_CMAKE_BUILD_TYPE}
+    - cmake --build ${YARP_BINARY_DIR} --config ${YARP_CMAKE_BUILD_TYPE} --target install
   artifacts:
     paths:
       - build/
+      - install/
     expire_in: 3 hrs
 
 .test_template: &test_definition
   stage: test
   script:
-    - (cd ${YARP_BINARY_DIR}; ctest --output-on-failure --build . -C ${YARP_CMAKE_BUILD_TYPE})
-  retry: 2
+    - cmake --build ${YARP_BINARY_DIR} --config ${YARP_CMAKE_BUILD_TYPE} --target test
+  #retry: 2
 
 .test_valgrind_template: &test_valgrind_definition
   stage: test
   script:
-    - (cd ${YARP_BINARY_DIR}; cmake . -DYARP_VALGRIND_TESTS=ON -DYARP_VALGRIND_DRD_TESTS=OFF -DYARP_VALGRIND_HELGRIND_TESTS=OFF YARP_VALGRIND_MEMCHECK_TESTS=ON YARP_VALGRIND_SGCHECK_TESTS=OFF)
+    - cmake ${YARP_BINARY_DIR} -DYARP_VALGRIND_TESTS=ON -DYARP_VALGRIND_DRD_TESTS=OFF -DYARP_VALGRIND_HELGRIND_TESTS=OFF YARP_VALGRIND_MEMCHECK_TESTS=ON YARP_VALGRIND_SGCHECK_TESTS=OFF
     # For now, disable tests with race conditions
-    - (cd ${YARP_BINARY_DIR}; cmake . -DYARP_DISABLE_FAILING_TESTS=ON)
-    - (cd ${YARP_BINARY_DIR}; ctest --output-on-failure --build . -C ${YARP_CMAKE_BUILD_TYPE})
-  retry: 2
+    - cmake ${YARP_BINARY_DIR} -DYARP_DISABLE_FAILING_TESTS=ON
+    - cmake --build ${YARP_BINARY_DIR} --config ${YARP_CMAKE_BUILD_TYPE} --target test
+  #retry: 2
 
-.bindings_lua_template: &bindings_lua_definition
+.bindings_template: &bindings_definition
   stage: test
   script:
-    - .ci/test_bindings.sh lua
-
-.bindings_tcl_template: &bindings_tcl_definition
-  stage: test
-  script:
-    - .ci/test_bindings.sh tcl
-
-.bindings_java_template: &bindings_java_definition
-  stage: test
-  script:
-    - .ci/test_bindings.sh java
-
-
-.bindings_tcl_template: &bindings_csharp_definition
-  stage: test
-  script:
-    - .ci/test_bindings.sh csharp
-
-.bindings_python_template: &bindings_python_definition
-  stage: test
-  script:
-    - apt-get install -y -qq libpython3-dev
-    - .ci/test_bindings.sh python
-
-.bindings_ruby_template: &bindings_ruby_definition
-  stage: test
-  script:
-    - .ci/test_bindings.sh ruby
-
-.bindings_octave_template: &bindings_octave_definition
-  stage: test
-  script:
-    - .ci/test_bindings.sh octave
+    - ${YARP_SOURCE_DIR}/.ci/test_bindings.sh ${YARP_BINDINGS_LANGUAGE}
 
 .dox_template: &dox_definition
   stage: dox
   script:
-    - (cd ${YARP_BINARY_DIR}; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE} --target dox)
+    - cmake --build ${YARP_BINARY_DIR} --config ${YARP_CMAKE_BUILD_TYPE} --target dox
 
 .examples_template: &examples_definition
   stage: test
   script:
-    - .ci/examples.sh
+    - ${YARP_SOURCE_DIR}/.ci/examples.sh
 
 .configure_and_build_template: &configure_and_build_definition
   stage: build
   dependencies: []
   script:
-    - .ci/configure.sh
-    - (cd ${YARP_BINARY_DIR}; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE})
-    - (cd ${YARP_BINARY_DIR}; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE} --target install)
-    - (cd ${YARP_BINARY_DIR}; ctest --output-on-failure --build . -C ${YARP_CMAKE_BUILD_TYPE})
+    - ${YARP_SOURCE_DIR}/.ci/configure.sh
+    - cmake --build ${YARP_BINARY_DIR} --config ${YARP_CMAKE_BUILD_TYPE}
+    - cmake --build ${YARP_BINARY_DIR} --config ${YARP_CMAKE_BUILD_TYPE} --target install
+    - cmake --build ${YARP_BINARY_DIR} --config ${YARP_CMAKE_BUILD_TYPE} --target test
 
 ################################################################################
 # Test configuration with all available CMake
@@ -133,73 +110,73 @@ stages:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.0/bin/cmake
-    - .ci/system_info.sh
+    - ${YARP_SOURCE_DIR}/.ci/system_info.sh
 
 .configure-cmake-3_1:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.1/bin/cmake
-    - .ci/system_info.sh
+    - ${YARP_SOURCE_DIR}/.ci/system_info.sh
 
 .configure-cmake-3_2:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.2/bin/cmake
-    - .ci/system_info.sh
+    - ${YARP_SOURCE_DIR}/.ci/system_info.sh
 
 .configure-cmake-3_3:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.3/bin/cmake
-    - .ci/system_info.sh
+    - ${YARP_SOURCE_DIR}/.ci/system_info.sh
 
 .configure-cmake-3_4:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.4/bin/cmake
-    - .ci/system_info.sh
+    - ${YARP_SOURCE_DIR}/.ci/system_info.sh
 
 .configure-cmake-3_5:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.5/bin/cmake
-    - .ci/system_info.sh
+    - ${YARP_SOURCE_DIR}/.ci/system_info.sh
 
 .configure-cmake-3_6:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.6/bin/cmake
-    - .ci/system_info.sh
+    - ${YARP_SOURCE_DIR}/.ci/system_info.sh
 
 .configure-cmake-3_7:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.7/bin/cmake
-    - .ci/system_info.sh
+    - ${YARP_SOURCE_DIR}/.ci/system_info.sh
 
 .configure-cmake-3_8:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.8/bin/cmake
-    - .ci/system_info.sh
+    - ${YARP_SOURCE_DIR}/.ci/system_info.sh
 
 .configure-cmake-3_9:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.9/bin/cmake
-    - .ci/system_info.sh
+    - ${YARP_SOURCE_DIR}/.ci/system_info.sh
 
 .configure-cmake-3_10:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.10/bin/cmake
-    - .ci/system_info.sh
+    - ${YARP_SOURCE_DIR}/.ci/system_info.sh
 
 .configure-cmake-3_11:
   <<: *configure_definition
   before_script:
     - update-alternatives --set cmake /opt/cmake-3.11/bin/cmake
-    - .ci/system_info.sh
+    - ${YARP_SOURCE_DIR}/.ci/system_info.sh
 
 ################################################################################
 # Test build with all available compilers
@@ -208,19 +185,19 @@ stages:
   <<: *configure_and_build_definition
   before_script:
     - update-alternatives --set gcc /usr/bin/gcc-6
-    - .ci/system_info.sh
+    - ${YARP_SOURCE_DIR}/.ci/system_info.sh
 
 .build-gcc-7:
   <<: *configure_and_build_definition
   before_script:
     - update-alternatives --set gcc /usr/bin/gcc-7
-    - .ci/system_info.sh
+    - ${YARP_SOURCE_DIR}/.ci/system_info.sh
 
 .build-gcc-8:
   <<: *configure_and_build_definition
   before_script:
     - update-alternatives --set gcc /usr/bin/gcc-8
-    - .ci/system_info.sh
+    - ${YARP_SOURCE_DIR}/.ci/system_info.sh
 
 .build-clang-4_0:
   <<: *configure_and_build_definition
@@ -228,7 +205,7 @@ stages:
     - update-alternatives --set cc /usr/bin/clang
     - update-alternatives --set c++ /usr/bin/clang++
     - update-alternatives --set clang /usr/lib/llvm-4.0/bin/clang
-    - .ci/system_info.sh
+    - ${YARP_SOURCE_DIR}/.ci/system_info.sh
 
 .build-clang-5_0:
   <<: *configure_and_build_definition
@@ -236,7 +213,7 @@ stages:
     - update-alternatives --set cc /usr/bin/clang
     - update-alternatives --set c++ /usr/bin/clang++
     - update-alternatives --set clang /usr/lib/llvm-5.0/bin/clang
-    - .ci/system_info.sh
+    - ${YARP_SOURCE_DIR}/.ci/system_info.sh
 
 .build-clang-6_0:
   <<: *configure_and_build_definition
@@ -244,7 +221,7 @@ stages:
     - update-alternatives --set cc /usr/bin/clang
     - update-alternatives --set c++ /usr/bin/clang++
     - update-alternatives --set clang /usr/lib/llvm-6.0/bin/clang
-    - .ci/system_info.sh
+    - ${YARP_SOURCE_DIR}/.ci/system_info.sh
 
 ################################################################################
 # Builds with special parameters
@@ -306,43 +283,65 @@ test-valgrind-debian-testing:
 
 bindings-lua-debian-testing:
   <<: *debian_testing_definition
-  <<: *bindings_lua_definition
+  <<: *bindings_definition
+  variables:
+    YARP_BINDINGS_LANGUAGE: "lua"
   dependencies:
     - build-debian-testing
 
 bindings-tcl-debian-testing:
   <<: *debian_testing_definition
-  <<: *bindings_tcl_definition
+  <<: *bindings_definition
+  variables:
+    YARP_BINDINGS_LANGUAGE: "tcl"
   dependencies:
     - build-debian-testing
 
 bindings-java-debian-testing:
   <<: *debian_testing_definition
-  <<: *bindings_java_definition
+  <<: *bindings_definition
+  variables:
+    YARP_BINDINGS_LANGUAGE: "java"
   dependencies:
     - build-debian-testing
 
 bindings-csharp-debian-testing:
   <<: *debian_testing_definition
-  <<: *bindings_csharp_definition
+  <<: *bindings_definition
+  variables:
+    YARP_BINDINGS_LANGUAGE: "csharp"
   dependencies:
     - build-debian-testing
 
-bindings-python-debian-testing:
+bindings-python2-debian-testing:
   <<: *debian_testing_definition
-  <<: *bindings_python_definition
+  <<: *bindings_definition
+  variables:
+    YARP_BINDINGS_LANGUAGE: "python2"
+  dependencies:
+    - build-debian-testing
+
+bindings-python3-debian-testing:
+  <<: *debian_testing_definition
+  <<: *bindings_definition
+  variables:
+    YARP_BINDINGS_LANGUAGE: "python3"
   dependencies:
     - build-debian-testing
 
 bindings-ruby-debian-testing:
   <<: *debian_testing_definition
-  <<: *bindings_ruby_definition
+  <<: *bindings_definition
+  variables:
+    YARP_BINDINGS_LANGUAGE: "ruby"
   dependencies:
     - build-debian-testing
 
 bindings-octave-debian-testing:
   <<: *debian_testing_definition
-  <<: *bindings_octave_definition
+  <<: *bindings_definition
+  variables:
+    YARP_BINDINGS_LANGUAGE: "octave"
   dependencies:
     - build-debian-testing
 

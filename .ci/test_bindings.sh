@@ -8,7 +8,13 @@ language=$(echo "$1" | tr '[:lower:]' '[:upper:]')
 
 
 export YARP_BINDINGS_CMAKE_OPTIONS="-DYARP_COMPILE_BINDINGS=ON -DCREATE_${language}=ON"
-
+if [ "${language}" = "PYTHON" -o "${language}" = "PYTHON2" ]; then
+    export YARP_BINDINGS_CMAKE_OPTIONS="${YARP_BINDINGS_CMAKE_OPTIONS} -DYARP_USE_PYTHON_VERSION=2"
+elif [ "${language}" = "PYTHON3" ]; then
+    export YARP_BINDINGS_CMAKE_OPTIONS="${YARP_BINDINGS_CMAKE_OPTIONS} -DYARP_USE_PYTHON_VERSION=3"
+fi
+echo ${YARP_BINDINGS_CMAKE_OPTIONS}
+exit 0;
 
 ################################################################################
 echo "Building ${language} bindings - Out of source build (build tree)"
@@ -16,13 +22,14 @@ export BINDINGS_SOURCE_DIR="${CI_PROJECT_DIR}/bindings"
 export BINDINGS_BINARY_DIR="${BINDINGS_SOURCE_DIR}/build-${language}"
 export YARP_DIR="${YARP_BINARY_DIR}"
 
-mkdir -p ${BINDINGS_BINARY_DIR}
-(cd ${BINDINGS_BINARY_DIR}; cmake -G"${YARP_CMAKE_GENERATOR}" \
-                                  -DCMAKE_BUILD_TYPE=${YARP_CMAKE_BUILD_TYPE} \
-                                  -DYARP_DIR=${YARP_DIR} \
-                                  ${YARP_BINDINGS_CMAKE_OPTIONS} \
-                                  ${BINDINGS_SOURCE_DIR})
-(cd ${BINDINGS_BINARY_DIR}; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE})
+cmake -H"${BINDINGS_SOURCE_DIR}" \
+      -B"${BINDINGS_BINARY_DIR}" \
+      -G"${YARP_CMAKE_GENERATOR}" \
+      -DCMAKE_BUILD_TYPE=${YARP_CMAKE_BUILD_TYPE} \
+      -DYARP_DIR=${YARP_DIR} \
+      ${YARP_BINDINGS_CMAKE_OPTIONS}
+
+cmake --build ${BINDINGS_BINARY_DIR} --config ${YARP_CMAKE_BUILD_TYPE}
 
 
 ################################################################################
@@ -31,13 +38,14 @@ export BINDINGS_SOURCE_DIR="${YARP_INSTALL_PREFIX}/share/yarp/bindings"
 export BINDINGS_BINARY_DIR="${BINDINGS_SOURCE_DIR}/build-${language}"
 export YARP_DIR=${YARP_INSTALL_DIR}
 
-mkdir -p ${BINDINGS_BINARY_DIR}
-(cd ${BINDINGS_BINARY_DIR}; cmake -G"${YARP_CMAKE_GENERATOR}" \
-                                  -DCMAKE_BUILD_TYPE=${YARP_CMAKE_BUILD_TYPE} \
-                                  -DYARP_DIR=${YARP_BINARY_DIR} \
-                                  ${YARP_BINDINGS_CMAKE_OPTIONS} \
-                                  ${BINDINGS_SOURCE_DIR})
-(cd ${BINDINGS_BINARY_DIR}; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE})
+cmake -H"${BINDINGS_SOURCE_DIR}" \
+      -B"${BINDINGS_BINARY_DIR}" \
+      -G"${YARP_CMAKE_GENERATOR}" \
+      -DCMAKE_BUILD_TYPE=${YARP_CMAKE_BUILD_TYPE} \
+      -DYARP_DIR=${YARP_DIR} \
+      ${YARP_BINDINGS_CMAKE_OPTIONS}
+
+cmake --build ${BINDINGS_BINARY_DIR} --config ${YARP_CMAKE_BUILD_TYPE}
 
 
 ################################################################################
@@ -46,5 +54,5 @@ unset BINDINGS_SOURCE_DIR
 unset BINDINGS_BINARY_DIR
 unset YARP_DIR
 
-(cd ${YARP_BINARY_DIR}; cmake . ${YARP_BINDINGS_CMAKE_OPTIONS})
-(cd ${YARP_BINARY_DIR}; cmake --build . --config ${YARP_CMAKE_BUILD_TYPE})
+cmake ${YARP_BINARY_DIR} ${YARP_BINDINGS_CMAKE_OPTIONS}
+cmake --build ${YARP_BINARY_DIR} --config ${YARP_CMAKE_BUILD_TYPE}
