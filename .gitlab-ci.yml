@@ -97,12 +97,12 @@ stages:
       - ${YARP_BINARY_DIR}/dox/YARP.tag
     expire_in: 4 hrs
 
-examples_template: &examples_definition
+.examples_template: &examples_definition
   stage: test
   script:
     - ${YARP_SOURCE_DIR}/.ci/examples.sh
 
-configure_and_build_template: &configure_and_build_definition
+.configure_and_build_template: &configure_and_build_definition
   stage: build
   dependencies: []
   script:
@@ -246,10 +246,10 @@ build-skip-ace:
       - ${YARP_BINARY_DIR}/
       - ${YARP_INSTALL_DIR}/
 
-test-valgrind-skip-ace:
-  <<: *test_valgrind_definition
-  dependencies:
-    - build-skip-ace
+#test-valgrind-skip-ace:
+  #<<: *test_valgrind_definition
+  #dependencies:
+    #- build-skip-ace
 
 build-no-math:
   <<: *configure_and_build_definition
