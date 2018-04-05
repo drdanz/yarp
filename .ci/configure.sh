@@ -3,6 +3,15 @@
 # Prepare CMake options
 . "${YARP_SOURCE_DIR}/scripts/admin/generate-cmake-options.sh" $(hostname) $(lsb_release -cs) continuous
 export YARP_CMAKE_OPTIONS="${CMAKE_OPTIONS} -DCMAKE_INSTALL_PREFIX=${YARP_INSTALL_PREFIX}"
+export YARP_CMAKE_OPTIONS="${YARP_CMAKE_OPTIONS} \
+                           -DYARP_DOXYGEN_HTML:BOOL=ON \
+                           -DYARP_DOXYGEN_HTML_QHP:BOOL=ON \
+                           -DYARP_DOXYGEN_MAN:BOOL=ON \
+                           -DYARP_DOXYGEN_TAGFILE:BOOL=ON \
+                           -DYARP_DOXYGEN_XML:BOOL=ON"
+
+# FIXME For some reason, if the h264 carrier is enabled, valgrind reports a lot
+#       of errors, therefore this flag is temporarily disabled
 # export YARP_CMAKE_OPTIONS="${YARP_CMAKE_OPTIONS} -DENABLE_yarpcar_h264:BOOL=ON"
 
 # FIXME: Use CMAKE_C_COMPILER_LAUNCHER and CMAKE_CXX_COMPILER_LAUNCHER instead
