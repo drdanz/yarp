@@ -33,7 +33,7 @@ stages:
   - configure
   - build
   - test
-  - dox
+  - deploy
 
 # FIXME
 #except:
@@ -86,7 +86,7 @@ stages:
     - ${YARP_SOURCE_DIR}/.ci/test_bindings.sh ${YARP_BINDINGS_LANGUAGE}
 
 .dox_template: &dox_definition
-  stage: dox
+  stage: deploy
   script:
     - cmake --build ${YARP_BINARY_DIR} --config ${YARP_CMAKE_BUILD_TYPE} --target dox
   artifacts:
