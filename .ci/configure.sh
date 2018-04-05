@@ -3,7 +3,7 @@
 # Prepare CMake options
 . "${YARP_SOURCE_DIR}/scripts/admin/generate-cmake-options.sh" $(hostname) $(lsb_release -cs) continuous
 export YARP_CMAKE_OPTIONS="${CMAKE_OPTIONS} -DCMAKE_INSTALL_PREFIX=${YARP_INSTALL_PREFIX}"
-export YARP_CMAKE_OPTIONS="${YARP_CMAKE_OPTIONS} -DENABLE_yarpcar_h264:BOOL=ON"
+# export YARP_CMAKE_OPTIONS="${YARP_CMAKE_OPTIONS} -DENABLE_yarpcar_h264:BOOL=ON"
 
 # FIXME: Use CMAKE_C_COMPILER_LAUNCHER and CMAKE_CXX_COMPILER_LAUNCHER instead
 #        of changing the path as soon as CMake > 3.4 is required.
