@@ -4,13 +4,13 @@
 
 include(CMakeDependentOption)
 
-find_file(DOXYGEN_PLANTUM_JAR
+find_file(DOXYGEN_PLANTUML_JAR
           NAMES plantuml.jar
           PATHS /usr/share
           PATH_SUFFIXES plantuml
           DOC "PlantUML tool for using Doxygen")
-if(NOT DOXYGEN_PLANTUM_JAR)
-  set(DOXYGEN_PLANTUM_JAR "")
+if(NOT DOXYGEN_PLANTUML_JAR)
+  set(DOXYGEN_PLANTUML_JAR "")
 endif()
 
 if(DOXYGEN_FOUND)
