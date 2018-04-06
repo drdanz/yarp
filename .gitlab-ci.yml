@@ -191,6 +191,13 @@ configure-cmake-3_11:
 ################################################################################
 # Test build with all available compilers
 
+build-gcc-5:
+  <<: *configure_and_build_definition
+  image: registry.gitlab.com/drdanz/yarp/yarp-builder-debian-sid:latest
+  before_script:
+    - update-alternatives --set gcc /usr/bin/gcc-5
+    - ${YARP_SOURCE_DIR}/.ci/system_info.sh
+
 build-gcc-6:
   <<: *configure_and_build_definition
   before_script:
@@ -232,6 +239,16 @@ build-clang-6_0:
     - update-alternatives --set c++ /usr/bin/clang++
     - update-alternatives --set clang /usr/lib/llvm-6.0/bin/clang
     - ${YARP_SOURCE_DIR}/.ci/system_info.sh
+
+build-clang-7:
+  <<: *configure_and_build_definition
+  image: registry.gitlab.com/drdanz/yarp/yarp-builder-debian-sid:latest
+  before_script:
+    - update-alternatives --set cc /usr/bin/clang
+    - update-alternatives --set c++ /usr/bin/clang++
+    - update-alternatives --set clang /usr/lib/llvm-7/bin/clang
+    - ${YARP_SOURCE_DIR}/.ci/system_info.sh
+
 
 ################################################################################
 # Builds with special parameters
