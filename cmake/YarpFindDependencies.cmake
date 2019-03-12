@@ -267,34 +267,12 @@ endmacro()
 # look for it here.
 checkandset_dependency(YCM)
 
-
-
-option(SKIP_ACE "Compile YARP without ACE (Linux only, TCP only, limited functionality)" OFF)
-mark_as_advanced(SKIP_ACE)
-
-# FIXME Deprecate SKIP_ACE in favour of YARP_USE_ACE
-# YARP_USE_ACE is marked as internal
-if(SKIP_ACE)
-  set_property(CACHE YARP_USE_ACE PROPERTY VALUE FALSE)
-else()
-  set_property(CACHE YARP_USE_ACE PROPERTY VALUE TRUE)
-endif()
-
 find_package(ACE QUIET)
 checkandset_dependency(ACE)
+# FIXME Deprecate SKIP_ACE in favour of YARP_USE_ACE
+# YARP_USE_ACE is marked as internal
 set_property(CACHE YARP_USE_ACE PROPERTY TYPE INTERNAL)
-
-message("SKIP_ACE = ${SKIP_ACE}")
-message("YARP_USE_ACE = ${YARP_USE_ACE}")
-message("YARP_HAS_ACE = ${YARP_HAS_ACE}")
-message("ACE_FOUND = ${ACE_FOUND}")
-message("ACE_LIBRARIES = ${ACE_LIBRARIES}")
-message("ACE_INCLUDE_DIRS = ${ACE_INCLUDE_DIRS}")
-message("ACE_COMPILES_WITHOUT_INLINE_RELEASE = ${ACE_COMPILES_WITHOUT_INLINE_RELEASE}")
-message("ACE_COMPILES_WITH_INLINE_RELEASE = ${ACE_COMPILES_WITH_INLINE_RELEASE}")
-message("ACE_COMPILES_WITHOUT_INLINE_DEBUG = ${ACE_COMPILES_WITHOUT_INLINE_DEBUG}")
-message("ACE_COMPILES_WITH_INLINE_DEBUG = ${ACE_COMPILES_WITH_INLINE_DEBUG}")
-
+set_property(CACHE YARP_USE_ACE PROPERTY VALUE TRUE)
 
 set(RTF_REQUIRED_VERSION 1.4.61)
 find_package(RTF ${RTF_REQUIRED_VERSION} QUIET)
@@ -422,6 +400,24 @@ checkandset_dependency(I2C)
 
 
 # OPTIONS:
+option(SKIP_ACE "Compile YARP without ACE (Linux only, TCP only, limited functionality)" OFF)
+mark_as_advanced(SKIP_ACE)
+if(SKIP_ACE)
+  set_property(CACHE YARP_USE_ACE PROPERTY VALUE FALSE)
+endif()
+
+
+message("SKIP_ACE = ${SKIP_ACE}")
+message("YARP_USE_ACE = ${YARP_USE_ACE}")
+message("YARP_HAS_ACE = ${YARP_HAS_ACE}")
+message("ACE_FOUND = ${ACE_FOUND}")
+message("ACE_LIBRARIES = ${ACE_LIBRARIES}")
+message("ACE_INCLUDE_DIRS = ${ACE_INCLUDE_DIRS}")
+message("ACE_COMPILES_WITHOUT_INLINE_RELEASE = ${ACE_COMPILES_WITHOUT_INLINE_RELEASE}")
+message("ACE_COMPILES_WITH_INLINE_RELEASE = ${ACE_COMPILES_WITH_INLINE_RELEASE}")
+message("ACE_COMPILES_WITHOUT_INLINE_DEBUG = ${ACE_COMPILES_WITHOUT_INLINE_DEBUG}")
+message("ACE_COMPILES_WITH_INLINE_DEBUG = ${ACE_COMPILES_WITH_INLINE_DEBUG}")
+
 
 option(CREATE_LIB_MATH "Create math library libYARP_math?" ${YARP_HAS_EIGEN3})
 cmake_dependent_option(CREATE_YARPROBOTINTERFACE "Do you want to compile yarprobotinterface?" ON YARP_COMPILE_EXECUTABLES OFF)
