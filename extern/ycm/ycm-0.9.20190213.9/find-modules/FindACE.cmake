@@ -4,6 +4,11 @@
 #
 # Try to find the ACE library
 #
+# Targets set::
+#
+#   ACE::ACE
+#   ACE::ACE_INLINE
+#
 # Variables set::
 #
 #   ACE_FOUND
@@ -181,7 +186,6 @@ if(ACE_FOUND)
 
     include (CheckCXXSourceCompiles)
 
-
     # "__ACE_INLINE__" is needed in some configurations
     set(_ACE_NEEDS_INLINE_CPP "
 #include <ace/OS_NS_unistd.h>
@@ -197,15 +201,36 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 ")
+
+    # Backup variables
+    set(_CMAKE_TRY_COMPILE_CONFIGURATION ${CMAKE_TRY_COMPILE_CONFIGURATION})
+    set(_CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS})
+
+    unset(CMAKE_REQUIRED_DEFINITIONS)
     if(ACE_ACE_LIBRARY_RELEASE)
         set(CMAKE_TRY_COMPILE_CONFIGURATION "Release")
+        set(CMAKE_REQUIRED_DEFINITIONS )
         check_cxx_source_compiles("${_ACE_NEEDS_INLINE_CPP}" ACE_COMPILES_WITHOUT_INLINE_RELEASE)
+
+        set(CMAKE_TRY_COMPILE_CONFIGURATION "Release")
+        set(CMAKE_REQUIRED_DEFINITIONS "-D__ACE_INLINE__")
+        check_cxx_source_compiles("${_ACE_NEEDS_INLINE_CPP}" ACE_COMPILES_WITH_INLINE_RELEASE)
     endif()
     if(ACE_ACE_LIBRARY_DEBUG)
         set(CMAKE_TRY_COMPILE_CONFIGURATION "Debug")
+        set(CMAKE_REQUIRED_DEFINITIONS )
         check_cxx_source_compiles("${_ACE_NEEDS_INLINE_CPP}" ACE_COMPILES_WITHOUT_INLINE_DEBUG)
+
+        set(CMAKE_TRY_COMPILE_CONFIGURATION "Debug")
+        set(CMAKE_REQUIRED_DEFINITIONS "-D__ACE_INLINE__")
+        check_cxx_source_compiles("${_ACE_NEEDS_INLINE_CPP}" ACE_COMPILES_WITH_INLINE_DEBUG)
     endif()
 
+    # Restore variables
+    set(CMAKE_TRY_COMPILE_CONFIGURATION ${_CMAKE_TRY_COMPILE_CONFIGURATION})
+    set(CMAKE_REQUIRED_DEFINITIONS ${_CMAKE_REQUIRED_DEFINITIONS})
+    unset(_CMAKE_TRY_COMPILE_CONFIGURATION)
+    unset(_CMAKE_REQUIRED_DEFINITIONS)
 
     # Check for ACE_INET_Addr::is_loopback
     if("${ACE_VERSION}" VERSION_LESS "5.4.8")
@@ -237,6 +262,40 @@ int main(int argc, char *argv[]) {
         unset(CMAKE_REQUIRED_LIBRARIES)
     endif()
 
+    add_library(ACE::ACE UNKNOWN IMPORTED)
+
+    set_target_properties(ACE::ACE PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${ACE_INCLUDE_DIRS}")
+    set_target_properties(ACE::ACE PROPERTIES INTERFACE_SYSTEM_INCLUDE_DIRECTORIES "${ACE_INCLUDE_DIRS}")
+
+    if(ACE_ACE_LIBRARY_RELEASE)
+        set_property(TARGET ACE::ACE APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+        set_target_properties(ACE::ACE PROPERTIES IMPORTED_LOCATION_RELEASE "${ACE_ACE_LIBRARY_RELEASE}")
+        set_target_properties(ACE::ACE PROPERTIES IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX")
+        if(ACE_COMPILES_WITH_INLINE_RELEASE)
+            # See also https://gitlab.kitware.com/cmake/cmake/issues/15142
+            set_target_properties(ACE::ACE PROPERTIES
+                                  INTERFACE_COMPILE_DEFINITIONS "\$<\$<CONFIG:Release>:__ACE_INLINE__>"
+                                  INTERFACE_COMPILE_DEFINITIONS "\$<\$<CONFIG:MinSizeRel>:__ACE_INLINE__>"
+                                  INTERFACE_COMPILE_DEFINITIONS "\$<\$<CONFIG:DebugFull>:__ACE_INLINE__>"
+                                  INTERFACE_COMPILE_DEFINITIONS "\$<\$<CONFIG:Profile>:__ACE_INLINE__>")
+        endif()
+    endif()
+
+    if(ACE_ACE_LIBRARY_DEBUG)
+        set_property(TARGET ACE::ACE APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
+        set_target_properties(ACE::ACE PROPERTIES IMPORTED_LOCATION_DEBUG "${ACE_ACE_LIBRARY_DEBUG}")
+        set_target_properties(ACE::ACE PROPERTIES IMPORTED_LINK_INTERFACE_LANGUAGES_DEBUG "CXX")
+        if(ACE_COMPILES_WITH_INLINE_DEBUG)
+            set_target_properties(ACE::ACE PROPERTIES
+                                  INTERFACE_COMPILE_DEFINITIONS "\$<\$<CONFIG:Debug>:__ACE_INLINE__>"
+                                  INTERFACE_COMPILE_DEFINITIONS "\$<\$<CONFIG:RelWithDebInfo>:__ACE_INLINE__>")
+        endif()
+    endif()
+
+    add_library(ACE::ACE_INLINE INTERFACE IMPORTED)
+    set_target_properties(ACE::ACE_INLINE PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${ACE_INCLUDE_DIRS}")
+    set_target_properties(ACE::ACE_INLINE PROPERTIES INTERFACE_SYSTEM_INCLUDE_DIRECTORIES "${ACE_INCLUDE_DIRS}")
+    set_target_properties(ACE::ACE_INLINE PROPERTIES INTERFACE_COMPILE_DEFINITIONS "__ACE_INLINE__")
 endif()
 
 
