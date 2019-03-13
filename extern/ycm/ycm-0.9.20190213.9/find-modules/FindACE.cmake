@@ -23,6 +23,10 @@
 #   ACE_COMPILES_WITHOUT_INLINE_RELEASE
 #   ACE_COMPILES_WITHOUT_INLINE_DEBUG
 #   ACE_ADDR_HAS_LOOPBACK_METHOD
+#
+# Optional variables::
+#
+#   ACE_INLINE (default ON)
 
 #=============================================================================
 # Copyright 2009 RobotCub Consortium
@@ -103,25 +107,26 @@ else()
 
     # Solaris needs some extra libraries that may not have been found already
     if(CMAKE_SYSTEM_NAME STREQUAL "SunOS")
-        list(APPEND ACE_LIBRARIES socket rt nsl)
+        set(ACE_EXTRA_LIBRARIES socket rt nsl)
     endif(CMAKE_SYSTEM_NAME STREQUAL "SunOS")
 
     # ACE package doesn't specify that pthread and rt are needed, which is
     # a problem for users of GoLD.  Link pthread (just on Linux for now).
     if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-        list(APPEND ACE_LIBRARIES pthread rt)
+        set(ACE_EXTRA_LIBRARIES pthread rt)
     endif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
 
     # Windows needs some extra libraries
     if(WIN32 AND NOT CYGWIN)
-        list(APPEND ACE_LIBRARIES winmm)
+        set(ACE_EXTRA_LIBRARIES winmm)
     endif(WIN32 AND NOT CYGWIN)
 
     # Mingw needs some extra libraries
     if(MINGW)
-        list(APPEND ACE_LIBRARIES winmm ws2_32 wsock32)
+        set(ACE_EXTRA_LIBRARIES winmm ws2_32 wsock32)
     endif(MINGW)
 
+    list(APPEND ACE_LIBRARIES ${ACE_EXTRA_LIBRARIES})
 
     ########################################################################
     ## finished - now just set up flags and complain to user if necessary
@@ -162,139 +167,34 @@ endif()
 ## If ACE was found, check if some features are available
 
 if(ACE_FOUND)
-
-    # If set, save variables for later
-    if(DEFINED CMAKE_TRY_COMPILE_CONFIGURATION)
-        set(_CMAKE_TRY_COMPILE_CONFIGURATION ${CMAKE_TRY_COMPILE_CONFIGURATION})
-    else()
-        unset(_CMAKE_TRY_COMPILE_CONFIGURATION)
-    endif()
-
-    if(DEFINED CMAKE_REQUIRED_INCLUDES)
-        set(_CMAKE_REQUIRED_INCLUDES ${CMAKE_REQUIRED_INCLUDES})
-    else()
-        unset(_CMAKE_REQUIRED_INCLUDES)
-    endif()
-    set(CMAKE_REQUIRED_INCLUDES ${ACE_INCLUDE_DIRS})
-
-    if(DEFINED CMAKE_REQUIRED_LIBRARIES)
-        set(_CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES})
-    else()
-        unset(_CMAKE_REQUIRED_LIBRARIES)
-    endif()
-    set(CMAKE_REQUIRED_LIBRARIES ${ACE_LIBRARIES})
-
-    include (CheckCXXSourceCompiles)
-
-    # "__ACE_INLINE__" is needed in some configurations
-    set(_ACE_NEEDS_INLINE_CPP "
-#include <ace/OS_NS_unistd.h>
-#include <ace/Time_Value.h>
-void time_delay(double seconds) {
-    ACE_Time_Value tv;
-    tv.sec (long(seconds));
-    tv.usec (long((seconds-long(seconds)) * 1.0e6));
-    ACE_OS::sleep(tv);
-}
-int main(int argc, char *argv[]) {
-    time_delay(1);
-    return 0;
-}
-")
-
-    # Backup variables
-    set(_CMAKE_TRY_COMPILE_CONFIGURATION ${CMAKE_TRY_COMPILE_CONFIGURATION})
-    set(_CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS})
-
-    unset(CMAKE_REQUIRED_DEFINITIONS)
-    if(ACE_ACE_LIBRARY_RELEASE)
-        set(CMAKE_TRY_COMPILE_CONFIGURATION "Release")
-        set(CMAKE_REQUIRED_DEFINITIONS )
-        check_cxx_source_compiles("${_ACE_NEEDS_INLINE_CPP}" ACE_COMPILES_WITHOUT_INLINE_RELEASE)
-
-        set(CMAKE_TRY_COMPILE_CONFIGURATION "Release")
-        set(CMAKE_REQUIRED_DEFINITIONS "-D__ACE_INLINE__")
-        check_cxx_source_compiles("${_ACE_NEEDS_INLINE_CPP}" ACE_COMPILES_WITH_INLINE_RELEASE)
-    endif()
-    if(ACE_ACE_LIBRARY_DEBUG)
-        set(CMAKE_TRY_COMPILE_CONFIGURATION "Debug")
-        set(CMAKE_REQUIRED_DEFINITIONS )
-        check_cxx_source_compiles("${_ACE_NEEDS_INLINE_CPP}" ACE_COMPILES_WITHOUT_INLINE_DEBUG)
-
-        set(CMAKE_TRY_COMPILE_CONFIGURATION "Debug")
-        set(CMAKE_REQUIRED_DEFINITIONS "-D__ACE_INLINE__")
-        check_cxx_source_compiles("${_ACE_NEEDS_INLINE_CPP}" ACE_COMPILES_WITH_INLINE_DEBUG)
-    endif()
-
-    # Restore variables
-    set(CMAKE_TRY_COMPILE_CONFIGURATION ${_CMAKE_TRY_COMPILE_CONFIGURATION})
-    set(CMAKE_REQUIRED_DEFINITIONS ${_CMAKE_REQUIRED_DEFINITIONS})
-    unset(_CMAKE_TRY_COMPILE_CONFIGURATION)
-    unset(_CMAKE_REQUIRED_DEFINITIONS)
-
-    # Check for ACE_INET_Addr::is_loopback
-    if("${ACE_VERSION}" VERSION_LESS "5.4.8")
-        set(ACE_ADDR_HAS_LOOPBACK_METHOD 0)
-    else()
-        set(ACE_ADDR_HAS_LOOPBACK_METHOD 1)
-    endif()
-
-
-    # Reset variables to their original values
-    if(DEFINED _CMAKE_TRY_COMPILE_CONFIGURATION)
-        set(CMAKE_TRY_COMPILE_CONFIGURATION ${_CMAKE_TRY_COMPILE_CONFIGURATION})
-        unset(_CMAKE_TRY_COMPILE_CONFIGURATION)
-    else()
-        unset(CMAKE_TRY_COMPILE_CONFIGURATION)
-    endif()
-
-    if(DEFINED _CMAKE_REQUIRED_INCLUDES)
-        set(CMAKE_REQUIRED_INCLUDES ${_CMAKE_REQUIRED_INCLUDES})
-        unset(${_CMAKE_REQUIRED_INCLUDES})
-    else()
-        unset(CMAKE_REQUIRED_INCLUDES)
-    endif()
-
-    if(DEFINED _CMAKE_REQUIRED_LIBRARIES)
-        set(CMAKE_REQUIRED_LIBRARIES ${_CMAKE_REQUIRED_LIBRARIES})
-        unset(_CMAKE_REQUIRED_LIBRARIES)
-    else()
-        unset(CMAKE_REQUIRED_LIBRARIES)
-    endif()
-
+    # Create and populate the ACE::ACE target
     add_library(ACE::ACE UNKNOWN IMPORTED)
 
     set_target_properties(ACE::ACE PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${ACE_INCLUDE_DIRS}")
     set_target_properties(ACE::ACE PROPERTIES INTERFACE_SYSTEM_INCLUDE_DIRECTORIES "${ACE_INCLUDE_DIRS}")
+    set_target_properties(ACE::ACE PROPERTIES INTERFACE_LINK_LIBRARIES ${ACE_EXTRA_LIBRARIES})
+    if (NOT DEFINED ACE_INLINE OR ACE_INLINE)
+        set_target_properties(ACE::ACE PROPERTIES INTERFACE_COMPILE_DEFINITIONS "__ACE_INLINE__")
+    endif()
 
     if(ACE_ACE_LIBRARY_RELEASE)
         set_property(TARGET ACE::ACE APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
         set_target_properties(ACE::ACE PROPERTIES IMPORTED_LOCATION_RELEASE "${ACE_ACE_LIBRARY_RELEASE}")
         set_target_properties(ACE::ACE PROPERTIES IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX")
-        if(ACE_COMPILES_WITH_INLINE_RELEASE)
-            # See also https://gitlab.kitware.com/cmake/cmake/issues/15142
-            set_target_properties(ACE::ACE PROPERTIES
-                                  INTERFACE_COMPILE_DEFINITIONS "\$<\$<CONFIG:Release>:__ACE_INLINE__>"
-                                  INTERFACE_COMPILE_DEFINITIONS "\$<\$<CONFIG:MinSizeRel>:__ACE_INLINE__>"
-                                  INTERFACE_COMPILE_DEFINITIONS "\$<\$<CONFIG:DebugFull>:__ACE_INLINE__>"
-                                  INTERFACE_COMPILE_DEFINITIONS "\$<\$<CONFIG:Profile>:__ACE_INLINE__>")
-        endif()
     endif()
 
     if(ACE_ACE_LIBRARY_DEBUG)
         set_property(TARGET ACE::ACE APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
         set_target_properties(ACE::ACE PROPERTIES IMPORTED_LOCATION_DEBUG "${ACE_ACE_LIBRARY_DEBUG}")
         set_target_properties(ACE::ACE PROPERTIES IMPORTED_LINK_INTERFACE_LANGUAGES_DEBUG "CXX")
-        if(ACE_COMPILES_WITH_INLINE_DEBUG)
-            set_target_properties(ACE::ACE PROPERTIES
-                                  INTERFACE_COMPILE_DEFINITIONS "\$<\$<CONFIG:Debug>:__ACE_INLINE__>"
-                                  INTERFACE_COMPILE_DEFINITIONS "\$<\$<CONFIG:RelWithDebInfo>:__ACE_INLINE__>")
-        endif()
     endif()
 
+    # Create and populate the ACE::ACE_INLINE target
     add_library(ACE::ACE_INLINE INTERFACE IMPORTED)
+
     set_target_properties(ACE::ACE_INLINE PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${ACE_INCLUDE_DIRS}")
     set_target_properties(ACE::ACE_INLINE PROPERTIES INTERFACE_SYSTEM_INCLUDE_DIRECTORIES "${ACE_INCLUDE_DIRS}")
+    set_target_properties(ACE::ACE_INLINE PROPERTIES INTERFACE_LINK_LIBRARIES ${ACE_EXTRA_LIBRARIES})
     set_target_properties(ACE::ACE_INLINE PROPERTIES INTERFACE_COMPILE_DEFINITIONS "__ACE_INLINE__")
 endif()
 
