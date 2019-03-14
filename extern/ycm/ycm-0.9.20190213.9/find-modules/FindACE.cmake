@@ -73,24 +73,14 @@ find_library(ACE_ACE_LIBRARY_RELEASE
                    /usr/local/lib
              DOC "ACE library file")
 
-if(NOT DEFINED CMAKE_DEBUG_POSTFIX)
-    set(CMAKE_DEBUG_POSTFIX "d")
-    set(_CMAKE_DEBUG_POSTFIX_DEFINED 1)
-endif()
-
 find_library(ACE_ACE_LIBRARY_DEBUG
-             NAMES ACE${CMAKE_DEBUG_POSTFIX}
-                   ace${CMAKE_DEBUG_POSTFIX}
+             NAMES ACEd
+                   aced
              PATHS $ENV{ACE_ROOT}/lib
                    $ENV{ACE_ROOT}
                    /usr/lib
                    /usr/local/lib
              DOC "ACE library file (debug version)")
-
-if(DEFINED _CMAKE_DEBUG_POSTFIX_DEFINED)
-    unset(CMAKE_DEBUG_POSTFIX)
-    unset(_CMAKE_DEBUG_POSTFIX_DEFINED)
-endif()
 
 include(SelectLibraryConfigurations)
 select_library_configurations(ACE_ACE)
