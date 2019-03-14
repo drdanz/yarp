@@ -267,7 +267,7 @@ endmacro()
 # look for it here.
 checkandset_dependency(YCM)
 
-find_package(ACE QUIET)
+find_package(ACE 6.0.0 QUIET)
 checkandset_dependency(ACE)
 # FIXME Deprecate SKIP_ACE in favour of YARP_USE_ACE
 # YARP_USE_ACE is marked as internal
