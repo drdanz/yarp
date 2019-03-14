@@ -200,48 +200,48 @@ set_target_properties(ACE::ACE_INLINE PROPERTIES INTERFACE_COMPILE_DEFINITIONS "
 ########################################################################
 ## Compatibility with older versions
 
-# If set, save variables for later
-set(_CMAKE_TRY_COMPILE_CONFIGURATION ${CMAKE_TRY_COMPILE_CONFIGURATION})
-set(_CMAKE_REQUIRED_INCLUDES ${CMAKE_REQUIRED_INCLUDES})
-set(_CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES})
-
-include (CheckCXXSourceCompiles)
-
-# "__ACE_INLINE__" is needed in some configurations
-set(_ACE_NEEDS_INLINE_CPP "
-#include <ace/OS_NS_unistd.h>
-#include <ace/Time_Value.h>
-void time_delay(double seconds) {
-    ACE_Time_Value tv;
-    tv.sec (long(seconds));
-    tv.usec (long((seconds-long(seconds)) * 1.0e6));
-    ACE_OS::sleep(tv);
-}
-int main(int argc, char *argv[]) {
-    time_delay(1);
-    return 0;
-}
-")
-set(CMAKE_REQUIRED_INCLUDES ${ACE_INCLUDE_DIRS})
-set(CMAKE_REQUIRED_LIBRARIES ${ACE_LIBRARIES})
-if(ACE_ACE_LIBRARY_RELEASE)
-  set(CMAKE_TRY_COMPILE_CONFIGURATION "Release")
-  check_cxx_source_compiles("${_ACE_NEEDS_INLINE_CPP}" ACE_COMPILES_WITHOUT_INLINE_RELEASE)
-endif()
-if(ACE_ACE_LIBRARY_DEBUG)
-  set(CMAKE_TRY_COMPILE_CONFIGURATION "Debug")
-  check_cxx_source_compiles("${_ACE_NEEDS_INLINE_CPP}" ACE_COMPILES_WITHOUT_INLINE_DEBUG)
-endif()
-
-# Reset variables to their original values
-set(CMAKE_TRY_COMPILE_CONFIGURATION ${_CMAKE_TRY_COMPILE_CONFIGURATION})
-set(CMAKE_REQUIRED_INCLUDES ${_CMAKE_REQUIRED_INCLUDES})
-set(CMAKE_REQUIRED_LIBRARIES ${_CMAKE_REQUIRED_LIBRARIES})
-unset(_CMAKE_TRY_COMPILE_CONFIGURATION)
-unset(_CMAKE_REQUIRED_INCLUDES)
-unset(_CMAKE_REQUIRED_LIBRARIES)
-
 if (NOT COMMAND _FindACE_Deprecated)
+  # If set, save variables for later
+  set(_CMAKE_TRY_COMPILE_CONFIGURATION ${CMAKE_TRY_COMPILE_CONFIGURATION})
+  set(_CMAKE_REQUIRED_INCLUDES ${CMAKE_REQUIRED_INCLUDES})
+  set(_CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES})
+
+  include (CheckCXXSourceCompiles)
+
+  # "__ACE_INLINE__" is needed in some configurations
+  set(_ACE_NEEDS_INLINE_CPP "
+  #include <ace/OS_NS_unistd.h>
+  #include <ace/Time_Value.h>
+  void time_delay(double seconds) {
+      ACE_Time_Value tv;
+      tv.sec (long(seconds));
+      tv.usec (long((seconds-long(seconds)) * 1.0e6));
+      ACE_OS::sleep(tv);
+  }
+  int main(int argc, char *argv[]) {
+      time_delay(1);
+      return 0;
+  }
+  ")
+  set(CMAKE_REQUIRED_INCLUDES ${ACE_INCLUDE_DIRS})
+  set(CMAKE_REQUIRED_LIBRARIES ${ACE_LIBRARIES})
+  if(ACE_ACE_LIBRARY_RELEASE)
+    set(CMAKE_TRY_COMPILE_CONFIGURATION "Release")
+    check_cxx_source_compiles("${_ACE_NEEDS_INLINE_CPP}" ACE_COMPILES_WITHOUT_INLINE_RELEASE)
+  endif()
+  if(ACE_ACE_LIBRARY_DEBUG)
+    set(CMAKE_TRY_COMPILE_CONFIGURATION "Debug")
+    check_cxx_source_compiles("${_ACE_NEEDS_INLINE_CPP}" ACE_COMPILES_WITHOUT_INLINE_DEBUG)
+  endif()
+
+  # Reset variables to their original values
+  set(CMAKE_TRY_COMPILE_CONFIGURATION ${_CMAKE_TRY_COMPILE_CONFIGURATION})
+  set(CMAKE_REQUIRED_INCLUDES ${_CMAKE_REQUIRED_INCLUDES})
+  set(CMAKE_REQUIRED_LIBRARIES ${_CMAKE_REQUIRED_LIBRARIES})
+  unset(_CMAKE_TRY_COMPILE_CONFIGURATION)
+  unset(_CMAKE_REQUIRED_INCLUDES)
+  unset(_CMAKE_REQUIRED_LIBRARIES)
+
   function(_FindACE_Deprecated _variable _access _value _current_list_file _stack)
     message(DEPRECATION "${_variable} is deprecated")
   endfunction()
