@@ -90,7 +90,7 @@ public:
         return join(group, sender, Contact());
     }
 
-    virtual ~DgramTwoWayStream();
+    ~DgramTwoWayStream() override;
 
     InputStream& getInputStream() override
     {
@@ -161,21 +161,30 @@ public:
 
 private:
     yarp::os::ManagedBytes monitor;
-    bool closed, interrupting, reader;
+    bool closed;
+    bool interrupting;
+    bool reader;
 #ifdef YARP_HAS_ACE
     ACE_SOCK_Dgram* dgram;
     ACE_SOCK_Dgram_Mcast* mgram;
-    ACE_INET_Addr localHandle, remoteHandle;
+    ACE_INET_Addr localHandle;
+    ACE_INET_Addr remoteHandle;
 #else
     int dgram_sockfd;
     void* dgram;
     void* mgram;
-    int localHandle, remoteHandle;
+    int localHandle;
+    int remoteHandle;
 #endif
-    Contact localAddress, remoteAddress, restrictInterfaceIp;
-    yarp::os::ManagedBytes readBuffer, writeBuffer;
+    Contact localAddress;
+    Contact remoteAddress;
+    Contact restrictInterfaceIp;
+    yarp::os::ManagedBytes readBuffer;
+    yarp::os::ManagedBytes writeBuffer;
     std::mutex mutex;
-    yarp::conf::ssize_t readAt, readAvail, writeAvail;
+    yarp::conf::ssize_t readAt;
+    yarp::conf::ssize_t readAvail;
+    yarp::conf::ssize_t writeAvail;
     int pct;
     bool happy;
     bool bufferAlertNeeded;
