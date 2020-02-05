@@ -41,10 +41,12 @@
 #include <cerrno>
 #include <cstring>
 
+#include <climits> // FIXME REMOVE
+
 using namespace yarp::os::impl;
 using namespace yarp::os;
 
-#define CRC_SIZE 8
+#define CRC_SIZE 12 // sizeof(CRC) = 4 + sizeof(cnt) = 4 + sizeof(pct) = 4
 #define UDP_MAX_DATAGRAM_SIZE (65507 - CRC_SIZE)
 
 
@@ -53,39 +55,52 @@ YARP_OS_LOG_COMPONENT(DGRAMTWOWAYSTREAM, "yarp.os.impl.DgramTwoWayStream")
 } // namespace
 
 
-static bool checkCrc(char* buf, yarp::conf::ssize_t length, yarp::conf::ssize_t crcLength, int pct, int* store_altPct = nullptr)
+static bool checkCrc(char* buf, yarp::conf::ssize_t length, yarp::conf::ssize_t crcLength, int expectedCnt, int expectedPct, int* store_recvCnt = nullptr, int* store_recvPct = nullptr)
 {
-    auto alt = (NetInt32)NetType::getCrc(buf + crcLength,
+    auto expectedCrc = (NetInt32)NetType::getCrc(buf + crcLength,
                                          (length > crcLength) ? (length - crcLength) : 0);
     Bytes b(buf, 4);
     Bytes b2(buf + 4, 4);
-    NetInt32 curr = NetType::netInt(b);
-    int altPct = NetType::netInt(b2);
-    bool ok = (alt == curr && pct == altPct);
+    Bytes b3(buf + 8, 4);
+    int recvCrc = NetType::netInt(b);
+    int recvCnt = NetType::netInt(b2);
+    int recvPct = NetType::netInt(b3);
+    bool ok = (expectedCrc == recvCrc && expectedPct == recvPct);
+    if (expectedCnt != recvCnt) {
+        yCDebug(DGRAMTWOWAYSTREAM, "not received or out of order");
+    }
     if (!ok) {
-        if (alt != curr) {
+        if (expectedCrc != recvCrc) {
             yCDebug(DGRAMTWOWAYSTREAM, "crc mismatch");
         }
-        if (pct != altPct) {
+        if (expectedPct != recvPct) {
             yCDebug(DGRAMTWOWAYSTREAM, "packet code broken");
         }
     }
-    if (store_altPct != nullptr) {
-        *store_altPct = altPct;
+//     yCDebug(DGRAMTWOWAYSTREAM, "DGRAM #%d/%d/%d received;", recvCnt, recvPct, recvCrc);
+//     yCDebug(DGRAMTWOWAYSTREAM, "DGRAM #%d/%d/%d expected; CRC is %s.", expectedCnt, expectedPct, expectedCrc, (ok ? "OK" : "NOT OK"));
+
+    if (store_recvCnt != nullptr) {
+        *store_recvCnt = recvCnt;
+    }
+    if (store_recvPct != nullptr) {
+        *store_recvPct = recvPct;
     }
 
     return ok;
 }
 
 
-static void addCrc(char* buf, yarp::conf::ssize_t length, yarp::conf::ssize_t crcLength, int pct)
+static void addCrc(char* buf, yarp::conf::ssize_t length, yarp::conf::ssize_t crcLength, int cnt, int pct)
 {
     auto alt = (NetInt32)NetType::getCrc(buf + crcLength,
                                          (length > crcLength) ? (length - crcLength) : 0);
     Bytes b(buf, 4);
     Bytes b2(buf + 4, 4);
+    Bytes b3(buf + 8, 4);
     NetType::netInt((NetInt32)alt, b);
-    NetType::netInt((NetInt32)pct, b2);
+    NetType::netInt((NetInt32)cnt, b2);
+    NetType::netInt((NetInt32)pct, b3);
 }
 
 
@@ -760,9 +775,24 @@ yarp::conf::ssize_t DgramTwoWayStream::read(Bytes& b)
             readAvail = result;
 
             // deal with CRC
-            int altPct = 0;
-            bool crcOk = checkCrc(readBuffer.get(), readAvail, CRC_SIZE, pct, &altPct);
-            if (altPct != -1) {
+            int recvCnt = 0;
+            int recvPct = 0;
+            bool crcOk = checkCrc(readBuffer.get(), readAvail, CRC_SIZE, cnt, pct, &recvCnt, &recvPct);
+            if (recvCnt > cnt) {
+                misCount += recvCnt - cnt;
+                cnt = recvCnt;
+                double now = SystemClock::nowSystem();
+                if (now - lastDropReportTime > 1) {
+                    yCInfo(DGRAMTWOWAYSTREAM, "*** %d datagram packet(s) missing ***", misCount);
+                    lastDropReportTime = now;
+                    misCount = 0;
+                }
+            } else if (recvCnt < cnt) {
+                yCInfo(DGRAMTWOWAYSTREAM, "Dropped packet #%d (out of order)", recvCnt);
+                reset();
+                return -1;
+            }
+            if (recvPct != -1) {
                 pct++;
                 if (!crcOk) {
                     if (bufferAlertNeeded && !bufferAlerted) {
@@ -779,9 +809,9 @@ yarp::conf::ssize_t DgramTwoWayStream::read(Bytes& b)
                     } else {
                         errCount++;
                         double now = SystemClock::nowSystem();
-                        if (now - lastReportTime > 1) {
+                        if (now - lastErrorReportTime > 1) {
                             yCError(DGRAMTWOWAYSTREAM, "*** %d datagram packet(s) dropped - checksum error ***", errCount);
-                            lastReportTime = now;
+                            lastErrorReportTime = now;
                             errCount = 0;
                         }
                     }
@@ -854,7 +884,7 @@ void DgramTwoWayStream::flush()
     if (writeAvail <= CRC_SIZE) {
         return;
     }
-    addCrc(writeBuffer.get(), writeAvail, CRC_SIZE, pct);
+    addCrc(writeBuffer.get(), writeAvail, CRC_SIZE, cnt, pct);
     pct++;
 
     if (writeAvail > 0) {
@@ -947,6 +977,7 @@ void DgramTwoWayStream::beginPacket()
 void DgramTwoWayStream::endPacket()
 {
 //     yCError(DGRAMTWOWAYSTREAM, "Packet ends: %s", (reader ? "reader" : "writer"));
+    cnt++;
     if (!reader) {
         pct = 0;
     }

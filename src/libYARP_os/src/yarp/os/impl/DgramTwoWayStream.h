@@ -53,13 +53,16 @@ public:
             readAt(0),
             readAvail(0),
             writeAvail(0),
+            cnt(0),
             pct(0),
             happy(true),
             bufferAlertNeeded(false),
             bufferAlerted(false),
             multiMode(false),
+            misCount(0),
             errCount(0),
-            lastReportTime(0)
+            lastDropReportTime(0),
+            lastErrorReportTime(0)
     {
     }
 
@@ -185,13 +188,16 @@ private:
     yarp::conf::ssize_t readAt;
     yarp::conf::ssize_t readAvail;
     yarp::conf::ssize_t writeAvail;
+    int cnt;
     int pct;
     bool happy;
     bool bufferAlertNeeded;
     bool bufferAlerted;
     bool multiMode;
+    int misCount;
     int errCount;
-    double lastReportTime;
+    double lastDropReportTime;
+    double lastErrorReportTime;
 
     void allocate(int readSize = 0, int writeSize = 0);
 
