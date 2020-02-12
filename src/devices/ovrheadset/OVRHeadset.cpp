@@ -402,6 +402,7 @@ bool yarp::dev::OVRHeadset::open(yarp::os::Searchable& cfg)
         isFunctionMap[DOUBLE] = &yarp::os::Value::isFloat64;
 
         //to add a parameter check, simply add a line below here and let the magic happens
+#if 0
         paramParser.push_back(std::make_pair("tfDevice",            STRING));
         paramParser.push_back(std::make_pair("tfLocal",             STRING));
         paramParser.push_back(std::make_pair("tfRemote",            STRING));
@@ -410,6 +411,7 @@ bool yarp::dev::OVRHeadset::open(yarp::os::Searchable& cfg)
         paramParser.push_back(std::make_pair("tf_root_frame",       STRING));
         paramParser.push_back(std::make_pair("stick_as_axis",       BOOL));
         paramParser.push_back(std::make_pair("gui_elements",        INT));
+#endif
 
         for (auto& p : paramParser)
         {
@@ -488,6 +490,7 @@ bool yarp::dev::OVRHeadset::open(yarp::os::Searchable& cfg)
     fillHatStorage();
 
     //opening tf client
+#if 0
     tfClientCfg.put("device", cfg.find("tfDevice").asString());
     tfClientCfg.put("local", cfg.find("tfLocal").asString());
     tfClientCfg.put("remote", cfg.find("tfRemote").asString());
@@ -504,6 +507,7 @@ bool yarp::dev::OVRHeadset::open(yarp::os::Searchable& cfg)
         return false;
     }
     yInfo() << "TransformCLient successfully opened at port: " << cfg.find("tfLocal").asString();
+#endif
 
     //opening ports
     ports =
@@ -945,6 +949,7 @@ void yarp::dev::OVRHeadset::run()
     ovrPoseStatef predicted_headpose = predicted_ts.HeadPose;
     yarp::os::Stamp predicted_stamp(distortionFrameIndex, predicted_ts.HeadPose.TimeInSeconds);
 
+#if 0
     //send hands frames
     if (relative)
     {
@@ -979,6 +984,7 @@ void yarp::dev::OVRHeadset::run()
     }
 
     //tfPublisher->setTransform(right_frame,   root_frame, yarp::math::operator*(T_Head.transposed(), T_RHand));
+#endif
 
     // Get Input State
     inputStateMutex.lock();
