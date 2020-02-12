@@ -43,6 +43,10 @@ public:
     unsigned int lastImageWidth;
     unsigned int lastImageHeight;
 
+    float xOffset;
+    float yOffset;
+    float zOffset;
+
     float rollOffset;
     float pitchOffset;
     float yawOffset;

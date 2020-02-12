@@ -582,9 +582,15 @@ bool yarp::dev::OVRHeadset::open(yarp::os::Searchable& cfg)
 
     prediction = cfg.check("prediction", yarp::os::Value(0.01), "Prediction [sec]").asFloat64();
 
+    displayPorts[0]->xOffset = static_cast<float>(cfg.check("left-x-offset", yarp::os::Value(0.0), "[LEFT_SHIFT+A][LEFT_SHIFT+D] Left eye x offset").asFloat64());
+    displayPorts[0]->yOffset = static_cast<float>(cfg.check("left-y-offset", yarp::os::Value(0.0), "[LEFT_SHIFT+S][LEFT_SHIFT+W] Left eye y offset").asFloat64());
+    displayPorts[0]->zOffset = static_cast<float>(cfg.check("left-z-offset", yarp::os::Value(0.0), "[LEFT_SHIFT+Q][LEFT_SHIFT+E] Left eye z offset").asFloat64());
     displayPorts[0]->rollOffset  = static_cast<float>(cfg.check("left-roll-offset",   yarp::os::Value(0.0), "[LEFT_SHIFT+PAGE_UP][LEFT_SHIFT+PAGE_DOWN] Left eye roll offset").asFloat64());
     displayPorts[0]->pitchOffset = static_cast<float>(cfg.check("left-pitch-offset",  yarp::os::Value(0.0), "[LEFT_SHIFT+UP_ARROW][LEFT_SHIFT+DOWN_ARROW] Left eye pitch offset").asFloat64());
     displayPorts[0]->yawOffset   = static_cast<float>(cfg.check("left-yaw-offset",    yarp::os::Value(0.0), "[LEFT_SHIFT+LEFT_ARROW][LEFT_SHIFT+RIGHT_ARROW] Left eye yaw offset").asFloat64());
+    displayPorts[1]->xOffset = static_cast<float>(cfg.check("right-x-offset", yarp::os::Value(0.0), "[RIGHT_SHIFT+A][RIGHT_SHIFT+D] Right eye x offset").asFloat64());
+    displayPorts[1]->yOffset = static_cast<float>(cfg.check("right-y-offset", yarp::os::Value(0.0), "[RIGHT_SHIFT+S][RIGHT_SHIFT+W] Right eye y offset").asFloat64());
+    displayPorts[1]->zOffset = static_cast<float>(cfg.check("right-z-offset", yarp::os::Value(0.0), "[RIGHT_SHIFT+Q][RIGHT_SHIFT+E] Right eye z offset").asFloat64());
     displayPorts[1]->rollOffset  = static_cast<float>(cfg.check("right-roll-offset",  yarp::os::Value(0.0), "[RIGHT_SHIFT+PAGE_UP][RIGHT_SHIFT+PAGE_DOWN] Right eye roll offset").asFloat64());
     displayPorts[1]->pitchOffset = static_cast<float>(cfg.check("right-pitch-offset", yarp::os::Value(0.0), "[RIGHT_SHIFT+UP_ARROW][RIGHT_SHIFT+DOWN_ARROW] Right eye pitch offset").asFloat64());
     displayPorts[1]->yawOffset   = static_cast<float>(cfg.check("right-yaw-offset",   yarp::os::Value(0.0), "[RIGHT_SHIFT+LEFT_ARROW][RIGHT_SHIFT+RIGHT_ARROW] Right eye yaw offset").asFloat64());
@@ -1088,13 +1094,18 @@ void yarp::dev::OVRHeadset::run()
         for (int eye = 0; eye < ovrEye_Count; ++eye) {
             if (imagePoseEnabled) {
                 if (userPoseEnabled) {
-                    // Use orientation read from the HMD at the beginning of the frame
+                    // Use position and orientation read from the HMD at the beginning of the frame
+                    EyeRenderPose[eye].Position = headpose.ThePose.Position;
                     EyeRenderPose[eye].Orientation = headpose.ThePose.Orientation;
                 } else {
-                    // Use orientation received from the image
+                    // Use position and orientation received from the image
+                    EyeRenderPose[eye].Position = displayPorts[eye]->eyeRenderTexture->eyePose.Position;
                     EyeRenderPose[eye].Orientation = displayPorts[eye]->eyeRenderTexture->eyePose.Orientation;
                 }
             } else {
+                EyeRenderPose[eye].Position.x = 0.0f;
+                EyeRenderPose[eye].Position.y = 0.0f;
+                EyeRenderPose[eye].Position.z = 0.0f;
                 EyeRenderPose[eye].Orientation.w = -1.0f;
                 EyeRenderPose[eye].Orientation.x = 0.0f;
                 EyeRenderPose[eye].Orientation.y = 0.0f;
@@ -1408,6 +1419,66 @@ void yarp::dev::OVRHeadset::onKey(int key, int scancode, int action, int mods)
             yDebug() << "Right eye roll offset =" << displayPorts[1]->rollOffset;
         }
         break;
+    case GLFW_KEY_A:
+        if (!rightShiftPressed) {
+            displayPorts[0]->xOffset += ctrlPressed ? 5.0f : 0.0025f;
+            yDebug() << "Left eye x offset =" << displayPorts[0]->xOffset;
+        }
+        if (!leftShiftPressed) {
+            displayPorts[1]->xOffset += ctrlPressed ? 5.0f : 0.0025f;
+            yDebug() << "Right eye x offset =" << displayPorts[1]->xOffset;
+        }
+        break;
+    case GLFW_KEY_D:
+        if (!rightShiftPressed) {
+            displayPorts[0]->xOffset -= ctrlPressed ? 5.0f : 0.0025f;
+            yDebug() << "Left eye x offset =" << displayPorts[0]->xOffset;
+        }
+        if (!leftShiftPressed) {
+            displayPorts[1]->xOffset -= ctrlPressed ? 5.0f : 0.0025f;
+            yDebug() << "Right eye x offset =" << displayPorts[1]->xOffset;
+        }
+        break;
+    case GLFW_KEY_W:
+        if (!rightShiftPressed) {
+            displayPorts[0]->yOffset += ctrlPressed ? 5.0f : 0.0025f;
+            yDebug() << "Left eye y offset =" << displayPorts[0]->yOffset;
+        }
+        if (!leftShiftPressed) {
+            displayPorts[1]->yOffset += ctrlPressed ? 5.0f : 0.0025f;
+            yDebug() << "Right eye y offset =" << displayPorts[1]->yOffset;
+        }
+        break;
+    case GLFW_KEY_S:
+        if (!rightShiftPressed) {
+            displayPorts[0]->yOffset -= ctrlPressed ? 5.0f : 0.0025f;
+            yDebug() << "Left eye y offset =" << displayPorts[0]->yOffset;
+        }
+        if (!leftShiftPressed) {
+            displayPorts[1]->yOffset -= ctrlPressed ? 5.0f : 0.0025f;
+            yDebug() << "Right eye y offset =" << displayPorts[1]->yOffset;
+        }
+        break;
+    case GLFW_KEY_Q:
+        if (!rightShiftPressed) {
+            displayPorts[0]->zOffset += ctrlPressed ? 5.0f : 0.0025f;
+            yDebug() << "Left eye z offset =" << displayPorts[0]->zOffset;
+        }
+        if (!leftShiftPressed) {
+            displayPorts[1]->zOffset += ctrlPressed ? 5.0f : 0.0025f;
+            yDebug() << "Right eye z offset =" << displayPorts[1]->zOffset;
+        }
+        break;
+    case GLFW_KEY_E:
+        if (!rightShiftPressed) {
+            displayPorts[0]->zOffset -= ctrlPressed ? 5.0f : 0.0025f;
+            yDebug() << "Left eye z offset =" << displayPorts[0]->zOffset;
+        }
+        if (!leftShiftPressed) {
+            displayPorts[1]->zOffset -= ctrlPressed ? 5.0f : 0.0025f;
+            yDebug() << "Right eye z offset =" << displayPorts[1]->zOffset;
+        }
+        break;
     case GLFW_KEY_SLASH:
         {
             int PerfHudMode = ovr_GetInt(session, OVR_PERF_HUD_MODE, 0);
@@ -1428,11 +1499,17 @@ void yarp::dev::OVRHeadset::onKey(int key, int scancode, int action, int mods)
         yDebug() << "    Gui" << ((guiCount != 0) ? (guiEnabled ? "ON" : "OFF") : "DISABLED");
         yDebug() << "  Left eye:";
         yDebug() << "    HFOV = " << camHFOV[0];
+        yDebug() << "    x offset =" << displayPorts[0]->xOffset;
+        yDebug() << "    y offset =" << displayPorts[0]->yOffset;
+        yDebug() << "    z offset =" << displayPorts[0]->zOffset;
         yDebug() << "    pitch offset =" << displayPorts[0]->pitchOffset;
         yDebug() << "    yaw offset =" << displayPorts[0]->yawOffset;
         yDebug() << "    roll offset =" << displayPorts[0]->rollOffset;
         yDebug() << "  Right eye:";
         yDebug() << "    HFOV =" << camHFOV[1];
+        yDebug() << "    x offset =" << displayPorts[1]->xOffset;
+        yDebug() << "    y offset =" << displayPorts[1]->yOffset;
+        yDebug() << "    z offset =" << displayPorts[1]->zOffset;
         yDebug() << "    pitch offset =" << displayPorts[1]->pitchOffset;
         yDebug() << "    yaw offset =" << displayPorts[1]->yawOffset;
         yDebug() << "    roll offset =" << displayPorts[1]->rollOffset;

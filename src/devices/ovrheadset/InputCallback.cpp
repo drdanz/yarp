@@ -32,6 +32,9 @@ InputCallback::InputCallback(int eye) :
         droppedFrames(0),
         lastImageWidth(0),
         lastImageHeight(0),
+        xOffset(0.0f),
+        yOffset(0.0f),
+        zOffset(0.0f),
         rollOffset(0.0f),
         pitchOffset(0.0f),
         yawOffset(0.0f)
@@ -127,9 +130,9 @@ void InputCallback::onRead(ImageType &img)
             }
         }
 
-        float x = 0.0f;
-        float y = 0.0f;
-        float z = 0.0f;
+        float x = xOffset;
+        float y = yOffset;
+        float z = zOffset;
         float roll = rollOffset;
         float pitch = pitchOffset;
         float yaw = yawOffset;
