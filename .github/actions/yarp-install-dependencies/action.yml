@@ -12,10 +12,133 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - run: echo Hello ${{ inputs.who-to-greet }}.
+    - name: Step 1
+      run: echo Hello ${{ inputs.who-to-greet }}.
       shell: bash
-    - id: random-number-generator
+
+    - name: Step 2
+      id: random-number-generator
       run: echo "::set-output name=random-id::$(echo $RANDOM)"
       shell: bash
-    - run: ${{ github.action_path }}/entrypoint.sh
+
+    - name: Step 3
+      run: ${{ github.action_path }}/entrypoint.sh
       shell: bash
+
+    - name: Dependencies [Linux]
+      if: runner.os == 'Linux'
+      uses: nick-invision/retry@v2.2.0
+      with:
+        timeout_minutes: 20
+        retry_wait_seconds: 300
+        max_attempts: 3
+        command: |
+          # Install Robotology dependencies from robotology ppa
+          sudo apt-add-repository -y ppa:robotology/ppa
+          sudo apt-get install -qq -y ycm-cmake-modules \
+                                      librobottestingframework-dev
+
+          # Install build tools
+          sudo apt-get install -qq -y cmake \
+                                      ccache \
+                                      ninja-build \
+                                      valgrind \
+                                      lcov
+
+          sudo apt-get install -qq -y libace-dev \
+                                      libsqlite3-dev \
+                                      libtinyxml-dev \
+                                      libedit-dev \
+                                      qtbase5-dev \
+                                      qtdeclarative5-dev \
+                                      qtmultimedia5-dev \
+                                      libqt5opengl5-dev \
+                                      libqcustomplot-dev \
+                                      libopencv-dev \
+                                      libeigen3-dev \
+                                      libgraphviz-dev \
+                                      libgstreamer1.0-dev \
+                                      libgstreamer-plugins-base1.0-dev \
+                                      libpng-dev \
+                                      libv4l-dev \
+                                      libavcodec-dev \
+                                      libavdevice-dev \
+                                      libavformat-dev \
+                                      libavutil-dev \
+                                      portaudio19-dev \
+                                      libsdl1.2-dev \
+                                      libopenni2-dev \
+                                      libftdi-dev \
+                                      libi2c-dev \
+                                      libfuse-dev \
+                                      libjpeg-dev \
+                                      libpcl-dev
+
+          # Install SWIG and bindings dependencies
+          sudo apt-get install -qq -y swig \
+                                      mono-mcs \
+                                      liblua5.3-dev \
+                                      lua5.3 \
+                                      tcl-dev \
+                                      tk-dev \
+                                      python3-dev \
+                                      liboctave-dev \
+                                      default-jdk \
+                                      ruby-dev \
+                                      ruby \
+                                      perl
+
+          # Remove old packages from apt cache
+          sudo apt-get autoclean -qq
+
+    - name: Dependencies [Windows]
+      if: runner.os == 'Windows'
+      uses: nick-invision/retry@v2.2.0
+      with:
+        timeout_minutes: 20
+        retry_wait_seconds: 300
+        max_attempts: 3
+        command: >-
+          echo # To avoid spending a huge time compiling vcpkg dependencies, we download a root that comes precompiled with all the ports that we need &
+          choco install --no-progress -y wget 7zip &
+          echo &
+          echo # Download and install SWIG &
+          wget -nv https://sourceforge.net/projects/swig/files/swigwin/swigwin-4.0.2/swigwin-4.0.2.zip -O swigwin.zip &
+          7z x swigwin.zip &
+          mv swigwin-4.0.2/swig.exe swig.exe &
+          echo &
+          echo # To avoid problems with non-relocatable packages, we unzip the archive exactly in the same C:/robotology/vcpkg &
+          that has been used to create the pre-compiled archive &
+          wget -nv https://github.com/robotology/robotology-superbuild-dependencies-vcpkg/releases/download/v0.6.0/vcpkg-robotology-yarp-only.zip &
+          7z x -oC:\ vcpkg-robotology-yarp-only.zip &
+          echo &
+          echo # Download and install YCM &
+          wget -nv https://github.com/robotology/ycm/releases/download/v0.12.1/YCM-0.12.1-all.tar.gz -O ycm.tar.gz &
+          7z x ycm.tar.gz &
+          7z x -ttar -oC:\robotology ycm.tar &
+          echo &
+          echo # Download and install ccache &
+          wget -nv https://github.com/cristianadam/ccache/releases/download/v3.7.7/Windows.tar.xz -O ccache.tar.xz &
+          7z x ccache.tar.xz &
+          7z x -ttar ccache.tar
+
+    - name: Dependencies [macOS]
+      if: runner.os == 'macOS'
+      uses: nick-invision/retry@v2.2.0
+      with:
+        timeout_minutes: 20
+        retry_wait_seconds: 300
+        max_attempts: 3
+        command: |
+          # Select Xcode version
+          #ls -n /Applications/ | grep Xcode*
+          if [[ "${{ matrix.config.os }}" == "macos-11.0" ]]; then
+            sudo xcode-select -s /Applications/Xcode_12.3.app/Contents/Developer
+          fi
+
+          brew tap robotology/homebrew-formulae
+          brew update
+          brew install ccache
+          brew install ace
+          brew install sqlite tinyxml libedit libpng qt5 opencv eigen graphviz
+          brew install robotology/formulae/ycm
