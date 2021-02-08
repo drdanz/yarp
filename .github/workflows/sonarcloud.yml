@@ -36,8 +36,7 @@ jobs:
 
         echo "SONAR_SCANNER_OPTS=\"-server\"" >> $GITHUB_ENV
 
-        echo "PATH=\${SONAR_SCANNER_HOME}/bin:${PATH}" >> $GITHUB_ENV
-        echo "PATH=${HOME}/.sonar/build-wrapper-linux-x86:${PATH}" >> $GITHUB_ENV
+        echo "PATH=${HOME}/.sonar/build-wrapper-linux-x86:\${SONAR_SCANNER_HOME}/bin:${PATH}" >> $GITHUB_ENV
 
         cat $GITHUB_ENV
 
