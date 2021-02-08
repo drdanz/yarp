@@ -94,21 +94,24 @@ jobs:
 
     - name: Prepare Environment for SonarCloud
       env:
-        GITHUB_TOKEN:
+        SONAR_PROJECT_KEY: 'drdanz_yarp'
+        SONAR_PROJECT_NAME: 'yarp'
+        SONAR_ORGANIZATION: 'drdanz'
+        SONAR_SCANNER_VERSION: '4.6.0.2311'
       run: |
          # project name from SonarCloud projet creation page -Dsonar.projectKey=XXXX
-        echo "SONAR_PROJECT_KEY=drdanz_yarp" >> $GITHUB_ENV
+        echo "SONAR_PROJECT_KEY=${SONAR_PROJECT_KEY}" >> $GITHUB_ENV
 
         # project name from SonarCloud projet creation page -Dsonar.projectKey=XXXX
-        echo "SONAR_PROJECT_NAME=yarp" >> $GITHUB_ENV
+        echo "SONAR_PROJECT_NAME=${SONAR_PROJECT_NAME}" >> $GITHUB_ENV
 
         # project name from SonarCloud projet creation page -Dsonar.projectName=XXXX
-        echo "SONAR_ORGANIZATION=drdanz" >> $GITHUB_ENV
+        echo "SONAR_ORGANIZATION=${SONAR_ORGANIZATION}" >> $GITHUB_ENV
 
         # Set default to SONAR_HOST_URL in not provided
         echo "SONAR_HOST_URL=${SONAR_HOST_URL:-https://sonarcloud.io}" >> $GITHUB_ENV
 
-        echo "SONAR_SCANNER_VERSION=4.2.0.1873" >> $GITHUB_ENV
+        echo "SONAR_SCANNER_VERSION=${SONAR_SCANNER_VERSION}" >> $GITHUB_ENV
         echo "SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-${SONAR_SCANNER_VERSION}-linux"
 
     - name: Download SonarCloud
