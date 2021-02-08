@@ -11,6 +11,36 @@ jobs:
     name: SonarCloud
     runs-on: ubuntu-20.04
     steps:
+
+    - name: Prepare Environment for SonarCloud
+      env:
+        SONAR_PROJECT_KEY: 'drdanz_yarp'
+        SONAR_PROJECT_NAME: 'yarp'
+        SONAR_ORGANIZATION: 'drdanz'
+        SONAR_SCANNER_VERSION: '4.6.0.2311'
+      run: |
+        # project name from SonarCloud projet creation page -Dsonar.projectKey=XXXX
+        echo "SONAR_PROJECT_KEY=${SONAR_PROJECT_KEY}" >> $GITHUB_ENV
+
+        # project name from SonarCloud projet creation page -Dsonar.projectKey=XXXX
+        echo "SONAR_PROJECT_NAME=${SONAR_PROJECT_NAME}" >> $GITHUB_ENV
+
+        # project name from SonarCloud projet creation page -Dsonar.projectName=XXXX
+        echo "SONAR_ORGANIZATION=${SONAR_ORGANIZATION}" >> $GITHUB_ENV
+
+        # Set default to SONAR_HOST_URL in not provided
+        echo "SONAR_HOST_URL=${SONAR_HOST_URL:-https://sonarcloud.io}" >> $GITHUB_ENV
+
+        echo "SONAR_SCANNER_VERSION=${SONAR_SCANNER_VERSION}" >> $GITHUB_ENV
+        echo "SONAR_SCANNER_HOME=${HOME}/.sonar/sonar-scanner-${SONAR_SCANNER_VERSION}-linux" >> $GITHUB_ENV
+
+        echo "SONAR_SCANNER_OPTS=\"-server\"" >> $GITHUB_ENV
+
+        echo "PATH=\${SONAR_SCANNER_HOME}/bin:${PATH}" >> $GITHUB_ENV
+        echo "PATH=${HOME}/.sonar/build-wrapper-linux-x86:${PATH}" >> $GITHUB_ENV
+
+        cat $GITHUB_ENV
+
     - name: Clone repository
       uses: actions/checkout@v2
       with:
@@ -91,33 +121,6 @@ jobs:
           -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON \
           -DYARP_NO_DEPRECATED:BOOL=ON \
           -DYARP_COMPILE_BINDINGS:BOOL=OFF
-
-    - name: Prepare Environment for SonarCloud
-      env:
-        SONAR_PROJECT_KEY: 'drdanz_yarp'
-        SONAR_PROJECT_NAME: 'yarp'
-        SONAR_ORGANIZATION: 'drdanz'
-        SONAR_SCANNER_VERSION: '4.6.0.2311'
-      run: |
-        # project name from SonarCloud projet creation page -Dsonar.projectKey=XXXX
-        echo "SONAR_PROJECT_KEY=${SONAR_PROJECT_KEY}" >> $GITHUB_ENV
-
-        # project name from SonarCloud projet creation page -Dsonar.projectKey=XXXX
-        echo "SONAR_PROJECT_NAME=${SONAR_PROJECT_NAME}" >> $GITHUB_ENV
-
-        # project name from SonarCloud projet creation page -Dsonar.projectName=XXXX
-        echo "SONAR_ORGANIZATION=${SONAR_ORGANIZATION}" >> $GITHUB_ENV
-
-        # Set default to SONAR_HOST_URL in not provided
-        echo "SONAR_HOST_URL=${SONAR_HOST_URL:-https://sonarcloud.io}" >> $GITHUB_ENV
-
-        echo "SONAR_SCANNER_VERSION=${SONAR_SCANNER_VERSION}" >> $GITHUB_ENV
-        echo "SONAR_SCANNER_HOME=${HOME}/.sonar/sonar-scanner-${SONAR_SCANNER_VERSION}-linux" >> $GITHUB_ENV
-
-        echo "SONAR_SCANNER_OPTS=\"-server\"" >> $GITHUB_ENV
-
-        echo "PATH=${SONAR_SCANNER_HOME}/bin:${PATH}" >> $GITHUB_ENV
-        echo "PATH=${HOME}/.sonar/build-wrapper-linux-x86:${PATH}" >> $GITHUB_ENV
 
     - name: Download SonarCloud
       run: |
