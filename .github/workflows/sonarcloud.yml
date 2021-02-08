@@ -11,11 +11,132 @@ jobs:
     name: SonarCloud
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    - name: Clone repository
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+    # This step is copied from the build step, please keep them in sync until we
+    # find a better way to do it automatically
+    - name: Dependencies [Linux]
+      if: runner.os == 'Linux'
+      uses: nick-invision/retry@v2.2.0
+      with:
+        timeout_minutes: 20
+        retry_wait_seconds: 300
+        max_attempts: 3
+        command: |
+          # Install Robotology dependencies from robotology ppa
+          sudo apt-add-repository -y ppa:robotology/ppa
+          sudo apt-get install -qq -y ycm-cmake-modules \
+                                      librobottestingframework-dev
+
+          # Install build tools
+          sudo apt-get install -qq -y cmake \
+                                      ccache \
+                                      ninja-build \
+                                      valgrind \
+                                      lcov
+
+          sudo apt-get install -qq -y libace-dev \
+                                      libsqlite3-dev \
+                                      libtinyxml-dev \
+                                      libedit-dev \
+                                      qtbase5-dev \
+                                      qtdeclarative5-dev \
+                                      qtmultimedia5-dev \
+                                      libqt5opengl5-dev \
+                                      libqcustomplot-dev \
+                                      libopencv-dev \
+                                      libeigen3-dev \
+                                      libgraphviz-dev \
+                                      libgstreamer1.0-dev \
+                                      libgstreamer-plugins-base1.0-dev \
+                                      libpng-dev \
+                                      libv4l-dev \
+                                      libavcodec-dev \
+                                      libavdevice-dev \
+                                      libavformat-dev \
+                                      libavutil-dev \
+                                      portaudio19-dev \
+                                      libsdl1.2-dev \
+                                      libopenni2-dev \
+                                      libftdi-dev \
+                                      libi2c-dev \
+                                      libfuse-dev \
+                                      libjpeg-dev \
+                                      libpcl-dev
+
+          # Install SWIG and bindings dependencies
+          sudo apt-get install -qq -y swig \
+                                      mono-mcs \
+                                      liblua5.3-dev \
+                                      lua5.3 \
+                                      tcl-dev \
+                                      tk-dev \
+                                      python3-dev \
+                                      liboctave-dev \
+                                      default-jdk \
+                                      ruby-dev \
+                                      ruby \
+                                      perl
+
+          # Remove old packages from apt cache
+          sudo apt-get autoclean -qq
+
+    - name: Run CMake
+      run: |
+        /usr/bin/cmake -S. -Bbuild \
+          -C .ci/initial-cache.gh.linux.cmake \
+          -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON \
+          -DYARP_NO_DEPRECATED:BOOL=ON \
+          -DYARP_COMPILE_BINDINGS:BOOL=OFF
+
+    - name: Prepare Environment for SonarCloud
+      env:
+        GITHUB_TOKEN:
+      run: |
+         # project name from SonarCloud projet creation page -Dsonar.projectKey=XXXX
+        echo "SONAR_PROJECT_KEY=drdanz_yarp" >> $GITHUB_ENV
+
+        # project name from SonarCloud projet creation page -Dsonar.projectKey=XXXX
+        echo "SONAR_PROJECT_NAME=yarp" >> $GITHUB_ENV
+
+        # project name from SonarCloud projet creation page -Dsonar.projectName=XXXX
+        echo "SONAR_ORGANIZATION=drdanz" >> $GITHUB_ENV
+
+        # Set default to SONAR_HOST_URL in not provided
+        echo "SONAR_HOST_URL=${SONAR_HOST_URL:-https://sonarcloud.io}" >> $GITHUB_ENV
+
+        echo "SONAR_SCANNER_VERSION=4.2.0.1873" >> $GITHUB_ENV
+        echo "SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-${SONAR_SCANNER_VERSION}-linux"
+
+    - name: Download SonarCloud
+      run: |
+        mkdir $HOME/.sonar
+
+        # download sonar-scanner
+        curl -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
+        unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
+        export PATH=$SONAR_SCANNER_HOME/bin:$PATH
+        export SONAR_SCANNER_OPTS="-server"
+
+        # download build-wrapper
+        curl -sSLo $HOME/.sonar/build-wrapper-linux-x86.zip https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip
+        unzip -o $HOME/.sonar/build-wrapper-linux-x86.zip -d $HOME/.sonar/
+        export PATH=$HOME/.sonar/build-wrapper-linux-x86:$PATH
+
+    - name: SonarCloud Scan
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: |
+        # Build inside the build-wrapper
+        build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build/ --config Release
+
+        # Run sonar scanner (here, arguments are passed through the command line but most of them can be written in the sonar-project.properties file)
+        [[ -v SONAR_TOKEN ]] && SONAR_TOKEN_CMD_ARG="-Dsonar.login=${SONAR_TOKEN}"
+        [[ -v SONAR_ORGANIZATION ]] && SONAR_ORGANIZATION_CMD_ARG="-Dsonar.organization=${SONAR_ORGANIZATION}"
+        [[ -v SONAR_PROJECT_NAME ]] && SONAR_PROJECT_NAME_CMD_ARG="-Dsonar.projectName=${SONAR_PROJECT_NAME}"
+        SONAR_OTHER_ARGS="-Dsonar.projectVersion=1.0 -Dsonar.sources=src -Dsonar.cfamily.build-wrapper-output=build_wrapper_output_directory -Dsonar.sourceEncoding=UTF-8"
+        sonar-scanner -Dsonar.host.url="${SONAR_HOST_URL}" -Dsonar.projectKey=${SONAR_PROJECT_KEY} ${SONAR_OTHER_ARGS} ${SONAR_PROJECT_NAME_CMD_ARG} ${SONAR_TOKEN_CMD_ARG} ${SONAR_ORGANIZATION_CMD_ARG}
