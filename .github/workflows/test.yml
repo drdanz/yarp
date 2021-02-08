@@ -2,10 +2,10 @@ name: Test
 on:
   push:
 
-    name: SonarCloud
+jobs:
+    name: TestJob
     runs-on: ubuntu-20.04
     steps:
 
-jobs:
     - name: Test job
       uses: ./.github/actions/yarp-install-dependencies

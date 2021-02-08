@@ -41,6 +41,12 @@ jobs:
 
         cat $GITHUB_ENV
 
+    - name: Prepare Environment for SonarCloud
+      run: |
+        echo ${PATH}
+        exit 1
+
+
     - name: Clone repository
       uses: actions/checkout@v2
       with:
