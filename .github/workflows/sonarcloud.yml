@@ -112,24 +112,24 @@ jobs:
         echo "SONAR_HOST_URL=${SONAR_HOST_URL:-https://sonarcloud.io}" >> $GITHUB_ENV
 
         echo "SONAR_SCANNER_VERSION=${SONAR_SCANNER_VERSION}" >> $GITHUB_ENV
-        echo "SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-${SONAR_SCANNER_VERSION}-linux"
+        echo "SONAR_SCANNER_HOME=${HOME}/.sonar/sonar-scanner-${SONAR_SCANNER_VERSION}-linux" >> $GITHUB_ENV
 
         echo "SONAR_SCANNER_OPTS=\"-server\"" >> $GITHUB_ENV
 
-        echo "PATH=$SONAR_SCANNER_HOME/bin:$PATH" >> $GITHUB_ENV
-        echo "PATH=$HOME/.sonar/build-wrapper-linux-x86:$PATH" >> $GITHUB_ENV
+        echo "PATH=${SONAR_SCANNER_HOME}/bin:${PATH}" >> $GITHUB_ENV
+        echo "PATH=${HOME}/.sonar/build-wrapper-linux-x86:${PATH}" >> $GITHUB_ENV
 
     - name: Download SonarCloud
       run: |
-        mkdir $HOME/.sonar
+        mkdir ${HOME}/.sonar
 
-        # download sonar-scanner
-        curl -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
-        unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
+        # Download sonar-scanner
+        curl -sSLo ${HOME}/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
+        unzip -o ${HOME}/.sonar/sonar-scanner.zip -d ${HOME}/.sonar/
 
-        # download build-wrapper
-        curl -sSLo $HOME/.sonar/build-wrapper-linux-x86.zip https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip
-        unzip -o $HOME/.sonar/build-wrapper-linux-x86.zip -d $HOME/.sonar/
+        # Download build-wrapper
+        curl -sSLo ${HOME}/.sonar/build-wrapper-linux-x86.zip https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip
+        unzip -o ${HOME}/.sonar/build-wrapper-linux-x86.zip -d ${HOME}/.sonar/
 
     - name: SonarCloud Scan
       env:
