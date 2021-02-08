@@ -42,7 +42,7 @@ jobs:
 
         cat $GITHUB_ENV
 
-   - name: Clone repository
+    - name: Clone repository
       uses: actions/checkout@v2
       with:
         fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
