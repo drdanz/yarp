@@ -99,7 +99,7 @@ jobs:
         SONAR_ORGANIZATION: 'drdanz'
         SONAR_SCANNER_VERSION: '4.6.0.2311'
       run: |
-         # project name from SonarCloud projet creation page -Dsonar.projectKey=XXXX
+        # project name from SonarCloud projet creation page -Dsonar.projectKey=XXXX
         echo "SONAR_PROJECT_KEY=${SONAR_PROJECT_KEY}" >> $GITHUB_ENV
 
         # project name from SonarCloud projet creation page -Dsonar.projectKey=XXXX
