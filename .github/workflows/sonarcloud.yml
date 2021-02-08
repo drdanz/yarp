@@ -117,14 +117,6 @@ jobs:
           # Remove old packages from apt cache
           sudo apt-get autoclean -qq
 
-    - name: Run CMake
-      run: |
-        /usr/bin/cmake -S. -Bbuild \
-          -C .ci/initial-cache.gh.linux.cmake \
-          -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON \
-          -DYARP_NO_DEPRECATED:BOOL=ON \
-          -DYARP_COMPILE_BINDINGS:BOOL=OFF
-
     - name: Download SonarCloud
       run: |
         mkdir ${HOME}/.sonar
@@ -137,17 +129,52 @@ jobs:
         curl -sSLo ${HOME}/.sonar/build-wrapper-linux-x86.zip https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip
         unzip -o ${HOME}/.sonar/build-wrapper-linux-x86.zip -d ${HOME}/.sonar/
 
+    - name: Run CMake
+      run: |
+        export CLICOLOR_FORCE=1
+        export YARP_COLORED_OUTPUT=1
+
+        /usr/bin/cmake -S. -Bbuild \
+          -C .ci/initial-cache.gh.linux.cmake \
+          -DCMAKE_C_FLAGS=-fdiagnostics-color=always \
+          -DCMAKE_CXX_FLAGS=-fdiagnostics-color=always \
+          -DCMAKE_BUILD_TYPE=Profile \
+          "-DCMAKE_C_FLAGS_PROFILE=-pg -g3 -ggdb -fno-inline -ftest-coverage -fprofile-arcs -DNDEBUG" \
+          "-DCMAKE_CXX_FLAGS_PROFILE=-pg -g3 -ggdb -fno-inline -ftest-coverage -fprofile-arcs -DNDEBUG" \
+          -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON \
+          -DYARP_NO_DEPRECATED:BOOL=ON \
+          -DYARP_COMPILE_BINDINGS:BOOL=OFF
+
+        (cd build && lcov --directory . --zerocounters)
+
+        (cd build && make && make test)
+
+        # Capture coverage info for Profile builds
+        (cd build; lcov --directory . --capture --output-file coverage.info)
+
+        # Filter out system and test code
+        (cd build; lcov --remove coverage.info '/usr/*' 'tests/*' 'example/*' 'extern/*' 'build/*' --output-file coverage.info)
+
+        # Debug before upload
+        (cd build; lcov --list coverage.info)
+
+        echo "SONAR_CFAMILY_GCOV_REPORTSPATH=build/coverage.info" >> $GITHUB_ENV
+
     - name: SonarCloud Scan
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
         # Build inside the build-wrapper
-        build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build/ --config Release
+        build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build/ --config Profile
+
+        build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build/ --config Profile --target test
+
 
         # Run sonar scanner (here, arguments are passed through the command line but most of them can be written in the sonar-project.properties file)
         [[ -v SONAR_TOKEN ]] && SONAR_TOKEN_CMD_ARG="-Dsonar.login=${SONAR_TOKEN}"
         [[ -v SONAR_ORGANIZATION ]] && SONAR_ORGANIZATION_CMD_ARG="-Dsonar.organization=${SONAR_ORGANIZATION}"
         [[ -v SONAR_PROJECT_NAME ]] && SONAR_PROJECT_NAME_CMD_ARG="-Dsonar.projectName=${SONAR_PROJECT_NAME}"
+        [[ -v SONAR_CFAMILY_GCOV_REPORTSPATH ]] && SONAR_CFAMILY_GCOV_REPORTSPATH_CMD_ARG="-Dsonar.cfamily.gcov.reportsPath=${SONAR_CFAMILY_GCOV_REPORTSPATH}" ]]
         SONAR_OTHER_ARGS="-Dsonar.projectVersion=1.0 -Dsonar.sources=src -Dsonar.cfamily.build-wrapper-output=build_wrapper_output_directory -Dsonar.sourceEncoding=UTF-8 -Dsonar.cfamily.threads=${SONAR_THREADS}"
         sonar-scanner -Dsonar.host.url="${SONAR_HOST_URL}" -Dsonar.projectKey=${SONAR_PROJECT_KEY} ${SONAR_OTHER_ARGS} ${SONAR_PROJECT_NAME_CMD_ARG} ${SONAR_TOKEN_CMD_ARG} ${SONAR_ORGANIZATION_CMD_ARG}
