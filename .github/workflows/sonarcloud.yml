@@ -32,11 +32,13 @@ jobs:
         echo "SONAR_HOST_URL=${SONAR_HOST_URL:-https://sonarcloud.io}" >> $GITHUB_ENV
 
         echo "SONAR_SCANNER_VERSION=${SONAR_SCANNER_VERSION}" >> $GITHUB_ENV
-        echo "SONAR_SCANNER_HOME=${HOME}/.sonar/sonar-scanner-${SONAR_SCANNER_VERSION}-linux" >> $GITHUB_ENV
+
+        SONAR_SCANNER_HOME=${HOME}/.sonar/sonar-scanner-${SONAR_SCANNER_VERSION}-linux
+        echo "SONAR_SCANNER_HOME=${SONAR_SCANNER_HOME}" >> $GITHUB_ENV
 
         echo "SONAR_SCANNER_OPTS=\"-server\"" >> $GITHUB_ENV
 
-        echo "PATH=${HOME}/.sonar/build-wrapper-linux-x86:\${SONAR_SCANNER_HOME}/bin:${PATH}" >> $GITHUB_ENV
+        echo "PATH=${HOME}/.sonar/build-wrapper-linux-x86:${SONAR_SCANNER_HOME}/bin:${PATH}" >> $GITHUB_ENV
 
         cat $GITHUB_ENV
 
