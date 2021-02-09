@@ -37,6 +37,7 @@ jobs:
         SONAR_LINKS_HOMEPAGE: 'https://www.yarp.it/'
         SONAR_SOURCES: 'src'
         SONAR_TESTS: 'tests'
+        SONAR_CFAMILY_GCOV_REPORTSPATH: 'build/coverage.info'
         SONAR_CFAMILY_CACHE_ENABLED: true
         SONAR_SCANNER_VERSION: '4.6.0.2311'
         SONAR_THREADS: 2
