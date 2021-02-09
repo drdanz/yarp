@@ -1,4 +1,4 @@
-name: Build
+name: 'SonarCloud'
 on:
   push:
     branches:
@@ -199,16 +199,19 @@ jobs:
         # Debug before upload
         (cd build; lcov --list coverage.info)
 
-    - name: SonarCloud Scan
+    - name: Build inside the build-wrapper
+      run: |
+        build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build --config Profile
+
+    - name: Run tests inside the build-wrapper
+      run: |
+        build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build --config Profile --target test
+
+    - name: Run sonar scanner
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
-        # Build inside the build-wrapper
-        build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build --config Profile
-
-        build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build --config Profile --target test
-
         # Run sonar scanner (here, arguments are passed through the command line but most of them can be written in the sonar-project.properties file)
         [[ -v SONAR_TOKEN ]] && SONAR_TOKEN_CMD_ARG="-Dsonar.login=${SONAR_TOKEN}"
         [[ -v SONAR_ORGANIZATION ]] && SONAR_ORGANIZATION_CMD_ARG="-Dsonar.organization=${SONAR_ORGANIZATION}"
@@ -242,5 +245,5 @@ jobs:
             ${SONAR_PROJECT_DESCRIPTION_CMD_ARG} \
             ${SONAR_TOKEN_CMD_ARG} \
             ${SONAR_ORGANIZATION_CMD_ARG} \
-            ${SONAR_CFAMILY_GCOV_REPORTSPATH} \
+            ${SONAR_CFAMILY_GCOV_REPORTSPATH_CMD_ARG} \
             ${SONAR_CFAMILY_CACHE_PATH_CMD_ARG}
