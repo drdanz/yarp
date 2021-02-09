@@ -11,12 +11,31 @@ jobs:
     name: SonarCloud
     runs-on: ubuntu-20.04
     steps:
+    - name: Clone repository
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+    - name: Get YARP Project Version
+      id: get_yarp_version
+      run: |
+        echo "::set-output name=yarp_version::$(awk '/ VERSION /{print $2}' CMakeLists.txt)"
+
+    - name: Get Timestamp
+      id: get_timestamp
+      run: |
+        echo "::set-output name=timestamp::$(/bin/date -u +%Y%m%d-%H%M%S)"
 
     - name: Prepare Environment for SonarCloud
       env:
+        SONAR_ORGANIZATION: 'drdanz'
         SONAR_PROJECT_KEY: 'drdanz_yarp'
         SONAR_PROJECT_NAME: 'yarp'
-        SONAR_ORGANIZATION: 'drdanz'
+        SONAR_PROJECT_DESCRIPTION: 'Yet Another Robot Platform'
+        SONAR_PROJECT_VERSION: ${{ steps.get_yarp_version.outputs.yarp_version }}
+        SONAR_SOURCES: 'src'
+        SONAR_CFAMILY_GCOV_REPORTSPATH: 'build/coverage.info'
+        SONAR_CFAMILY_CACHE_PATH: '.sonar/cache'
         SONAR_SCANNER_VERSION: '4.6.0.2311'
       run: |
         # project name from SonarCloud projet creation page -Dsonar.projectKey=XXXX
@@ -28,6 +47,9 @@ jobs:
         # project name from SonarCloud projet creation page -Dsonar.projectName=XXXX
         echo "SONAR_ORGANIZATION=${SONAR_ORGANIZATION}" >> $GITHUB_ENV
 
+        # project version
+        echo "SONAR_PROJECT_VERSION=${SONAR_PROJECT_VERSION:-1.0}"
+
         # Set default to SONAR_HOST_URL in not provided
         echo "SONAR_HOST_URL=${SONAR_HOST_URL:-https://sonarcloud.io}" >> $GITHUB_ENV
 
@@ -36,18 +58,27 @@ jobs:
         SONAR_SCANNER_HOME=${HOME}/.sonar/sonar-scanner-${SONAR_SCANNER_VERSION}-linux
         echo "SONAR_SCANNER_HOME=${SONAR_SCANNER_HOME}" >> $GITHUB_ENV
 
-        echo "SONAR_SCANNER_OPTS=-server" >> $GITHUB_ENV
-
+        echo "SONAR_SCANNER_OPTS=${SONAR_SCANNER_OPTS:--server}" >> $GITHUB_ENV
+        echo "SONAR_SOURCES=${SONAR_SOURCES:-src}" >> $GITHUB_ENV
+        echo "SONAR_SOURCEENCODING=${SONAR_SOURCEENCODING:-UTF-8}" >> $GITHUB_ENV
         echo "SONAR_THREADS=${SONAR_THREADS:-1}" >> $GITHUB_ENV
+
+        [[ -v SONAR_CFAMILY_GCOV_REPORTSPATH ]] && echo "SONAR_CFAMILY_GCOV_REPORTSPATH=${SONAR_CFAMILY_GCOV_REPORTSPATH}" >> $GITHUB_ENV
+        [[ -v SONAR_CFAMILY_CACHE_PATH ]] && echo "SONAR_CFAMILY_CACHE_PATH=${SONAR_CFAMILY_CACHE_PATH}" >> $GITHUB_ENV
 
         echo "PATH=${HOME}/.sonar/build-wrapper-linux-x86:${SONAR_SCANNER_HOME}/bin:${PATH}" >> $GITHUB_ENV
 
         cat $GITHUB_ENV
 
-    - name: Clone repository
-      uses: actions/checkout@v2
+    - name: Handle cache
+      uses: actions/cache@v2
       with:
-        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+        path: |
+          .ccache
+          .sonar/cache
+        key: sonarcloud-cache-${{ steps.get_timestamp.outputs.timestamp }}
+        restore-keys: |
+          sonarcloud-cache-
 
     # This step is copied from the build step, please keep them in sync until we
     # find a better way to do it automatically
@@ -119,7 +150,7 @@ jobs:
 
     - name: Download SonarCloud
       run: |
-        mkdir ${HOME}/.sonar
+        mkdir -p ${HOME}/.sonar
 
         # Download sonar-scanner
         curl -sSLo ${HOME}/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
@@ -158,23 +189,40 @@ jobs:
         # Debug before upload
         (cd build; lcov --list coverage.info)
 
-        echo "SONAR_CFAMILY_GCOV_REPORTSPATH=build/coverage.info" >> $GITHUB_ENV
-
     - name: SonarCloud Scan
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
         # Build inside the build-wrapper
-        build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build/ --config Profile
+        build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build --config Profile
 
-        build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build/ --config Profile --target test
-
+        build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build --config Profile --target test
 
         # Run sonar scanner (here, arguments are passed through the command line but most of them can be written in the sonar-project.properties file)
         [[ -v SONAR_TOKEN ]] && SONAR_TOKEN_CMD_ARG="-Dsonar.login=${SONAR_TOKEN}"
         [[ -v SONAR_ORGANIZATION ]] && SONAR_ORGANIZATION_CMD_ARG="-Dsonar.organization=${SONAR_ORGANIZATION}"
         [[ -v SONAR_PROJECT_NAME ]] && SONAR_PROJECT_NAME_CMD_ARG="-Dsonar.projectName=${SONAR_PROJECT_NAME}"
+        [[ -v SONAR_PROJECT_DESCRIPTION ]] && SONAR_PROJECT_DESCRIPTION_CMD_ARG="-Dsonar.projectDescription=${SONAR_PROJECT_DESCRIPTION}"
+
+        # Path to coverage files
         [[ -v SONAR_CFAMILY_GCOV_REPORTSPATH ]] && SONAR_CFAMILY_GCOV_REPORTSPATH_CMD_ARG="-Dsonar.cfamily.gcov.reportsPath=${SONAR_CFAMILY_GCOV_REPORTSPATH}"
-        SONAR_OTHER_ARGS="-Dsonar.projectVersion=1.0 -Dsonar.sources=src -Dsonar.cfamily.build-wrapper-output=build_wrapper_output_directory -Dsonar.sourceEncoding=UTF-8 -Dsonar.cfamily.threads=${SONAR_THREADS}"
-        sonar-scanner -Dsonar.host.url="${SONAR_HOST_URL}" -Dsonar.projectKey=${SONAR_PROJECT_KEY} ${SONAR_OTHER_ARGS} ${SONAR_PROJECT_NAME_CMD_ARG} ${SONAR_TOKEN_CMD_ARG} ${SONAR_ORGANIZATION_CMD_ARG} ${SONAR_CFAMILY_GCOV_REPORTSPATH}
+
+        # Path to cache
+        SONAR_CFAMILY_CACHE_PATH_CMD_ARG=-Dsonar.cfamily.cache.enabled=false
+        [[ -v SONAR_CFAMILY_CACHE_PATH ]] && SONAR_CFAMILY_CACHE_PATH_CMD_ARG="-Dsonar.cfamily.cache.enabled=true -Dsonar.cfamily.cache.path=${SONAR_CFAMILY_CACHE_PATH}"
+
+        sonar-scanner \
+            -Dsonar.host.url="${SONAR_HOST_URL}" \
+            -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+            -Dsonar.projectVersion=${SONAR_PROJECT_VERSION} \
+            -Dsonar.sources=${SONAR_SOURCES} \
+            -Dsonar.cfamily.build-wrapper-output=build_wrapper_output_directory \
+            -Dsonar.sourceEncoding=${SONAR_SOURCEENCODING} \
+            -Dsonar.cfamily.threads=${SONAR_THREADS}
+            ${SONAR_PROJECT_NAME_CMD_ARG} \
+            ${SONAR_PROJECT_DESCRIPTION_CMD_ARG} \
+            ${SONAR_TOKEN_CMD_ARG} \
+            ${SONAR_ORGANIZATION_CMD_ARG} \
+            ${SONAR_CFAMILY_GCOV_REPORTSPATH} \
+            ${SONAR_CFAMILY_CACHE_PATH_CMD_ARG}
