@@ -38,7 +38,7 @@ jobs:
         SONAR_SOURCES: 'src'
         SONAR_TESTS: 'tests'
         SONAR_CFAMILY_GCOV_REPORTSPATH: 'build/coverage.info'
-        SONAR_CFAMILY_CACHE_ENABLE: true
+        SONAR_CFAMILY_CACHE_ENABLED: true
         SONAR_SCANNER_VERSION: '4.6.0.2311'
       run: |
         # project name from SonarCloud projet creation page -Dsonar.projectKey=XXXX
@@ -80,7 +80,8 @@ jobs:
 
         [[ -v SONAR_CFAMILY_GCOV_REPORTSPATH ]] && echo "SONAR_CFAMILY_GCOV_REPORTSPATH=\"${SONAR_CFAMILY_GCOV_REPORTSPATH}\"" >> $GITHUB_ENV
 
-        [[ $SONAR_CFAMILY_CACHE_ENABLE = true ]] && echo "SONAR_CFAMILY_CACHE_PATH=\"${SONAR_CFAMILY_CACHE_PATH}\"" >> $GITHUB_ENV
+        echo "SONAR_CFAMILY_CACHE_ENABLED=$([[ $SONAR_CFAMILY_CACHE_ENABLED = true ]] && echo true || echo false)" >> $GITHUB_ENV
+        [[ $SONAR_CFAMILY_CACHE_ENABLED = true ]] && echo "SONAR_CFAMILY_CACHE_PATH=\"${SONAR_CACHE_PATH}\"" >> $GITHUB_ENV
 
         echo "PATH=${SONAR_HOME}/build-wrapper-linux-x86:${SONAR_SCANNER_HOME}/bin:${PATH}" >> $GITHUB_ENV
 
@@ -233,8 +234,7 @@ jobs:
         [[ -v SONAR_CFAMILY_GCOV_REPORTSPATH ]] && SONAR_CFAMILY_GCOV_REPORTSPATH_CMD_ARG="-Dsonar.cfamily.gcov.reportsPath=${SONAR_CFAMILY_GCOV_REPORTSPATH}"
 
         # Path to cache
-        SONAR_CFAMILY_CACHE_PATH_CMD_ARG=-Dsonar.cfamily.cache.enabled=false
-        [[ -v SONAR_CFAMILY_CACHE_PATH ]] && SONAR_CFAMILY_CACHE_PATH_CMD_ARG="-Dsonar.cfamily.cache.enabled=true -Dsonar.cfamily.cache.path=${SONAR_CFAMILY_CACHE_PATH}"
+        [[ -v SONAR_CFAMILY_CACHE_PATH ]] && SONAR_CFAMILY_CACHE_PATH_CMD_ARG="-Dsonar.cfamily.cache.path=${SONAR_CFAMILY_CACHE_PATH}"
 
         sonar-scanner \
             -Dsonar.host.url="${SONAR_HOST_URL}" \
@@ -254,4 +254,5 @@ jobs:
             ${SONAR_TOKEN_CMD_ARG} \
             ${SONAR_ORGANIZATION_CMD_ARG} \
             ${SONAR_CFAMILY_GCOV_REPORTSPATH_CMD_ARG} \
+            -Dsonar.cfamily.cache.enabled=${SONAR_CFAMILY_CACHE_ENABLED} \
             ${SONAR_CFAMILY_CACHE_PATH_CMD_ARG}
