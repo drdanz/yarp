@@ -33,7 +33,9 @@ jobs:
         SONAR_PROJECT_NAME: 'yarp'
         SONAR_PROJECT_DESCRIPTION: 'Yet Another Robot Platform'
         SONAR_PROJECT_VERSION: ${{ steps.get_yarp_version.outputs.yarp_version }}
+        SONAR_LINKS_HOMEPAGE: 'https://www.yarp.it/'
         SONAR_SOURCES: 'src'
+        SONAR_TESTS: 'tests'
         SONAR_CFAMILY_GCOV_REPORTSPATH: 'build/coverage.info'
         SONAR_CFAMILY_CACHE_PATH: '.sonar/cache'
         SONAR_SCANNER_VERSION: '4.6.0.2311'
@@ -50,6 +52,12 @@ jobs:
         # project version
         echo "SONAR_PROJECT_VERSION=${SONAR_PROJECT_VERSION:-1.0}"
 
+        # Links
+        SONAR_LINKS_HOMEPAGE=${SONAR_LINKS_HOMEPAGE:-https://github.com/${GITHUB_REPOSITORY}/}
+        SONAR_LINKS_CI=${SONAR_LINKS_CI:-https://github.com/${GITHUB_REPOSITORY}/actions/}
+        SONAR_LINKS_ISSUE=${SONAR_LINKS_ISSUE:-https://github.com/${GITHUB_REPOSITORY}/issues/}
+        SONAR_LINKS_SCM=${SONAR_LINKS_SCM:-https://github.com/${GITHUB_REPOSITORY}/}
+
         # Set default to SONAR_HOST_URL in not provided
         echo "SONAR_HOST_URL=${SONAR_HOST_URL:-https://sonarcloud.io}" >> $GITHUB_ENV
 
@@ -59,12 +67,14 @@ jobs:
         echo "SONAR_SCANNER_HOME=${SONAR_SCANNER_HOME}" >> $GITHUB_ENV
 
         echo "SONAR_SCANNER_OPTS=${SONAR_SCANNER_OPTS:--server}" >> $GITHUB_ENV
-        echo "SONAR_SOURCES=${SONAR_SOURCES:-src}" >> $GITHUB_ENV
+        echo "SONAR_SOURCES=\"${SONAR_SOURCES:-src}\"" >> $GITHUB_ENV
+        [[ -v SONAR_TESTS ]] && echo "SONAR_TESTS=\"${SONAR_TESTS}\"" >> $GITHUB_ENV
+
         echo "SONAR_SOURCEENCODING=${SONAR_SOURCEENCODING:-UTF-8}" >> $GITHUB_ENV
         echo "SONAR_THREADS=${SONAR_THREADS:-1}" >> $GITHUB_ENV
 
-        [[ -v SONAR_CFAMILY_GCOV_REPORTSPATH ]] && echo "SONAR_CFAMILY_GCOV_REPORTSPATH=${SONAR_CFAMILY_GCOV_REPORTSPATH}" >> $GITHUB_ENV
-        [[ -v SONAR_CFAMILY_CACHE_PATH ]] && echo "SONAR_CFAMILY_CACHE_PATH=${SONAR_CFAMILY_CACHE_PATH}" >> $GITHUB_ENV
+        [[ -v SONAR_CFAMILY_GCOV_REPORTSPATH ]] && echo "SONAR_CFAMILY_GCOV_REPORTSPATH=\"${SONAR_CFAMILY_GCOV_REPORTSPATH}\"" >> $GITHUB_ENV
+        [[ -v SONAR_CFAMILY_CACHE_PATH ]] && echo "SONAR_CFAMILY_CACHE_PATH=\"${SONAR_CFAMILY_CACHE_PATH}\"" >> $GITHUB_ENV
 
         echo "PATH=${HOME}/.sonar/build-wrapper-linux-x86:${SONAR_SCANNER_HOME}/bin:${PATH}" >> $GITHUB_ENV
 
@@ -205,6 +215,9 @@ jobs:
         [[ -v SONAR_PROJECT_NAME ]] && SONAR_PROJECT_NAME_CMD_ARG="-Dsonar.projectName=${SONAR_PROJECT_NAME}"
         [[ -v SONAR_PROJECT_DESCRIPTION ]] && SONAR_PROJECT_DESCRIPTION_CMD_ARG="-Dsonar.projectDescription=${SONAR_PROJECT_DESCRIPTION}"
 
+        # Paths to test files
+        [[ -v SONAR_TESTS ]] && SONAR_TESTS_CMD_ARG="-Dsonar.tests=${SONAR_TESTS}"
+
         # Path to coverage files
         [[ -v SONAR_CFAMILY_GCOV_REPORTSPATH ]] && SONAR_CFAMILY_GCOV_REPORTSPATH_CMD_ARG="-Dsonar.cfamily.gcov.reportsPath=${SONAR_CFAMILY_GCOV_REPORTSPATH}"
 
@@ -217,9 +230,14 @@ jobs:
             -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
             -Dsonar.projectVersion=${SONAR_PROJECT_VERSION} \
             -Dsonar.sources=${SONAR_SOURCES} \
+            -Dsonar.links.homepage=${SONAR_LINKS_HOMEPAGE} \
+            -Dsonar.links.ci=${SONAR_LINKS_CI} \
+            -Dsonar.links.issue=${SONAR_LINKS_ISSUE} \
+            -Dsonar.links.scm=${SONAR_LINKS_SCM} \
             -Dsonar.cfamily.build-wrapper-output=build_wrapper_output_directory \
             -Dsonar.sourceEncoding=${SONAR_SOURCEENCODING} \
-            -Dsonar.cfamily.threads=${SONAR_THREADS}
+            -Dsonar.cfamily.threads=${SONAR_THREADS} \
+            ${SONAR_TESTS_CMD_ARG} \
             ${SONAR_PROJECT_NAME_CMD_ARG} \
             ${SONAR_PROJECT_DESCRIPTION_CMD_ARG} \
             ${SONAR_TOKEN_CMD_ARG} \
