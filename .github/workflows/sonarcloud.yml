@@ -42,6 +42,11 @@ jobs:
         SONAR_SCANNER_VERSION: '4.6.0.2311'
         SONAR_THREADS: 2
       run: |
+        # Internal variables
+        SONAR_HOME_PATH=.sonar
+        SONAR_CACHE_PATH=${SONAR_HOME_PATH}/cache
+        SONAR_HOME=${HOME}/${SONAR_HOME_PATH}
+
         # project name from SonarCloud projet creation page -Dsonar.projectKey=XXXX
         echo "SONAR_PROJECT_KEY=${SONAR_PROJECT_KEY}" >> $GITHUB_ENV
 
@@ -52,22 +57,18 @@ jobs:
         echo "SONAR_ORGANIZATION=${SONAR_ORGANIZATION}" >> $GITHUB_ENV
 
         # project version
-        echo "SONAR_PROJECT_VERSION=${SONAR_PROJECT_VERSION:-1.0}"
+        echo "SONAR_PROJECT_VERSION=${SONAR_PROJECT_VERSION:-1.0}" >> $GITHUB_ENV
 
         # Links
-        SONAR_LINKS_HOMEPAGE=${SONAR_LINKS_HOMEPAGE:-https://github.com/${GITHUB_REPOSITORY}/}
-        SONAR_LINKS_CI=${SONAR_LINKS_CI:-https://github.com/${GITHUB_REPOSITORY}/actions/}
-        SONAR_LINKS_ISSUE=${SONAR_LINKS_ISSUE:-https://github.com/${GITHUB_REPOSITORY}/issues/}
-        SONAR_LINKS_SCM=${SONAR_LINKS_SCM:-https://github.com/${GITHUB_REPOSITORY}/}
+        SONAR_LINKS_HOMEPAGE=${SONAR_LINKS_HOMEPAGE:-https://github.com/${GITHUB_REPOSITORY}/} >> $GITHUB_ENV
+        SONAR_LINKS_CI=${SONAR_LINKS_CI:-https://github.com/${GITHUB_REPOSITORY}/actions/} >> $GITHUB_ENV
+        SONAR_LINKS_ISSUE=${SONAR_LINKS_ISSUE:-https://github.com/${GITHUB_REPOSITORY}/issues/} >> $GITHUB_ENV
+        SONAR_LINKS_SCM=${SONAR_LINKS_SCM:-https://github.com/${GITHUB_REPOSITORY}/} >> $GITHUB_ENV
 
         # Set default to SONAR_HOST_URL in not provided
         echo "SONAR_HOST_URL=${SONAR_HOST_URL:-https://sonarcloud.io}" >> $GITHUB_ENV
 
         echo "SONAR_SCANNER_VERSION=${SONAR_SCANNER_VERSION}" >> $GITHUB_ENV
-
-        SONAR_HOME_PATH=.sonar
-        SONAR_CACHE_PATH=${SONAR_HOME_PATH}/cache
-        SONAR_HOME=${HOME}/${SONAR_HOME_PATH}
 
         SONAR_SCANNER_HOME=${SONAR_HOME}/sonar-scanner-${SONAR_SCANNER_VERSION}-linux
         echo "SONAR_SCANNER_HOME=${SONAR_SCANNER_HOME}" >> $GITHUB_ENV
