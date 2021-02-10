@@ -90,6 +90,16 @@ jobs:
 
         cat $GITHUB_ENV
 
+        # Download sonar-scanner
+        curl -sSLo ${SONAR_HOME}/sonar-scanner.zip https://binaries${SONAR_HOME_PATH}source.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
+        unzip -o ${SONAR_HOME}/sonar-scanner.zip -d ${SONAR_HOME}/
+
+        # Download build-wrapper
+        curl -sSLo ${SONAR_HOME}/build-wrapper-linux-x86.zip https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip
+        unzip -o ${SONAR_HOME}/build-wrapper-linux-x86.zip -d ${SONAR_HOME}/
+
+        echo "::set-output name=sonar_path::${SONAR_HOME_PATH}"
+        echo "::set-output name=sonar_cache_path::${SONAR_CACHE_PATH}"
 
     # This step is copied from the build step, please keep them in sync until we
     # find a better way to do it automatically
@@ -161,21 +171,19 @@ jobs:
 
     - name: Run CMake
       run: |
+        export CLICOLOR_FORCE=1
+        export YARP_COLORED_OUTPUT=1
+
         /usr/bin/cmake -S. -Bbuild \
           -C .ci/initial-cache.gh.linux.cmake \
+          -DCMAKE_C_FLAGS=-fdiagnostics-color=always \
+          -DCMAKE_CXX_FLAGS=-fdiagnostics-color=always \
+          -DCMAKE_BUILD_TYPE=Profile \
+          "-DCMAKE_C_FLAGS_PROFILE=-pg -g3 -ggdb -fno-inline -ftest-coverage -fprofile-arcs -DNDEBUG" \
+          "-DCMAKE_CXX_FLAGS_PROFILE=-pg -g3 -ggdb -fno-inline -ftest-coverage -fprofile-arcs -DNDEBUG" \
           -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON \
           -DYARP_NO_DEPRECATED:BOOL=ON \
           -DYARP_COMPILE_BINDINGS:BOOL=OFF
-
-    - name: Download SonarCloud
-      run: |
-        # Download sonar-scanner
-        curl -sSLo ${HOME}/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
-        unzip -o ${HOME}/.sonar/sonar-scanner.zip -d ${HOME}/.sonar/
-
-        # Download build-wrapper
-        curl -sSLo ${HOME}/.sonar/build-wrapper-linux-x86.zip https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip
-        unzip -o ${HOME}/.sonar/build-wrapper-linux-x86.zip -d ${HOME}/.sonar/
 
     - name: SonarCloud Scan
       env:
