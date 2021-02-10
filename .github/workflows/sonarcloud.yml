@@ -1,11 +1,9 @@
 name: Build
 on:
   push:
-    branches:
-      - master
-      - yarp-3.4
   pull_request:
     types: [opened, synchronize, reopened]
+
 jobs:
   sonarcloud:
     name: SonarCloud
