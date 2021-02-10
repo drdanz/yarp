@@ -101,6 +101,16 @@ jobs:
         echo "::set-output name=sonar_path::${SONAR_HOME_PATH}"
         echo "::set-output name=sonar_cache_path::${SONAR_CACHE_PATH}"
 
+    - name: Handle cache
+      uses: actions/cache@v2
+      with:
+        path: |
+          .ccache
+          ${{ steps.get_sonar.outputs.sonar_cache_path }}
+        key: sonar-cache-${{ steps.get_timestamp.outputs.timestamp }}
+        restore-keys: |
+          sonar-cache-
+
     # This step is copied from the build step, please keep them in sync until we
     # find a better way to do it automatically
     - name: Dependencies [Linux]
