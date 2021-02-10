@@ -1,4 +1,4 @@
-name: Build
+name: 'SonarCloud'
 on:
   push:
   pull_request:
@@ -9,14 +9,42 @@ jobs:
     name: SonarCloud
     runs-on: ubuntu-20.04
     steps:
+    - name: Clone repository
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
-    - name: Prepare Environment for SonarCloud
+    - name: Get YARP Project Version
+      id: get_yarp_version
+      run: |
+        echo "::set-output name=yarp_version::$(awk '/ VERSION /{print $2}' CMakeLists.txt)"
+
+    - name: Get Timestamp
+      id: get_timestamp
+      run: |
+        echo "::set-output name=timestamp::$(/bin/date -u +%Y%m%d-%H%M%S)"
+
+    - name: Get Sonar and Prepare Environment
+      id: get_sonar
       env:
+        SONAR_ORGANIZATION: 'drdanz'
         SONAR_PROJECT_KEY: 'drdanz_yarp'
         SONAR_PROJECT_NAME: 'yarp'
-        SONAR_ORGANIZATION: 'drdanz'
+        SONAR_PROJECT_DESCRIPTION: 'Yet Another Robot Platform'
+        SONAR_PROJECT_VERSION: ${{ steps.get_yarp_version.outputs.yarp_version }}
+        SONAR_LINKS_HOMEPAGE: 'https://www.yarp.it/'
+        SONAR_SOURCES: 'src'
+        SONAR_TESTS: 'tests'
+        SONAR_CFAMILY_GCOV_REPORTSPATH: 'build/coverage.info'
+        SONAR_CFAMILY_CACHE_ENABLED: true
         SONAR_SCANNER_VERSION: '4.6.0.2311'
+        SONAR_THREADS: 2
       run: |
+        # Internal variables
+        SONAR_HOME_PATH=.sonar
+        SONAR_CACHE_PATH=${SONAR_HOME_PATH}/cache
+        SONAR_HOME=${HOME}/${SONAR_HOME_PATH}
+
         # project name from SonarCloud projet creation page -Dsonar.projectKey=XXXX
         echo "SONAR_PROJECT_KEY=${SONAR_PROJECT_KEY}" >> $GITHUB_ENV
 
@@ -26,26 +54,42 @@ jobs:
         # project name from SonarCloud projet creation page -Dsonar.projectName=XXXX
         echo "SONAR_ORGANIZATION=${SONAR_ORGANIZATION}" >> $GITHUB_ENV
 
+        # project version
+        echo "SONAR_PROJECT_VERSION=${SONAR_PROJECT_VERSION:-1.0}" >> $GITHUB_ENV
+
+        # Links
+        echo "SONAR_LINKS_HOMEPAGE=${SONAR_LINKS_HOMEPAGE:-https://github.com/${GITHUB_REPOSITORY}/}" >> $GITHUB_ENV
+        echo "SONAR_LINKS_CI=${SONAR_LINKS_CI:-https://github.com/${GITHUB_REPOSITORY}/actions/}" >> $GITHUB_ENV
+        echo "SONAR_LINKS_ISSUE=${SONAR_LINKS_ISSUE:-https://github.com/${GITHUB_REPOSITORY}/issues/}" >> $GITHUB_ENV
+        echo "SONAR_LINKS_SCM=${SONAR_LINKS_SCM:-https://github.com/${GITHUB_REPOSITORY}/}" >> $GITHUB_ENV
+
         # Set default to SONAR_HOST_URL in not provided
         echo "SONAR_HOST_URL=${SONAR_HOST_URL:-https://sonarcloud.io}" >> $GITHUB_ENV
 
         echo "SONAR_SCANNER_VERSION=${SONAR_SCANNER_VERSION}" >> $GITHUB_ENV
 
-        SONAR_SCANNER_HOME=${HOME}/.sonar/sonar-scanner-${SONAR_SCANNER_VERSION}-linux
+        SONAR_SCANNER_HOME=${SONAR_HOME}/sonar-scanner-${SONAR_SCANNER_VERSION}-linux
         echo "SONAR_SCANNER_HOME=${SONAR_SCANNER_HOME}" >> $GITHUB_ENV
 
-        echo "SONAR_SCANNER_OPTS=-server" >> $GITHUB_ENV
+        echo "SONAR_SCANNER_OPTS=${SONAR_SCANNER_OPTS:--server}" >> $GITHUB_ENV
+        echo "SONAR_SOURCES=${SONAR_SOURCES:-src}" >> $GITHUB_ENV
+        [[ -v SONAR_TESTS ]] && echo "SONAR_TESTS=${SONAR_TESTS}" >> $GITHUB_ENV
 
+        echo "SONAR_SOURCEENCODING=${SONAR_SOURCEENCODING:-UTF-8}" >> $GITHUB_ENV
         echo "SONAR_THREADS=${SONAR_THREADS:-1}" >> $GITHUB_ENV
 
-        echo "PATH=${HOME}/.sonar/build-wrapper-linux-x86:${SONAR_SCANNER_HOME}/bin:${PATH}" >> $GITHUB_ENV
+        [[ -v SONAR_CFAMILY_GCOV_REPORTSPATH ]] && echo "SONAR_CFAMILY_GCOV_REPORTSPATH=${SONAR_CFAMILY_GCOV_REPORTSPATH}" >> $GITHUB_ENV
+
+        echo "SONAR_CFAMILY_CACHE_ENABLED=$([[ $SONAR_CFAMILY_CACHE_ENABLED = true ]] && echo true || echo false)" >> $GITHUB_ENV
+        [[ $SONAR_CFAMILY_CACHE_ENABLED = true ]] && echo "SONAR_CFAMILY_CACHE_PATH=${SONAR_CACHE_PATH}" >> $GITHUB_ENV
+
+        echo "PATH=${SONAR_HOME}/build-wrapper-linux-x86:${SONAR_SCANNER_HOME}/bin:${PATH}" >> $GITHUB_ENV
+
+        mkdir -p ${SONAR_HOME}
+        mkdir -p ${SONAR_CACHE_PATH}
 
         cat $GITHUB_ENV
 
-    - name: Clone repository
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
     # This step is copied from the build step, please keep them in sync until we
     # find a better way to do it automatically
