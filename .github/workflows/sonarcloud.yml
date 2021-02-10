@@ -36,7 +36,6 @@ jobs:
         SONAR_PROJECT_VERSION: ${{ steps.get_yarp_version.outputs.yarp_version }}
         SONAR_LINKS_HOMEPAGE: 'https://www.yarp.it/'
         SONAR_SOURCES: 'src'
-        SONAR_TESTS: 'tests'
         SONAR_CFAMILY_CACHE_ENABLED: true
         SONAR_SCANNER_VERSION: '4.6.0.2311'
         SONAR_THREADS: 2
