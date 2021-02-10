@@ -195,13 +195,35 @@ jobs:
           -DYARP_NO_DEPRECATED:BOOL=ON \
           -DYARP_COMPILE_BINDINGS:BOOL=OFF
 
-    - name: SonarCloud Scan
+        (cd build && lcov --directory . --zerocounters)
+
+    - name: Build inside the build-wrapper
+      run: |
+        build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build --config Profile
+
+    - name: Run tests inside the build-wrapper
+      run: |
+        build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build --config Profile --target test
+
+    - name: Capture coverage info
+      run: |
+        # Capture coverage info for Profile builds
+        (cd build; lcov --directory . --capture --output-file coverage.info)
+
+        # Filter out system and test code
+        (cd build; lcov --remove coverage.info '/usr/*' 'tests/*' 'example/*' 'extern/*' 'build/*' --output-file coverage.info)
+
+        # Debug before upload
+        (cd build; lcov --list coverage.info)
+
+        # More debug
+        find . -name "*gcov*"
+
+    - name: Run sonar scanner
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
-        # Build inside the build-wrapper
-        build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build/ --config Release
 
         # Run sonar scanner (here, arguments are passed through the command line but most of them can be written in the sonar-project.properties file)
         [[ -v SONAR_TOKEN ]] && SONAR_TOKEN_CMD_ARG="-Dsonar.login=${SONAR_TOKEN}"
