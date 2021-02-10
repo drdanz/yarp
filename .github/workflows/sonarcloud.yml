@@ -197,11 +197,11 @@ jobs:
 
     - name: Build inside the build-wrapper
       run: |
-        build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build --config Release
+        build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build --config Profile
 
     - name: Run tests inside the build-wrapper
       run: |
-        build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build --config Release --target test
+        build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build --config Profile --target test
 
     - name: Run sonar scanner
       env:
