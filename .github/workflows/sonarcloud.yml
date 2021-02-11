@@ -263,6 +263,7 @@ jobs:
             -Dsonar.host.url="${SONAR_HOST_URL}" \
             -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
             -Dsonar.projectVersion=${SONAR_PROJECT_VERSION} \
+            -Dsonar.language=c++ \
             -Dsonar.sources=${SONAR_SOURCES} \
             -Dsonar.links.homepage=${SONAR_LINKS_HOMEPAGE} \
             -Dsonar.links.ci=${SONAR_LINKS_CI} \
