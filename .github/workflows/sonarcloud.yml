@@ -101,16 +101,6 @@ jobs:
         echo "::set-output name=sonar_path::${SONAR_HOME_PATH}"
         echo "::set-output name=sonar_cache_path::${SONAR_CACHE_PATH}"
 
-    - name: Handle cache
-      uses: actions/cache@v2
-      with:
-        path: |
-          .ccache
-          ${{ steps.get_sonar.outputs.sonar_cache_path }}
-        key: sonar-cache-${{ steps.get_timestamp.outputs.timestamp }}
-        restore-keys: |
-          sonar-cache-
-
     # This step is copied from the build step, please keep them in sync until we
     # find a better way to do it automatically
     - name: Dependencies [Linux]
@@ -183,6 +173,47 @@ jobs:
 
           # Remove old packages from apt cache
           sudo apt-get autoclean -qq
+
+    - name: Prepare ccache and print stats
+      id: init_ccache
+      run: |
+        echo "CCACHE_BASEDIR=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+        echo "CCACHE_HOME_PATH=.ccache" >> $GITHUB_ENV
+        echo "CCACHE_DIR=$CCACHE_BASEDIR/${CCACHE_HOME_PATH}" >> $GITHUB_ENV
+        echo "CCACHE_COMPRESS=true" >> $GITHUB_ENV
+        echo "CCACHE_COMPRESSLEVEL=6" >> $GITHUB_ENV
+        echo "CCACHE_MAXSIZE=400M" >> $GITHUB_ENV
+        echo "CCACHE_CPP2=yes" >> $GITHUB_ENV
+        echo "PATH=/usr/lib/ccache::${PATH}" >> $GITHUB_ENV
+
+        cat $GITHUB_ENV
+
+        set -x
+
+        which ccache
+        ccache --version
+        ccache -p
+
+        ls -la --color=always /usr/lib/ccache
+        ls -la --color=always $HOME/lib/ccache
+
+        # Print ccache stats
+        ccache -s
+
+        # Reset ccache stats before uploading
+        ccache -z
+
+        echo "::set-output name=ccache_path::${CCACHE_HOME_PATH}"
+
+    - name: Handle cache
+      uses: actions/cache@v2
+      with:
+        path: |
+          ${{ steps.init_ccache.outputs.ccache_path }}
+          ${{ steps.get_sonar.outputs.sonar_cache_path }}
+        key: sonar-cache-${{ steps.get_timestamp.outputs.timestamp }}
+        restore-keys: |
+          sonar-cache-
 
     - name: Run CMake
       run: |
