@@ -133,6 +133,10 @@ jobs:
                                       valgrind \
                                       lcov \
                                       gcovr
+                                      wget \
+                                      curl \
+                                      clang-11 \
+                                      clang-tidy-11
 
           sudo apt-get install -qq -y libace-dev \
                                       libsqlite3-dev \
@@ -198,6 +202,10 @@ jobs:
 
         (cd build && lcov --directory . --zerocounters)
 
+    - name: Link compile_commands.json in the source directory
+      run: |
+        ln -s build/compile_commands.json .
+
     - name: Build inside the build-wrapper
       run: |
         build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake --build build --config Profile
@@ -223,6 +231,11 @@ jobs:
     - name: Capture coverage info 2
       run: |
         gcovr --xml -r . --object-directory=build -o build/coverage.xml
+
+    - name: Run clang-tidy
+      run: |
+        /usr/bin/run-clang-tidy-11 | sed "s|${PWD}/||g" | tee build/clang-tidy-report.txt
+
     - name: Run sonar scanner
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -265,5 +278,6 @@ jobs:
             ${SONAR_ORGANIZATION_CMD_ARG} \
             ${SONAR_CFAMILY_GCOV_REPORTSPATH_CMD_ARG} \
             -Dsonar.cxx.coverage.reportPath=build/coverage.xml \
+            -Dsonar.cxx.clangtidy.reportPath=build/clang-tidy-report.txt \
             -Dsonar.cfamily.cache.enabled=${SONAR_CFAMILY_CACHE_ENABLED} \
             ${SONAR_CFAMILY_CACHE_PATH_CMD_ARG}
