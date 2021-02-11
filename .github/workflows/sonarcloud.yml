@@ -132,7 +132,7 @@ jobs:
                                       ninja-build \
                                       valgrind \
                                       lcov \
-                                      gcovr
+                                      gcovr \
                                       wget \
                                       curl \
                                       clang-11 \
@@ -278,6 +278,7 @@ jobs:
             ${SONAR_TOKEN_CMD_ARG} \
             ${SONAR_ORGANIZATION_CMD_ARG} \
             ${SONAR_CFAMILY_GCOV_REPORTSPATH_CMD_ARG} \
+            -Dsonar.cxx.file.suffixes=.h,.cpp \
             -Dsonar.cxx.coverage.reportPath=build/coverage.xml \
             -Dsonar.cxx.clangtidy.reportPath=build/clang-tidy-report.txt \
             -Dsonar.cfamily.cache.enabled=${SONAR_CFAMILY_CACHE_ENABLED} \
