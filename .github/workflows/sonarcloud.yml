@@ -131,7 +131,8 @@ jobs:
                                       ccache \
                                       ninja-build \
                                       valgrind \
-                                      lcov
+                                      lcov \
+                                      gcovr
 
           sudo apt-get install -qq -y libace-dev \
                                       libsqlite3-dev \
@@ -219,6 +220,9 @@ jobs:
         # More debug
         find . -name "*gcov*"
 
+    - name: Capture coverage info 2
+      run: |
+        gcovr --xml -r . --object-directory=build -o build/coverage.xml
     - name: Run sonar scanner
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -260,5 +264,6 @@ jobs:
             ${SONAR_TOKEN_CMD_ARG} \
             ${SONAR_ORGANIZATION_CMD_ARG} \
             ${SONAR_CFAMILY_GCOV_REPORTSPATH_CMD_ARG} \
+            -Dsonar.cxx.coverage.reportPath=build/coverage.xml \
             -Dsonar.cfamily.cache.enabled=${SONAR_CFAMILY_CACHE_ENABLED} \
             ${SONAR_CFAMILY_CACHE_PATH_CMD_ARG}
