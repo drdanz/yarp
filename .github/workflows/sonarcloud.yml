@@ -219,7 +219,7 @@ jobs:
 
     - name: Capture coverage info
       run: |
-        gcovr --sonarqube -r . --object-directory=build -o build/coverage.xml
+        gcovr --sonarqube --branches --keep --root . --object-directory=build --output build/coverage.xml
 
     - name: Run sonar scanner
       env:
