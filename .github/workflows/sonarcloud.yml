@@ -240,6 +240,8 @@ jobs:
         # Path to cache
         [[ -v SONAR_CFAMILY_CACHE_PATH ]] && SONAR_CFAMILY_CACHE_PATH_CMD_ARG="-Dsonar.cfamily.cache.path=${SONAR_CFAMILY_CACHE_PATH}"
 
+        set -x
+
         sonar-scanner \
             -Dsonar.host.url="${SONAR_HOST_URL}" \
             -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
