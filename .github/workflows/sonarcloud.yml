@@ -193,7 +193,7 @@ jobs:
 
         echo "::set-output name=ccache_path::${CCACHE_HOME_PATH}"
 
-    - name: Print ccache stats
+    - name: Print ccache info and stats before build
       run: |
         set -x
 
@@ -206,7 +206,7 @@ jobs:
         # Print ccache stats
         ccache -s
 
-        # Reset ccache stats before uploading
+        # Reset ccache stats before starting
         ccache -z
 
     - name: Handle cache
@@ -251,6 +251,13 @@ jobs:
     - name: Run tests
       run: |
         /usr/bin/cmake --build build --config Profile --target test
+
+    - name: Print ccache stats after build
+      run: |
+        set -x
+
+        # Print ccache stats
+        ccache -s
 
     - name: Capture coverage info
       run: |
