@@ -250,7 +250,12 @@ jobs:
 
     - name: Run tests
       run: |
-        /usr/bin/cmake --build build --config Profile --target test
+        # Download CTest2JUnit.xsl
+        wget https://raw.githubusercontent.com/zanata/zanata-tests/master/scripts/CTest2JUnit.xsl CTest2JUnit.xsl
+
+        # -T Test produces the xml output with the results
+        (cd build && ctest -T test)
+        xsltproc CTest2JUnit.xsl build/Testing/`head -n 1 < Testing/TAG`/Test.xml > build/JUnitTestResults.xml
 
     - name: Print ccache stats after build
       run: |
@@ -301,6 +306,7 @@ jobs:
             -Dsonar.cfamily.threads=${SONAR_THREADS} \
             -Dsonar.cfamily.cache.enabled=${SONAR_CFAMILY_CACHE_ENABLED} \
             -Dsonar.coverageReportPaths=build/coverage.xml \
+            -Dsonar.coverageReportPaths=build/JUnitTestResults.xml \
             ${SONAR_TESTS_CMD_ARG} \
             ${SONAR_PROJECT_NAME_CMD_ARG} \
             ${SONAR_PROJECT_DESCRIPTION_CMD_ARG} \
