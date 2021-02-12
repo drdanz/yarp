@@ -174,7 +174,7 @@ jobs:
           # Remove old packages from apt cache
           sudo apt-get autoclean -qq
 
-    - name: Prepare ccache and print stats
+    - name: Prepare ccache environment variables
       id: init_ccache
       run: |
         echo "CCACHE_BASEDIR=$GITHUB_WORKSPACE" >> $GITHUB_ENV
@@ -188,6 +188,10 @@ jobs:
 
         cat $GITHUB_ENV
 
+        echo "::set-output name=ccache_path::${CCACHE_HOME_PATH}"
+
+    - name: Print ccache stats
+      run: |
         set -x
 
         which ccache
@@ -195,15 +199,12 @@ jobs:
         ccache -p
 
         ls -la --color=always /usr/lib/ccache
-        ls -la --color=always $HOME/lib/ccache
 
         # Print ccache stats
         ccache -s
 
         # Reset ccache stats before uploading
         ccache -z
-
-        echo "::set-output name=ccache_path::${CCACHE_HOME_PATH}"
 
     - name: Handle cache
       uses: actions/cache@v2
