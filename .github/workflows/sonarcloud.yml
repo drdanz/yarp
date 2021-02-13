@@ -126,7 +126,8 @@ jobs:
                                       wget \
                                       curl \
                                       clang-11 \
-                                      clang-tidy-11
+                                      clang-tidy-11 \
+                                      xsltproc
 
           sudo apt-get install -qq -y libace-dev \
                                       libsqlite3-dev \
