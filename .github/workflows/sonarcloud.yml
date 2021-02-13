@@ -194,7 +194,7 @@ jobs:
 
         echo "::set-output name=ccache_path::${CCACHE_HOME_PATH}"
 
-    - name: Print ccache info and stats before build
+    - name: Print ccache info and reset stats before build
       run: |
         set -x
 
@@ -203,9 +203,6 @@ jobs:
         ccache -p
 
         ls -la --color=always /usr/lib/ccache
-
-        # Print ccache stats
-        ccache -s
 
         # Reset ccache stats before starting
         ccache -z
@@ -267,7 +264,7 @@ jobs:
 
     - name: Capture coverage info
       run: |
-        gcovr --sonarqube --branches --keep --root . --object-directory=build --output build/coverage.xml
+        gcovr --sonarqube --branches --keep --root . --object-directory=build -e "^build/" -e "^extern/" -e "^example/" -e "^test/" --output build/coverage.xml
 
     - name: Run sonar scanner
       env:
@@ -307,7 +304,7 @@ jobs:
             -Dsonar.cfamily.threads=${SONAR_THREADS} \
             -Dsonar.cfamily.cache.enabled=${SONAR_CFAMILY_CACHE_ENABLED} \
             -Dsonar.coverageReportPaths=build/coverage.xml \
-            -Dsonar.testExecutionReportPaths=build/JUnitTestResults.xml \
+            -Dsonar.junit.reportPaths=build/JUnitTestResults.xml \
             ${SONAR_TESTS_CMD_ARG} \
             ${SONAR_PROJECT_NAME_CMD_ARG} \
             ${SONAR_PROJECT_DESCRIPTION_CMD_ARG} \
