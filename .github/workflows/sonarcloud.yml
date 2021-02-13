@@ -307,7 +307,7 @@ jobs:
             -Dsonar.cfamily.threads=${SONAR_THREADS} \
             -Dsonar.cfamily.cache.enabled=${SONAR_CFAMILY_CACHE_ENABLED} \
             -Dsonar.coverageReportPaths=build/coverage.xml \
-            -Dsonar.coverageReportPaths=build/JUnitTestResults.xml \
+            -Dsonar.testExecutionReportPaths=build/JUnitTestResults.xml \
             ${SONAR_TESTS_CMD_ARG} \
             ${SONAR_PROJECT_NAME_CMD_ARG} \
             ${SONAR_PROJECT_DESCRIPTION_CMD_ARG} \
