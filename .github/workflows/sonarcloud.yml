@@ -251,7 +251,7 @@ jobs:
     - name: Run tests
       run: |
         # Download CTest2JUnit.xsl
-        wget https://raw.githubusercontent.com/zanata/zanata-tests/master/scripts/CTest2JUnit.xsl CTest2JUnit.xsl
+        wget https://raw.githubusercontent.com/zanata/zanata-tests/master/scripts/CTest2JUnit.xsl -O CTest2JUnit.xsl
 
         # -T Test produces the xml output with the results
         (cd build && ctest -T test)
