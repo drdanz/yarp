@@ -315,6 +315,7 @@ jobs:
             -Dsonar.cfamily.cache.enabled=${SONAR_CFAMILY_CACHE_ENABLED} \
             -Dsonar.coverageReportPaths=build/coverage.xml \
             -Dsonar.junit.reportPaths=build/JUnitTestResults.xml \
+            -Dsonar.coverage.exclusions="src/yarp*/**/* src/carriers/**/* src/devices/**/* src/idls/**/* src/libyarp*/**/* src/robottestingframework-plugins/**/*"
             ${SONAR_TESTS_CMD_ARG} \
             ${SONAR_PROJECT_NAME_CMD_ARG} \
             ${SONAR_PROJECT_DESCRIPTION_CMD_ARG} \
