@@ -198,7 +198,7 @@ jobs:
 
         echo "::set-output name=ccache_path::${CCACHE_HOME_PATH}"
 
-    - name: Print ccache info and reset stats before build
+    - name: Print info and reset stats before build
       run: |
         set -x
 
@@ -210,6 +210,9 @@ jobs:
 
         # Reset ccache stats before starting
         ccache -z
+
+        gcov --version
+        gcovr --version
 
     - name: Handle cache
       uses: actions/cache@v2
@@ -317,6 +320,7 @@ jobs:
             -Dsonar.cfamily.cache.enabled=${SONAR_CFAMILY_CACHE_ENABLED} \
             -Dsonar.coverageReportPaths=build/coverage.xml \
             -Dsonar.junit.reportPaths=build/JUnitTestResults.xml \
+            -Dsonar.exclusions=tests/**/* \
             -Dsonar.coverage.exclusions=src/yarp*/**/* \
             ${SONAR_TESTS_CMD_ARG} \
             ${SONAR_PROJECT_NAME_CMD_ARG} \
