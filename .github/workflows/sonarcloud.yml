@@ -255,7 +255,7 @@ jobs:
 
         # -T Test produces the xml output with the results
         (cd build && ctest -T test)
-        xsltproc CTest2JUnit.xsl build/Testing/`head -n 1 < Testing/TAG`/Test.xml > build/JUnitTestResults.xml
+        xsltproc CTest2JUnit.xsl build/Testing/$(head -n 1 < build/Testing/TAG)/Test.xml > build/JUnitTestResults.xml
 
     - name: Print ccache stats after build
       run: |
