@@ -111,13 +111,15 @@ jobs:
         retry_wait_seconds: 300
         max_attempts: 3
         command: |
+          set -x
+
           # Install Robotology dependencies from robotology ppa
           sudo apt-add-repository -y ppa:robotology/ppa
-          sudo apt-get install -qq -y ycm-cmake-modules \
+          sudo apt-get install -y ycm-cmake-modules \
                                       librobottestingframework-dev
 
           # Install build tools
-          sudo apt-get install -qq -y cmake \
+          sudo apt-get install -y cmake \
                                       ccache \
                                       ninja-build \
                                       valgrind \
@@ -131,7 +133,7 @@ jobs:
                                       libxml2-utils \
                                       source-highlight
 
-          sudo apt-get install -qq -y libace-dev \
+          sudo apt-get install -y libace-dev \
                                       libsqlite3-dev \
                                       libtinyxml-dev \
                                       libedit-dev \
@@ -161,7 +163,7 @@ jobs:
                                       libpcl-dev
 
           # Install SWIG and bindings dependencies
-          sudo apt-get install -qq -y swig \
+          sudo apt-get install -y swig \
                                       mono-mcs \
                                       liblua5.3-dev \
                                       lua5.3 \
@@ -175,7 +177,7 @@ jobs:
                                       perl
 
           # Remove old packages from apt cache
-          sudo apt-get autoclean -qq
+          sudo apt-get autoclean
 
     - name: Prepare ccache environment variables
       id: init_ccache
@@ -315,7 +317,7 @@ jobs:
             -Dsonar.cfamily.cache.enabled=${SONAR_CFAMILY_CACHE_ENABLED} \
             -Dsonar.coverageReportPaths=build/coverage.xml \
             -Dsonar.junit.reportPaths=build/JUnitTestResults.xml \
-            -Dsonar.coverage.exclusions="src/yarp*/**/* src/carriers/**/* src/devices/**/* src/idls/**/* src/libyarp*/**/* src/robottestingframework-plugins/**/*"
+            -Dsonar.coverage.exclusions=src/yarp*/**/*
             ${SONAR_TESTS_CMD_ARG} \
             ${SONAR_PROJECT_NAME_CMD_ARG} \
             ${SONAR_PROJECT_DESCRIPTION_CMD_ARG} \
