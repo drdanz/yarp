@@ -318,8 +318,9 @@ jobs:
             -Dsonar.cfamily.threads=${SONAR_THREADS} \
             -Dsonar.cfamily.cache.enabled=${SONAR_CFAMILY_CACHE_ENABLED} \
             -Dsonar.coverageReportPaths=build/coverage.xml \
+            -Dsonar.cfamily.gcov.reportsPath=build \
             -Dsonar.junit.reportPaths=build/JUnitTestResults.xml \
-            -Dsonar.exclusions=tests/**/* \
+            -Dsonar.exclusions="src/yarp*/**/* src/carriers/**/* src/devices/**/* src/idls/**/* src/libyarp*/**/* src/robottestingframework-plugins/**/* tests/**/*" \
             -Dsonar.coverage.exclusions="src/yarp*/**/* src/carriers/**/* src/devices/**/* src/idls/**/* src/libyarp*/**/* src/robottestingframework-plugins/**/*" \
             ${SONAR_TESTS_CMD_ARG} \
             ${SONAR_PROJECT_NAME_CMD_ARG} \
@@ -330,7 +331,7 @@ jobs:
 
     - name: Compress artifacts
       run : |
-        tar czvf build.tar.gz build/
+        tar czf build.tar.gz build/
 
         - name: Upload artifact
 
