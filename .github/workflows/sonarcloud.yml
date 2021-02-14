@@ -274,7 +274,7 @@ jobs:
 
     - name: Capture coverage info
       run: |
-        (cd build && gcovr --sonarqube --branches --keep --output coverage.xml --root .. .)
+        (cd build && gcovr --sonarqube --branches --output coverage.xml --root .. .)
 
     - name: Print coverage info file
       run: |
@@ -318,7 +318,6 @@ jobs:
             -Dsonar.cfamily.threads=${SONAR_THREADS} \
             -Dsonar.cfamily.cache.enabled=${SONAR_CFAMILY_CACHE_ENABLED} \
             -Dsonar.coverageReportPaths=build/coverage.xml \
-            -Dsonar.cfamily.gcov.reportsPath=build \
             -Dsonar.junit.reportPaths=build/JUnitTestResults.xml \
             -Dsonar.exclusions="src/yarp*/**/* src/carriers/**/* src/devices/**/* src/idls/**/* src/libyarp*/**/* src/robottestingframework-plugins/**/* tests/**/*" \
             -Dsonar.coverage.exclusions="src/yarp*/**/* src/carriers/**/* src/devices/**/* src/idls/**/* src/libyarp*/**/* src/robottestingframework-plugins/**/*" \
