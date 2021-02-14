@@ -327,3 +327,15 @@ jobs:
             ${SONAR_TOKEN_CMD_ARG} \
             ${SONAR_ORGANIZATION_CMD_ARG} \
             ${SONAR_CFAMILY_CACHE_PATH_CMD_ARG}
+
+    - name: Compress artifacts
+      run : |
+        tar czvf build.tar.gz build/
+
+        - name: Upload artifact
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: build
+        path: build.tar.gz
+        retention-days: 2
