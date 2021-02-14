@@ -333,9 +333,8 @@ jobs:
       run : |
         tar czf build.tar.gz build/
 
-        - name: Upload artifact
-
-    - uses: actions/upload-artifact@v2
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
       with:
         name: build
         path: build.tar.gz
