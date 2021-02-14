@@ -274,7 +274,7 @@ jobs:
 
     - name: Capture coverage info
       run: |
-        gcovr --sonarqube --branches --keep --root . --object-directory=build -e "^build/" -e "^extern/" -e "^example/" --output build/coverage.xml
+        (cd build && gcovr --sonarqube --branches --keep --output coverage.xml --root .. .)
 
     - name: Print coverage info file
       run: |
