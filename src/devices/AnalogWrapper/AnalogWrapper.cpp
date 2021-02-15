@@ -85,8 +85,9 @@ void AnalogServerHandler::setInterface(yarp::dev::IAnalogSensor *is)
 
 bool AnalogServerHandler::_handleIAnalog(yarp::os::Bottle &cmd, yarp::os::Bottle &reply)
 {
-    if (is==nullptr)
-      return false;
+    if (is == nullptr) {
+        return false;
+    }
 
     const size_t msgsize=cmd.size();
     int ret=IAnalogSensor::AS_ERROR;
@@ -95,18 +96,16 @@ bool AnalogServerHandler::_handleIAnalog(yarp::os::Bottle &cmd, yarp::os::Bottle
     switch (code)
     {
     case VOCAB_CALIBRATE:
-      if (msgsize==2)
-        ret=is->calibrateSensor();
-      else if (msgsize>2)
-      {
-        size_t offset=2;
-        Vector v(msgsize-offset);
-        for (unsigned int i=0; i<v.size(); i++)
-        {
-          v[i]=cmd.get(i+offset).asFloat64();
+        if (msgsize == 2) {
+            ret = is->calibrateSensor();
+        } else if (msgsize > 2) {
+            size_t offset = 2;
+            Vector v(msgsize - offset);
+            for (unsigned int i = 0; i < v.size(); i++) {
+                v[i] = cmd.get(i + offset).asFloat64();
+            }
+            ret = is->calibrateSensor(v);
         }
-        ret=is->calibrateSensor(v);
-      }
       break;
     case VOCAB_CALIBRATE_CHANNEL:
       if (msgsize==3)
@@ -134,7 +133,9 @@ bool AnalogServerHandler::read(yarp::os::ConnectionReader& connection)
     yarp::os::Bottle in;
     yarp::os::Bottle out;
     bool ok=in.read(connection);
-    if (!ok) return false;
+    if (!ok) {
+        return false;
+    }
 
     // parse in, prepare out
     int code = in.get(0).asVocab();
@@ -302,8 +303,9 @@ bool AnalogWrapper::openAndAttachSubDevice(Searchable &prop)
 bool AnalogWrapper::openDeferredAttach(yarp::os::Searchable &prop)
 {
     // nothing to do here?
-    if( (subDeviceOwned != nullptr) || (ownDevices == true) )
+    if ((subDeviceOwned != nullptr) || (ownDevices == true)) {
         yCError(ANALOGWRAPPER) << "AnalogWrapper: something wrong with the initialization.";
+    }
     return true;
 }
 
@@ -315,8 +317,9 @@ bool AnalogWrapper::openDeferredAttach(yarp::os::Searchable &prop)
 bool AnalogWrapper::attachAll(const PolyDriverList &analog2attach)
 {
     //check if we already instantiated a subdevice previously
-    if (ownDevices)
+    if (ownDevices) {
         return false;
+    }
 
     if (analog2attach.size() != 1)
     {
@@ -344,14 +347,16 @@ bool AnalogWrapper::attachAll(const PolyDriverList &analog2attach)
 bool AnalogWrapper::detachAll()
 {
     //check if we already instantiated a subdevice previously
-    if (ownDevices)
+    if (ownDevices) {
         return false;
+    }
 
     analogSensor_p = nullptr;
     for(unsigned int i=0; i<analogPorts.size(); i++)
     {
-        if(handlers[i] != nullptr)
+        if (handlers[i] != nullptr) {
             handlers[i]->setInterface(analogSensor_p);
+        }
     }
     return true;
 }
@@ -760,8 +765,9 @@ bool AnalogWrapper::open(yarp::os::Searchable &config)
     else
     {
         ownDevices=false;
-        if(!openDeferredAttach(config))
+        if (!openDeferredAttach(config)) {
             return false;
+        }
     }
 
     return true;
@@ -791,8 +797,9 @@ bool AnalogWrapper::initialize_YARP(yarp::os::Searchable &params)
                 }
                 createPort((streamingPortName ).c_str(), _rate );
                 // since createPort always return true, check the port is really been opened is done here
-                if(! Network::exists(streamingPortName + "/rpc:i"))
+                if (!Network::exists(streamingPortName + "/rpc:i")) {
                     return false;
+                }
             }
             else
             {
@@ -892,10 +899,11 @@ void AnalogWrapper::run()
                     {
                         yarp::sig::Vector &pv = analogPort.port.prepare();
                         first = analogPort.offset;
-                        if(analogPort.length == -1)   // read the max length available
+                        if (analogPort.length == -1) { // read the max length available
                             last = lastDataRead.size()-1;
-                        else
+                        } else {
                             last = analogPort.offset + analogPort.length - 1;
+                        }
 
                         // check vector limit
                         if(last>=(int)lastDataRead.size()){

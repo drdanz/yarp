@@ -77,7 +77,9 @@ public:
     }
 
     virtual ~WireTwiddler() {
-        if (writer) delete writer;
+        if (writer) {
+            delete writer;
+        }
         writer = nullptr;
     }
 
@@ -317,7 +319,9 @@ public:
     }
 
     const char *data(size_t index) const override {
-        if (srcs[index].offset<0) return srcs[index].src;
+        if (srcs[index].offset < 0) {
+            return srcs[index].src;
+        }
         return scratch.get()+srcs[index].offset;
     }
 

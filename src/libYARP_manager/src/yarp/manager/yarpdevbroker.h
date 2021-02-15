@@ -32,8 +32,12 @@ public:
             OSTRINGSTREAM strDevParam;
             std::string strParam;
             std::string strCmd;
-            if(szcmd) strCmd = szcmd;
-            if(szparam) strParam = szparam;
+            if (szcmd) {
+                strCmd = szcmd;
+            }
+            if (szparam) {
+                strParam = szparam;
+            }
             strDevParam<<"--device "<<strCmd<<" "<<strParam;
             return LocalBroker::init("yarpdev", strDevParam.str().c_str(),
                                      szhost, szstdio, szworkdir, szenv);
@@ -55,8 +59,12 @@ public:
             OSTRINGSTREAM strDevParam;
             std::string strParam;
             std::string strCmd;
-            if(szcmd) strCmd = szcmd;
-            if(szparam) strParam = szparam;
+            if (szcmd) {
+                strCmd = szcmd;
+            }
+            if (szparam) {
+                strParam = szparam;
+            }
             strDevParam<<"--device "<<strCmd<<" "<<strParam;
             return YarpBroker::init("yarpdev", strDevParam.str().c_str(),
                                      szhost, szstdio, szworkdir, szenv);

@@ -92,10 +92,11 @@ public:
 
     void threadRelease() override
     {
-        if (n>0)
+        if (n > 0) {
             period=average/(n-1);
-        else
-            period=0;
+        } else {
+            period = 0;
+        }
     }
 
 };
@@ -165,10 +166,11 @@ public:
 
     void afterStart(bool s) override
     {
-        if (s)
+        if (s) {
             state++;
-        else
-            state=-2;
+        } else {
+            state = -2;
+        }
     }
 
     void run() override
@@ -193,8 +195,9 @@ public:
             count--;
 
             //terminate when count is zero
-            if (count==0)
+            if (count == 0) {
                 PeriodicThread::askToStop();
+            }
     }
 
 };
@@ -239,7 +242,9 @@ public:
     }
 
     void run() override {
-        if (done) askToStop();
+        if (done) {
+            askToStop();
+        }
     }
 
     void threadRelease() override {
@@ -320,37 +325,43 @@ TEST_CASE("os::PeriodicThreadTest", "[yarp::os]")
         sprintf(message, "Thread1 requested period: %f[s]", desiredPeriod);
         INFO(message);
         actualPeriod = test(desiredPeriod, 1);
-        if( (actualPeriod > (desiredPeriod*(1-acceptedThreshold))) && (actualPeriod < (desiredPeriod * (1+acceptedThreshold))) )
+        if ((actualPeriod > (desiredPeriod * (1 - acceptedThreshold))) && (actualPeriod < (desiredPeriod * (1 + acceptedThreshold)))) {
             success = true;
+        }
         sprintf(message, "Thread1 estimated period: %f[s]", actualPeriod);
         INFO(message);
         sprintf(message, "Period NOT within range of %d%%", (int)(acceptedThreshold*100));
-        if(!success)
+        if (!success) {
             WARN(message);
+        }
 
         desiredPeriod = 0.010;
         sprintf(message, "Thread2 requested period: %f[s]", desiredPeriod);
         INFO(message);
         actualPeriod = test(desiredPeriod, 1);
-        if( (actualPeriod > (desiredPeriod*(1-acceptedThreshold))) && (actualPeriod < (desiredPeriod * (1+acceptedThreshold))) )
+        if ((actualPeriod > (desiredPeriod * (1 - acceptedThreshold))) && (actualPeriod < (desiredPeriod * (1 + acceptedThreshold)))) {
             success = true;
+        }
         sprintf(message, "Thread2 estimated period: %f[s]", actualPeriod);
         INFO(message);
         sprintf(message, "Period NOT within range of %d%%", (int)(acceptedThreshold*100));
-        if(!success)
+        if (!success) {
             WARN(message);
+        }
 
         desiredPeriod = 0.001;
         sprintf(message, "Thread3 requested period: %f[s]", desiredPeriod);
         INFO(message);
         actualPeriod = test(desiredPeriod, 1);
-        if( (actualPeriod > (desiredPeriod*(1-acceptedThreshold))) && (actualPeriod < (desiredPeriod * (1+acceptedThreshold))) )
+        if ((actualPeriod > (desiredPeriod * (1 - acceptedThreshold))) && (actualPeriod < (desiredPeriod * (1 + acceptedThreshold)))) {
             success = true;
+        }
         sprintf(message, "Thread3 estimated period: %f[s]", actualPeriod);
         INFO(message);
         sprintf(message, "Period NOT within range of %d%%", (int)(acceptedThreshold*100));
-        if(!success)
+        if (!success) {
             WARN(message);
+        }
 
         INFO("Testing askToStop() function");
         PeriodicThread4 thread(0.010);
@@ -391,13 +402,17 @@ TEST_CASE("os::PeriodicThreadTest", "[yarp::os]")
         SystemClock clk;
         for (int i=0; i<20; i++) {
             clk.delay(0.1);
-            if (thread.count == 1) break;
+            if (thread.count == 1) {
+                break;
+            }
         }
         CHECK(thread.count); // 1
         clock.t += 100*1000;
         for (int i=0; i<20; i++) {
             clk.delay(0.1);
-            if (thread.count == 2) break;
+            if (thread.count == 2) {
+                break;
+            }
         }
         CHECK(thread.count); // 2
         clock.done = true;

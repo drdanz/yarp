@@ -41,8 +41,9 @@ public:
             delete [] _argv[a];
         }
 
-        if (_argv)
-            delete [] _argv;
+        if (_argv) {
+            delete[] _argv;
+        }
         _argv=nullptr;
     }
 

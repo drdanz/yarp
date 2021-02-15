@@ -173,73 +173,87 @@ YConsoleManager::YConsoleManager(int argc, char* argv[]) : Manager()
     std::string inifile=rf.findFile("from");
     std::string inipath;
     size_t lastSlash=inifile.rfind('/');
-    if (lastSlash!=std::string::npos)
+    if (lastSlash != std::string::npos) {
         inipath=inifile.substr(0, lastSlash+1);
-    else
-    {
+    } else {
         lastSlash=inifile.rfind('\\');
-        if (lastSlash!=std::string::npos)
-            inipath=inifile.substr(0, lastSlash+1);
+        if (lastSlash != std::string::npos) {
+            inipath = inifile.substr(0, lastSlash + 1);
+        }
     }
 
 //     if(!config.check("ymanagerini_dir"))
 //         config.put("ymanagerini_dir", inipath.c_str());
 
-    if(!config.check("apppath"))
+    if (!config.check("apppath")) {
         config.put("apppath", "./");
+    }
 
-    if(!config.check("modpath"))
+    if (!config.check("modpath")) {
         config.put("modpath", "./");
+    }
 
-    if(!config.check("respath"))
+    if (!config.check("respath")) {
         config.put("respath", "./");
+    }
 
-    if(!config.check("load_subfolders"))
+    if (!config.check("load_subfolders")) {
         config.put("load_subfolders", "no");
+    }
 
-    if(!config.check("watchdog"))
+    if (!config.check("watchdog")) {
         config.put("watchdog", "no");
+    }
 
-    if(!config.check("module_failure"))
+    if (!config.check("module_failure")) {
         config.put("module_failure", "prompt");
+    }
 
-    if(!config.check("connection_failure"))
+    if (!config.check("connection_failure")) {
         config.put("connection_failure", "prompt");
+    }
 
-    if(!config.check("auto_connect"))
+    if (!config.check("auto_connect")) {
         config.put("auto_connect", "no");
+    }
 
-    if(!config.check("auto_dependency"))
+    if (!config.check("auto_dependency")) {
         config.put("auto_dependency", "no");
+    }
 
-    if(!config.check("color_theme"))
+    if (!config.check("color_theme")) {
         config.put("color_theme", "light");
+    }
 
 
     /**
      * Set configuration
      */
-    if(config.find("color_theme").asString() == "dark")
+    if (config.find("color_theme").asString() == "dark") {
         setColorTheme(THEME_DARK);
-    else if(config.find("color_theme").asString() == "light")
+    } else if (config.find("color_theme").asString() == "light") {
         setColorTheme(THEME_LIGHT);
-    else
+    } else {
         setColorTheme(THEME_NONE);
+    }
 
-    if(config.find("watchdog").asString() == "yes")
+    if (config.find("watchdog").asString() == "yes") {
         enableWatchDog();
-    else
+    } else {
         disableWatchod();
+    }
 
-    if(config.find("auto_dependency").asString() == "yes")
+    if (config.find("auto_dependency").asString() == "yes") {
         enableAutoDependency();
-    else
+    } else {
         disableAutoDependency();
+    }
 
-    if(config.find("auto_connect").asString() == "yes")
+    if (config.find("auto_connect").asString() == "yes") {
         enableAutoConnect();
-    else
+    } else {
         disableAutoConnect();
+    }
 
     if(!config.check("silent"))
     {
@@ -254,8 +268,9 @@ YConsoleManager::YConsoleManager(int argc, char* argv[]) : Manager()
         while (getline(modPaths, strPath, ';'))
         {
             trimString(strPath);
-            if (!isAbsolute(strPath.c_str()))
+            if (!isAbsolute(strPath.c_str())) {
                 strPath = std::string(inipath).append(strPath);
+            }
             addModules(strPath.c_str());
         }
     }
@@ -267,8 +282,9 @@ YConsoleManager::YConsoleManager(int argc, char* argv[]) : Manager()
         while (getline(resPaths, strPath, ';'))
         {
             trimString(strPath);
-            if (!isAbsolute(strPath.c_str()))
+            if (!isAbsolute(strPath.c_str())) {
                 strPath = std::string(inipath).append(strPath);
+            }
             addResources(strPath.c_str());
         }
     }
@@ -281,15 +297,17 @@ YConsoleManager::YConsoleManager(int argc, char* argv[]) : Manager()
         while (getline(appPaths, strPath, ';'))
         {
             trimString(strPath);
-            if (!isAbsolute(strPath.c_str()))
+            if (!isAbsolute(strPath.c_str())) {
                 strPath = std::string(inipath).append(strPath);
+            }
             if(config.find("load_subfolders").asString() == "yes")
             {
-                if(!loadRecursiveApplications(strPath.c_str()))
+                if (!loadRecursiveApplications(strPath.c_str())) {
                     logger->addError("Cannot load the applications from  " + strPath);
-            }
-            else
+                }
+            } else {
                 addApplications(strPath.c_str());
+            }
         }
     }
 
@@ -313,14 +331,17 @@ YConsoleManager::YConsoleManager(int argc, char* argv[]) : Manager()
     new_action.sa_flags = 0;
 
     sigaction (SIGINT, nullptr, &old_action);
-    if (old_action.sa_handler != SIG_IGN)
-        sigaction (SIGINT, &new_action, nullptr);
+    if (old_action.sa_handler != SIG_IGN) {
+        sigaction(SIGINT, &new_action, nullptr);
+    }
     sigaction (SIGHUP, nullptr, &old_action);
-    if (old_action.sa_handler != SIG_IGN)
-        sigaction (SIGHUP, &new_action, nullptr);
+    if (old_action.sa_handler != SIG_IGN) {
+        sigaction(SIGHUP, &new_action, nullptr);
+    }
     sigaction (SIGTERM, nullptr, &old_action);
-    if (old_action.sa_handler != SIG_IGN)
-        sigaction (SIGTERM, &new_action, nullptr);
+    if (old_action.sa_handler != SIG_IGN) {
+        sigaction(SIGTERM, &new_action, nullptr);
+    }
 #endif
 
     if(config.check("application"))
@@ -332,32 +353,37 @@ YConsoleManager::YConsoleManager(int argc, char* argv[]) : Manager()
             if(application)
             {
                 // add this application to the manager if does not exist
-                if(!getKnowledgeBase()->getApplication(application->getName()))
+                if (!getKnowledgeBase()->getApplication(application->getName())) {
                     getKnowledgeBase()->addApplication(application);
+                }
 
-                #ifdef YARP_HAS_Libedit
+#ifdef YARP_HAS_Libedit
                 updateAppNames(&appnames);
                 #endif
 
                 if(loadApplication(application->getName()))
                 {
-                    if(!config.check("silent"))
+                    if (!config.check("silent")) {
                         which();
+                    }
 
-                    if(config.check("assign_hosts"))
+                    if (config.check("assign_hosts")) {
                         loadBalance();
+                    }
 
                     if(config.check("run"))
                     {
-                        if(config.check("connect"))
+                        if (config.check("connect")) {
                             enableAutoConnect();
+                        }
                          bShouldRun = run();
+                    } else if (config.check("connect")) {
+                        connect();
                     }
-                    else if(config.check("connect"))
-                            connect();
 
-                    if(config.check("disconnect"))
-                         disconnect();
+                    if (config.check("disconnect")) {
+                        disconnect();
+                    }
 
                     if(config.check("stop"))
                     {
@@ -367,8 +393,9 @@ YConsoleManager::YConsoleManager(int argc, char* argv[]) : Manager()
                         bShouldRun = false;
                         for(moditr=modules.begin(); moditr<modules.end(); moditr++)
                         {
-                            if(running(id))
+                            if (running(id)) {
                                 stop(id);
+                            }
                             id++;
                         }
                         bShouldRun = !suspended();
@@ -380,24 +407,30 @@ YConsoleManager::YConsoleManager(int argc, char* argv[]) : Manager()
                          kill();
                     }
 
-                    if(config.check("check_con"))
+                    if (config.check("check_con")) {
                         checkConnections();
+                    }
 
-                    if(config.check("check_state"))
+                    if (config.check("check_state")) {
                         checkStates();
+                    }
 
-                    if(config.check("check_dep"))
-                        if(checkDependency())
-                            cout<<INFO<<"All of resource dependencies are satisfied."<<ENDC<<endl;
+                    if (config.check("check_dep")) {
+                        if (checkDependency()) {
+                            cout << INFO << "All of resource dependencies are satisfied." << ENDC << endl;
+                        }
+                    }
                 }
             }
         }
-        if(!config.check("silent"))
+        if (!config.check("silent")) {
             reportErrors();
+        }
     }
 
-    if(!config.check("exit"))
+    if (!config.check("exit")) {
         YConsoleManager::myMain();
+    }
 }
 
 YConsoleManager::~YConsoleManager() = default;
@@ -441,9 +474,9 @@ void YConsoleManager::myMain()
         {
             temp = szLine;
             add_history(szLine);
-        }
-        else
+        } else {
             temp = "";
+        }
 #else
         cout << ">> ";
         getline(cin, temp);
@@ -455,15 +488,18 @@ void YConsoleManager::myMain()
         string s;
         while (foo >> s)
         {
-            if (s[0]=='~') s = getenv("HOME") + s.substr(1);
+            if (s[0] == '~') {
+                s = getenv("HOME") + s.substr(1);
+            }
             cmdList.push_back(s);
         }
         if(!process(cmdList))
         {
             if(cmdList[0] == "exit")
             {
-                if(YConsoleManager::exit())
+                if (YConsoleManager::exit()) {
                     break;
+                }
             }
             else
             {
@@ -486,8 +522,9 @@ void YConsoleManager::myMain()
 
 bool YConsoleManager::exit()
 {
-    if(!bShouldRun)
+    if (!bShouldRun) {
         return true;
+    }
 
     string ans;
     cout<<WARNING<<"WARNING: ";
@@ -506,8 +543,9 @@ bool YConsoleManager::exit()
 
 bool YConsoleManager::process(const vector<string> &cmdList)
 {
-    if (!cmdList.size() || cmdList[0] == "")
+    if (!cmdList.size() || cmdList[0] == "") {
         return true;
+    }
 
     /**
      * help
@@ -526,8 +564,9 @@ bool YConsoleManager::process(const vector<string> &cmdList)
      if((cmdList.size() == 3) &&
         (cmdList[0] == "add") && (cmdList[1] == "app"))
      {
-         if(addApplication(cmdList[2].c_str()))
-            cout<<INFO<<cmdList[2]<<" is successfully added."<<ENDC<<endl;
+         if (addApplication(cmdList[2].c_str())) {
+             cout << INFO << cmdList[2] << " is successfully added." << ENDC << endl;
+         }
          reportErrors();
         #ifdef YARP_HAS_Libedit
         updateAppNames(&appnames);
@@ -541,8 +580,9 @@ bool YConsoleManager::process(const vector<string> &cmdList)
      if((cmdList.size() == 3) &&
         (cmdList[0] == "add") && (cmdList[1] == "mod"))
      {
-         if(addModule(cmdList[2].c_str()))
-            cout<<INFO<<cmdList[2]<<" is successfully added."<<ENDC<<endl;
+         if (addModule(cmdList[2].c_str())) {
+             cout << INFO << cmdList[2] << " is successfully added." << ENDC << endl;
+         }
          reportErrors();
          return true;
      }
@@ -553,8 +593,9 @@ bool YConsoleManager::process(const vector<string> &cmdList)
      if((cmdList.size() == 3) &&
         (cmdList[0] == "add") && (cmdList[1] == "res"))
      {
-         if(addResource(cmdList[2].c_str()))
-            cout<<INFO<<cmdList[2]<<" is successfully added."<<ENDC<<endl;
+         if (addResource(cmdList[2].c_str())) {
+             cout << INFO << cmdList[2] << " is successfully added." << ENDC << endl;
+         }
          reportErrors();
          return true;
      }
@@ -609,8 +650,9 @@ bool YConsoleManager::process(const vector<string> &cmdList)
         (cmdList[0] == "run"))
      {
         bShouldRun = false;
-        for(unsigned int i=1; i<cmdList.size(); i++)
+        for (unsigned int i = 1; i < cmdList.size(); i++) {
             bShouldRun |= run(atoi(cmdList[i].c_str()));
+        }
         reportErrors();
         return true;
      }
@@ -630,8 +672,9 @@ bool YConsoleManager::process(const vector<string> &cmdList)
         (cmdList[0] == "stop"))
      {
          //bShouldRun = false;
-        for(unsigned int i=1; i<cmdList.size(); i++)
-            stop(atoi(cmdList[i].c_str()));
+         for (unsigned int i = 1; i < cmdList.size(); i++) {
+             stop(atoi(cmdList[i].c_str()));
+         }
          bShouldRun = !suspended();
          reportErrors();
          return true;
@@ -652,8 +695,9 @@ bool YConsoleManager::process(const vector<string> &cmdList)
         (cmdList[0] == "kill"))
      {
          //bShouldRun = false;
-         for(unsigned int i=1; i<cmdList.size(); i++)
-            kill(atoi(cmdList[i].c_str()));
+         for (unsigned int i = 1; i < cmdList.size(); i++) {
+             kill(atoi(cmdList[i].c_str()));
+         }
          bShouldRun = !suspended();
          reportErrors();
          return true;
@@ -672,8 +716,9 @@ bool YConsoleManager::process(const vector<string> &cmdList)
      if((cmdList.size() >= 2) &&
         (cmdList[0] == "connect"))
      {
-        for(unsigned int i=1; i<cmdList.size(); i++)
-            connect(atoi(cmdList[i].c_str()));
+         for (unsigned int i = 1; i < cmdList.size(); i++) {
+             connect(atoi(cmdList[i].c_str()));
+         }
         reportErrors();
         return true;
      }
@@ -692,8 +737,9 @@ bool YConsoleManager::process(const vector<string> &cmdList)
      if((cmdList.size() >= 2) &&
         (cmdList[0] == "disconnect"))
      {
-        for(unsigned int i=1; i<cmdList.size(); i++)
-            disconnect(atoi(cmdList[i].c_str()));
+         for (unsigned int i = 1; i < cmdList.size(); i++) {
+             disconnect(atoi(cmdList[i].c_str()));
+         }
         reportErrors();
         return true;
      }
@@ -715,8 +761,9 @@ bool YConsoleManager::process(const vector<string> &cmdList)
     if((cmdList.size() == 2) &&
         (cmdList[0] == "check") && (cmdList[1] == "dep"))
     {
-        if(checkDependency())
-            cout<<INFO<<"All of resource dependencies are satisfied."<<ENDC<<endl;
+        if (checkDependency()) {
+            cout << INFO << "All of resource dependencies are satisfied." << ENDC << endl;
+        }
         reportErrors();
         return true;
     }
@@ -736,10 +783,11 @@ bool YConsoleManager::process(const vector<string> &cmdList)
             return true;
         }
 
-        if(running(id))
+        if (running(id)) {
             cout<<OKGREEN<<"<RUNNING> ";
-        else
-            cout<<FAIL<<"<STOPPED> ";
+        } else {
+            cout << FAIL << "<STOPPED> ";
+        }
         cout<<INFO<<"("<<id<<") ";
         cout<<modules[id]->getCommand();
         cout<<" ["<<modules[id]->getHost()<<"]"<<ENDC<<endl;
@@ -770,10 +818,11 @@ bool YConsoleManager::process(const vector<string> &cmdList)
             return true;
         }
 
-        if(connected(id))
+        if (connected(id)) {
             cout<<OKGREEN<<"<CONNECTED> ";
-        else
-            cout<<FAIL<<"<DISCONNECTED> ";
+        } else {
+            cout << FAIL << "<DISCONNECTED> ";
+        }
 
         cout<<INFO<<"("<<id<<") ";
         cout<<connections[id].from()<<" - "<<connections[id].to();
@@ -805,10 +854,11 @@ bool YConsoleManager::process(const vector<string> &cmdList)
             string fpath = mod->getXmlFile();
 
             size_t pos = fpath.rfind(directorySeparator);
-            if(pos!=string::npos)
+            if (pos != string::npos) {
                 fname = fpath.substr(pos);
-            else
+            } else {
                 fname = fpath;
+            }
             cout<<INFO<<"("<<id++<<") ";
             cout<<OKBLUE<<mod->getName()<<ENDC;
             cout<<INFO<<" ["<<fname<<"]"<<ENDC<<endl;
@@ -832,10 +882,11 @@ bool YConsoleManager::process(const vector<string> &cmdList)
             string fpath = app->getXmlFile();
 
             size_t pos = fpath.rfind(directorySeparator);
-            if(pos!=string::npos)
+            if (pos != string::npos) {
                 fname = fpath.substr(pos);
-            else
+            } else {
                 fname = fpath;
+            }
             cout<<INFO<<"("<<id++<<") ";
             cout<<OKBLUE<<app->getName()<<ENDC;
             cout<<INFO<<" ["<<fname<<"]"<<ENDC<<endl;
@@ -860,15 +911,17 @@ bool YConsoleManager::process(const vector<string> &cmdList)
                 string fname;
                 string fpath = comp->getXmlFile();
                 size_t pos = fpath.rfind(directorySeparator);
-                if(pos!=string::npos)
+                if (pos != string::npos) {
                     fname = fpath.substr(pos);
-                else
+                } else {
                     fname = fpath;
+                }
                 cout<<INFO<<"("<<id++<<") ";
-                if(comp->getDisable())
+                if (comp->getDisable()) {
                     cout<<WARNING<<comp->getName()<<ENDC;
-                else
-                    cout<<OKBLUE<<comp->getName()<<ENDC;
+                } else {
+                    cout << OKBLUE << comp->getName() << ENDC;
+                }
                 cout<<INFO<<" ["<<fname<<"]"<<ENDC<<endl;
             }
         }
@@ -882,8 +935,9 @@ bool YConsoleManager::process(const vector<string> &cmdList)
     if((cmdList.size() == 2) &&
         (cmdList[0] == "export") )
     {
-        if(!exportDependencyGraph(cmdList[1].c_str()))
-            cout<<FAIL<<"ERROR:   "<<INFO<<"Cannot export graph to "<<cmdList[1]<<"."<<ENDC<<endl;
+        if (!exportDependencyGraph(cmdList[1].c_str())) {
+            cout << FAIL << "ERROR:   " << INFO << "Cannot export graph to " << cmdList[1] << "." << ENDC << endl;
+        }
         return true;
     }
 
@@ -917,36 +971,40 @@ bool YConsoleManager::process(const vector<string> &cmdList)
 
         if(cmdList[1] == string("watchdog"))
         {
-            if(cmdList[2] == string("yes"))
+            if (cmdList[2] == string("yes")) {
                 enableWatchDog();
-            else
+            } else {
                 disableWatchod();
+            }
         }
 
         if(cmdList[1] == string("auto_dependency"))
         {
-            if(cmdList[2] == string("yes"))
+            if (cmdList[2] == string("yes")) {
                 enableAutoDependency();
-            else
+            } else {
                 disableAutoDependency();
+            }
         }
 
         if(cmdList[1] == string("auto_connect"))
         {
-            if(cmdList[2] == string("yes"))
+            if (cmdList[2] == string("yes")) {
                 enableAutoConnect();
-            else
+            } else {
                 disableAutoConnect();
+            }
         }
 
         if(cmdList[1] == string("color_theme"))
         {
-            if(cmdList[2] == string("dark"))
+            if (cmdList[2] == string("dark")) {
                 setColorTheme(THEME_DARK);
-            else if(cmdList[2] == string("light"))
+            } else if (cmdList[2] == string("light")) {
                 setColorTheme(THEME_LIGHT);
-            else
+            } else {
                 setColorTheme(THEME_NONE);
+            }
         }
 
         return true;
@@ -963,9 +1021,9 @@ bool YConsoleManager::process(const vector<string> &cmdList)
          {
             cout<<OKBLUE<<cmdList[1]<<INFO<<" = ";
             cout<<OKGREEN<<config.find(cmdList[1]).asString()<<ENDC<<endl;
+         } else {
+             cout << FAIL << "ERROR:   " << INFO << "'" << cmdList[1].c_str() << "' not found." << ENDC << endl;
          }
-         else
-            cout<<FAIL<<"ERROR:   "<<INFO<<"'"<<cmdList[1].c_str()<<"' not found."<<ENDC<<endl;
          return true;
      }
 
@@ -1070,9 +1128,9 @@ void YConsoleManager::checkStates()
         {
             bShouldRun = true;
             cout<<OKGREEN<<"<RUNNING> ";
+        } else {
+            cout << FAIL << "<STOPPED> ";
         }
-        else
-            cout<<FAIL<<"<STOPPED> ";
         cout<<INFO<<"("<<id<<") ";
         cout<<(*moditr)->getCommand();
         cout<<" ["<<(*moditr)->getHost()<<"]"<<ENDC<<endl;
@@ -1087,10 +1145,11 @@ void YConsoleManager::checkConnections()
     int id = 0;
     for(cnnitr=connections.begin(); cnnitr<connections.end(); cnnitr++)
     {
-        if(connected(id))
+        if (connected(id)) {
             cout<<OKGREEN<<"<CONNECTED> ";
-        else
-            cout<<FAIL<<"<DISCONNECTED> ";
+        } else {
+            cout << FAIL << "<DISCONNECTED> ";
+        }
 
         cout<<INFO<<"("<<id<<") ";
         cout<<(*cnnitr).from()<<" - "<<(*cnnitr).to();
@@ -1105,11 +1164,13 @@ void YConsoleManager::reportErrors()
     if(logger->errorCount() || logger->warningCount())
     {
         const char* msg;
-        while((msg=logger->getLastError()))
-            cout<<FAIL<<"ERROR:   "<<INFO<<msg<<ENDC<<endl;
+        while ((msg = logger->getLastError())) {
+            cout << FAIL << "ERROR:   " << INFO << msg << ENDC << endl;
+        }
 
-        while((msg=logger->getLastWarning()))
-            cout<<WARNING<<"WARNING: "<<INFO<<msg<<ENDC<<endl;
+        while ((msg = logger->getLastWarning())) {
+            cout << WARNING << "WARNING: " << INFO << msg << ENDC << endl;
+        }
     }
 }
 
@@ -1123,8 +1184,9 @@ void YConsoleManager::onExecutableDied(void* which) { }
 void YConsoleManager::onExecutableFailed(void* which)
 {
     auto* exe = (Executable*) which;
-    if(config.find("module_failure").asString() == "prompt")
-        cout<<exe->getCommand()<<" from "<<exe->getHost()<<" is failed!"<<endl;
+    if (config.find("module_failure").asString() == "prompt") {
+        cout << exe->getCommand() << " from " << exe->getHost() << " is failed!" << endl;
+    }
 
     if(config.find("module_failure").asString() == "recover")
     {
@@ -1146,9 +1208,10 @@ void YConsoleManager::onCnnStablished(void* which) { }
 void YConsoleManager::onCnnFailed(void* which)
 {
     auto* cnn = (Connection*) which;
-    if(config.check("connection_failure") &&
-     config.find("connection_failure").asString() == "prompt")
-        cout<<endl<<"connection failed between "<<cnn->from()<<" and "<<cnn->to()<<endl;
+    if (config.check("connection_failure") && config.find("connection_failure").asString() == "prompt") {
+        cout << endl
+             << "connection failed between " << cnn->from() << " and " << cnn->to() << endl;
+    }
 
     if(bShouldRun && config.check("connection_failure") &&
      config.find("connection_failure").asString() == "terminate")
@@ -1165,14 +1228,15 @@ bool YConsoleManager::loadRecursiveApplications(const char* szPath)
 {
     const std::string directorySeparator{yarp::conf::filesystem::preferred_separator};
     string strPath = szPath;
-    if((strPath.rfind(directorySeparator)==string::npos) ||
-            (strPath.rfind(directorySeparator)!=strPath.size()-1))
-            strPath = strPath + string(directorySeparator);
+    if ((strPath.rfind(directorySeparator) == string::npos) || (strPath.rfind(directorySeparator) != strPath.size() - 1)) {
+        strPath = strPath + string(directorySeparator);
+    }
 
     DIR *dir;
     struct dirent *entry;
-    if ((dir = opendir(strPath.c_str())) == nullptr)
+    if ((dir = opendir(strPath.c_str())) == nullptr) {
         return false;
+    }
 
     addApplications(strPath.c_str());
 
@@ -1196,8 +1260,9 @@ void YConsoleManager::updateAppNames(vector<string>* names)
     names->clear();
     KnowledgeBase* kb = getKnowledgeBase();
     ApplicaitonPContainer apps =  kb->getApplications();
-    for(auto& app : apps)
+    for (auto& app : apps) {
         names->push_back(app->getName());
+    }
 }
 
 
@@ -1269,10 +1334,11 @@ char ** my_completion (const char* text, int start, int end)
   /* If this word is at the start of the line, then it is a command
      to complete.  Otherwise it is the name of a file in the current
      directory. */
-    if (start == 0)
+    if (start == 0) {
         matches = rl_completion_matches(text, &command_generator);
-   else
+    } else {
         matches = rl_completion_matches(text, &appname_generator);
+    }
 
     return (matches);
 }
@@ -1300,8 +1366,9 @@ char* command_generator (const char* text, int state)
   while ((list_index<CMD_COUNTS) && (name = (char*)commands[list_index]))
     {
       list_index++;
-      if (strncmp (name, text, len) == 0)
-        return (dupstr(name));
+      if (strncmp(name, text, len) == 0) {
+          return (dupstr(name));
+      }
     }
 
   /* if no names matched, then return null. */
@@ -1324,8 +1391,9 @@ char* appname_generator (const char* text, int state)
   while ((list_index<appnames.size()) && (name = (char*)appnames[list_index].c_str()))
     {
       list_index++;
-      if (strncmp (name, text, len) == 0)
-        return (dupstr(name));
+      if (strncmp(name, text, len) == 0) {
+          return (dupstr(name));
+      }
     }
 
   return ((char *)nullptr);

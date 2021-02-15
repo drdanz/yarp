@@ -72,8 +72,9 @@ yarp::robotinterface::experimental::ParamList yarp::robotinterface::experimental
                 param1.value() += std::string(" ");
                 param1.value() += param2.value();
                 it2 = params.erase(it2);
-            } else
+            } else {
                 it2++;
+            }
         }
     }
     return params;

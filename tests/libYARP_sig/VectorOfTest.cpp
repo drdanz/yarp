@@ -69,8 +69,9 @@ TEST_CASE("sig::VectorOfTest", "[yarp::sig]")
             {
                 for (unsigned int k = 0; k < vector.size(); k++)
                 {
-                    if (tmp[k] != vector[k])
+                    if (tmp[k] != vector[k]) {
                         success = false;
+                    }
                 }
             }
 
@@ -117,8 +118,9 @@ TEST_CASE("sig::VectorOfTest", "[yarp::sig]")
             {
                 for (unsigned int k = 0; k < vector.size(); k++)
                 {
-                    if (tmp2.get(k).asInt32() != vector[k])
+                    if (tmp2.get(k).asInt32() != vector[k]) {
                         success = false;
+                    }
                 }
             }
 

@@ -390,8 +390,9 @@ public:
             }
         }
 
-        if (length()>=1)
-            return ret.substr(0, ret.length()-1);
+        if (length() >= 1) {
+            return ret.substr(0, ret.length() - 1);
+        }
         return ret;
     }
 
@@ -407,8 +408,9 @@ public:
         if ((first<=last)&&((int)last<(int)this->size()))
         {
             ret.resize(last-first+1);
-            for (unsigned int k=first; k<=last; k++)
-                ret[k-first]=(*this)[k];
+            for (unsigned int k = first; k <= last; k++) {
+                ret[k - first] = (*this)[k];
+            }
         }
         return ret;
     }
@@ -424,10 +426,12 @@ public:
      */
     bool setSubvector(int position, const VectorOf<T> &v)
     {
-        if (position+v.size() > this->size())
+        if (position + v.size() > this->size()) {
             return false;
-        for (size_t i=0;i<v.size();i++)
-            (*this)[position+i] = v(i);
+        }
+        for (size_t i = 0; i < v.size(); i++) {
+            (*this)[position + i] = v(i);
+        }
         return true;
     }
 

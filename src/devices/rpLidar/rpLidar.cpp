@@ -213,8 +213,9 @@ bool RpLidar::close()
         HW_reset();
     }
 
-    if(driver.isValid())
+    if (driver.isValid()) {
         driver.close();
+    }
 
     yCInfo(RPLIDAR) << "rpLidar closed";
     return true;
@@ -638,7 +639,9 @@ void RpLidar::run()
         double distance = i_distance / 4.0 / 1000; //m
         double angle = i_angle / 64.0; //deg
         angle = (360 - angle) + 90;
-        if (angle >= 360) angle -= 360;
+        if (angle >= 360) {
+            angle -= 360;
+        }
 
         if (i_distance == 0)
         {
@@ -656,8 +659,9 @@ void RpLidar::run()
 
         if (clip_min_enable)
         {
-            if (distance < min_distance)
+            if (distance < min_distance) {
                 distance = max_distance;
+            }
         }
         if (clip_max_enable)
         {

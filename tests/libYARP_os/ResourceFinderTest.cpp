@@ -41,7 +41,9 @@ static void restoreEnvironment()
 {
     for (size_t i=0; i<env.size(); i++) {
         Bottle *lst = env.get(i).asList();
-        if (lst==nullptr) continue;
+        if (lst == nullptr) {
+            continue;
+        }
         std::string key = lst->get(0).asString();
         std::string val = lst->get(1).asString();
         bool found = lst->get(2).asInt32()?true:false;
@@ -84,7 +86,9 @@ static void mkdir(const Bottle& dirs)
     std::string slash = std::string{yarp::conf::filesystem::preferred_separator};
     std::string dir = "";
     for (size_t i=0; i<dirs.size(); i++) {
-        if (i>0) dir += slash;
+        if (i > 0) {
+            dir += slash;
+        }
         dir = dir + dirs.get(i).asString();
         mkdir(dir);
     }
@@ -764,7 +768,9 @@ TEST_CASE("os::ResourceFinderTest", "[yarp::os]")
 
             bool found;
             std::string robot = yarp::conf::environment::getEnvironment("YARP_ROBOT_NAME", &found);
-            if (!found) robot = "default";
+            if (!found) {
+                robot = "default";
+            }
             CHECK(rf.getHomeContextPath() == ResourceFinder::getDataHome() + slash + "contexts" + slash + "my_app"); // $YARP_DATA_HOME/contexts/my_app found as directory for writing
             CHECK(rf.getHomeRobotPath() == ResourceFinder::getDataHome() + slash + "robots" + slash + robot); // $YARP_DATA_HOME/robots/dummyRobot found as directory for writing
 

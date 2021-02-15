@@ -85,8 +85,9 @@ bool isHidden(std::string fileName)
     if (attributes & FILE_ATTRIBUTE_HIDDEN)
         return true;
 #else
-    if (fileName[0] == '.')
+    if (fileName[0] == '.') {
         return true;
+    }
 #endif
     return false;
 }
@@ -98,8 +99,9 @@ bool fileCopy(std::string srcFileName, std::string destFileName, bool force, boo
     FILE* source = fopen(srcFileName.c_str(), "rb");
     if (source == nullptr)
     {
-        if (verbose)
+        if (verbose) {
             printf("Could not open source file %s\n", srcFileName.c_str());
+        }
         return false;
     }
     if (!yarp::os::stat(destFileName.c_str()))
@@ -110,8 +112,9 @@ bool fileCopy(std::string srcFileName, std::string destFileName, bool force, boo
         }
         else
         {
-            if (verbose)
+            if (verbose) {
                 printf("File already exists : %s\n", destFileName.c_str());
+            }
             fclose(source);
             return false;
         }
@@ -119,8 +122,9 @@ bool fileCopy(std::string srcFileName, std::string destFileName, bool force, boo
     FILE* dest = fopen(destFileName.c_str(), "wb");
     if (dest == nullptr)
     {
-        if (verbose)
+        if (verbose) {
             printf("Could not open target file %s\n", destFileName.c_str());
+        }
         fclose(source);
         return false;
     }
@@ -149,20 +153,21 @@ int recursiveCopy(std::string srcDirName, std::string destDirName, bool force, b
     yarp::os::impl::YARP_stat statbuf;
     if (yarp::os::impl::stat(srcDirName.c_str(), &statbuf) == -1)
     {
-        if (verbose)
+        if (verbose) {
             printf("Error in checking properties for %s\n", srcDirName.c_str());
+        }
         return -1;
     }
-    if ((statbuf.st_mode & S_IFMT) == S_IFREG)
+    if ((statbuf.st_mode & S_IFMT) == S_IFREG) {
         ok = fileCopy(srcDirName, destDirName, force, verbose) && ok;
-    else if ((statbuf.st_mode & S_IFMT) == S_IFDIR)
-    {
+    } else if ((statbuf.st_mode & S_IFMT) == S_IFDIR) {
         yarp::os::impl::dirent **namelist;
         int n = yarp::os::impl::scandir(srcDirName.c_str(), &namelist, nullptr, yarp::os::impl::alphasort);
         if (n<0)
         {
-            if (verbose)
+            if (verbose) {
                 std::cerr << "Could not read from directory " << srcDirName << std::endl;
+            }
             return -1;
         }
         if (yarp::os::mkdir((destDirName).c_str()) < 0)
@@ -173,8 +178,9 @@ int recursiveCopy(std::string srcDirName, std::string destDirName, bool force, b
                 ok = ok && !yarp::os::mkdir((destDirName).c_str());
                 if (!ok)
                 {
-                    if (verbose)
+                    if (verbose) {
                         printf("Could not create directory %s\n", destDirName.c_str());
+                    }
                     return -1;
                 }
             }
@@ -207,7 +213,6 @@ int recursiveCopy(std::string srcDirName, std::string destDirName, bool force, b
             free(namelist[i]);
         }
         free(namelist);
-
     }
     return (ok == true ? 0 : -1);
 }
@@ -217,20 +222,21 @@ int recursiveRemove(std::string dirName, bool verbose)
     yarp::os::impl::YARP_stat statbuf;
     if (yarp::os::impl::stat(dirName.c_str(), &statbuf) == -1)
     {
-        if (verbose)
+        if (verbose) {
             printf("Error in checking properties for %s\n", dirName.c_str());
+        }
         return -1;
     }
-    if ((statbuf.st_mode & S_IFMT) == S_IFREG)
+    if ((statbuf.st_mode & S_IFMT) == S_IFREG) {
         return fileRemove(dirName) ? 0 : -1;
-    else if ((statbuf.st_mode & S_IFMT) == S_IFDIR)
-    {
+    } else if ((statbuf.st_mode & S_IFMT) == S_IFDIR) {
         yarp::os::impl::dirent **namelist;
         int n = yarp::os::impl::scandir(dirName.c_str(), &namelist, nullptr, yarp::os::impl::alphasort);
         if (n<0)
         {
-            if (verbose)
+            if (verbose) {
                 printf("Could not read from  directory %s\n", dirName.c_str());
+            }
             return yarp::os::rmdir(dirName.c_str()); // TODO check if this is useful...
         }
 
@@ -247,9 +253,9 @@ int recursiveRemove(std::string dirName, bool verbose)
         free(namelist);
 
         return yarp::os::rmdir(dirName.c_str());
-    }
-    else
+    } else {
         return -1;
+    }
 }
 
 std::vector<std::string> listContentDirs(const std::string &curPath)
@@ -267,11 +273,13 @@ std::vector<std::string> listContentDirs(const std::string &curPath)
         {
             yarp::os::impl::YARP_stat statbuf;
             std::string path = std::string(curPath).append(PATH_SEPARATOR).append(name);
-            if (yarp::os::impl::stat(path.c_str(), &statbuf) == -1)
+            if (yarp::os::impl::stat(path.c_str(), &statbuf) == -1) {
                 printf("Error in checking properties for %s\n", path.c_str());
+            }
 
-            if ((statbuf.st_mode & S_IFMT) == S_IFDIR)
+            if ((statbuf.st_mode & S_IFMT) == S_IFDIR) {
                 dirsList.push_back(name);
+            }
         }
         free(namelist[i]);
     }
@@ -303,8 +311,9 @@ std::vector<std::string> listContentFiles(const std::string &curPath)
         {
             yarp::os::impl::YARP_stat statbuf;
             std::string path = std::string(curPath).append(PATH_SEPARATOR).append(name);
-            if (yarp::os::impl::stat(path.c_str(), &statbuf) == -1)
+            if (yarp::os::impl::stat(path.c_str(), &statbuf) == -1) {
                 printf("Error in checking properties for %s\n", path.c_str());
+            }
             if ((statbuf.st_mode & S_IFMT) == S_IFREG)
             {
                 fileList.push_back(path);
@@ -313,8 +322,9 @@ std::vector<std::string> listContentFiles(const std::string &curPath)
             if ((statbuf.st_mode & S_IFMT) == S_IFDIR)
             {
                 std::vector<std::string> nestedFiles = listContentFiles(path);
-                for (auto& nestedFile : nestedFiles)
-                    fileStack.push_back(std::string{path}.append(PATH_SEPARATOR).append(nestedFile));
+                for (auto& nestedFile : nestedFiles) {
+                    fileStack.push_back(std::string {path}.append(PATH_SEPARATOR).append(nestedFile));
+                }
             }
         }
         fileStack.pop_front();
@@ -325,8 +335,9 @@ std::vector<std::string> listContentFiles(const std::string &curPath)
 void printContentDirs(const std::string &curPath)
 {
     std::vector<std::string> dirsList = listContentDirs(curPath);
-    for (auto& dirsIt : dirsList)
+    for (auto& dirsIt : dirsList) {
         printf("%s\n", dirsIt.c_str());
+    }
 }
 
 
@@ -399,10 +410,9 @@ void prepareHomeFolder(yarp::os::ResourceFinder &rf, folderType ftype)
 bool prepareSubFolders(const std::string& startDir, const std::string& fileName)
 {
     string fname(fileName);
-    if (fname.find('/') == string::npos)
+    if (fname.find('/') == string::npos) {
         return true;
-    else
-    {
+    } else {
         size_t curPos, startPos = 0;
         while ((curPos = fname.find('/', startPos)) != string::npos)
         {
@@ -416,15 +426,15 @@ bool prepareSubFolders(const std::string& startDir, const std::string& fileName)
 bool recursiveFileList(const char* basePath, const char* suffix, std::set<std::string>& filenames)
 {
     string strPath = string(basePath);
-    if ((strPath.rfind('/') == string::npos) ||
-        (strPath.rfind('/') != strPath.size() - 1))
+    if ((strPath.rfind('/') == string::npos) || (strPath.rfind('/') != strPath.size() - 1)) {
         strPath = strPath + string(PATH_SEPARATOR);
+    }
 
     string mySuffix = string(suffix);
 
-    if (((mySuffix.rfind('/') == string::npos) ||
-        (mySuffix.rfind('/') != mySuffix.size() - 1)) && mySuffix != "")
+    if (((mySuffix.rfind('/') == string::npos) || (mySuffix.rfind('/') != mySuffix.size() - 1)) && mySuffix != "") {
         mySuffix = mySuffix + string(PATH_SEPARATOR);
+    }
 
     strPath += mySuffix;
 
@@ -468,8 +478,9 @@ int recursiveDiff(std::string srcDirName, std::string destDirName, std::ostream 
     std::set<std::string> destFileList;
     ok = ok && recursiveFileList(destDirName.c_str(), "", destFileList);
 
-    if (!ok)
+    if (!ok) {
         return -1;
+    }
     size_t nModifiedFiles = 0;
     for (const auto& srcIt : srcFileList)
     {
@@ -478,8 +489,9 @@ int recursiveDiff(std::string srcDirName, std::string destDirName, std::ostream 
         {
             diff_match_patch<std::string> dmp;
             std::string srcFileName = std::string{srcDirName}.append(PATH_SEPARATOR).append(srcIt);
-            if (isHidden(srcFileName))
+            if (isHidden(srcFileName)) {
                 continue;
+            }
 
             std::ifstream in(srcFileName.c_str());
             std::string srcStr((std::istreambuf_iterator<char>(in)), std::istreambuf_iterator<char>());
@@ -550,14 +562,16 @@ int recursiveMerge(std::string srcDirName, std::string destDirName, std::string 
     std::set<std::string> hiddenFilesList;
     ok = ok && recursiveFileList(commonParentName.c_str(), "", hiddenFilesList);
 
-    if (!ok)
+    if (!ok) {
         return -1;
+    }
 
     for (const auto& srcIt : srcFileList)
     {
         std::string srcFileName = std::string{srcDirName}.append(PATH_SEPARATOR).append(srcIt);
-        if (isHidden(srcFileName))
+        if (isHidden(srcFileName)) {
             continue;
+        }
 
         auto destPos = destFileList.find(srcIt);
         if (destPos != destFileList.end())
@@ -602,8 +616,9 @@ int import(yarp::os::Bottle& importArg, folderType fType)
 #endif
 {
     std::string contextName;
-    if (importArg.size() >1)
+    if (importArg.size() > 1) {
         contextName = importArg.get(1).asString();
+    }
     if (contextName == "")
     {
         printf("No %s name provided\n", fType == CONTEXTS ? "context" : "robot");
@@ -659,15 +674,15 @@ YARP_WARNING_POP
         int result = recursiveCopy(originalpath, destDirname);
         recursiveCopy(originalpath, hiddenDirname, true, false);
 
-        if (result < 0)
+        if (result < 0) {
             printf("ERRORS OCCURRED WHILE IMPORTING %s %s\n", fType == CONTEXTS ? "CONTEXT" : "ROBOT", contextName.c_str());
-        else
-        {
+        } else {
             printf("Copied %s %s from %s to %s .\n", fType == CONTEXTS ? "context" : "robot", contextName.c_str(), originalpath.c_str(), destDirname.c_str());
             printf("Current locations for this %s:\n", fType == CONTEXTS ? "context" : "robot");
             yarp::os::Bottle paths = rf.findPaths(getFolderStringName(fType).append(PATH_SEPARATOR).append(contextName));
-            for (size_t curCont = 0; curCont<paths.size(); ++curCont)
+            for (size_t curCont = 0; curCont < paths.size(); ++curCont) {
                 printf("%s\n", paths.get(curCont).asString().c_str());
+            }
         }
         return result;
     }
@@ -740,8 +755,9 @@ int remove(yarp::os::Bottle& removeArg, folderType fType)
 #endif
 {
     std::string contextName;
-    if (removeArg.size() >1)
+    if (removeArg.size() > 1) {
         contextName = removeArg.get(1).asString();
+    }
     if (contextName == "")
     {
         printf("No %s name provided\n", fType == CONTEXTS ? "context" : "robot");
@@ -774,14 +790,16 @@ YARP_WARNING_POP
             if (choice == 'y')
             {
                 int result = recursiveRemove(targetPath);
-                if (result < 0)
+                if (result < 0) {
                     printf("ERRORS OCCURRED WHILE REMOVING %s\n", targetPath.c_str());
-                else
+                } else {
                     printf("Removed folder %s\n", targetPath.c_str());
+                }
                 //remove hidden folder:
                 std::string hiddenPath = rf.findPath(getFolderStringNameHidden(fType).append(PATH_SEPARATOR).append(contextName), opts);
-                if (hiddenPath != "")
+                if (hiddenPath != "") {
                     recursiveRemove(hiddenPath, false);
+                }
                 return result;
             }
             else
@@ -801,8 +819,9 @@ YARP_WARNING_POP
                 bool ok = true;
                 bool removeHidden = true;
                 std::string hiddenPath = rf.findPath(getFolderStringNameHidden(fType).append(PATH_SEPARATOR).append(contextName), opts);
-                if (hiddenPath != "")
+                if (hiddenPath != "") {
                     removeHidden = false;
+                }
 
                 for (size_t i = 2; i<removeArg.size(); ++i)
                 {
@@ -810,8 +829,9 @@ YARP_WARNING_POP
                     if (fileName != "")
                     {
                         ok = (recursiveRemove(std::string(targetPath).append(PATH_SEPARATOR).append(fileName)) >= 0) && ok;
-                        if (removeHidden)
+                        if (removeHidden) {
                             recursiveRemove(std::string(hiddenPath).append(PATH_SEPARATOR).append(fileName), false);
+                        }
                     }
                 }
                 if (ok)
@@ -904,12 +924,14 @@ YARP_DISABLE_DEPRECATED_WARNING
 YARP_WARNING_POP
 #endif
             std::string userPath = rf.findPath(getFolderStringName(fType).append(PATH_SEPARATOR).append(subDir), opts);
-            if (userPath == "")
+            if (userPath == "") {
                 continue;
+            }
             try
             {
-                if (recursiveDiff(installedPath.append(PATH_SEPARATOR).append(subDir), userPath, tmp)>0)
+                if (recursiveDiff(installedPath.append(PATH_SEPARATOR).append(subDir), userPath, tmp) > 0) {
                     std::cout << subDir << std::endl;
+                }
             }
             catch (...)
             {
@@ -928,8 +950,9 @@ int merge(yarp::os::Bottle& mergeArg, folderType fType)
 #endif
 {
     std::string contextName;
-    if (mergeArg.size() >1)
+    if (mergeArg.size() > 1) {
         contextName = mergeArg.get(1).asString();
+    }
     if (contextName == "")
     {
         printf("No %s name provided\n", fType == CONTEXTS ? "context" : "robot");
@@ -959,12 +982,13 @@ YARP_WARNING_POP
                 opts.searchLocations = ResourceFinderOptions::Installed;
                 std::string installedFileName = rf.findPath(getFolderStringName(fType).append(PATH_SEPARATOR).append(contextName).append(PATH_SEPARATOR).append(fileName), opts);
 
-                if (userFileName != "" && hiddenFileName != "" && installedFileName != "")
+                if (userFileName != "" && hiddenFileName != "" && installedFileName != "") {
                     fileMerge(installedFileName, userFileName, hiddenFileName);
-                else if (userFileName != ""  && installedFileName != "")
+                } else if (userFileName != "" && installedFileName != "") {
                     printf("Need to use mergetool\n");
-                else
+                } else {
                     printf("Could not merge file %s\n", fileName.c_str());
+                }
             }
         }
     }

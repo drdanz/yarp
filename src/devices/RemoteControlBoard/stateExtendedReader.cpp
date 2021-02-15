@@ -79,10 +79,12 @@ void StateExtendedInputPort::onRead(yarp::dev::impl::jointData &v)
     {
         double tmpDT=now-prev;
         deltaT+=tmpDT;
-        if (tmpDT>deltaTMax)
-            deltaTMax=tmpDT;
-        if (tmpDT<deltaTMin)
-            deltaTMin=tmpDT;
+        if (tmpDT > deltaTMax) {
+            deltaTMax = tmpDT;
+        }
+        if (tmpDT < deltaTMin) {
+            deltaTMin = tmpDT;
+        }
     }
 
     prev=now;
@@ -92,8 +94,9 @@ void StateExtendedInputPort::onRead(yarp::dev::impl::jointData &v)
     last=v;
     getEnvelope(lastStamp);
     //check that timestamp are available
-    if (!lastStamp.isValid())
+    if (!lastStamp.isValid()) {
         lastStamp.update(now);
+    }
     mutex.unlock();
 }
 
@@ -161,8 +164,9 @@ bool StateExtendedInputPort::getLastSingle(int j, int field, double *data, Stamp
 
         localArrivalTime=now;
         stamp = lastStamp;
-        if (ret && ( (Time::now()-localArrivalTime) > timeout) )
+        if (ret && ((Time::now() - localArrivalTime) > timeout)) {
             ret = false;
+        }
     }
     mutex.unlock();
 
@@ -193,9 +197,9 @@ bool StateExtendedInputPort::getLastSingle(int j, int field, int *data, Stamp &s
         }
         localArrivalTime=now;
         stamp = lastStamp;
-        if (ret && ( (Time::now()-localArrivalTime) > timeout) )
+        if (ret && ((Time::now() - localArrivalTime) > timeout)) {
             ret = false;
-
+        }
     }
     mutex.unlock();
     return ret;
@@ -261,8 +265,9 @@ bool StateExtendedInputPort::getLastVector(int field, double* data, Stamp& stamp
 
         localArrivalTime=now;
         stamp = lastStamp;
-        if (ret && ( (Time::now()-localArrivalTime) > timeout) )
+        if (ret && ((Time::now() - localArrivalTime) > timeout)) {
             ret = false;
+        }
     }
     mutex.unlock();
 
@@ -293,8 +298,9 @@ bool StateExtendedInputPort::getLastVector(int field, int* data, Stamp& stamp, d
         }
         localArrivalTime=now;
         stamp = lastStamp;
-        if (ret && ( (Time::now()-localArrivalTime) > timeout) )
+        if (ret && ((Time::now() - localArrivalTime) > timeout)) {
             ret = false;
+        }
     }
     mutex.unlock();
     return ret;

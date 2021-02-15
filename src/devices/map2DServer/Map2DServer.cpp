@@ -755,7 +755,9 @@ bool Map2DServer::read(yarp::os::ConnectionReader& connection)
     yarp::os::Bottle in;
     yarp::os::Bottle out;
     bool ok = in.read(connection);
-    if (!ok) return false;
+    if (!ok) {
+        return false;
+    }
 
     //parse string command
     if(in.get(0).isString())
@@ -824,7 +826,9 @@ bool Map2DServer::loadMaps(std::string mapsfile)
         std::getline(file, buffer);
         std::istringstream iss(buffer);
         iss >> dummy;
-        if (dummy == "") break;
+        if (dummy == "") {
+            break;
+        }
         if (dummy == "mapfile:")
         {
             string mapfilename;
@@ -840,8 +844,9 @@ bool Map2DServer::loadMaps(std::string mapsfile)
                 auto p = m_maps_storage.find(map_name);
                 if (p == m_maps_storage.end())
                 {
-                    if (option == "crop")
-                        map.crop(-1,-1,-1,-1);
+                    if (option == "crop") {
+                        map.crop(-1, -1, -1, -1);
+                    }
                     m_maps_storage[map_name] = map;
                 }
                 else
@@ -1053,17 +1058,22 @@ bool Map2DServer::open(yarp::os::Searchable &config)
         yarp::sig::Vector vec=yarp::math::dcm2rpy(mat);
         double orig_angle = vec[2];
         map.setOrigin(map_ros->info.origin.position.x,map_ros->info.origin.position.y,orig_angle);
-        for (size_t y=0; y< map_ros->info.height; y++)
+        for (size_t y = 0; y < map_ros->info.height; y++) {
             for (size_t x=0; x< map_ros->info.width; x++)
             {
                XYCell cell(x,map_ros->info.height-1-y);
                double occ = map_ros->data[x+y*map_ros->info.width];
                map.setOccupancyData(cell,occ);
 
-               if      (occ >= 0   && occ <= 70)  map.setMapFlag(cell, MapGrid2D::MAP_CELL_FREE);
-               else if (occ >= 71 && occ <= 100)  map.setMapFlag(cell, MapGrid2D::MAP_CELL_WALL);
-               else                               map.setMapFlag(cell, MapGrid2D::MAP_CELL_UNKNOWN);
+               if (occ >= 0 && occ <= 70) {
+                   map.setMapFlag(cell, MapGrid2D::MAP_CELL_FREE);
+               } else if (occ >= 71 && occ <= 100) {
+                   map.setMapFlag(cell, MapGrid2D::MAP_CELL_WALL);
+               } else {
+                   map.setMapFlag(cell, MapGrid2D::MAP_CELL_UNKNOWN);
+               }
             }
+        }
         auto p = m_maps_storage.find(map_name);
         if (p == m_maps_storage.end())
         {
@@ -1107,7 +1117,9 @@ bool Map2DServer::priv_load_locations_and_areas_v1(std::ifstream& file)
     while (1)
     {
         std::getline(file, buffer);
-        if (buffer == "Areas:") break;
+        if (buffer == "Areas:") {
+            break;
+        }
         if (file.eof())
         {
             yCError(MAP2DSERVER) << "Unexpected End Of File";
@@ -1140,7 +1152,9 @@ bool Map2DServer::priv_load_locations_and_areas_v1(std::ifstream& file)
     {
         Map2DArea       area;
         std::getline(file, buffer);
-        if (file.eof()) break;
+        if (file.eof()) {
+            break;
+        }
 
         Bottle b;
         b.fromString(buffer);
@@ -1177,7 +1191,9 @@ bool Map2DServer::priv_load_locations_and_areas_v2(std::ifstream& file)
     while (1)
     {
         std::getline(file, buffer);
-        if (buffer == "Areas:") break;
+        if (buffer == "Areas:") {
+            break;
+        }
         if (file.eof())
         {
             yCError(MAP2DSERVER) << "Unexpected End Of File";
@@ -1210,7 +1226,9 @@ bool Map2DServer::priv_load_locations_and_areas_v2(std::ifstream& file)
     {
         Map2DArea       area;
         std::getline(file, buffer);
-        if (file.eof()) break;
+        if (file.eof()) {
+            break;
+        }
 
         Bottle b;
         b.fromString(buffer);

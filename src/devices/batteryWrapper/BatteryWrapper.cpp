@@ -103,7 +103,9 @@ bool BatteryWrapper::read(yarp::os::ConnectionReader& connection)
     yarp::os::Bottle in;
     yarp::os::Bottle out;
     bool ok = in.read(connection);
-    if (!ok) return false;
+    if (!ok) {
+        return false;
+    }
 
     // parse in, prepare out
     int code = in.get(0).asVocab();
@@ -281,7 +283,9 @@ void BatteryWrapper::run()
             m_streamingPort.write();
 
             // if the battery is not charging, checks its status of charge
-            if (battery_current>0.4) check_battery_status(battery_charge);
+            if (battery_current > 0.4) {
+                check_battery_status(battery_charge);
+            }
 
             // save data to file
             if (m_enable_log)

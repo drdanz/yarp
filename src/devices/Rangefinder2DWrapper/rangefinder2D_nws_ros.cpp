@@ -192,9 +192,9 @@ bool Rangefinder2D_nws_ros::open(yarp::os::Searchable &config)
     {
         yCError(RANGEFINDER2D_NWS_ROS) << "Rangefinder2DWrapper: missing 'period' parameter. Check you configuration file\n";
         return false;
-    }
-    else
+    } else {
         _period = config.find("period").asInt32() / 1000.0;
+    }
 
     checkROSParams(config);
 
@@ -246,10 +246,11 @@ void Rangefinder2D_nws_ros::run()
 
         if (ret)
         {
-            if(iTimed)
+            if (iTimed) {
                 lastStateStamp = iTimed->getLastInputStamp();
-            else
+            } else {
                 lastStateStamp.update(yarp::os::Time::now());
+            }
 
             int ranges_size = ranges.size();
 

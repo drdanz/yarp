@@ -265,8 +265,9 @@ void SignalHandler::checkDefaultNameCounterCount()
 
     while(li.hasNext()){
         QFileInfo fi = li.next();
-        if(fi.fileName().contains("frame") )
+        if (fi.fileName().contains("frame")) {
             defaultNameCounter++;
+        }
     }
 
 }
@@ -289,8 +290,9 @@ void SignalHandler::checkCustomNameCounterCount(QString file)
 
     while(li.hasNext()){
         QFileInfo fi = li.next();
-        if(fi.fileName().contains(sfile) )
+        if (fi.fileName().contains(sfile)) {
             customNameCounter++;
+        }
     }
 
 }
@@ -301,8 +303,9 @@ void SignalHandler::checkCustomNameCounterCount(QString file)
  */
 void SignalHandler::setFileNames(QUrl url)
 {
-    if(b_saveSetFrameMode == false)
+    if (b_saveSetFrameMode == false) {
         this->fileNames = url.toLocalFile();
+    }
 }
 
 /*! \brief Enables the Dump frame modality (Save frame set).*/

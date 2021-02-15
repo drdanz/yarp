@@ -254,9 +254,9 @@ bool Implement_RgbVisualParams_Parser::respond(const yarp::os::Bottle& cmd, yarp
                             response.addFloat64(conf[i].framerate);
                             response.addVocab(conf[i].pixelCoding);
                         }
-                    }
-                    else
+                    } else {
                         response.addVocab(VOCAB_FAILED);
+                    }
                 }
                 break;
 
@@ -272,9 +272,9 @@ bool Implement_RgbVisualParams_Parser::respond(const yarp::os::Bottle& cmd, yarp
                         response.addVocab(VOCAB_IS);
                         response.addInt32(width);
                         response.addInt32(height);
-                    }
-                    else
+                    } else {
                         response.addVocab(VOCAB_FAILED);
+                    }
                 }
                 break;
 
@@ -289,9 +289,9 @@ bool Implement_RgbVisualParams_Parser::respond(const yarp::os::Bottle& cmd, yarp
                         response.addVocab(VOCAB_IS);
                         response.addFloat64(hFov);
                         response.addFloat64(vFov);
-                    }
-                    else
+                    } else {
                         response.addVocab(VOCAB_FAILED);
+                    }
                 }
                 break;
 
@@ -306,9 +306,9 @@ bool Implement_RgbVisualParams_Parser::respond(const yarp::os::Bottle& cmd, yarp
                         response.addVocab(VOCAB_IS);
                         yarp::os::Bottle& tmp=response.addList();
                         ret &= Property::copyPortable(params, tmp);
-                    }
-                    else
+                    } else {
                         response.addVocab(VOCAB_FAILED);
+                    }
                 }
                 break;
 
@@ -322,9 +322,9 @@ bool Implement_RgbVisualParams_Parser::respond(const yarp::os::Bottle& cmd, yarp
                         response.addVocab(VOCAB_MIRROR);
                         response.addVocab(VOCAB_IS);
                         response.addInt32(mirror);
-                    }
-                    else
+                    } else {
                         response.addVocab(VOCAB_FAILED);
+                    }
                 }
                 break;
 
@@ -633,9 +633,9 @@ bool Implement_DepthVisualParams_Parser::respond(const yarp::os::Bottle& cmd, ya
                         response.addVocab(VOCAB_IS);
                         response.addFloat64(hFov);
                         response.addFloat64(vFov);
-                    }
-                    else
+                    } else {
                         response.addVocab(VOCAB_FAILED);
+                    }
                 }
                 break;
 
@@ -689,9 +689,9 @@ bool Implement_DepthVisualParams_Parser::respond(const yarp::os::Bottle& cmd, ya
                         response.addVocab(VOCAB_MIRROR);
                         response.addVocab(VOCAB_IS);
                         response.addInt32(mirror);
-                    }
-                    else
+                    } else {
                         response.addVocab(VOCAB_FAILED);
+                    }
                 }
                 break;
 

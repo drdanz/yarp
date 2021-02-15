@@ -61,10 +61,12 @@ public:
         if (iterations>0){
             double dt=now-prev;
 
-            if (dt>max)
-                max=dt;
-            if (dt<min)
-                min=dt;
+            if (dt > max) {
+                max = dt;
+            }
+            if (dt < min) {
+                min = dt;
+            }
         }
 
         prev=now;
@@ -93,10 +95,11 @@ public:
         \param av the average value
     */
     void getStats(double &av){
-        if (iterations>0)
+        if (iterations > 0) {
             av=(yarp::os::Time::now()-t0)/iterations;
-        else
-            av=0;
+        } else {
+            av = 0;
+        }
     }
 };
 

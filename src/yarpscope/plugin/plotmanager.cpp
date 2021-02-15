@@ -89,8 +89,9 @@ void PlotManager::setInterval(int interval)
 {
 
     timer.setInterval(interval);
-    if(!timer.isActive())
+    if (!timer.isActive()) {
         timer.start();
+    }
 }
 
 /*! \brief Timeout of the refresh timer */

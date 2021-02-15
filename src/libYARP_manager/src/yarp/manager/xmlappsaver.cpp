@@ -24,13 +24,16 @@ using namespace yarp::manager;
 
 XmlAppSaver::XmlAppSaver(const char* szFileName)
 {
-    if(szFileName) strFileName = szFileName;
+    if (szFileName) {
+        strFileName = szFileName;
+    }
 }
 
 bool XmlAppSaver::save(Application* application)
 {
-    if(!strFileName.size())
-         return serialXml(application, application->getXmlFile());
+    if (!strFileName.size()) {
+        return serialXml(application, application->getXmlFile());
+    }
 
     return serialXml(application, strFileName.c_str());
 }
@@ -204,21 +207,25 @@ bool XmlAppSaver::serialXml(Application* app, const char* szFile)
             auto* newConn=new TiXmlElement("connection");
             Connection curConn=app->getConnectionAt(connCt);
 
-            if(strlen(curConn.getId()))
+            if (strlen(curConn.getId())) {
                 newConn->SetAttribute("id", curConn.getId());
+            }
 
-            if(curConn.isPersistent())
+            if (curConn.isPersistent()) {
                 newConn->SetAttribute("persist", "true");
+            }
 
             auto* from = new TiXmlElement("from");
-            if (curConn.isExternalFrom())
+            if (curConn.isExternalFrom()) {
                 from->SetAttribute("external", "true");
+            }
             from->LinkEndChild(new TiXmlText(curConn.from()));
             newConn->LinkEndChild(from);
 
             auto* to = new TiXmlElement("to");
-            if (curConn.isExternalTo())
+            if (curConn.isExternalTo()) {
                 to->SetAttribute("external", "true");
+            }
             to->LinkEndChild(new TiXmlText(curConn.to()));
             newConn->LinkEndChild(to);
 
@@ -231,8 +238,10 @@ bool XmlAppSaver::serialXml(Application* app, const char* szFile)
             if(model.points.size()>0)
             {
                 txt<<"(Pos ";
-                for(auto& point : model.points)
-                    txt<<"((x "<<point.x<<") "<<"(y "<<point.y<<")) ";
+                for (auto& point : model.points) {
+                    txt << "((x " << point.x << ") "
+                        << "(y " << point.y << ")) ";
+                }
                 txt<<" )";
                 auto* geometry=new TiXmlElement("geometry");
                 geometry->LinkEndChild(new TiXmlText(txt.str().c_str()));
@@ -268,8 +277,10 @@ bool XmlAppSaver::serialXml(Application* app, const char* szFile)
             if(model.points.size()>0)
             {
                 txt<<"(Pos ";
-                for(auto& point : model.points)
-                    txt<<"((x "<<point.x<<") "<<"(y "<<point.y<<")) ";
+                for (auto& point : model.points) {
+                    txt << "((x " << point.x << ") "
+                        << "(y " << point.y << ")) ";
+                }
                 txt<<" )";
                 auto* geometry=new TiXmlElement("geometry");
                 geometry->LinkEndChild(new TiXmlText(txt.str().c_str()));
@@ -285,12 +296,13 @@ bool XmlAppSaver::serialXml(Application* app, const char* szFile)
 
         OSTRINGSTREAM err;
         err<<"tinyXml error for file " << app->getXmlFile();
-        if (doc.Error())
-            err <<" at line " << doc.ErrorRow() << ", column " << doc.ErrorCol() << ": " << doc.ErrorDesc();
+        if (doc.Error()) {
+            err << " at line " << doc.ErrorRow() << ", column " << doc.ErrorCol() << ": " << doc.ErrorDesc();
+        }
         logger->addError(err);
         err <<"\n";
         return false;
+    } else {
+        return true;
     }
-    else return true;
-
 }

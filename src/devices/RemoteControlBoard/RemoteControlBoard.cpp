@@ -126,11 +126,13 @@ bool RemoteControlBoard::checkProtocolVersion(bool ignore)
     rpc_p.write(cmd, reply);
 
     // check size and format of messages, expected [prot] int int int [ok]
-    if (reply.size()!=5)
-       error=true;
+    if (reply.size() != 5) {
+        error = true;
+    }
 
-    if (reply.get(0).asVocab()!=VOCAB_PROTOCOL_VERSION)
-       error=true;
+    if (reply.get(0).asVocab() != VOCAB_PROTOCOL_VERSION) {
+        error = true;
+    }
 
     if (!error)
     {
@@ -139,15 +141,18 @@ bool RemoteControlBoard::checkProtocolVersion(bool ignore)
         protocolVersion.tweak=reply.get(3).asInt32();
 
         //verify protocol
-        if (protocolVersion.major!=PROTOCOL_VERSION_MAJOR)
-            error=true;
+        if (protocolVersion.major != PROTOCOL_VERSION_MAJOR) {
+            error = true;
+        }
 
-        if (protocolVersion.minor!=PROTOCOL_VERSION_MINOR)
-            error=true;
+        if (protocolVersion.minor != PROTOCOL_VERSION_MINOR) {
+            error = true;
+        }
     }
 
-    if (!error)
+    if (!error) {
         return true;
+    }
 
     // protocol did not match
     yCError(REMOTECONTROLBOARD,
@@ -187,23 +192,29 @@ bool RemoteControlBoard::open(Searchable& config)
     yarp::os::QosStyle localQos;
     if (config.check("local_qos")) {
         Bottle& qos = config.findGroup("local_qos");
-        if(qos.check("thread_priority"))
+        if (qos.check("thread_priority")) {
             localQos.setThreadPriority(qos.find("thread_priority").asInt32());
-        if(qos.check("thread_policy"))
+        }
+        if (qos.check("thread_policy")) {
             localQos.setThreadPolicy(qos.find("thread_policy").asInt32());
-        if(qos.check("packet_priority"))
+        }
+        if (qos.check("packet_priority")) {
             localQos.setPacketPriority(qos.find("packet_priority").asString());
+        }
     }
 
     yarp::os::QosStyle remoteQos;
     if (config.check("remote_qos")) {
         Bottle& qos = config.findGroup("remote_qos");
-        if(qos.check("thread_priority"))
+        if (qos.check("thread_priority")) {
             remoteQos.setThreadPriority(qos.find("thread_priority").asInt32());
-        if(qos.check("thread_policy"))
+        }
+        if (qos.check("thread_policy")) {
             remoteQos.setThreadPolicy(qos.find("thread_policy").asInt32());
-        if(qos.check("packet_priority"))
+        }
+        if (qos.check("packet_priority")) {
             remoteQos.setPacketPriority(qos.find("packet_priority").asString());
+        }
     }
 
     bool writeStrict_isFound = config.check("writeStrict");
@@ -221,9 +232,9 @@ bool RemoteControlBoard::open(Searchable& config)
             writeStrict_singleJoint = false;
             writeStrict_moreJoints  = false;
             yCInfo(REMOTECONTROLBOARD, "RemoteControlBoard is DISABLING the writeStrict opition for all commands");
-        }
-        else
+        } else {
             yCError(REMOTECONTROLBOARD, "Found writeStrict opition with wrong value. Accepted options are 'on' or 'off'");
+        }
     }
 
     if (local=="") {
@@ -287,8 +298,9 @@ bool RemoteControlBoard::open(Searchable& config)
             connectionProblem = true;
         }
         // set the QoS preferences for the 'command' port
-        if (config.check("local_qos") || config.check("remote_qos"))
+        if (config.check("local_qos") || config.check("remote_qos")) {
             NetworkBase::setConnectionQos(command_p.getName(), s1, localQos, remoteQos, false);
+        }
 
         s1 = remote;
         s1 += "/stateExt:o";
@@ -299,8 +311,9 @@ bool RemoteControlBoard::open(Searchable& config)
         if (ok)
         {
             // set the QoS preferences for the 'state' port
-            if (config.check("local_qos") || config.check("remote_qos"))
+            if (config.check("local_qos") || config.check("remote_qos")) {
                 NetworkBase::setConnectionQos(s1, extendedIntputStatePort.getName(), remoteQos, localQos, false);
+            }
         }
         else
         {
@@ -346,9 +359,9 @@ bool RemoteControlBoard::open(Searchable& config)
         diagnosticThread = new DiagnosticThread(DIAGNOSTIC_THREAD_PERIOD);
         diagnosticThread->setOwner(&extendedIntputStatePort);
         diagnosticThread->start();
+    } else {
+        diagnosticThread = nullptr;
     }
-    else
-        diagnosticThread=nullptr;
 
     // allocate memory for helper struct
     // single joint
@@ -561,62 +574,76 @@ bool RemoteControlBoard::set1V1I2D(int code, int j, double val1, double val2)
 
 bool RemoteControlBoard::set1VDA(int v, const double *val)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     Bottle cmd, response;
     cmd.addVocab(VOCAB_SET);
     cmd.addVocab(v);
     Bottle& l = cmd.addList();
-    for (size_t i = 0; i < nj; i++)
+    for (size_t i = 0; i < nj; i++) {
         l.addFloat64(val[i]);
+    }
     bool ok = rpc_p.write(cmd, response);
     return CHECK_FAIL(ok, response);
 }
 
 bool RemoteControlBoard::set2V1DA(int v1, int v2, const double *val)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     Bottle cmd, response;
     cmd.addVocab(VOCAB_SET);
     cmd.addVocab(v1);
     cmd.addVocab(v2);
     Bottle& l = cmd.addList();
-    for (size_t i = 0; i < nj; i++)
+    for (size_t i = 0; i < nj; i++) {
         l.addFloat64(val[i]);
+    }
     bool ok = rpc_p.write(cmd, response);
     return CHECK_FAIL(ok, response);
 }
 
 bool RemoteControlBoard::set2V2DA(int v1, int v2, const double *val1, const double *val2)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     Bottle cmd, response;
     cmd.addVocab(VOCAB_SET);
     cmd.addVocab(v1);
     cmd.addVocab(v2);
     Bottle& l1 = cmd.addList();
-    for (size_t i = 0; i < nj; i++)
+    for (size_t i = 0; i < nj; i++) {
         l1.addFloat64(val1[i]);
+    }
     Bottle& l2 = cmd.addList();
-    for (size_t i = 0; i < nj; i++)
+    for (size_t i = 0; i < nj; i++) {
         l2.addFloat64(val2[i]);
+    }
     bool ok = rpc_p.write(cmd, response);
     return CHECK_FAIL(ok, response);
 }
 
 bool RemoteControlBoard::set1V1I1IA1DA(int v, const int len, const int *val1, const double *val2)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     Bottle cmd, response;
     cmd.addVocab(VOCAB_SET);
     cmd.addVocab(v);
     cmd.addInt32(len);
     int i;
     Bottle& l1 = cmd.addList();
-    for (i = 0; i < len; i++)
+    for (i = 0; i < len; i++) {
         l1.addInt32(val1[i]);
+    }
     Bottle& l2 = cmd.addList();
-    for (i = 0; i < len; i++)
+    for (i = 0; i < len; i++) {
         l2.addFloat64(val2[i]);
+    }
     bool ok = rpc_p.write(cmd, response);
     return CHECK_FAIL(ok, response);
 }
@@ -635,7 +662,9 @@ bool RemoteControlBoard::set2V1I1D(int v1, int v2, int axis, double val)
 
 bool RemoteControlBoard::setValWithPidType(int voc, PidControlTypeEnum type, int axis, double val)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     Bottle cmd, response;
     cmd.addVocab(VOCAB_SET);
     cmd.addVocab(VOCAB_PID);
@@ -649,15 +678,18 @@ bool RemoteControlBoard::setValWithPidType(int voc, PidControlTypeEnum type, int
 
 bool RemoteControlBoard::setValWithPidType(int voc, PidControlTypeEnum type, const double* val_arr)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     Bottle cmd, response;
     cmd.addVocab(VOCAB_SET);
     cmd.addVocab(VOCAB_PID);
     cmd.addVocab(voc);
     cmd.addVocab(type);
     Bottle& l = cmd.addList();
-    for (size_t i = 0; i < nj; i++)
+    for (size_t i = 0; i < nj; i++) {
         l.addFloat64(val_arr[i]);
+    }
     bool ok = rpc_p.write(cmd, response);
     return CHECK_FAIL(ok, response);
 }
@@ -683,7 +715,9 @@ bool RemoteControlBoard::getValWithPidType(int voc, PidControlTypeEnum type, int
 
 bool RemoteControlBoard::getValWithPidType(int voc, PidControlTypeEnum type, double *val)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     Bottle cmd, response;
     cmd.addVocab(VOCAB_GET);
     cmd.addVocab(VOCAB_PID);
@@ -693,12 +727,14 @@ bool RemoteControlBoard::getValWithPidType(int voc, PidControlTypeEnum type, dou
     if (CHECK_FAIL(ok, response))
     {
         Bottle* lp = response.get(2).asList();
-        if (lp == nullptr)
+        if (lp == nullptr) {
             return false;
+        }
         Bottle& l = *lp;
         yCAssert(REMOTECONTROLBOARD, nj == l.size());
-        for (size_t i = 0; i < nj; i++)
+        for (size_t i = 0; i < nj; i++) {
             val[i] = l.get(i).asFloat64();
+        }
         getTimeStamp(response, lastStamp);
         return true;
     }
@@ -828,8 +864,9 @@ bool RemoteControlBoard::get1V1I1IA1B(int v,  const int len, const int *val1, bo
     cmd.addVocab(v);
     cmd.addInt32(len);
     Bottle& l1 = cmd.addList();
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < len; i++) {
         l1.addInt32(val1[i]);
+    }
 
     bool ok = rpc_p.write(cmd, response);
 
@@ -844,7 +881,9 @@ bool RemoteControlBoard::get1V1I1IA1B(int v,  const int len, const int *val1, bo
 bool RemoteControlBoard::get2V1I1IA1DA(int v1, int v2, const int n_joints, const int *joints, double *retVals, std::string functionName)
 {
     Bottle cmd, response;
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
 
     cmd.addVocab(VOCAB_GET);
     cmd.addVocab(v1);
@@ -852,8 +891,9 @@ bool RemoteControlBoard::get2V1I1IA1DA(int v1, int v2, const int n_joints, const
     cmd.addInt32(n_joints);
 
     Bottle& l1 = cmd.addList();
-    for (int i = 0; i < n_joints; i++)
+    for (int i = 0; i < n_joints; i++) {
         l1.addInt32(joints[i]);
+    }
 
     bool ok = rpc_p.write(cmd, response);
 
@@ -900,19 +940,23 @@ bool RemoteControlBoard::get1V1B(int v, bool &val)
 
 bool RemoteControlBoard::get1VIA(int v, int *val)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     Bottle cmd, response;
     cmd.addVocab(VOCAB_GET);
     cmd.addVocab(v);
     bool ok = rpc_p.write(cmd, response);
     if (CHECK_FAIL(ok, response)) {
         Bottle* lp = response.get(2).asList();
-        if (lp == nullptr)
+        if (lp == nullptr) {
             return false;
+        }
         Bottle& l = *lp;
         yCAssert(REMOTECONTROLBOARD, nj == l.size());
-        for (size_t i = 0; i < nj; i++)
+        for (size_t i = 0; i < nj; i++) {
             val[i] = l.get(i).asInt32();
+        }
 
         getTimeStamp(response, lastStamp);
 
@@ -923,19 +967,23 @@ bool RemoteControlBoard::get1VIA(int v, int *val)
 
 bool RemoteControlBoard::get1VDA(int v, double *val)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     Bottle cmd, response;
     cmd.addVocab(VOCAB_GET);
     cmd.addVocab(v);
     bool ok = rpc_p.write(cmd, response);
     if (CHECK_FAIL(ok, response)) {
         Bottle* lp = response.get(2).asList();
-        if (lp == nullptr)
+        if (lp == nullptr) {
             return false;
+        }
         Bottle& l = *lp;
         yCAssert(REMOTECONTROLBOARD, nj == l.size());
-        for (size_t i = 0; i < nj; i++)
+        for (size_t i = 0; i < nj; i++) {
             val[i] = l.get(i).asFloat64();
+        }
 
         getTimeStamp(response, lastStamp);
 
@@ -946,7 +994,9 @@ bool RemoteControlBoard::get1VDA(int v, double *val)
 
 bool RemoteControlBoard::get1V1DA(int v1, double *val)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     Bottle cmd, response;
     cmd.addVocab(VOCAB_GET);
     cmd.addVocab(v1);
@@ -954,12 +1004,14 @@ bool RemoteControlBoard::get1V1DA(int v1, double *val)
 
     if (CHECK_FAIL(ok, response)) {
         Bottle* lp = response.get(2).asList();
-        if (lp == nullptr)
+        if (lp == nullptr) {
             return false;
+        }
         Bottle& l = *lp;
         yCAssert(REMOTECONTROLBOARD, nj == l.size());
-        for (size_t i = 0; i < nj; i++)
+        for (size_t i = 0; i < nj; i++) {
             val[i] = l.get(i).asFloat64();
+        }
 
         getTimeStamp(response, lastStamp);
         return true;
@@ -969,7 +1021,9 @@ bool RemoteControlBoard::get1V1DA(int v1, double *val)
 
 bool RemoteControlBoard::get2V1DA(int v1, int v2, double *val)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     Bottle cmd, response;
     cmd.addVocab(VOCAB_GET);
     cmd.addVocab(v1);
@@ -978,12 +1032,14 @@ bool RemoteControlBoard::get2V1DA(int v1, int v2, double *val)
 
     if (CHECK_FAIL(ok, response)) {
         Bottle* lp = response.get(2).asList();
-        if (lp == nullptr)
+        if (lp == nullptr) {
             return false;
+        }
         Bottle& l = *lp;
         yCAssert(REMOTECONTROLBOARD, nj == l.size());
-        for (size_t i = 0; i < nj; i++)
+        for (size_t i = 0; i < nj; i++) {
             val[i] = l.get(i).asFloat64();
+        }
 
         getTimeStamp(response, lastStamp);
         return true;
@@ -993,7 +1049,9 @@ bool RemoteControlBoard::get2V1DA(int v1, int v2, double *val)
 
 bool RemoteControlBoard::get2V2DA(int v1, int v2, double *val1, double *val2)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     Bottle cmd, response;
     cmd.addVocab(VOCAB_GET);
     cmd.addVocab(v1);
@@ -1001,12 +1059,14 @@ bool RemoteControlBoard::get2V2DA(int v1, int v2, double *val1, double *val2)
     bool ok = rpc_p.write(cmd, response);
     if (CHECK_FAIL(ok, response)) {
         Bottle* lp1 = response.get(2).asList();
-        if (lp1 == nullptr)
+        if (lp1 == nullptr) {
             return false;
+        }
         Bottle& l1 = *lp1;
         Bottle* lp2 = response.get(3).asList();
-        if (lp2 == nullptr)
+        if (lp2 == nullptr) {
             return false;
+        }
         Bottle& l2 = *lp2;
 
         size_t nj1 = l1.size();
@@ -1014,10 +1074,12 @@ bool RemoteControlBoard::get2V2DA(int v1, int v2, double *val1, double *val2)
        // yCAssert(REMOTECONTROLBOARD, nj == nj1);
        // yCAssert(REMOTECONTROLBOARD, nj == nj2);
 
-        for (size_t i = 0; i < nj1; i++)
+        for (size_t i = 0; i < nj1; i++) {
             val1[i] = l1.get(i).asFloat64();
-        for (size_t i = 0; i < nj2; i++)
+        }
+        for (size_t i = 0; i < nj2; i++) {
             val2[i] = l2.get(i).asFloat64();
+        }
 
         getTimeStamp(response, lastStamp);
         return true;
@@ -1043,22 +1105,26 @@ bool RemoteControlBoard::get1V1I1S(int code, int j, std::string &name)
 
 bool RemoteControlBoard::get1V1I1IA1DA(int v, const int len, const int *val1, double *val2)
 {
-    if(!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
 
     Bottle cmd, response;
     cmd.addVocab(VOCAB_GET);
     cmd.addVocab(v);
     cmd.addInt32(len);
     Bottle &l1 = cmd.addList();
-    for(int i = 0; i < len; i++)
+    for (int i = 0; i < len; i++) {
         l1.addInt32(val1[i]);
+    }
 
     bool ok = rpc_p.write(cmd, response);
 
     if (CHECK_FAIL(ok, response)) {
         Bottle* lp2 = response.get(2).asList();
-        if (lp2 == nullptr)
+        if (lp2 == nullptr) {
             return false;
+        }
         Bottle& l2 = *lp2;
 
         size_t nj2 = l2.size();
@@ -1067,8 +1133,9 @@ bool RemoteControlBoard::get1V1I1IA1DA(int v, const int len, const int *val1, do
             yCError(REMOTECONTROLBOARD, "received an answer with an unexpected number of entries!");
             return false;
         }
-        for (size_t i = 0; i < nj2; i++)
+        for (size_t i = 0; i < nj2; i++) {
             val2[i] = l2.get(i).asFloat64();
+        }
 
         getTimeStamp(response, lastStamp);
         return true;
@@ -1110,7 +1177,9 @@ bool RemoteControlBoard::setPid(const PidControlTypeEnum& pidtype, int j, const 
 
 bool RemoteControlBoard::setPids(const PidControlTypeEnum& pidtype, const Pid *pids)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     Bottle cmd, response;
     cmd.addVocab(VOCAB_SET);
     cmd.addVocab(VOCAB_PID);
@@ -1176,8 +1245,9 @@ bool RemoteControlBoard::getPid(const PidControlTypeEnum& pidtype, int j, Pid *p
     bool ok = rpc_p.write(cmd, response);
     if (CHECK_FAIL(ok, response)) {
         Bottle* lp = response.get(2).asList();
-        if (lp == nullptr)
+        if (lp == nullptr) {
             return false;
+        }
         Bottle& l = *lp;
         pid->kp = l.get(0).asFloat64();
         pid->kd = l.get(1).asFloat64();
@@ -1196,7 +1266,9 @@ bool RemoteControlBoard::getPid(const PidControlTypeEnum& pidtype, int j, Pid *p
 
 bool RemoteControlBoard::getPids(const PidControlTypeEnum& pidtype, Pid *pids)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     Bottle cmd, response;
     cmd.addVocab(VOCAB_GET);
     cmd.addVocab(VOCAB_PID);
@@ -1206,15 +1278,17 @@ bool RemoteControlBoard::getPids(const PidControlTypeEnum& pidtype, Pid *pids)
     if (CHECK_FAIL(ok, response))
     {
         Bottle* lp = response.get(2).asList();
-        if (lp == nullptr)
+        if (lp == nullptr) {
             return false;
+        }
         Bottle& l = *lp;
         yCAssert(REMOTECONTROLBOARD, nj == l.size());
         for (size_t i = 0; i < nj; i++)
         {
             Bottle* mp = l.get(i).asList();
-            if (mp == nullptr)
+            if (mp == nullptr) {
                 return false;
+            }
             pids[i].kp = mp->get(0).asFloat64();
             pids[i].kd = mp->get(1).asFloat64();
             pids[i].ki = mp->get(2).asFloat64();
@@ -1253,7 +1327,9 @@ bool RemoteControlBoard::getPidErrorLimits(const PidControlTypeEnum& pidtype, do
 
 bool RemoteControlBoard::resetPid(const PidControlTypeEnum& pidtype, int j)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     Bottle cmd, response;
     cmd.addVocab(VOCAB_SET);
     cmd.addVocab(VOCAB_PID);
@@ -1266,7 +1342,9 @@ bool RemoteControlBoard::resetPid(const PidControlTypeEnum& pidtype, int j)
 
 bool RemoteControlBoard::disablePid(const PidControlTypeEnum& pidtype, int j)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     Bottle cmd, response;
     cmd.addVocab(VOCAB_SET);
     cmd.addVocab(VOCAB_PID);
@@ -1279,7 +1357,9 @@ bool RemoteControlBoard::disablePid(const PidControlTypeEnum& pidtype, int j)
 
 bool RemoteControlBoard::enablePid(const PidControlTypeEnum& pidtype, int j)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     Bottle cmd, response;
     cmd.addVocab(VOCAB_SET);
     cmd.addVocab(VOCAB_PID);
@@ -1784,15 +1864,18 @@ bool RemoteControlBoard::stop(int j)
 
 bool RemoteControlBoard::stop(const int len, const int *val1)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     Bottle cmd, response;
     cmd.addVocab(VOCAB_SET);
     cmd.addVocab(VOCAB_STOP_GROUP);
     cmd.addInt32(len);
     int i;
     Bottle& l1 = cmd.addList();
-    for (i = 0; i < len; i++)
+    for (i = 0; i < len; i++) {
         l1.addInt32(val1[i]);
+    }
 
     bool ok = rpc_p.write(cmd, response);
     return CHECK_FAIL(ok, response);
@@ -1810,7 +1893,9 @@ bool RemoteControlBoard::stop()
 bool RemoteControlBoard::velocityMove(int j, double v)
 {
  //   return set1V1I1D(VOCAB_VELOCITY_MOVE, j, v);
-    if (!isLive()) return false;
+ if (!isLive()) {
+     return false;
+ }
     CommandMessage& c = command_buffer.get();
     c.head.clear();
     c.head.addVocab(VOCAB_VELOCITY_MOVE);
@@ -1823,7 +1908,9 @@ bool RemoteControlBoard::velocityMove(int j, double v)
 
 bool RemoteControlBoard::velocityMove(const double *v)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     CommandMessage& c = command_buffer.get();
     c.head.clear();
     c.head.addVocab(VOCAB_VELOCITY_MOVES);
@@ -2034,7 +2121,9 @@ bool RemoteControlBoard::setRefTorques(const double *t)
 {
     //Now we use streaming instead of rpc
     //return set2V1DA(VOCAB_TORQUE, VOCAB_REFS, t);
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     CommandMessage& c = command_buffer.get();
     c.head.clear();
     c.head.addVocab(VOCAB_TORQUES_DIRECTS);
@@ -2051,7 +2140,9 @@ bool RemoteControlBoard::setRefTorque(int j, double v)
 {
     //return set2V1I1D(VOCAB_TORQUE, VOCAB_REF, j, v);
     // use the streaming port!
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     CommandMessage& c = command_buffer.get();
     c.head.clear();
     // in streaming port only SET command can be sent, so it is implicit
@@ -2069,15 +2160,18 @@ bool RemoteControlBoard::setRefTorques(const int n_joint, const int *joints, con
 {
     //return set2V1I1D(VOCAB_TORQUE, VOCAB_REF, j, v);
     // use the streaming port!
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     CommandMessage& c = command_buffer.get();
     c.head.clear();
     // in streaming port only SET command can be sent, so it is implicit
     c.head.addVocab(VOCAB_TORQUES_DIRECT_GROUP);
     c.head.addInt32(n_joint);
     Bottle &jointList = c.head.addList();
-    for (int i = 0; i < n_joint; i++)
+    for (int i = 0; i < n_joint; i++) {
         jointList.addInt32(joints[i]);
+    }
     c.body.resize(n_joint);
     memcpy(&(c.body[0]), t, sizeof(double)*n_joint);
     command_buffer.write(writeStrict_moreJoints);
@@ -2110,8 +2204,9 @@ bool RemoteControlBoard::getMotorTorqueParams(int j, MotorTorqueParameters *para
     bool ok = rpc_p.write(cmd, response);
     if (CHECK_FAIL(ok, response)) {
         Bottle* lp = response.get(2).asList();
-        if (lp == nullptr)
+        if (lp == nullptr) {
             return false;
+        }
         Bottle& l = *lp;
         if (l.size() != 4)
         {
@@ -2169,8 +2264,9 @@ bool RemoteControlBoard::getImpedance(int j, double *stiffness, double *damping)
     bool ok = rpc_p.write(cmd, response);
     if (CHECK_FAIL(ok, response)) {
         Bottle* lp = response.get(2).asList();
-        if (lp == nullptr)
+        if (lp == nullptr) {
             return false;
+        }
         Bottle& l = *lp;
         *stiffness = l.get(0).asFloat64();
         *damping   = l.get(1).asFloat64();
@@ -2189,8 +2285,9 @@ bool RemoteControlBoard::getImpedanceOffset(int j, double *offset)
     bool ok = rpc_p.write(cmd, response);
     if (CHECK_FAIL(ok, response)) {
         Bottle* lp = response.get(2).asList();
-        if (lp == nullptr)
+        if (lp == nullptr) {
             return false;
+        }
         Bottle& l = *lp;
         *offset    = l.get(0).asFloat64();
         return true;
@@ -2239,8 +2336,9 @@ bool RemoteControlBoard::getCurrentImpedanceLimit(int j, double *min_stiff, doub
     bool ok = rpc_p.write(cmd, response);
     if (CHECK_FAIL(ok, response)) {
         Bottle* lp = response.get(2).asList();
-        if (lp == nullptr)
+        if (lp == nullptr) {
             return false;
+        }
         Bottle& l = *lp;
         *min_stiff    = l.get(0).asFloat64();
         *max_stiff    = l.get(1).asFloat64();
@@ -2281,11 +2379,12 @@ bool RemoteControlBoard::getControlModes(const int n_joint, const int *joints, i
     bool ret = extendedIntputStatePort.getLastVector(VOCAB_CM_CONTROL_MODES, last_wholePart.controlMode.data(), lastStamp, localArrivalTime);
     if(ret)
     {
-        for (int i = 0; i < n_joint; i++)
+        for (int i = 0; i < n_joint; i++) {
             modes[i] = last_wholePart.controlMode[joints[i]];
-    }
-    else
+        }
+    } else {
         ret = false;
+    }
 
     extendedPortMutex.unlock();
     return ret;
@@ -2293,7 +2392,9 @@ bool RemoteControlBoard::getControlModes(const int n_joint, const int *joints, i
 
 bool RemoteControlBoard::setControlMode(const int j, const int mode)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     Bottle cmd, response;
     cmd.addVocab(VOCAB_SET);
     cmd.addVocab(VOCAB_ICONTROLMODE);
@@ -2307,7 +2408,9 @@ bool RemoteControlBoard::setControlMode(const int j, const int mode)
 
 bool RemoteControlBoard::setControlModes(const int n_joint, const int *joints, int *modes)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     Bottle cmd, response;
     cmd.addVocab(VOCAB_SET);
     cmd.addVocab(VOCAB_ICONTROLMODE);
@@ -2315,12 +2418,14 @@ bool RemoteControlBoard::setControlModes(const int n_joint, const int *joints, i
     cmd.addInt32(n_joint);
     int i;
     Bottle& l1 = cmd.addList();
-    for (i = 0; i < n_joint; i++)
+    for (i = 0; i < n_joint; i++) {
         l1.addInt32(joints[i]);
+    }
 
     Bottle& l2 = cmd.addList();
-    for (i = 0; i < n_joint; i++)
+    for (i = 0; i < n_joint; i++) {
         l2.addVocab(modes[i]);
+    }
 
     bool ok = rpc_p.write(cmd, response);
     return CHECK_FAIL(ok, response);
@@ -2328,15 +2433,18 @@ bool RemoteControlBoard::setControlModes(const int n_joint, const int *joints, i
 
 bool RemoteControlBoard::setControlModes(int *modes)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     Bottle cmd, response;
     cmd.addVocab(VOCAB_SET);
     cmd.addVocab(VOCAB_ICONTROLMODE);
     cmd.addVocab(VOCAB_CM_CONTROL_MODES);
 
     Bottle& l2 = cmd.addList();
-    for (size_t i = 0; i < nj; i++)
+    for (size_t i = 0; i < nj; i++) {
         l2.addVocab(modes[i]);
+    }
 
     bool ok = rpc_p.write(cmd, response);
     return CHECK_FAIL(ok, response);
@@ -2348,7 +2456,9 @@ bool RemoteControlBoard::setControlModes(int *modes)
 
 bool RemoteControlBoard::setPosition(int j, double ref)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     CommandMessage& c = command_buffer.get();
     c.head.clear();
     c.head.addVocab(VOCAB_POSITION_DIRECT);
@@ -2361,14 +2471,17 @@ bool RemoteControlBoard::setPosition(int j, double ref)
 
 bool RemoteControlBoard::setPositions(const int n_joint, const int *joints, const double *refs)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     CommandMessage& c = command_buffer.get();
     c.head.clear();
     c.head.addVocab(VOCAB_POSITION_DIRECT_GROUP);
     c.head.addInt32(n_joint);
     Bottle &jointList = c.head.addList();
-    for (int i = 0; i < n_joint; i++)
+    for (int i = 0; i < n_joint; i++) {
         jointList.addInt32(joints[i]);
+    }
     c.body.resize(n_joint);
     memcpy(&(c.body[0]), refs, sizeof(double)*n_joint);
     command_buffer.write(writeStrict_moreJoints);
@@ -2377,7 +2490,9 @@ bool RemoteControlBoard::setPositions(const int n_joint, const int *joints, cons
 
 bool RemoteControlBoard::setPositions(const double *refs)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     CommandMessage& c = command_buffer.get();
     c.head.clear();
     c.head.addVocab(VOCAB_POSITION_DIRECTS);
@@ -2409,15 +2524,17 @@ bool RemoteControlBoard::getRefPositions(const int n_joint, const int* joints, d
 bool RemoteControlBoard::velocityMove(const int n_joint, const int *joints, const double *spds)
 {
     // streaming port
-    if (!isLive())
+    if (!isLive()) {
         return false;
+    }
     CommandMessage& c = command_buffer.get();
     c.head.clear();
     c.head.addVocab(VOCAB_VELOCITY_MOVE_GROUP);
     c.head.addInt32(n_joint);
     Bottle &jointList = c.head.addList();
-    for (int i = 0; i < n_joint; i++)
+    for (int i = 0; i < n_joint; i++) {
         jointList.addInt32(joints[i]);
+    }
     c.body.resize(n_joint);
     memcpy(&(c.body[0]), spds, sizeof(double)*n_joint);
     command_buffer.write(writeStrict_moreJoints);
@@ -2460,11 +2577,12 @@ bool RemoteControlBoard::getInteractionModes(int n_joints, int *joints, yarp::de
     bool ret = extendedIntputStatePort.getLastVector(VOCAB_INTERACTION_MODES, last_wholePart.interactionMode.data(), lastStamp, localArrivalTime);
     if(ret)
     {
-        for (int i = 0; i < n_joints; i++)
+        for (int i = 0; i < n_joints; i++) {
             modes[i] = (yarp::dev::InteractionModeEnum)last_wholePart.interactionMode[joints[i]];
-    }
-    else
+        }
+    } else {
         ret = false;
+    }
 
     extendedPortMutex.unlock();
     return ret;
@@ -2482,7 +2600,9 @@ bool RemoteControlBoard::getInteractionModes(yarp::dev::InteractionModeEnum* mod
 bool RemoteControlBoard::setInteractionMode(int axis, yarp::dev::InteractionModeEnum mode)
 {
     Bottle cmd, response;
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
 
     cmd.addVocab(VOCAB_SET);
     cmd.addVocab(VOCAB_INTERFACE_INTERACTION_MODE);
@@ -2497,7 +2617,9 @@ bool RemoteControlBoard::setInteractionMode(int axis, yarp::dev::InteractionMode
 bool RemoteControlBoard::setInteractionModes(int n_joints, int *joints, yarp::dev::InteractionModeEnum* modes)
 {
     Bottle cmd, response;
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
 
     cmd.addVocab(VOCAB_SET);
     cmd.addVocab(VOCAB_INTERFACE_INTERACTION_MODE);
@@ -2505,8 +2627,9 @@ bool RemoteControlBoard::setInteractionModes(int n_joints, int *joints, yarp::de
     cmd.addInt32(n_joints);
 
     Bottle& l1 = cmd.addList();
-    for (int i = 0; i < n_joints; i++)
+    for (int i = 0; i < n_joints; i++) {
         l1.addInt32(joints[i]);
+    }
 
     Bottle& l2 = cmd.addList();
     for (int i = 0; i < n_joints; i++)
@@ -2520,15 +2643,18 @@ bool RemoteControlBoard::setInteractionModes(int n_joints, int *joints, yarp::de
 bool RemoteControlBoard::setInteractionModes(yarp::dev::InteractionModeEnum* modes)
 {
     Bottle cmd, response;
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
 
     cmd.addVocab(VOCAB_SET);
     cmd.addVocab(VOCAB_INTERFACE_INTERACTION_MODE);
     cmd.addVocab(VOCAB_INTERACTION_MODES);
 
     Bottle& l1 = cmd.addList();
-    for (size_t i = 0; i < nj; i++)
+    for (size_t i = 0; i < nj; i++) {
         l1.addVocab(modes[i]);
+    }
 
     bool ok = rpc_p.write(cmd, response);
     return CHECK_FAIL(ok, response);
@@ -2635,7 +2761,9 @@ bool RemoteControlBoard::getRefCurrent(int j, double *t)
 
 bool RemoteControlBoard::setRefCurrents(const double *refs)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     CommandMessage& c = command_buffer.get();
     c.head.clear();
     c.head.addVocab(VOCAB_CURRENTCONTROL_INTERFACE);
@@ -2648,7 +2776,9 @@ bool RemoteControlBoard::setRefCurrents(const double *refs)
 
 bool RemoteControlBoard::setRefCurrent(int j, double ref)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     CommandMessage& c = command_buffer.get();
     c.head.clear();
     c.head.addVocab(VOCAB_CURRENTCONTROL_INTERFACE);
@@ -2662,15 +2792,18 @@ bool RemoteControlBoard::setRefCurrent(int j, double ref)
 
 bool RemoteControlBoard::setRefCurrents(const int n_joint, const int *joints, const double *refs)
 {
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     CommandMessage& c = command_buffer.get();
     c.head.clear();
     c.head.addVocab(VOCAB_CURRENTCONTROL_INTERFACE);
     c.head.addVocab(VOCAB_CURRENT_REF_GROUP);
     c.head.addInt32(n_joint);
     Bottle &jointList = c.head.addList();
-    for (int i = 0; i < n_joint; i++)
+    for (int i = 0; i < n_joint; i++) {
         jointList.addInt32(joints[i]);
+    }
     c.body.resize(n_joint);
     memcpy(&(c.body[0]), refs, sizeof(double)*n_joint);
     command_buffer.write(writeStrict_moreJoints);
@@ -2711,7 +2844,9 @@ bool RemoteControlBoard::getCurrentRanges(double *min, double *max)
 bool RemoteControlBoard::setRefDutyCycle(int j, double v)
 {
     // using the streaming port
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     CommandMessage& c = command_buffer.get();
     c.head.clear();
     // in streaming port only SET command can be sent, so it is implicit
@@ -2729,7 +2864,9 @@ bool RemoteControlBoard::setRefDutyCycle(int j, double v)
 bool RemoteControlBoard::setRefDutyCycles(const double *v)
 {
     // using the streaming port
-    if (!isLive()) return false;
+    if (!isLive()) {
+        return false;
+    }
     CommandMessage& c = command_buffer.get();
     c.head.clear();
     c.head.addVocab(VOCAB_PWMCONTROL_INTERFACE);
@@ -2762,9 +2899,9 @@ bool RemoteControlBoard::getRefDutyCycle(int j, double *ref)
 
         getTimeStamp(response, lastStamp);
         return true;
-    }
-    else
+    } else {
         return false;
+    }
 }
 
 bool RemoteControlBoard::getRefDutyCycles(double *refs)

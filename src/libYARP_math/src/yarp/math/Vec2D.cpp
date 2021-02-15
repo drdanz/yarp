@@ -45,7 +45,9 @@ bool Vec2D<double>::read(yarp::os::ConnectionReader& connection)
     connection.convertTextMode();
     Vec2DPortContentHeader header;
     bool ok = connection.expectBlock((char*)&header, sizeof(header));
-    if (!ok) return false;
+    if (!ok) {
+        return false;
+    }
 
     if (header.listLen == 2 && header.listTag == (BOTTLE_TAG_LIST | BOTTLE_TAG_FLOAT64))
     {
@@ -67,7 +69,9 @@ bool Vec2D<int>::read(yarp::os::ConnectionReader& connection)
     connection.convertTextMode();
     Vec2DPortContentHeader header;
     bool ok = connection.expectBlock((char*)&header, sizeof(header));
-    if (!ok) return false;
+    if (!ok) {
+        return false;
+    }
 
     if (header.listLen == 2 && header.listTag == (BOTTLE_TAG_LIST | BOTTLE_TAG_INT32))
     {
@@ -89,7 +93,9 @@ bool Vec2D<size_t>::read(yarp::os::ConnectionReader& connection)
     connection.convertTextMode();
     Vec2DPortContentHeader header;
     bool ok = connection.expectBlock((char*)&header, sizeof(header));
-    if (!ok) return false;
+    if (!ok) {
+        return false;
+    }
 
     if (header.listLen == 2 && header.listTag == (BOTTLE_TAG_LIST | BOTTLE_TAG_INT64))
     {
@@ -242,16 +248,18 @@ yarp::math::Vec2D<T>& yarp::math::Vec2D<T>::operator-=(const yarp::math::Vec2D<T
 template <typename T>
 bool yarp::math::Vec2D<T>::operator ==(const yarp::math::Vec2D<T>& rhs) const
 {
-    if (this->x == rhs.x &&
-        this->y == rhs.y) return true;
+    if (this->x == rhs.x && this->y == rhs.y) {
+        return true;
+    }
     return false;
 }
 
 template <typename T>
 bool yarp::math::Vec2D<T>::operator !=(const yarp::math::Vec2D<T>& rhs) const
 {
-    if (this->x == rhs.x &&
-        this->y == rhs.y) return false;
+    if (this->x == rhs.x && this->y == rhs.y) {
+        return false;
+    }
     return true;
 }
 

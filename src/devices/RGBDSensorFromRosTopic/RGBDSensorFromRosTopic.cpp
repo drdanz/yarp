@@ -78,13 +78,17 @@ bool RGBDSensorFromRosTopic::close()
 
 int RGBDSensorFromRosTopic::getRgbHeight()
 {
-    if (m_rgb_input_processor==nullptr) return 0;
+    if (m_rgb_input_processor == nullptr) {
+        return 0;
+    }
     return (int)m_rgb_input_processor->getHeight();
 }
 
 int RGBDSensorFromRosTopic::getRgbWidth()
 {
-    if (m_rgb_input_processor == nullptr) return 0;
+    if (m_rgb_input_processor == nullptr) {
+        return 0;
+    }
     return (int)m_rgb_input_processor->getWidth();
 }
 

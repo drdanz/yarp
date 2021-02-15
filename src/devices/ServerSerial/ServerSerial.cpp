@@ -24,26 +24,28 @@ ServerSerial::~ServerSerial()
 
 bool ServerSerial::send(const Bottle& msg)
 {
-    if(verb)
+    if (verb) {
         yCDebug(SERVERSERIAL, "std::string to send : %s", msg.toString().c_str());
+    }
     if(serial != nullptr) {
         serial->send(msg);
         return true;
-    }
-    else
+    } else {
         return false;
+    }
 }
 
 bool ServerSerial::send(char *msg, size_t size)
 {
-    if(verb)
+    if (verb) {
         yCDebug(SERVERSERIAL, "std::string to send : %s", msg);
+    }
     if(serial != nullptr) {
         serial->send(msg, size);
         return true;
-    }
-    else
+    } else {
         return false;
+    }
 }
 
 bool ServerSerial::receive(Bottle& msg)
@@ -51,54 +53,54 @@ bool ServerSerial::receive(Bottle& msg)
     if(serial != nullptr) {
         serial->receive(msg);
         return true;
-    }
-    else
+    } else {
         return false;
+    }
 }
 
 int ServerSerial::receiveChar(char& c)
 {
     if(serial != nullptr) {
         return serial->receiveChar(c);
-    }
-    else
+    } else {
         return -1;
+    }
 }
 
 int ServerSerial::flush()
 {
     if(serial != nullptr) {
         return serial->flush();
-    }
-    else
+    } else {
         return -1;
+    }
 }
 
 bool ServerSerial::setDTR(bool enable)
 {
     if (serial != nullptr) {
         return serial->setDTR(enable);
-    }
-    else
+    } else {
         return false;
+    }
 }
 
 int ServerSerial::receiveLine(char* line, const int MaxLineLength)
 {
     if(serial != nullptr) {
         return serial->receiveLine(line, MaxLineLength);
-    }
-    else
+    } else {
         return -1;
+    }
 }
 
 int ServerSerial::receiveBytes(unsigned char* bytes, const int size)
 {
     if (serial != nullptr) {
         return serial->receiveBytes(bytes, size);
-    }
-    else
+    } else {
         return -1;
+    }
 }
 
 bool ServerSerial::open()  {
@@ -112,8 +114,9 @@ bool ServerSerial::close() {
 bool ServerSerial::open(Searchable& prop)
 {
     verb = (prop.check("verbose",Value(0),"Specifies if the device is in verbose mode (0/1).").asInt32())>0;
-    if (verb)
+    if (verb) {
         yCInfo(SERVERSERIAL, "running with verbose output");
+    }
 
     Value *name;
     if (prop.check("subdevice",name,"name of specific control device to wrap")) {
@@ -155,9 +158,9 @@ bool ServerSerial::open(Searchable& prop)
     fromDevice.open(rootName+"/out");
 
 
-
-    if (poly.isValid())
+    if (poly.isValid()) {
         poly.view(serial);
+    }
 
     if(serial != nullptr) {
         start();
@@ -206,7 +209,8 @@ void ImplementCallbackHelper2::onRead(Bottle &b)
 {
     if (ser) {
         bool ok = ser->send(b);
-        if (!ok)
+        if (!ok) {
             yCError(SERVERSERIAL, "Problems while trying to send data");
+        }
     }
 }

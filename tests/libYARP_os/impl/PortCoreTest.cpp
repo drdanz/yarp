@@ -109,7 +109,9 @@ public:
         expectation = bot.toString();
         sender.send(bot);
         for (int i=0; i<1000; i++) {
-            if (receives==1) break;
+            if (receives == 1) {
+                break;
+            }
             Time::delay(0.3);
         }
         CHECK(receives == 1); // "something received");
@@ -155,7 +157,9 @@ public:
         expectation = bot.toString();
         sender.send(bot);
         for (int i=0; i<1000; i++) {
-            if (receives==1) break;
+            if (receives == 1) {
+                break;
+            }
             Time::delay(0.3);
         }
         CHECK(receives == 1);  // "something received");

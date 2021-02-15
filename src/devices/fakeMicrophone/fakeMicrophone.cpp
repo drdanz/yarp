@@ -153,7 +153,9 @@ void fakeMicrophone::run()
                 unsigned short elem1 = double(m_wave_amplitude * sin(double(m_counter[i]) / m_max_count[i] * 2 * M_PI));
                 m_inputBuffer->write(elem1);
                 m_counter[i]++;
-                if (m_counter[i] >= m_max_count[i]) m_counter[i] = 0;
+                if (m_counter[i] >= m_max_count[i]) {
+                    m_counter[i] = 0;
+                }
             }
        }
         else if(m_waveform == waveform_t::sawtooth)
@@ -164,7 +166,9 @@ void fakeMicrophone::run()
                 unsigned short elem1 = m_wave_amplitude * 2 * (double(m_counter[i])/ m_max_count[i]) - m_wave_amplitude;
                 m_inputBuffer->write(elem1);
                 m_counter[i]++;
-                if (m_counter[i] >= m_max_count[i]) m_counter[i] = 0;
+                if (m_counter[i] >= m_max_count[i]) {
+                    m_counter[i] = 0;
+                }
             }
         }
         else if (m_waveform == waveform_t::square)
@@ -175,7 +179,9 @@ void fakeMicrophone::run()
                 unsigned short elem1 = m_counter[i] < m_max_count[i]/2  ? m_wave_amplitude : 0;
                 m_inputBuffer->write(elem1);
                 m_counter[i]++;
-                if (m_counter[i] >= m_max_count[i]) m_counter[i] = 0;
+                if (m_counter[i] >= m_max_count[i]) {
+                    m_counter[i] = 0;
+                }
             }
         }
         else if (m_waveform == waveform_t::constant)
@@ -184,7 +190,9 @@ void fakeMicrophone::run()
             {
                 m_inputBuffer->write(m_wave_amplitude / double(i + 1));
                 m_counter[i]++;
-                if (m_counter[i] >= m_max_count[i]) m_counter[i] = 0;
+                if (m_counter[i] >= m_max_count[i]) {
+                    m_counter[i] = 0;
+                }
             }
         }
         else

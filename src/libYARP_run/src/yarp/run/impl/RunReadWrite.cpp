@@ -40,12 +40,18 @@ int RunWrite::loop()
 
     while (mRunning)
     {
-        if (!fgets(txt, 2048, stdin) || ferror(stdin) || feof(stdin)) break;
+        if (!fgets(txt, 2048, stdin) || ferror(stdin) || feof(stdin)) {
+            break;
+        }
 
-        if (!mRunning) break;
+        if (!mRunning) {
+            break;
+        }
 
         yarp::os::Bottle bot;
-        if (mVerbose) bot.addString(tag.c_str());
+        if (mVerbose) {
+            bot.addString(tag.c_str());
+        }
         bot.addString(txt);
         wPort.write(bot);
     }
@@ -77,7 +83,9 @@ int RunRead::loop()
             break;
         }
 
-        if (!mRunning) break;
+        if (!mRunning) {
+            break;
+        }
 
         if (bot.size()==1)
         {
@@ -144,8 +152,10 @@ int RunReadWrite::loop()
         while (mRunning)
         {
             #if !defined(_WIN32)
-            if (yarp::os::impl::getppid()==1) break;
-            #endif
+            if (yarp::os::impl::getppid() == 1) {
+                break;
+            }
+#endif
 
             yarp::os::Bottle bot;
 
@@ -155,11 +165,15 @@ int RunReadWrite::loop()
                 break;
             }
 
-            if (!mRunning) break;
+            if (!mRunning) {
+                break;
+            }
 
-            #if !defined(_WIN32)
-            if (yarp::os::impl::getppid()==1) break;
-            #endif
+#if !defined(_WIN32)
+            if (yarp::os::impl::getppid() == 1) {
+                break;
+            }
+#endif
 
             if (bot.size()==1)
             {
@@ -193,7 +207,9 @@ int RunReadWrite::loop()
 
         wPort.close();
 
-        if (mForwarded) fPort.close();
+        if (mForwarded) {
+            fPort.close();
+        }
 
 #if defined(_WIN32)
         ::exit(0);
@@ -237,18 +253,26 @@ void RunReadWrite::run()
         RUNLOG("mRunning")
 
         #if !defined(_WIN32)
-        if (yarp::os::impl::getppid()==1) break;
-        #endif
+        if (yarp::os::impl::getppid() == 1) {
+            break;
+        }
+#endif
 
-        if (!fgets(txt, 2048, stdin) || ferror(stdin) || feof(stdin)) break;
+        if (!fgets(txt, 2048, stdin) || ferror(stdin) || feof(stdin)) {
+            break;
+        }
 
         RUNLOG(txt)
 
         #if !defined(_WIN32)
-        if (yarp::os::impl::getppid()==1) break;
-        #endif
+        if (yarp::os::impl::getppid() == 1) {
+            break;
+        }
+#endif
 
-        if (!mRunning) break;
+        if (!mRunning) {
+            break;
+        }
 
         RUNLOG(txt)
 

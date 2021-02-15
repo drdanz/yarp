@@ -403,8 +403,9 @@ bool yarp::robotinterface::experimental::Device::calibrate(const yarp::dev::Poly
         rem_calibrator_available = false;
     }
 
-    if (rem_calibrator_available)
+    if (rem_calibrator_available) {
         rem_calibrator_wrap->setCalibratorDevice(rem_calibrator_calib);
+    }
 
     // Start the calibrator thread
     yarp::os::Thread* calibratorThread = new yarp::robotinterface::impl::CalibratorThread(calibrator,

@@ -52,8 +52,10 @@ RgbdSensor_nws_ros::~RgbdSensor_nws_ros()
 bool RgbdSensor_nws_ros::open(yarp::os::Searchable &config)
 {
     m_conf.fromString(config.toString());
-    if(verbose >= 5)
-        yCTrace(RGBDSENSORNWSROS) << "\nParameters are: \n" << config.toString();
+    if (verbose >= 5) {
+        yCTrace(RGBDSENSORNWSROS) << "\nParameters are: \n"
+                                  << config.toString();
+    }
 
     if(!fromConfig(config))
     {
@@ -81,8 +83,9 @@ bool RgbdSensor_nws_ros::open(yarp::os::Searchable &config)
     }
     else
     {
-        if(!openDeferredAttach(config))
+        if (!openDeferredAttach(config)) {
             return false;
+        }
     }
 
     return true;
@@ -92,11 +95,12 @@ bool RgbdSensor_nws_ros::fromConfig(yarp::os::Searchable &config)
 {
     if (!config.check("period", "refresh period of the broadcasted values in ms"))
     {
-        if(verbose >= 3)
+        if (verbose >= 3) {
             yCInfo(RGBDSENSORNWSROS) << "Using default 'period' parameter of " << DEFAULT_THREAD_PERIOD << "s";
-    }
-    else
+        }
+    } else {
         period = config.find("period").asInt32() / 1000.0;
+    }
 
     //check if param exist and assign it to corresponding variable.. if it doesn't, initialize the variable with default value.
     unsigned int                    i;
@@ -273,8 +277,9 @@ bool RgbdSensor_nws_ros::attachAll(const PolyDriverList &device2attach)
 
     Idevice2attach->view(sensor_p);
     Idevice2attach->view(fgCtrl);
-    if(!attach(sensor_p))
+    if (!attach(sensor_p)) {
         return false;
+    }
 
     PeriodicThread::setPeriod(period);
     return PeriodicThread::start();
@@ -282,12 +287,14 @@ bool RgbdSensor_nws_ros::attachAll(const PolyDriverList &device2attach)
 
 bool RgbdSensor_nws_ros::detachAll()
 {
-    if (yarp::os::PeriodicThread::isRunning())
+    if (yarp::os::PeriodicThread::isRunning()) {
         yarp::os::PeriodicThread::stop();
+    }
 
     //check if we already instantiated a subdevice previously
-    if (isSubdeviceOwned)
+    if (isSubdeviceOwned) {
         return false;
+    }
 
     sensor_p = nullptr;
     return true;

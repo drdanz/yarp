@@ -24,8 +24,9 @@ ImplementControlMode::ImplementControlMode(IControlModeRaw *r):
 
 bool ImplementControlMode::initialize(int size, const int *amap)
 {
-    if (helper!=nullptr)
+    if (helper != nullptr) {
         return false;
+    }
 
     helper=(void *)(new ControlBoardHelper(size, amap));
     yAssert (helper != nullptr);
@@ -76,8 +77,9 @@ bool ImplementControlMode::getControlModes(int *modes)
 
 bool ImplementControlMode::getControlModes(const int n_joint, const int *joints, int *modes)
 {
-    if(!castToMapper(helper)->checkAxesIds(n_joint, joints))
+    if (!castToMapper(helper)->checkAxesIds(n_joint, joints)) {
         return false;
+    }
 
     yarp::dev::impl::Buffer<int> buffValues = buffManager->getBuffer();
 
@@ -100,8 +102,9 @@ bool ImplementControlMode::setControlMode(const int j, const int mode)
 
 bool ImplementControlMode::setControlModes(const int n_joint, const int *joints, int *modes)
 {
-    if(!castToMapper(helper)->checkAxesIds(n_joint, joints))
+    if (!castToMapper(helper)->checkAxesIds(n_joint, joints)) {
         return false;
+    }
 
     yarp::dev::impl::Buffer<int> buffValues  = buffManager->getBuffer();
 

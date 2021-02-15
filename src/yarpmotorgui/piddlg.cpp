@@ -232,7 +232,9 @@ void PidDlg::onSendRemoteVariable()
             break;
         }
     }
-    if (i == -1) return;
+    if (i == -1) {
+        return;
+    }
 
     std::string key = ui->tableVariables->item(i, 0)->text().toStdString();
     std::string val = ui->tableVariables->item(i, 1)->text().toStdString();

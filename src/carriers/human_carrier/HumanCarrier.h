@@ -134,7 +134,9 @@ public:
 
     bool write(ConnectionState& proto, SizedWriter& writer) override {
         bool ok = sendIndex(proto,writer);
-        if (!ok) return false;
+        if (!ok) {
+            return false;
+        }
         writer.write(proto.os());
         return proto.os().isOk();
     }
@@ -152,7 +154,9 @@ public:
         Bytes b2((char*)prefix.c_str(),prefix.length());
         proto.is().read(b2);
         bool ok = proto.is().isOk() && (prefix==compare);
-        if (!ok) std::cout << "YOU DID NOT SAY 'human says '" << std::endl;
+        if (!ok) {
+            std::cout << "YOU DID NOT SAY 'human says '" << std::endl;
+        }
         return ok;
     }
 
@@ -171,7 +175,9 @@ public:
         Bytes b2((char*)prefix.c_str(),prefix.length());
         proto.is().read(b2);
         bool ok = proto.is().isOk() && (prefix==compare);
-        if (!ok) std::cout << "YOU DID NOT SAY 'computers rule!'" << std::endl;
+        if (!ok) {
+            std::cout << "YOU DID NOT SAY 'computers rule!'" << std::endl;
+        }
         return ok;
     }
 

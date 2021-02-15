@@ -154,8 +154,9 @@ public:
     void setStrict(bool strict = true)
     {
         isStrict = strict;
-        if (buffered_port)
+        if (buffered_port) {
             buffered_port->setStrict(strict);
+        }
     }
 
 private:
@@ -165,8 +166,9 @@ private:
 
     Contactable& active()
     {
-        if (buffered_port)
+        if (buffered_port) {
             return *buffered_port;
+        }
         return port;
     }
 
@@ -183,8 +185,9 @@ private:
 
     void clear()
     {
-        if (!buffered_port)
+        if (!buffered_port) {
             return;
+        }
         delete buffered_port;
         buffered_port = nullptr;
     }

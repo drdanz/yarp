@@ -202,8 +202,9 @@ bool Lidar2DDeviceBase::parseConfiguration(yarp::os::Searchable& config)
     yCInfo(LASER_BASE) << "allow_infinity:" << (m_do_not_clip_and_allow_infinity_enable ==true);
     if (m_range_skip_vector.size() >0)
     {
-        for (size_t i=0; i< m_range_skip_vector.size(); i++)
-        yCInfo(LASER_BASE) << "skip area:" << m_range_skip_vector[i].min << "->" << m_range_skip_vector[i].max;
+        for (size_t i = 0; i < m_range_skip_vector.size(); i++) {
+            yCInfo(LASER_BASE) << "skip area:" << m_range_skip_vector[i].min << "->" << m_range_skip_vector[i].max;
+        }
     }
     return true;
 }
@@ -230,8 +231,12 @@ bool Lidar2DDeviceBase::applyLimitsOnLaserData()
         double& distance = m_laser_data[i];
         double  angle = i * m_resolution;
 
-        if (std::isnan(distance)) continue;
-        if (checkSkipAngle(angle, distance)) continue;
+        if (std::isnan(distance)) {
+            continue;
+        }
+        if (checkSkipAngle(angle, distance)) {
+            continue;
+        }
 
         if (m_clip_min_enable)
         {
@@ -272,9 +277,13 @@ bool Lidar2DDeviceBase::updateLidarData()
 {
     bool b = true;
     b &= acquireDataFromHW();
-    if (!b) return false;
+    if (!b) {
+        return false;
+    }
     b &= applyLimitsOnLaserData();
-    if (!b) return false;
+    if (!b) {
+        return false;
+    }
     b &= updateTimestamp();
     return b;
 }

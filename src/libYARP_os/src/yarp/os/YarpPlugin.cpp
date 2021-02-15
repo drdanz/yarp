@@ -192,8 +192,9 @@ void YarpPluginSettings::reportFailure() const
 
 bool YarpPluginSettings::readFromSelector(const std::string& name)
 {
-    if (!selector)
+    if (!selector) {
         return false;
+    }
     Bottle plugins = selector->getSelectedPlugins();
     Bottle group = plugins.findGroup(name.c_str()).tail();
     if (group.isNull()) {

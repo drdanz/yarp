@@ -42,7 +42,9 @@ public:
     }
 
     virtual ~BootstrapServerAdapter() {
-        if (fallback!=nullptr) delete fallback;
+        if (fallback != nullptr) {
+            delete fallback;
+        }
         fallback = nullptr;
     }
 

@@ -49,7 +49,9 @@ bool JoypadControlClient::getJoypadInfo()
 
     for(auto vocab_port : vocabs_ports)
     {
-        if(!getCount(get<0>(vocab_port), count)) return false;
+        if (!getCount(get<0>(vocab_port), count)) {
+            return false;
+        }
         if(count)
         {
             string source;

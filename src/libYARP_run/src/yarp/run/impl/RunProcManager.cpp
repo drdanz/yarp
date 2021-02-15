@@ -326,7 +326,9 @@ bool YarpRunInfoVector::CleanZombie(int zombie)
         if (m_apList[i] && m_apList[i]->Clean(zombie, pZombie))
         {
             bFound=true;
-            if (pZombie) m_apList[i] = nullptr;
+            if (pZombie) {
+                m_apList[i] = nullptr;
+            }
             break;
         }
     }
@@ -351,36 +353,37 @@ yarp::os::Bottle YarpRunInfoVector::PS()
 
     yarp::os::Bottle ps, line, grp;
 
-    for (int i=0; i<m_nProcesses; ++i) if (m_apList[i])
-    {
-        line.clear();
+    for (int i = 0; i < m_nProcesses; ++i) {
+        if (m_apList[i]) {
+            line.clear();
 
-        grp.clear();
-        grp.addString("pid");
-        grp.addInt32(m_apList[i]->mPidCmd);
-        line.addList()=grp;
+            grp.clear();
+            grp.addString("pid");
+            grp.addInt32(m_apList[i]->mPidCmd);
+            line.addList() = grp;
 
-        grp.clear();
-        grp.addString("tag");
-        grp.addString(m_apList[i]->mAlias.c_str());
-        line.addList()=grp;
+            grp.clear();
+            grp.addString("tag");
+            grp.addString(m_apList[i]->mAlias.c_str());
+            line.addList() = grp;
 
-        grp.clear();
-        grp.addString("status");
-        grp.addString(m_apList[i]->IsActive()?"running":"zombie");
-        line.addList()=grp;
+            grp.clear();
+            grp.addString("status");
+            grp.addString(m_apList[i]->IsActive() ? "running" : "zombie");
+            line.addList() = grp;
 
-        grp.clear();
-        grp.addString("cmd");
-        grp.addString(m_apList[i]->mCmd.c_str());
-        line.addList()=grp;
+            grp.clear();
+            grp.addString("cmd");
+            grp.addString(m_apList[i]->mCmd.c_str());
+            line.addList() = grp;
 
-        grp.clear();
-        grp.addString("env");
-        grp.addString(m_apList[i]->mEnv.c_str());
-        line.addList()=grp;
+            grp.clear();
+            grp.addString("env");
+            grp.addString(m_apList[i]->mEnv.c_str());
+            line.addList() = grp;
 
-        ps.addList()=line;
+            ps.addList() = line;
+        }
     }
 
     POST()
@@ -559,10 +562,18 @@ bool YarpRunCmdWithStdioInfo::Clean()
     {
         mKillingStdio=true;
 
-        if (mWriteToPipeStdinToCmd)   CLOSE(mWriteToPipeStdinToCmd);
-        if (mReadFromPipeStdinToCmd)  CLOSE(mReadFromPipeStdinToCmd);
-        if (mWriteToPipeCmdToStdout)  CLOSE(mWriteToPipeCmdToStdout);
-        if (mReadFromPipeCmdToStdout) CLOSE(mReadFromPipeCmdToStdout);
+        if (mWriteToPipeStdinToCmd) {
+            CLOSE(mWriteToPipeStdinToCmd);
+        }
+        if (mReadFromPipeStdinToCmd) {
+            CLOSE(mReadFromPipeStdinToCmd);
+        }
+        if (mWriteToPipeCmdToStdout) {
+            CLOSE(mWriteToPipeCmdToStdout);
+        }
+        if (mReadFromPipeCmdToStdout) {
+            CLOSE(mReadFromPipeCmdToStdout);
+        }
 
         mWriteToPipeStdinToCmd=0;
         mReadFromPipeStdinToCmd=0;
@@ -599,7 +610,9 @@ bool YarpRunCmdWithStdioInfo::Clean()
 
 void YarpRunCmdWithStdioInfo::TerminateStdio()
 {
-    if (!mStdioVector) return;
+    if (!mStdioVector) {
+        return;
+    }
 
     if (mOn==mStdio)
     {

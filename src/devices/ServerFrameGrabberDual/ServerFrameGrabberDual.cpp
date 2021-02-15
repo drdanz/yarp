@@ -181,9 +181,9 @@ bool ServerGrabberResponder::respond(const yarp::os::Bottle &command, yarp::os::
         {
             return DeviceResponder::respond(command, reply);
         }
-    }
-    else
+    } else {
         return false;
+    }
 }
 
 // **********ServerGrabber**********
@@ -195,8 +195,9 @@ ServerGrabber::ServerGrabber() :
 
 ServerGrabber::~ServerGrabber()
 {
-    if(param.active)
+    if (param.active) {
         close();
+    }
 }
 
 bool ServerGrabber::close() {
@@ -285,8 +286,9 @@ bool ServerGrabber::open(yarp::os::Searchable& config) {
     else
     {
         yCInfo(SERVERGRABBER) << "Running, waiting for attach...";
-        if(!openDeferredAttach(config))
-        return false;
+        if (!openDeferredAttach(config)) {
+            return false;
+        }
     }
 
 
@@ -324,33 +326,38 @@ bool ServerGrabber::open(yarp::os::Searchable& config) {
 
 bool ServerGrabber::fromConfig(yarp::os::Searchable &config)
 {
-    if(config.check("period","refresh period(in ms) of the broadcasted values through yarp ports")
-            && config.find("period").isInt32())
+    if (config.check("period", "refresh period(in ms) of the broadcasted values through yarp ports")
+        && config.find("period").isInt32()) {
         period = config.find("period").asInt32() / 1000.0;
-    else
-        yCWarning(SERVERGRABBER) << "Period parameter not found, using default of"<< DEFAULT_THREAD_PERIOD << "s";
+    } else {
+        yCWarning(SERVERGRABBER) << "Period parameter not found, using default of" << DEFAULT_THREAD_PERIOD << "s";
+    }
     if((config.check("subdevice")) && (config.check("left_config") || config.check("right_config")))
     {
         yCError(SERVERGRABBER) << "Found both 'subdevice' and 'left_config/right_config' parameters...";
         return false;
     }
-    if(!config.check("subdevice", "name of the subdevice to use as a data source")
-            && config.check("left_config","name of the ini file containing the configuration of one of two subdevices to use as a data source")
-            && config.check("right_config" , "name of the ini file containing the configuration of one of two subdevices to use as a data source"))
-        param.twoCameras=true;
-    if(config.check("twoCameras", "if true ServerGrabber will open and handle two devices, if false only one"))//extra conf parameter for the yarprobotinterface
-        param.twoCameras=config.find("twoCameras").asBool();
-    if(config.check("split", "set 'true' to split the streaming on two different ports"))
-        param.split=config.find("split").asBool();
+    if (!config.check("subdevice", "name of the subdevice to use as a data source")
+        && config.check("left_config", "name of the ini file containing the configuration of one of two subdevices to use as a data source")
+        && config.check("right_config", "name of the ini file containing the configuration of one of two subdevices to use as a data source")) {
+        param.twoCameras = true;
+    }
+    if (config.check("twoCameras", "if true ServerGrabber will open and handle two devices, if false only one")) { //extra conf parameter for the yarprobotinterface
+        param.twoCameras = config.find("twoCameras").asBool();
+    }
+    if (config.check("split", "set 'true' to split the streaming on two different ports")) {
+        param.split = config.find("split").asBool();
+    }
     if(config.check("capabilities","two capabilities supported, COLOR and RAW respectively for rgb and raw streaming"))
     {
-        if(config.find("capabilities").asString()=="COLOR")
+        if (config.find("capabilities").asString() == "COLOR") {
             param.cap=COLOR;
-        else if(config.find("capabilities").asString()=="RAW")
-            param.cap=RAW;
-    }
-    else
+        } else if (config.find("capabilities").asString() == "RAW") {
+            param.cap = RAW;
+        }
+    } else {
         yCWarning(SERVERGRABBER) << "'capabilities' parameter not found or misspelled, the option available are COLOR(default) and RAW, using default";
+    }
     param.canDrop = !config.check("no_drop","if present, use strict policy for sending data");
     param.addStamp = config.check("stamp","if present, add timestamps to data");
 
@@ -361,17 +368,20 @@ bool ServerGrabber::fromConfig(yarp::os::Searchable &config)
     std::string rootName;
     rootName = config.check("name",Value("/grabber"),
                             "name of port to send data on").asString();
-    if(!param.twoCameras && param.split)
+    if (!param.twoCameras && param.split) {
         param.splitterMode = true;
+    }
 
     responder = new ServerGrabberResponder(true);
-    if(!responder->configure(this))
+    if (!responder->configure(this)) {
         return false;
+    }
     if(param.twoCameras)
     {
         responder2 = new ServerGrabberResponder(false);
-        if(!responder2->configure(this))
+        if (!responder2->configure(this)) {
             return false;
+        }
 
         rpcPort_Name  = rootName + "/left/rpc";
         rpcPort2_Name  = rootName + "/right/rpc";
@@ -379,9 +389,9 @@ bool ServerGrabber::fromConfig(yarp::os::Searchable &config)
         {
             pImg_Name = rootName + "/left";
             pImg2_Name = rootName + "/right";
-        }
-        else
+        } else {
             pImg_Name = rootName;
+        }
 
         // check if we need to create subdevice or if they are
         // passed later on thorugh attachAll()
@@ -399,8 +409,9 @@ bool ServerGrabber::fromConfig(yarp::os::Searchable &config)
         if(param.split)
         {
             responder2 = new ServerGrabberResponder(false);
-            if(!responder2->configure(this))
+            if (!responder2->configure(this)) {
                 return false;
+            }
             pImg_Name = rootName + "/left";
             pImg2_Name = rootName + "/right";
         }
@@ -530,8 +541,9 @@ bool ServerGrabber::respond(const yarp::os::Bottle& cmd,
                         if(param.twoCameras == false)   // a single HW source of images
                         {
                             imageInterface = fgImage;
-                            if(left == false)                               // if left is false, implicitly split is true
-                                u_offset = imageInterface->width()/2;       // 1b
+                            if (left == false) {                        // if left is false, implicitly split is true
+                                u_offset = imageInterface->width() / 2; // 1b
+                            }
 
                         }
                         else
@@ -650,9 +662,9 @@ bool ServerGrabber::respond(const yarp::os::Bottle& cmd,
                 }
             }
             return ret;
-        }
-        else
+        } else {
             return ifgCtrl_Parser.respond(cmd, response);
+        }
     } break;
 
     case VOCAB_RGB_VISUAL_PARAMS:
@@ -690,9 +702,9 @@ bool ServerGrabber::respond(const yarp::os::Bottle& cmd,
             }
 
             return ret;
+        } else {
+            return rgbParser.respond(cmd, response);
         }
-        else
-            return rgbParser.respond(cmd,response);
     } break;
         //////////////////
         // DC1394 COMMANDS
@@ -727,9 +739,9 @@ bool ServerGrabber::respond(const yarp::os::Bottle& cmd,
                 }
             }
             return ret;
-        }
-        else
+        } else {
             return ifgCtrl_DC1394_Parser.respond(cmd, response);
+        }
     } break;
     }
     yCError(SERVERGRABBER) << "Command not recognized" << cmd.toString();
@@ -909,16 +921,18 @@ bool ServerGrabber::attachAll(const PolyDriverList &device2attach)
 bool ServerGrabber::detachAll()
 {
     //check if we already instantiated a subdevice previously
-    if (isSubdeviceOwned)
+    if (isSubdeviceOwned) {
         return false;
+    }
     stopThread();
     return true;
 
 }
 void ServerGrabber::stopThread()
 {
-    if (yarp::os::PeriodicThread::isRunning())
+    if (yarp::os::PeriodicThread::isRunning()) {
         yarp::os::PeriodicThread::stop();
+    }
 
     rgbVis_p       = nullptr;
     rgbVis_p2      = nullptr;
@@ -1032,8 +1046,9 @@ bool ServerGrabber::openAndAttachSubDevice(Searchable &prop){
         plist.push(pd);
         plist.push(pd2);
         //The thread is started by attachAll()
-        if(!attachAll(plist))
+        if (!attachAll(plist)) {
             return false;
+        }
     }
     else
     {
@@ -1062,8 +1077,9 @@ bool ServerGrabber::openAndAttachSubDevice(Searchable &prop){
         PolyDriverDescriptor pd(poly,"poly");
         plist.push(pd);
         //The thread is started by attachAll()
-        if(!attachAll(plist))
+        if (!attachAll(plist)) {
             return false;
+        }
     }
     isSubdeviceOwned = true;
     return true;
@@ -1146,10 +1162,9 @@ void ServerGrabber::run()
                     setupFlexImage(*img,flex_i);
                     fgImage2->getImage(*img2);
                     setupFlexImage(*img2,flex_i2);
-                }
-                else
+                } else {
                     yCError(SERVERGRABBER) << "Image not captured.. check hardware configuration";
-
+                }
             }
             if(param.cap==RAW)
             {
@@ -1159,10 +1174,9 @@ void ServerGrabber::run()
                     setupFlexImage(*img_Raw,flex_i);
                     fgImageRaw2->getImage(*img2_Raw);
                     setupFlexImage(*img2_Raw,flex_i2);
-                }
-                else
+                } else {
                     yCError(SERVERGRABBER) << "Image not captured.. check hardware configuration";
-
+                }
             }
             Stamp s = Stamp(count,Time::now());
             pImg.setStrict(!param.canDrop);
@@ -1194,10 +1208,9 @@ void ServerGrabber::run()
                         yCError(SERVERGRABBER) << "Failed to concatenate images";
                         return;
                     }
-                }
-                else
+                } else {
                     yCError(SERVERGRABBER) << "Image not captured.. check hardware configuration";
-
+                }
             }
             if(param.cap==RAW)
             {
@@ -1213,10 +1226,9 @@ void ServerGrabber::run()
                         yCError(SERVERGRABBER) << "Failed to concatenate images";
                         return;
                     }
-                }
-                else
+                } else {
                     yCError(SERVERGRABBER) << "Image not captured.. check hardware configuration";
-
+                }
             }
 
             Stamp s = Stamp(count,Time::now());
@@ -1249,9 +1261,9 @@ void ServerGrabber::run()
 
                     setupFlexImage(*img,flex_i);
                     setupFlexImage(*img2,flex_i2);
-                }
-                else
+                } else {
                     yCError(SERVERGRABBER) << "Image not captured.. check hardware configuration";
+                }
             }
             if(param.cap==RAW)
             {
@@ -1270,9 +1282,9 @@ void ServerGrabber::run()
                     setupFlexImage(*img_Raw,flex_i);
                     setupFlexImage(*img2_Raw,flex_i2);
 
-                }
-                else
+                } else {
                     yCError(SERVERGRABBER) << "Image not captured.. check hardware configuration";
+                }
             }
             Stamp s = Stamp(count,Time::now());
             pImg.setStrict(!param.canDrop);
@@ -1295,9 +1307,9 @@ void ServerGrabber::run()
                 {
                     fgImage->getImage(*img);
                     setupFlexImage(*img,flex_i);
-                }
-                else
+                } else {
                     yCError(SERVERGRABBER) << "Image not captured.. check hardware configuration";
+                }
             }
             if(param.cap==RAW)
             {
@@ -1305,9 +1317,9 @@ void ServerGrabber::run()
                 {
                     fgImageRaw->getImage(*img_Raw);
                     setupFlexImage(*img_Raw,flex_i);
-                }
-                else
+                } else {
                     yCError(SERVERGRABBER) << "Image not captured.. check hardware configuration";
+                }
             }
             Stamp s = Stamp(count,Time::now());
             pImg.setStrict(!param.canDrop);

@@ -67,8 +67,9 @@ void Module::swap(const Module &mod)
     waitStart = mod.waitStart;
     waitStop = mod.waitStop;
     // deep copy
-    for(int i=0; i<mod.resourceCount(); i++)
+    for (int i = 0; i < mod.resourceCount(); i++) {
         addResource(mod.getResourceAt(i));
+    }
 }
 
 
@@ -92,8 +93,9 @@ bool Module::addArgument(Argument &argument)
 bool Module::removeArgument(Argument& argument)
 {
     auto itr = findArgument(argument);
-    if(itr == arguments.end())
+    if (itr == arguments.end()) {
         return true;
+    }
     arguments.erase(itr);
     return true;
 }
@@ -112,8 +114,9 @@ bool Module::removeOutput(OutputData& output)
     //__CHECK_NULLPTR(output);
 
     auto itr = findOutput(output);
-    if(itr == outputs.end())
+    if (itr == outputs.end()) {
         return true;
+    }
     outputs.erase(itr);
     return true;
 }
@@ -132,8 +135,9 @@ bool Module::removeInput(InputData& input)
     //__CHECK_NULLPTR(input);
 
     auto itr = findInput(input);
-    if(itr == inputs.end())
+    if (itr == inputs.end()) {
         return true;
+    }
     inputs.erase(itr);
     return true;
 }
@@ -151,8 +155,9 @@ bool Module::addResource(GenericResource& res)
 bool Module::removeResource(GenericResource& res)
 {
     auto itr = findResource(res);
-    if(itr == resources.end())
+    if (itr == resources.end()) {
         return true;
+    }
     resources.erase(itr);
     delete (*itr);
     return true;
@@ -161,12 +166,13 @@ bool Module::removeResource(GenericResource& res)
 bool Module::removeAuthor(Author& author)
 {
     AuthorIterator itr;
-    for(itr=authors.begin(); itr<authors.end(); itr++)
+    for (itr = authors.begin(); itr < authors.end(); itr++) {
         if((*itr) == author)
         {
             authors.erase(itr);
             return true;
         }
+    }
     return true;
 }
 
@@ -174,9 +180,11 @@ bool Module::removeAuthor(Author& author)
 ArgumentIterator Module::findArgument(Argument& argument)
 {
     ArgumentIterator itr;
-    for(itr=arguments.begin(); itr<arguments.end(); itr++)
-        if ((*itr) == argument)
+    for (itr = arguments.begin(); itr < arguments.end(); itr++) {
+        if ((*itr) == argument) {
             return itr;
+        }
+    }
     return arguments.end();
 }
 
@@ -184,9 +192,11 @@ ArgumentIterator Module::findArgument(Argument& argument)
 InputIterator Module::findInput(InputData& input)
 {
     InputIterator itr;
-    for(itr=inputs.begin(); itr<inputs.end(); itr++)
-        if ((*itr) == input)
+    for (itr = inputs.begin(); itr < inputs.end(); itr++) {
+        if ((*itr) == input) {
             return itr;
+        }
+    }
     return inputs.end();
 }
 
@@ -194,18 +204,22 @@ InputIterator Module::findInput(InputData& input)
 OutputIterator Module::findOutput(OutputData& output)
 {
     OutputIterator itr;
-    for(itr=outputs.begin(); itr<outputs.end(); itr++)
-        if ((*itr) == output)
+    for (itr = outputs.begin(); itr < outputs.end(); itr++) {
+        if ((*itr) == output) {
             return itr;
+        }
+    }
     return outputs.end();
 }
 
 ResourcePIterator Module::findResource(GenericResource& res)
 {
     ResourcePIterator itr;
-    for(itr=resources.begin(); itr<resources.end(); itr++)
-        if (*(*itr) == res)
+    for (itr = resources.begin(); itr < resources.end(); itr++) {
+        if (*(*itr) == res) {
             return itr;
+        }
+    }
     return resources.end();
 }
 
@@ -263,12 +277,12 @@ bool Module::setParam(const char* szParam)
         }
         else
         {
-            if((*itr).isSwitch())
+            if ((*itr).isSwitch()) {
                 (*itr).setValue(strVal.c_str());
-            else
-            {
-                if(strVal != "off")
+            } else {
+                if (strVal != "off") {
                     (*itr).setValue(strVal.c_str());
+                }
             }
         }
     }
@@ -277,8 +291,9 @@ bool Module::setParam(const char* szParam)
 
 bool Module::getParamValue(const char* key, bool bSwitch, std::string &param)
 {
-    if(!key)
+    if (!key) {
         return false;
+    }
 
     //printf("\n\nparsing '%s' for %s (switch:%d)\n", strParam.c_str(), key, bSwitch);
     string strKey = string("--") + string(key);
@@ -297,20 +312,23 @@ bool Module::getParamValue(const char* key, bool bSwitch, std::string &param)
     //printf("%s %d \n", __FILE__, __LINE__);
 
     pos += strKey.size();
-    if((pos >= strParam.length()) || (strParam.at(pos) != ' '))
+    if ((pos >= strParam.length()) || (strParam.at(pos) != ' ')) {
         return false;
+    }
 
     // skip all spaces
     while(strParam.at(pos++) == ' ')
     {
-        if(pos >= strParam.length())
+        if (pos >= strParam.length()) {
             return false;
+        }
     }
     pos--;
 
     size_t pos2 = pos;
-    while((pos2 < strParam.length()) && (strParam.at(pos2) != ' '))
+    while ((pos2 < strParam.length()) && (strParam.at(pos2) != ' ')) {
         pos2++;
+    }
     param = strParam.substr(pos, pos2-pos);
     return true;
 }

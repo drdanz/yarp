@@ -31,16 +31,18 @@ Executable::Executable(Broker* _broker, MEvent* _event, Module *module,
     killWrapper = new ConcurentWrapper(this, &Executable::killImplement);
     theID = -1;
 
-    if(bWatchDog)
+    if (bWatchDog) {
         watchdogWrapper = new ConcurentRateWrapper(this, &Executable::watchdogImplement);
-    else
+    } else {
         watchdogWrapper = nullptr;
+    }
 }
 
 Executable::~Executable()
 {
-    if(watchdogWrapper)
+    if (watchdogWrapper) {
         delete watchdogWrapper;
+    }
     delete startWrapper;
     delete stopWrapper;
     delete killWrapper;
@@ -66,8 +68,9 @@ bool Executable::initialize()
     {
         OSTRINGSTREAM msg;
         msg<<"cannot initialize broker. : ";
-        if(broker->error())
-            msg<<broker->error();
+        if (broker->error()) {
+            msg << broker->error();
+        }
         logger->addError(msg);
         event->onExecutableDied(this);
         return false;
@@ -101,8 +104,9 @@ void Executable::startImplement()
 
 void Executable::stop()
 {
-    if(!broker->initialized())
+    if (!broker->initialized()) {
         initialize();
+    }
 
     if(!stopWrapper->isRunning()) {
         stopWatchDog();
@@ -121,8 +125,9 @@ void Executable::stopImplement()
 
 void Executable::kill()
 {
-    if(!broker->initialized())
+    if (!broker->initialized()) {
         initialize();
+    }
 
     // Notice that kill can be called from multiple threads
     stopWatchDog();
@@ -139,8 +144,9 @@ void Executable::killImplement()
 RSTATE Executable::state()
 {
 
-    if(!broker->initialized())
+    if (!broker->initialized()) {
         initialize();
+    }
 
     // Updating real module state on demand
     // Notice that this is a blocking method
@@ -148,18 +154,24 @@ RSTATE Executable::state()
 
     const char* strState = execMachine->currentState()->getName();
 
-    if(compareString(strState, "SUSPENDED"))
+    if (compareString(strState, "SUSPENDED")) {
         return SUSPENDED;
-    if(compareString(strState, "READY"))
+    }
+    if (compareString(strState, "READY")) {
         return READY;
-    if(compareString(strState, "CONNECTING"))
+    }
+    if (compareString(strState, "CONNECTING")) {
         return CONNECTING;
-    if(compareString(strState, "RUNNING"))
+    }
+    if (compareString(strState, "RUNNING")) {
         return RUNNING;
-    if(compareString(strState, "DEAD"))
+    }
+    if (compareString(strState, "DEAD")) {
         return DEAD;
-    if(compareString(strState, "DYING"))
+    }
+    if (compareString(strState, "DYING")) {
         return DYING;
+    }
 
     std::cerr<<"Unknown state!"<<std::endl;
     return STUNKNOWN;
@@ -208,16 +220,19 @@ void Executable::setAndInitializeBroker(Broker *_broker)
 }
 
 bool Executable::startWatchDog() {
-    if(watchdogWrapper == nullptr)
+    if (watchdogWrapper == nullptr) {
         return false;
-    if(!watchdogWrapper->isRunning())
+    }
+    if (!watchdogWrapper->isRunning()) {
         watchdogWrapper->start();
+    }
     return true;
 }
 
 void Executable::stopWatchDog() {
-    if(watchdogWrapper && watchdogWrapper->isRunning())
+    if (watchdogWrapper && watchdogWrapper->isRunning()) {
         watchdogWrapper->stop();
+    }
 }
 
 void Executable::onBrokerStdout(const char* msg)
@@ -228,14 +243,17 @@ void Executable::onBrokerStdout(const char* msg)
 
 void Executable::watchdogImplement()
 {
-    if(!broker->running())
-            execMachine->moduleFailed();
+    if (!broker->running()) {
+        execMachine->moduleFailed();
+    }
 
     if(bAutoConnect)
     {
         CnnIterator itr;
-        for(itr=connections.begin(); itr!=connections.end(); itr++)
-            if( !broker->connected((*itr).from(), (*itr).to(), (*itr).carrier()) )
+        for (itr = connections.begin(); itr != connections.end(); itr++) {
+            if (!broker->connected((*itr).from(), (*itr).to(), (*itr).carrier())) {
                 execMachine->connectionFailed(&(*itr));
+            }
+        }
     }
 }

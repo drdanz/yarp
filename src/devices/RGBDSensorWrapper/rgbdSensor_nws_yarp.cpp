@@ -101,9 +101,9 @@ bool RGBDSensorParser::respond(const Bottle& cmd, Bottle& response)
                                 response.addVocab(VOCAB_IS);
                                 ret &= Property::copyPortable(params, params_b);  // will it really work??
                                 response.append(params_b);
-                            }
-                            else
+                            } else {
                                 response.addVocab(VOCAB_FAILED);
+                            }
                         }
                         break;
 
@@ -196,8 +196,10 @@ bool RgbdSensor_nws_yarp::open(yarp::os::Searchable &config)
 //     addUsage("[set] [expo] $fExposure", "set exposure");
 //
     m_conf.fromString(config.toString());
-    if(verbose >= 5)
-        yCTrace(RGBDSENSORNWSYARP) << "\nParameters are: \n" << config.toString();
+    if (verbose >= 5) {
+        yCTrace(RGBDSENSORNWSYARP) << "\nParameters are: \n"
+                                   << config.toString();
+    }
 
     if(!fromConfig(config))
     {
@@ -225,8 +227,9 @@ bool RgbdSensor_nws_yarp::open(yarp::os::Searchable &config)
     }
     else
     {
-        if(!openDeferredAttach(config))
+        if (!openDeferredAttach(config)) {
             return false;
+        }
     }
 
     return true;
@@ -236,11 +239,12 @@ bool RgbdSensor_nws_yarp::fromConfig(yarp::os::Searchable &config)
 {
     if (!config.check("period", "refresh period of the broadcasted values in ms"))
     {
-        if(verbose >= 3)
+        if (verbose >= 3) {
             yCInfo(RGBDSENSORNWSYARP) << "Using default 'period' parameter of " << DEFAULT_THREAD_PERIOD << "s";
-    }
-    else
+        }
+    } else {
         period = config.find("period").asInt32() / 1000.0;
+    }
 
     std::string rootName;
     rootName = config.check("name",Value("/"), "starting '/' if needed.").asString();
@@ -401,8 +405,9 @@ bool RgbdSensor_nws_yarp::attachAll(const PolyDriverList &device2attach)
 
     Idevice2attach->view(sensor_p);
     Idevice2attach->view(fgCtrl);
-    if(!attach(sensor_p))
+    if (!attach(sensor_p)) {
         return false;
+    }
 
     PeriodicThread::setPeriod(period);
     return PeriodicThread::start();
@@ -410,12 +415,14 @@ bool RgbdSensor_nws_yarp::attachAll(const PolyDriverList &device2attach)
 
 bool RgbdSensor_nws_yarp::detachAll()
 {
-    if (yarp::os::PeriodicThread::isRunning())
+    if (yarp::os::PeriodicThread::isRunning()) {
         yarp::os::PeriodicThread::stop();
+    }
 
     //check if we already instantiated a subdevice previously
-    if (isSubdeviceOwned)
+    if (isSubdeviceOwned) {
         return false;
+    }
 
     sensor_p = nullptr;
     return true;

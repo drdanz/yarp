@@ -143,15 +143,19 @@ bool fakeSpeaker::resetPlaybackAudioBuffer()
 
 bool fakeSpeaker::renderSound(const yarp::sig::Sound& sound)
 {
-    if (m_renderSoundImmediate) m_outputBuffer->clear();
+    if (m_renderSoundImmediate) {
+        m_outputBuffer->clear();
+    }
 
 //     size_t num_bytes = sound.getBytesPerSample();
     size_t num_channels = sound.getChannels();
     size_t num_samples = sound.getSamples();
 
-    for (size_t i = 0; i<num_samples; i++)
-        for (size_t j = 0; j<num_channels; j++)
+    for (size_t i = 0; i < num_samples; i++) {
+        for (size_t j = 0; j < num_channels; j++) {
             m_outputBuffer->write(sound.get(i, j));
+        }
+    }
     auto debug_p = sound.getInterleavedAudioRawData();
 
     m_isPlaying = true;

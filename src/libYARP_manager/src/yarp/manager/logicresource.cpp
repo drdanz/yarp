@@ -35,12 +35,14 @@ Node* Platform::clone()
 
 bool Platform::satisfy(GenericResource* resource)
 {
-    if(!getAvailability() || getDisable())
+    if (!getAvailability() || getDisable()) {
         return false;
+    }
 
     auto* os = dynamic_cast<Platform*>(resource);
-    if(os)
+    if (os) {
         return satisfy_platform(os);
+    }
 
     return false;
 }
@@ -80,12 +82,14 @@ Node* ResYarpPort::clone()
 
 bool ResYarpPort::satisfy(GenericResource* resource)
 {
-    if(!getAvailability() || getDisable())
+    if (!getAvailability() || getDisable()) {
         return false;
+    }
 
     auto* resport = dynamic_cast<ResYarpPort*>(resource);
-    if(!resport)
+    if (!resport) {
         return false;
+    }
     return (strPort == string(resport->getPort()) ||
             strPort == string(resport->getName()) );
 }

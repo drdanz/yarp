@@ -157,8 +157,9 @@ LocalBroker::~LocalBroker()
 
 void LocalBroker::fini()
 {
-    if(Thread::isRunning())
+    if (Thread::isRunning()) {
         Thread::stop();
+    }
 }
 
 bool LocalBroker::init()
@@ -194,24 +195,29 @@ bool LocalBroker::init(const char* szcmd, const char* szparam,
         return false;
     }
     strCmd = szcmd;
-    if(szparam && strlen(szparam))
+    if (szparam && strlen(szparam)) {
         strParam = szparam;
+    }
 
-    if(szhost && strlen(szhost))
+    if (szhost && strlen(szhost)) {
         strHost = szhost;
-    if(szworkdir && strlen(szworkdir))
+    }
+    if (szworkdir && strlen(szworkdir)) {
         strWorkdir = szworkdir;
+    }
 
     if(szstdio && strlen(szstdio))
     {
-        if(szstdio[0] != '/')
+        if (szstdio[0] != '/') {
             strStdio = string("/") + string(szstdio);
-        else
+        } else {
             strStdio = szstdio;
+        }
     }
 
-    if(szenv && strlen(szenv))
+    if (szenv && strlen(szenv)) {
         strEnv = szenv;
+    }
 
     /*
     OSTRINGSTREAM sstrID;
@@ -246,16 +252,22 @@ bool LocalBroker::init(const char* szcmd, const char* szparam,
 
 bool LocalBroker::start()
 {
-    if(!bInitialized) return false;
-    if(bOnlyConnector) return false;
+    if (!bInitialized) {
+        return false;
+    }
+    if (bOnlyConnector) {
+        return false;
+    }
 
-    if(running())
+    if (running()) {
         return true;
+    }
 
     strError.clear();
     ID = ExecuteCmd();
-    if(!ID)
+    if (!ID) {
         return false;
+    }
 
    if(running())
    {
@@ -266,8 +278,12 @@ bool LocalBroker::start()
 
 bool LocalBroker::stop()
 {
-    if(!bInitialized) return true;
-    if(bOnlyConnector) return false;
+    if (!bInitialized) {
+        return true;
+    }
+    if (bOnlyConnector) {
+        return false;
+    }
 
     strError.clear();
 #if defined(_WIN32)
@@ -281,8 +297,9 @@ bool LocalBroker::stop()
     double base = SystemClock::nowSystem();
     while(!timeout(base, STOP_TIMEOUT))
     {
-        if(!running())
+        if (!running()) {
             return true;
+        }
     }
 
     strError = "Timeout! cannot stop ";
@@ -294,8 +311,12 @@ bool LocalBroker::stop()
 
 bool LocalBroker::kill()
 {
-    if(!bInitialized) return true;
-    if(bOnlyConnector) return false;
+    if (!bInitialized) {
+        return true;
+    }
+    if (bOnlyConnector) {
+        return false;
+    }
 
     strError.clear();
 
@@ -310,8 +331,9 @@ bool LocalBroker::kill()
     double base = SystemClock::nowSystem();
     while(!timeout(base, KILL_TIMEOUT))
     {
-        if(!running())
+        if (!running()) {
             return true;
+        }
     }
 
     strError = "Timeout! cannot kill ";
@@ -324,8 +346,12 @@ bool LocalBroker::kill()
 
 int LocalBroker::running()
 {
-    if(!bInitialized) return 0;
-    if(bOnlyConnector) return 0;
+    if (!bInitialized) {
+        return 0;
+    }
+    if (bOnlyConnector) {
+        return 0;
+    }
     return (psCmd(ID))?1:0;
 }
 
@@ -402,8 +428,9 @@ bool LocalBroker::disconnect(const char* from, const char* to, const char *carri
         return true;
     }
 
-    if(!connected(from, to, carrier))
+    if (!connected(from, to, carrier)) {
         return true;
+    }
 
     if(!NetworkBase::disconnect(from, to))
     {
@@ -424,17 +451,20 @@ bool LocalBroker::exists(const char* port)
 
 const char* LocalBroker::requestRpc(const char* szport, const char* request, double timeout)
 {
-    if((szport==nullptr) || (request==nullptr))
+    if ((szport == nullptr) || (request == nullptr)) {
         return nullptr;
+    }
 
-    if(!exists(szport))
+    if (!exists(szport)) {
         return nullptr;
+    }
 
     // opening the port
     yarp::os::Port port;
     port.setTimeout((float)((timeout>0.0) ? timeout : CONNECTION_TIMEOUT));
-    if(!port.open("..."))
+    if (!port.open("...")) {
         return nullptr;
+    }
 
     ContactStyle style;
     style.quiet = true;
@@ -442,7 +472,9 @@ const char* LocalBroker::requestRpc(const char* szport, const char* request, dou
     bool ret;
     for(int i=0; i<10; i++) {
         ret = NetworkBase::connect(port.getName(), szport, style);
-        if(ret) break;
+        if (ret) {
+            break;
+        }
         SystemClock::delaySystem(1.0);
     }
 
@@ -466,8 +498,9 @@ const char* LocalBroker::requestRpc(const char* szport, const char* request, dou
 
 bool LocalBroker::connected(const char* from, const char* to, const char* carrier)
 {
-    if(!exists(from) || !exists(to))
+    if (!exists(from) || !exists(to)) {
         return false;
+    }
     return NetworkBase::isConnected(from, to);
 }
 
@@ -479,8 +512,9 @@ const char* LocalBroker::error()
 
 bool LocalBroker::attachStdout()
 {
-    if(Thread::isRunning())
+    if (Thread::isRunning()) {
         return true;
+    }
     if(!running())
     {
         strError = "Module is not running";
@@ -498,8 +532,9 @@ void LocalBroker::detachStdout()
 bool LocalBroker::timeout(double base, double timeout)
 {
     SystemClock::delaySystem(1.0);
-    if((SystemClock::nowSystem()-base) > timeout)
+    if ((SystemClock::nowSystem() - base) > timeout) {
         return true;
+    }
     return false;
 }
 
@@ -536,10 +571,12 @@ void LocalBroker::run()
            {
                 string strmsg;
                 char buff[1024];
-                while(fgets(buff, 1024, fd_stdout))
+                while (fgets(buff, 1024, fd_stdout)) {
                     strmsg += string(buff);
-                if(eventSink && strmsg.size())
+                }
+                if (eventSink && strmsg.size()) {
                     eventSink->onBrokerStdout(strmsg.c_str());
+                }
                 yarp::os::SystemClock::delaySystem(0.5); // this prevents event flooding
            }
         }
@@ -757,24 +794,27 @@ bool LocalBroker::stopCmd(int pid)
 
 bool LocalBroker::psCmd(int pid)
 {
-    if(!pid)
+    if (!pid) {
         return false;
+    }
     return !::kill(pid, 0);
 }
 
 
 bool LocalBroker::killCmd(int pid)
 {
-    if(!pid)
+    if (!pid) {
         return false;
+    }
     return !::kill(pid, SIGKILL);
 }
 
 
 bool LocalBroker::stopCmd(int pid)
 {
-    if(!pid)
+    if (!pid) {
         return false;
+    }
    return !::kill(pid, SIGTERM);
 }
 
@@ -819,8 +859,9 @@ int LocalBroker::waitPipeSignal(int pipe_fd)
         return PIPE_EVENT;
 #endif
 */
-    if(pselect(pipe_fd + 1, &fd, nullptr, nullptr, &timeout, nullptr))
+    if (pselect(pipe_fd + 1, &fd, nullptr, nullptr, &timeout, nullptr)) {
         return PIPE_EVENT;
+    }
     return PIPE_TIMEOUT;
 }
 
@@ -849,8 +890,9 @@ bool LocalBroker::startStdout()
 void LocalBroker::stopStdout()
 {
     Thread::stop();
-    if(fd_stdout)
+    if (fd_stdout) {
         fclose(fd_stdout);
+    }
     fd_stdout = nullptr;
 }
 
@@ -941,7 +983,9 @@ int LocalBroker::ExecuteCmd()
         if (currWorkDir)
         {
             char **cwd_szarg=new char*[nargs+1];
-            for (int i=1; i<nargs; ++i) cwd_szarg[i]=szarg[i];
+            for (int i = 1; i < nargs; ++i) {
+                cwd_szarg[i] = szarg[i];
+            }
             cwd_szarg[nargs]=nullptr;
             cwd_szarg[0]=new char[strlen(currWorkDir)+strlen(szarg[0])+16];
 
@@ -987,8 +1031,9 @@ int LocalBroker::ExecuteCmd()
         string retError;
         waitPipe(pipe_child_to_parent[READ_FROM_PIPE]);
 
-        for (char buff[1024]; fgets(buff,1024,in_from_child);)
+        for (char buff[1024]; fgets(buff, 1024, in_from_child);) {
             retError += string(buff);
+        }
         fclose(in_from_child);
 
         if(retError.size())

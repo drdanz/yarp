@@ -30,8 +30,9 @@ ImplementCurrentControl::~ImplementCurrentControl()
 
 bool ImplementCurrentControl::initialize(int size, const int *amap, const double* ampsToSens)
 {
-    if (helper!=nullptr)
+    if (helper != nullptr) {
         return false;
+    }
 
     intBuffManager = new yarp::dev::impl::FixedSizeBuffersManager<int> (size);
     yAssert (intBuffManager != nullptr);
@@ -123,8 +124,9 @@ bool ImplementCurrentControl::getCurrents(double *t)
 
 bool ImplementCurrentControl::setRefCurrents(const int n_joint, const int *joints, const double *t)
 {
-    if(!castToMapper(helper)->checkAxesIds(n_joint, joints))
+    if (!castToMapper(helper)->checkAxesIds(n_joint, joints)) {
         return false;
+    }
 
     yarp::dev::impl::Buffer<double> buffValues = doubleBuffManager->getBuffer();
     yarp::dev::impl::Buffer<int> buffJoints = intBuffManager->getBuffer();

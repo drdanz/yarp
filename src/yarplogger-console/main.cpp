@@ -121,8 +121,9 @@ class logger_module : public yarp::os::RFModule
             std::list<MessageEntry> m;
             the_logger->get_messages_by_process(proc_name, m);
             std::list<MessageEntry>::iterator it;
-            for (it = m.begin(); it != m.end(); it++)
-                printf(" %s %d %s \n",it->yarprun_timestamp.c_str(), it->level.toInt(), it->text.c_str());
+            for (it = m.begin(); it != m.end(); it++) {
+                printf(" %s %d %s \n", it->yarprun_timestamp.c_str(), it->level.toInt(), it->text.c_str());
+            }
             reply.addString("ack");
         }
         else if (command.get(0).asString()=="ask_all")
@@ -130,8 +131,9 @@ class logger_module : public yarp::os::RFModule
              std::list<MessageEntry> m;
              the_logger->get_messages(m);
              std::list<MessageEntry>::iterator it;
-             for (it = m.begin(); it != m.end(); it++)
-                 printf(" %s %d %s \n",it->yarprun_timestamp.c_str(), it->level.toInt(), it->text.c_str());
+             for (it = m.begin(); it != m.end(); it++) {
+                 printf(" %s %d %s \n", it->yarprun_timestamp.c_str(), it->level.toInt(), it->text.c_str());
+             }
              reply.addString("ack");
         }
         else if (command.get(0).asString()=="discover")
@@ -155,10 +157,11 @@ class logger_module : public yarp::os::RFModule
              for (it = infos.begin(); it != infos.end(); it++)
              {
                  std::tm* tm = localtime(&it->last_update);
-                 if (tm)
-                 printf("%s %s hour:%d minute:%d sec:%d \n",it->port_prefix.c_str(), it->port_complete.c_str(), tm->tm_hour,tm->tm_min, tm->tm_sec);
-                 else
-                 printf("%s %s no data received yet \n",it->port_prefix.c_str(), it->port_complete.c_str());
+                 if (tm) {
+                     printf("%s %s hour:%d minute:%d sec:%d \n", it->port_prefix.c_str(), it->port_complete.c_str(), tm->tm_hour, tm->tm_min, tm->tm_sec);
+                 } else {
+                     printf("%s %s no data received yet \n", it->port_prefix.c_str(), it->port_complete.c_str());
+                 }
              }
              reply.addString("ack");
         }

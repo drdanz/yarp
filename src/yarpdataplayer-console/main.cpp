@@ -229,8 +229,9 @@ class dataplayer_module : public yarp::os::RFModule, public yarpdataplayer_conso
                 {
                     yInfo() << "done stopping!";
                 }
-                for (int i=0; i < subDirCnt; i++)
+                for (int i = 0; i < subDirCnt; i++) {
                     utilities->partDetails[i].currFrame = 1;
+                }
 
                 if (verbose)
                 {
@@ -246,8 +247,9 @@ class dataplayer_module : public yarp::os::RFModule, public yarpdataplayer_conso
                     yInfo() << "asking the thread to resume";
                 }
 
-                for (int i=0; i < subDirCnt; i++)
+                for (int i = 0; i < subDirCnt; i++) {
                     utilities->partDetails[i].worker->resetTime();
+                }
 
                 utilities->dataplayerEngine->resume();
             }
@@ -259,8 +261,9 @@ class dataplayer_module : public yarp::os::RFModule, public yarpdataplayer_conso
                     yInfo() <<"initializing the workers...";
                 }
 
-                for (int i=0; i < subDirCnt; i++)
+                for (int i = 0; i < subDirCnt; i++) {
                     utilities->partDetails[i].worker->init();
+                }
 
                 if (verbose)
                 {
@@ -344,8 +347,9 @@ class dataplayer_module : public yarp::os::RFModule, public yarpdataplayer_conso
             {
                 yInfo() << "done stopping!";
             }
-            for (int i=0; i < subDirCnt; i++)
+            for (int i = 0; i < subDirCnt; i++) {
                 utilities->partDetails[i].currFrame = 1;
+            }
 
             if (verbose)
             {
@@ -624,8 +628,9 @@ class dataplayer_module : public yarp::os::RFModule, public yarpdataplayer_conso
             {
                 yInfo() << "done stopping!";
             }
-            for (int i=0; i < subDirCnt; i++)
+            for (int i = 0; i < subDirCnt; i++) {
                 utilities->partDetails[i].currFrame = 1;
+            }
 
             if (verbose)
             {

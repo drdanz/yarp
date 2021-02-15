@@ -92,7 +92,9 @@ bool AudioRecorderDeviceBase::getSound(yarp::sig::Sound& sound, size_t min_numbe
 
     //prepare the sound data struct
     size_t samples_to_be_copied = buff_size;
-    if (samples_to_be_copied > max_number_of_samples) samples_to_be_copied = max_number_of_samples;
+    if (samples_to_be_copied > max_number_of_samples) {
+        samples_to_be_copied = max_number_of_samples;
+    }
     if (sound.getChannels() != this->m_audiorecorder_cfg.numChannels && sound.getSamples() != samples_to_be_copied)
     {
         sound.resize(samples_to_be_copied, this->m_audiorecorder_cfg.numChannels);
@@ -103,12 +105,13 @@ bool AudioRecorderDeviceBase::getSound(yarp::sig::Sound& sound, size_t min_numbe
 #if DEBUG_TIME_SPENT
     double ct1 = yarp::os::Time::now();
 #endif
-    for (size_t i = 0; i < samples_to_be_copied; i++)
+    for (size_t i = 0; i < samples_to_be_copied; i++) {
         for (size_t j = 0; j < this->m_audiorecorder_cfg.numChannels; j++)
         {
             int16_t s = (int16_t)(m_inputBuffer->read());
             sound.set(s, i, j);
         }
+    }
 
     auto debug_p = sound.getInterleavedAudioRawData();
 #if DEBUG_TIME_SPENT

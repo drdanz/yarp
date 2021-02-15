@@ -332,8 +332,9 @@ bool JointItem::eventFilter(QObject *obj, QEvent *event)
                 }
             }
 
-            if(slider == nullptr)
+            if (slider == nullptr) {
                 return false;
+            }
 
 
             if(keyEvent->type() == QEvent::KeyPress){
@@ -1345,7 +1346,9 @@ double JointItem::getTrajectoryPositionValue()
 {
     //this function is mainly used used by the sequencer
     double pos = (double)ui->sliderTrajectoryPosition->value() / ui->sliderTrajectoryPosition->getSliderStep();
-    if (fabs(pos) < 1e-6) pos = 0;
+    if (fabs(pos) < 1e-6) {
+        pos = 0;
+    }
     return pos;
 }
 
@@ -1353,7 +1356,9 @@ double JointItem::getTrajectoryVelocityValue()
 {
     //this function is mainly used used by the sequencer
     double vel = (double)ui->sliderTrajectoryVelocity->value() / ui->sliderTrajectoryVelocity->getSliderStep();
-    if (fabs(vel) < 1e-6) vel = 0;
+    if (fabs(vel) < 1e-6) {
+        vel = 0;
+    }
     return vel;
 }
 
