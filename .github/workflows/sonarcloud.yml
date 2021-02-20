@@ -58,7 +58,7 @@ jobs:
         echo "SONAR_ORGANIZATION=${SONAR_ORGANIZATION}" >> $GITHUB_ENV
 
         # project version
-        echo "SONAR_PROJECT_VERSION=${SONAR_PROJECT_VERSION}" >> $GITHUB_ENV
+        [[ ! -z "${SONAR_PROJECT_VERSION}" ]] && echo "SONAR_PROJECT_VERSION=${SONAR_PROJECT_VERSION}" >> $GITHUB_ENV
 
         # Links
         echo "SONAR_LINKS_HOMEPAGE=${SONAR_LINKS_HOMEPAGE:-https://github.com/${GITHUB_REPOSITORY}/}" >> $GITHUB_ENV
