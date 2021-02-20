@@ -331,7 +331,8 @@ jobs:
             ${SONAR_PROJECT_VERSION_CMD_ARG} \
             ${SONAR_TOKEN_CMD_ARG} \
             ${SONAR_ORGANIZATION_CMD_ARG} \
-            ${SONAR_CFAMILY_CACHE_PATH_CMD_ARG}
+            ${SONAR_CFAMILY_CACHE_PATH_CMD_ARG} \
+            -Dsonar.scanner.dumpToFile=build/sonar-scanner-dump.txt
 
     - name: Compress artifacts
       run : |
