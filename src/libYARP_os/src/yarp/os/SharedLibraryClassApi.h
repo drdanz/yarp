@@ -103,13 +103,13 @@ YARP_END_PACK
     {                                                                                                \
         char cname[] = #classname;                                                                   \
         strncpy(name, cname, len);                                                                   \
-        return strlen(cname) + 1;                                                                    \
+        return (int)strlen(cname) + 1;                                                               \
     }                                                                                                \
     YARP_SHARED_CLASS_FN int factoryname##_getBaseClassName(char* name, int len)                     \
     {                                                                                                \
         char cname[] = #basename;                                                                    \
         strncpy(name, cname, len);                                                                   \
-        return strlen(cname) + 1;                                                                    \
+        return (int)strlen(cname) + 1;                                                               \
     }                                                                                                \
     YARP_SHARED_CLASS_FN int factoryname(void* api, int len)                                         \
     {                                                                                                \
