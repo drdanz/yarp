@@ -2,7 +2,10 @@ name: CI Workflow
 
 on:
   push:
-  pull_request:
+    branches:
+      - 'master'
+      - 'yarp-*'
+  pull_request_target:
     types: [opened, synchronize, reopened]
     branches:
       - 'master'
