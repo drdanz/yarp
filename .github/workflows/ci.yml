@@ -1857,6 +1857,13 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
+        # If this is a "pull_request_target" event, pretend this is a
+        # "pull_request" event in order to get proper reporting
+        if [[ ${GITHUB_EVENT_NAME} = "pull_request_target" ]]; then
+          export "GITHUB_EVENT_NAME=pull_request"
+          export "GITHUB_REF=${{ needs.select_environment.outputs.ref }}"
+          export "GITHUB_SHA=${{ needs.select_environment.outputs.sha }}"
+        fi
 
         # Run sonar scanner (here, arguments are passed through the command line but most of them can be written in the sonar-project.properties file)
         [[ -v SONAR_TOKEN ]] && SONAR_TOKEN_CMD_ARG="-Dsonar.login=${SONAR_TOKEN}"
