@@ -1576,11 +1576,24 @@ jobs:
         (cd build; lcov --list coverage.info)
 
     - name: Run codacy-coverage-reporter
-      uses: codacy/codacy-coverage-reporter-action@master
-      with:
-        project-token: ${{ secrets.CODACY_TOKEN }}
-        coverage-reports: build/coverage.info
+      run: |
+        # If this is a "pull_request_target" event, pretend this is a
+        # "pull_request" event in order to get proper reporting
+        if [[ ${GITHUB_EVENT_NAME} = "pull_request_target" ]]; then
+          export "GITHUB_EVENT_NAME=pull_request"
+          export "GITHUB_REF=${{ needs.select_environment.outputs.ref }}"
+          export "GITHUB_SHA=${{ needs.select_environment.outputs.sha }}"
+        fi
 
+        bash <(curl -Ls https://coverage.codacy.com/get.sh) report \
+            -r build/coverage.info \
+            -t ${{ secrets.CODACY_TOKEN }} \
+            --commit-uuid ${{ needs.select_environment.outputs.ref }}
+            --partial
+
+        bash <(curl -Ls https://coverage.codacy.com/get.sh) final \
+            -t ${{ secrets.CODACY_TOKEN }}
+            --commit-uuid ${{ needs.select_environment.outputs.ref }}
 
   sonarcloud:
     environment: code-analysis
