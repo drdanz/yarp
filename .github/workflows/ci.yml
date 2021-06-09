@@ -892,7 +892,7 @@ jobs:
         # Compilation related dependencies
         mamba install cmake compilers make ninja pkg-config
         # Actual dependencies
-        mamba install -c robotology ycm
+        mamba install -c robotology ycm-cmake-modules
 
 
     - name: Prepare Environment Script
