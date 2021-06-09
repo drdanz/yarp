@@ -211,7 +211,7 @@ jobs:
 
 
   build:
-    name: '[${{ matrix.config.id }}][${{ matrix.config.os }}|${{ matrix.config.cc }}|${{ matrix.config.cmake_generator }} (${{ matrix.config.cmake_toolset }} ${{ matrix.config.cmake_platform }})|${{ matrix.config.build_type }}] ${{ matrix.config.description }}'
+    name: '[${{ matrix.config.id }}][${{ matrix.config.os }}|${{ matrix.config.deps }}|${{ matrix.config.cc }}|${{ matrix.config.cmake_generator }} (${{ matrix.config.cmake_toolset }} ${{ matrix.config.cmake_platform }})|${{ matrix.config.build_type }}] ${{ matrix.config.description }}'
     needs: [select_environment, run-cmake]
     runs-on: ${{ matrix.config.os }}
     strategy:
@@ -221,6 +221,7 @@ jobs:
         - {
             id: '01',
             os: ubuntu-20.04,
+            deps: "apt",
             build_type: "Release",
             cc: "gcc",
             cxx: "g++",
@@ -231,6 +232,7 @@ jobs:
         - {
             id: '02',
             os: ubuntu-20.04,
+            deps: "apt",
             build_type: "Release",
             cc: "clang",
             cxx: "clang++",
@@ -242,6 +244,7 @@ jobs:
             id: '03',
             description: 'No ACE',
             os: ubuntu-20.04,
+            deps: "apt",
             build_type: "Release",
             cc: "gcc",
             cxx: "g++",
@@ -255,6 +258,7 @@ jobs:
             id: '04',
             description: 'No ACE',
             os: ubuntu-20.04,
+            deps: "apt",
             build_type: "Release",
             cc: "clang",
             cxx: "clang++",
@@ -268,6 +272,7 @@ jobs:
             id: '05',
             description: 'No YARP_math (bindings disabled)',
             os: ubuntu-20.04,
+            deps: "apt",
             build_type: "Release",
             cc: "gcc",
             cxx: "g++",
@@ -282,6 +287,7 @@ jobs:
             id: '06',
             description: 'No YARP_math (bindings disabled)',
             os: ubuntu-20.04,
+            deps: "apt",
             build_type: "Release",
             cc: "clang",
             cxx: "clang++",
@@ -296,6 +302,7 @@ jobs:
             id: '07',
             description: 'CLEAN_API (unit tests and bindings disabled)',
             os: ubuntu-20.04,
+            deps: "apt",
             build_type: "Release",
             cc: "gcc",
             cxx: "g++",
@@ -309,6 +316,7 @@ jobs:
             id: '08',
             description: 'CLEAN_API (unit tests and bindings disabled)',
             os: ubuntu-20.04,
+            deps: "apt",
             build_type: "Release",
             cc: "clang",
             cxx: "clang++",
@@ -322,6 +330,7 @@ jobs:
             id: '09',
             description: 'Static',
             os: ubuntu-20.04,
+            deps: "apt",
             build_type: "Release",
             cc: "gcc",
             cxx: "g++",
@@ -333,6 +342,7 @@ jobs:
             id: '10',
             description: 'Static',
             os: ubuntu-20.04,
+            deps: "apt",
             build_type: "Release",
             cc: "clang",
             cxx: "clang++",
@@ -344,6 +354,7 @@ jobs:
             id: '11',
             description: 'Static, no ACE (bindings disabled)',
             os: ubuntu-20.04,
+            deps: "apt",
             build_type: "Release",
             cc: "gcc",
             cxx: "g++",
@@ -358,6 +369,7 @@ jobs:
             id: '12',
             description: 'Static, no ACE (bindings disabled)',
             os: ubuntu-20.04,
+            deps: "apt",
             build_type: "Release",
             cc: "clang",
             cxx: "clang++",
@@ -372,6 +384,7 @@ jobs:
             id: '13',
             description: 'No deprecated',
             os: ubuntu-20.04,
+            deps: "apt",
             build_type: "Release",
             cc: "gcc",
             cxx: "g++",
@@ -383,6 +396,7 @@ jobs:
             id: '14',
             description: 'No deprecated',
             os: ubuntu-20.04,
+            deps: "apt",
             build_type: "Release",
             cc: "clang",
             cxx: "clang++",
@@ -394,6 +408,7 @@ jobs:
             id: '15',
             description: 'No executables (unit tests disabled)',
             os: ubuntu-20.04,
+            deps: "apt",
             build_type: "Release",
             cc: "gcc",
             cxx: "g++",
@@ -406,6 +421,7 @@ jobs:
             id: '16',
             description: 'No executables (unit tests disabled)',
             os: ubuntu-20.04,
+            deps: "apt",
             build_type: "Release",
             cc: "clang",
             cxx: "clang++",
@@ -418,6 +434,7 @@ jobs:
             id: '17',
             description: 'Build extern dependencies',
             os: ubuntu-20.04,
+            deps: "apt",
             build_type: "Release",
             cc: "gcc",
             cxx: "g++",
@@ -431,6 +448,7 @@ jobs:
             id: '18',
             description: 'Build extern dependencies',
             os: ubuntu-20.04,
+            deps: "apt",
             build_type: "Release",
             cc: "clang",
             cxx: "clang++",
@@ -443,6 +461,7 @@ jobs:
         - {
             id: '19',
             os: ubuntu-20.04,
+            deps: "apt",
             build_type: "Release",
             cc: "gcc",
             cxx: "g++",
@@ -452,6 +471,7 @@ jobs:
         - {
             id: '20',
             os: ubuntu-20.04,
+            deps: "apt",
             build_type: "Release",
             cc: "clang",
             cxx: "clang++",
@@ -462,6 +482,7 @@ jobs:
             id: '21',
             description: 'Valgrind (bindings, failing tests and examples as tests disabled)',
             os: ubuntu-20.04,
+            deps: "apt",
             build_type: "Debug",
             cc: "gcc",
             cxx: "g++",
@@ -491,6 +512,7 @@ jobs:
             id: '22',
             description: 'Valgrind, No ACE (bindings, failing tests and examples as tests disabled)',
             os: ubuntu-20.04,
+            deps: "apt",
             build_type: "Debug",
             cc: "gcc",
             cxx: "g++",
@@ -521,6 +543,7 @@ jobs:
         - {
             id: '23',
             os: windows-latest,
+            deps: "vcpkg",
             build_type: "Release",
             cc: "cl",
             cxx: "cl",
@@ -534,6 +557,7 @@ jobs:
         - {
             id: '24',
             os: windows-latest,
+            deps: "vcpkg",
             build_type: "Release",
             cc: "cl",
             cxx: "cl",
@@ -547,6 +571,7 @@ jobs:
         - {
             id: '25',
             os: windows-latest,
+            deps: "vcpkg",
             build_type: "Release",
             cc: "cl",
             cxx: "cl",
@@ -559,6 +584,7 @@ jobs:
         - {
             id: '26',
             os: windows-latest,
+            deps: "vcpkg",
             build_type: "Release",
             cc: "cl",
             cxx: "cl",
@@ -571,6 +597,7 @@ jobs:
         - {
             id: '27',
             os: macos-latest,
+            deps: "homebrew",
             build_type: "Release",
             cc: "clang",
             cxx: "clang++",
@@ -580,6 +607,7 @@ jobs:
         - {
             id: '28',
             os: macos-latest,
+            deps: "homebrew",
             build_type: "Release",
             cc: "clang",
             cxx: "clang++",
@@ -589,6 +617,7 @@ jobs:
         - {
             id: '29',
             os: macos-11.0,
+            deps: "homebrew",
             build_type: "Release",
             cc: "clang",
             cxx: "clang++",
@@ -598,6 +627,101 @@ jobs:
         - {
             id: '30',
             os: macos-11.0,
+            deps: "homebrew",
+            build_type: "Release",
+            cc: "clang",
+            cxx: "clang++",
+            cmake_generator: "Xcode",
+            cmake_initial_cache_file: ".ci/initial-cache.gh.macos.cmake",
+          }
+        - {
+            id: '31',
+            os: windows-latest,
+            deps: "conda",
+            build_type: "Release",
+            cc: "cl",
+            cxx: "cl",
+            cmake_generator: "Visual Studio 16 2019",
+            cmake_toolset: "v142",
+            cmake_platform: "x64",
+            cmake_toolchain_file: "C:/robotology/vcpkg/scripts/buildsystems/vcpkg.cmake",
+            cmake_initial_cache_file: ".ci/initial-cache.gh.windows.cmake",
+            environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
+          }
+        - {
+            id: '32',
+            os: windows-latest,
+            deps: "conda",
+            build_type: "Release",
+            cc: "cl",
+            cxx: "cl",
+            cmake_generator: "Visual Studio 16 2019",
+            cmake_toolset: "v141",
+            cmake_platform: "x64",
+            cmake_toolchain_file: "C:/robotology/vcpkg/scripts/buildsystems/vcpkg.cmake",
+            cmake_initial_cache_file: ".ci/initial-cache.gh.windows.cmake",
+            environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
+          }
+        - {
+            id: '33',
+            os: windows-latest,
+            deps: "conda",
+            build_type: "Release",
+            cc: "cl",
+            cxx: "cl",
+            cmake_generator: "Ninja",
+            cmake_toolset: "v142",
+            cmake_toolchain_file: "C:/robotology/vcpkg/scripts/buildsystems/vcpkg.cmake",
+            cmake_initial_cache_file: ".ci/initial-cache.gh.windows.cmake",
+            environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
+          }
+        - {
+            id: '34',
+            os: windows-latest,
+            deps: "conda",
+            build_type: "Release",
+            cc: "cl",
+            cxx: "cl",
+            cmake_generator: "Ninja",
+            cmake_toolset: "v141",
+            cmake_toolchain_file: "C:/robotology/vcpkg/scripts/buildsystems/vcpkg.cmake",
+            cmake_initial_cache_file: ".ci/initial-cache.gh.windows.cmake",
+            environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
+          }
+        - {
+            id: '35',
+            os: macos-latest,
+            deps: "conda",
+            build_type: "Release",
+            cc: "clang",
+            cxx: "clang++",
+            cmake_generator: "Unix Makefiles",
+            cmake_initial_cache_file: ".ci/initial-cache.gh.macos.cmake",
+          }
+        - {
+            id: '36',
+            os: macos-latest,
+            deps: "conda",
+            build_type: "Release",
+            cc: "clang",
+            cxx: "clang++",
+            cmake_generator: "Xcode",
+            cmake_initial_cache_file: ".ci/initial-cache.gh.macos.cmake",
+          }
+        - {
+            id: '37',
+            os: macos-11.0,
+            deps: "conda",
+            build_type: "Release",
+            cc: "clang",
+            cxx: "clang++",
+            cmake_generator: "Unix Makefiles",
+            cmake_initial_cache_file: ".ci/initial-cache.gh.macos.cmake",
+          }
+        - {
+            id: '38',
+            os: macos-11.0,
+            deps: "conda",
             build_type: "Release",
             cc: "clang",
             cxx: "clang++",
@@ -623,8 +747,8 @@ jobs:
           build-${{ matrix.config.id }}-${{ github.base_ref }}-ccache-
           build-${{ matrix.config.id }}-${{ github.ref }}-ccache-
 
-    - name: Dependencies [Linux]
-      if: runner.os == 'Linux'
+    - name: Dependencies [apt]
+      if: matrix.config.deps == 'apt'
       uses: nick-invision/retry@v2.2.0
       with:
         timeout_minutes: 20
@@ -702,8 +826,8 @@ jobs:
           # Remove old packages from apt cache
           sudo apt-get autoclean -qq
 
-    - name: Dependencies [Windows]
-      if: runner.os == 'Windows'
+    - name: Dependencies [vcpkg]
+      if: matrix.config.deps == 'vcpkg'
       uses: nick-invision/retry@v2.2.0
       with:
         timeout_minutes: 20
@@ -733,8 +857,8 @@ jobs:
           7z x ccache.tar.xz &
           7z x -ttar ccache.tar
 
-    - name: Dependencies [macOS]
-      if: runner.os == 'macOS'
+    - name: Dependencies [homebrew]
+      if: matrix.config.deps == 'homebrew'
       uses: nick-invision/retry@v2.2.0
       with:
         timeout_minutes: 20
@@ -753,6 +877,23 @@ jobs:
           brew install ace
           brew install sqlite tinyxml libedit libpng qt5 opencv eigen graphviz
           brew install robotology/formulae/ycm
+
+    - name: Setup miniconda [conda]
+      if: matrix.config.deps == 'conda'
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        mamba-version: "*"
+        channels: conda-forge,defaults
+        channel-priority: true
+
+    - name: Dependencies [conda]
+      if: matrix.config.deps == 'conda'
+      run: |
+        # Compilation related dependencies
+        mamba install cmake compilers make ninja pkg-config
+        # Actual dependencies
+        mamba install -c robotology ycm
+
 
     - name: Prepare Environment Script
       id: prepare_environment_script
