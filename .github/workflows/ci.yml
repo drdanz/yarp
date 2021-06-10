@@ -894,14 +894,46 @@ jobs:
         # Actual dependencies
         mamba install -c robotology ycm-cmake-modules
 
-
     - name: Prepare Environment Script
       id: prepare_environment_script
       shell: cmake -P {0}
       run: |
         cmake_minimum_required(VERSION 3.17)
+
+        # Create the script
         set(_env_script ${CMAKE_CURRENT_LIST_DIR}/environment_script.cmake)
         file(WRITE "${_env_script}" "")
+        message("::set-output name=environment_script::${_env_script}")
+
+        # Add execute_process_x() macro
+        file(APPEND "${_env_script}" "
+        function(execute_process_x)
+          set(_options)
+          set(_oneValueArgs RESULT_VARIABLE WORKING_DIRECTORY)
+          set(_multiValueArgs COMMAND)
+          cmake_parse_arguments(_x \"\${_options}\" \"\${_oneValueArgs}\" \"\${_multiValueArgs}\" \${ARGN})
+
+          string(REPLACE \";\" \" \" _cmd \"\${_x_COMMAND}\")
+          string(REPLACE \"\\\\\" \"\\\\\\\\\" _cmd \"\${_cmd}\")
+
+          message(STATUS \"::group::\${_cmd}\")
+          if(DEFINED _x_WORKING_DIRECTORY)
+            set(_wd WORKING_DIRECTORY \"\${_x_WORKING_DIRECTORY}\")
+          endif()
+          execute_process(COMMAND \${_x_COMMAND}
+                          \${_wd}
+                          RESULT_VARIABLE _result)
+          if(NOT _result EQUAL 0)
+            message(WARNING \"The command \\\"\${_cmd}\\\" failed with result \\\"\${_result}\\\"\")
+          endif()
+          if(DEFINED _x_RESULT_VARIABLE)
+            set(\${_x_RESULT_VARIABLE} \${_result} PARENT_SCOPE)
+          endif()
+          message(STATUS \"::endgroup::\")
+        endfunction()
+        ")
+
+        # Setup environment for the chosen compiler
         if("${{ runner.os }}" STREQUAL "Windows" AND NOT "${{ matrix.config.environment_script }}" STREQUAL "")
           execute_process(
               COMMAND "${{ matrix.config.environment_script }}" && set
@@ -917,26 +949,6 @@ jobs:
               file(APPEND "${_env_script}" "set(ENV{${_key}} \"${_value}\")\n")
             endif()
           endforeach()
-
-          # Ninja and other tools are downloaded in $GITHUB_WORKSPACE
-          file(APPEND "${_env_script}" "set(ENV{PATH} \"\$ENV{PATH};\$ENV{GITHUB_WORKSPACE}\")\n")
-
-          # YCM is installed manually, set YCM_DIR to allow CMake to find it
-          file(APPEND "${_env_script}" "set(ENV{YCM_DIR} \"C:\\\\robotology\\\\YCM-0.12.1-all\")\n")
-
-          # Append vcpkg bin directory to the PATH
-          if("${{ matrix.config.build_type }}" STREQUAL "Release")
-            file(APPEND "${_env_script}" "set(ENV{PATH} \"\$ENV{PATH};C:\\\\robotology\\\\vcpkg\\\\installed\\\\x64-windows\\\\bin\")\n")
-          else()
-            file(APPEND "${_env_script}" "set(ENV{PATH} \"\$ENV{PATH};C:\\\\robotology\\\\vcpkg\\\\installed\\\\x64-windows\\\\debug\\\\bin\")\n")
-          endif()
-
-          # Append output bin directory to the PATH
-          if("${{ matrix.config.cmake_generator }}" MATCHES "Visual Studio")
-            file(APPEND "${_env_script}" "set(ENV{PATH} \"\$ENV{PATH};\$ENV{GITHUB_WORKSPACE}\\\\build\\\\bin\\\\${{ matrix.config.build_type }}\")\n")
-          elseif("${{ matrix.config.cmake_generator }}" MATCHES "Ninja")
-            file(APPEND "${_env_script}" "set(ENV{PATH} \"\$ENV{PATH};\$ENV{GITHUB_WORKSPACE}\\\\build\\\\bin\")\n")
-          endif()
         endif()
 
         file(APPEND "${_env_script}" "set(ENV{CC} ${{ matrix.config.cc }})\n")
@@ -950,6 +962,8 @@ jobs:
           file(APPEND "${_env_script}" "set(ENV{CXXFLAGS} -fcolor-diagnostics)\n")
         endif()
 
+
+        # Setup environment for ccache
         file(APPEND "${_env_script}" "file(TO_CMAKE_PATH \"\$ENV{GITHUB_WORKSPACE}\" ccache_basedir)\n")
         file(APPEND "${_env_script}" "set(ENV{CCACHE_BASEDIR} \"\${ccache_basedir}\")\n")
         file(APPEND "${_env_script}" "set(ENV{CCACHE_DIR} \"\${ccache_basedir}/.ccache\")\n")
@@ -962,7 +976,6 @@ jobs:
         endif()
         # Force ccache to build the original cpp file instead of the pre-processed file
         file(APPEND "${_env_script}" "set(ENV{CCACHE_CPP2} \"yes\")\n")
-
         # Prepend ccache lib dir on Linux and macOS
         if("${{ runner.os }}" STREQUAL "Linux")
           file(APPEND "${_env_script}" "set(ENV{PATH} \"/usr/lib/ccache:\$ENV{PATH}\")\n")
@@ -977,34 +990,40 @@ jobs:
         # YARP variables
         file(APPEND "${_env_script}" "set(ENV{YARP_PORT_RANGE} \"20000\")\n")
 
-        # Add execute_process_x() macro
-        file(APPEND "${_env_script}" "
-        function(execute_process_x)
-          set(_options)
-          set(_oneValueArgs RESULT_VARIABLE WORKING_DIRECTORY)
-          set(_multiValueArgs COMMAND)
-          cmake_parse_arguments(_x \"\${_options}\" \"\${_oneValueArgs}\" \"\${_multiValueArgs}\" \${ARGN})
+    - name: Prepare Environment Script [vcpkg]
+      if: matrix.config.deps == 'vcpkg'
+      shell: cmake -P {0}
+      run: |
+        cmake_minimum_required(VERSION 3.17)
+        set(_env_script "${{ steps.prepare_environment_script.outputs.environment_script }}")
 
-          string(REPLACE \";\" \" \" _cmd \"\${_x_COMMAND}\")
-          string(REPLACE \"\\\\\" \"\\\\\\\\\" _cmd \"\${_cmd}\")
-          message(STATUS \"\\n\$ \${_cmd}\")
+        # Ninja and other tools are downloaded in $GITHUB_WORKSPACE
+        file(APPEND "${_env_script}" "set(ENV{PATH} \"\$ENV{PATH};\$ENV{GITHUB_WORKSPACE}\")\n")
 
-          if(DEFINED _x_WORKING_DIRECTORY)
-            set(_wd WORKING_DIRECTORY \"\${_x_WORKING_DIRECTORY}\")
-          endif()
-          execute_process(COMMAND \${_x_COMMAND}
-                          \${_wd}
-                          RESULT_VARIABLE _result)
-          if(NOT _result EQUAL 0)
-            message(WARNING \"The command \\\"\${_cmd}\\\" failed with result \\\"\${_result}\\\"\")
-          endif()
-          if(DEFINED _x_RESULT_VARIABLE)
-            set(\${_x_RESULT_VARIABLE} \${_result} PARENT_SCOPE)
-          endif()
-        endfunction()
-        ")
+        # YCM is installed manually, set YCM_DIR to allow CMake to find it
+        file(APPEND "${_env_script}" "set(ENV{YCM_DIR} \"C:\\\\robotology\\\\YCM-0.12.1-all\")\n")
 
-        message("::set-output name=environment_script::${_env_script}")
+        # Append vcpkg bin directory to the PATH
+        if("${{ matrix.config.build_type }}" STREQUAL "Release")
+          file(APPEND "${_env_script}" "set(ENV{PATH} \"\$ENV{PATH};C:\\\\robotology\\\\vcpkg\\\\installed\\\\x64-windows\\\\bin\")\n")
+        else()
+          file(APPEND "${_env_script}" "set(ENV{PATH} \"\$ENV{PATH};C:\\\\robotology\\\\vcpkg\\\\installed\\\\x64-windows\\\\debug\\\\bin\")\n")
+        endif()
+
+        # Append output bin directory to the PATH
+        if("${{ matrix.config.cmake_generator }}" MATCHES "Visual Studio")
+          file(APPEND "${_env_script}" "set(ENV{PATH} \"\$ENV{PATH};\$ENV{GITHUB_WORKSPACE}\\\\build\\\\bin\\\\${{ matrix.config.build_type }}\")\n")
+        elseif("${{ matrix.config.cmake_generator }}" MATCHES "Ninja")
+          file(APPEND "${_env_script}" "set(ENV{PATH} \"\$ENV{PATH};\$ENV{GITHUB_WORKSPACE}\\\\build\\\\bin\")\n")
+        endif()
+
+    - name: Prepare Environment Script [conda]
+      if: matrix.config.deps == 'conda'
+      shell: cmake -P {0}
+      run: |
+        cmake_minimum_required(VERSION 3.17)
+        set(_env_script "${{ steps.prepare_environment_script.outputs.environment_script }}")
+        file(APPEND "${_env_script}" "execute_process_x(COMMAND conda activate test)\n")
 
     - name: Print Environment Script
       shell: cmake -P {0}
