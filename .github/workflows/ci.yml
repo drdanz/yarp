@@ -903,7 +903,7 @@ jobs:
         # Create the script
         set(_env_script ${CMAKE_CURRENT_LIST_DIR}/environment_script.cmake)
         file(WRITE "${_env_script}" "")
-        message("::set-output name=environment_script::${_env_script}")
+        message(NOTICE "::set-output name=environment_script::${_env_script}")
 
         # Add execute_process_x() macro
         file(APPEND "${_env_script}" "
@@ -916,7 +916,7 @@ jobs:
           string(REPLACE \";\" \" \" _cmd \"\${_x_COMMAND}\")
           string(REPLACE \"\\\\\" \"\\\\\\\\\" _cmd \"\${_cmd}\")
 
-          message(STATUS \"::group::\${_cmd}\")
+          message(NOTICE \"::group::\${_cmd}\")
           if(DEFINED _x_WORKING_DIRECTORY)
             set(_wd WORKING_DIRECTORY \"\${_x_WORKING_DIRECTORY}\")
           endif()
@@ -929,7 +929,7 @@ jobs:
           if(DEFINED _x_RESULT_VARIABLE)
             set(\${_x_RESULT_VARIABLE} \${_result} PARENT_SCOPE)
           endif()
-          message(STATUS \"::endgroup::\")
+          message(NOTICE \"::endgroup::\")
         endfunction()
         ")
 
