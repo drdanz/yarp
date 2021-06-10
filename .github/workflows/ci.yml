@@ -218,422 +218,422 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - {
-            id: '01',
-            os: ubuntu-20.04,
-            deps: "apt",
-            build_type: "Release",
-            cc: "gcc",
-            cxx: "g++",
-            cmake_generator: "Unix Makefiles",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
-            test_external_bindings: true,
-          }
-        - {
-            id: '02',
-            os: ubuntu-20.04,
-            deps: "apt",
-            build_type: "Release",
-            cc: "clang",
-            cxx: "clang++",
-            cmake_generator: "Unix Makefiles",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
-            test_external_bindings: true,
-          }
-        - {
-            id: '03',
-            description: 'No ACE',
-            os: ubuntu-20.04,
-            deps: "apt",
-            build_type: "Release",
-            cc: "gcc",
-            cxx: "g++",
-            cmake_generator: "Unix Makefiles",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
-            cmake_extra_options: "-DCMAKE_DISABLE_FIND_PACKAGE_ACE=ON
-                                  -DSKIP_ACE:BOOL=ON",
-            test_external_bindings: true,
-          }
-        - {
-            id: '04',
-            description: 'No ACE',
-            os: ubuntu-20.04,
-            deps: "apt",
-            build_type: "Release",
-            cc: "clang",
-            cxx: "clang++",
-            cmake_generator: "Unix Makefiles",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
-            cmake_extra_options: "-DCMAKE_DISABLE_FIND_PACKAGE_ACE:BOOL=ON
-                                  -DSKIP_ACE:BOOL=ON",
-            test_external_bindings: true,
-          }
-        - {
-            id: '05',
-            description: 'No YARP_math (bindings disabled)',
-            os: ubuntu-20.04,
-            deps: "apt",
-            build_type: "Release",
-            cc: "gcc",
-            cxx: "g++",
-            cmake_generator: "Unix Makefiles",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
-            cmake_extra_options: "-DCMAKE_DISABLE_FIND_PACKAGE_Eigen:BOOL=ON
-                                  -DCMAKE_DISABLE_FIND_PACKAGE_GSL:BOOL=ON
-                                  -DYARP_COMPILE_libYARP_math:BOOL=OFF
-                                  -DYARP_COMPILE_BINDINGS:BOOL=OFF",
-          }
-        - {
-            id: '06',
-            description: 'No YARP_math (bindings disabled)',
-            os: ubuntu-20.04,
-            deps: "apt",
-            build_type: "Release",
-            cc: "clang",
-            cxx: "clang++",
-            cmake_generator: "Unix Makefiles",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
-            cmake_extra_options: "-DCMAKE_DISABLE_FIND_PACKAGE_Eigen:BOOL=ON
-                                  -DCMAKE_DISABLE_FIND_PACKAGE_GSL:BOOL=ON
-                                  -DYARP_COMPILE_libYARP_math:BOOL=OFF
-                                  -DYARP_COMPILE_BINDINGS:BOOL=OFF",
-          }
-        - {
-            id: '07',
-            description: 'CLEAN_API (unit tests and bindings disabled)',
-            os: ubuntu-20.04,
-            deps: "apt",
-            build_type: "Release",
-            cc: "gcc",
-            cxx: "g++",
-            cmake_generator: "Unix Makefiles",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
-            cmake_extra_options: "-DYARP_CLEAN_API:BOOL=ON
-                                  -DYARP_COMPILE_TESTS:BOOL=OFF
-                                  -DYARP_COMPILE_BINDINGS:BOOL=OFF",
-          }
-        - {
-            id: '08',
-            description: 'CLEAN_API (unit tests and bindings disabled)',
-            os: ubuntu-20.04,
-            deps: "apt",
-            build_type: "Release",
-            cc: "clang",
-            cxx: "clang++",
-            cmake_generator: "Unix Makefiles",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
-            cmake_extra_options: "-DYARP_CLEAN_API:BOOL=ON
-                                  -DYARP_COMPILE_TESTS:BOOL=OFF
-                                  -DYARP_COMPILE_BINDINGS:BOOL=OFF",
-          }
-        - {
-            id: '09',
-            description: 'Static',
-            os: ubuntu-20.04,
-            deps: "apt",
-            build_type: "Release",
-            cc: "gcc",
-            cxx: "g++",
-            cmake_generator: "Unix Makefiles",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
-            cmake_extra_options: "-DBUILD_SHARED_LIBS:BOOL=OFF",
-          }
-        - {
-            id: '10',
-            description: 'Static',
-            os: ubuntu-20.04,
-            deps: "apt",
-            build_type: "Release",
-            cc: "clang",
-            cxx: "clang++",
-            cmake_generator: "Unix Makefiles",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
-            cmake_extra_options: "-DBUILD_SHARED_LIBS:BOOL=OFF",
-          }
-        - {
-            id: '11',
-            description: 'Static, no ACE (bindings disabled)',
-            os: ubuntu-20.04,
-            deps: "apt",
-            build_type: "Release",
-            cc: "gcc",
-            cxx: "g++",
-            cmake_generator: "Unix Makefiles",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
-            cmake_extra_options: "-DBUILD_SHARED_LIBS:BOOL=OFF
-                                  -DCMAKE_DISABLE_FIND_PACKAGE_ACE:BOOL=ON
-                                  -DSKIP_ACE:BOOL=ON
-                                  -DYARP_COMPILE_BINDINGS:BOOL=OFF",
-          }
-        - {
-            id: '12',
-            description: 'Static, no ACE (bindings disabled)',
-            os: ubuntu-20.04,
-            deps: "apt",
-            build_type: "Release",
-            cc: "clang",
-            cxx: "clang++",
-            cmake_generator: "Unix Makefiles",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
-            cmake_extra_options: "-DBUILD_SHARED_LIBS:BOOL=OFF
-                                  -DCMAKE_DISABLE_FIND_PACKAGE_ACE:BOOL=ON
-                                  -DSKIP_ACE:BOOL=ON
-                                  -DYARP_COMPILE_BINDINGS:BOOL=OFF",
-          }
-        - {
-            id: '13',
-            description: 'No deprecated',
-            os: ubuntu-20.04,
-            deps: "apt",
-            build_type: "Release",
-            cc: "gcc",
-            cxx: "g++",
-            cmake_generator: "Unix Makefiles",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
-            cmake_extra_options: "-DYARP_NO_DEPRECATED:BOOL=ON",
-          }
-        - {
-            id: '14',
-            description: 'No deprecated',
-            os: ubuntu-20.04,
-            deps: "apt",
-            build_type: "Release",
-            cc: "clang",
-            cxx: "clang++",
-            cmake_generator: "Unix Makefiles",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
-            cmake_extra_options: "-DYARP_NO_DEPRECATED:BOOL=ON",
-          }
-        - {
-            id: '15',
-            description: 'No executables (unit tests disabled)',
-            os: ubuntu-20.04,
-            deps: "apt",
-            build_type: "Release",
-            cc: "gcc",
-            cxx: "g++",
-            cmake_generator: "Unix Makefiles",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
-            cmake_extra_options: "-DYARP_COMPILE_EXECUTABLES:BOOL=OFF
-                                  -DYARP_COMPILE_TESTS:BOOL=OFF",
-          }
-        - {
-            id: '16',
-            description: 'No executables (unit tests disabled)',
-            os: ubuntu-20.04,
-            deps: "apt",
-            build_type: "Release",
-            cc: "clang",
-            cxx: "clang++",
-            cmake_generator: "Unix Makefiles",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
-            cmake_extra_options: "-DYARP_COMPILE_EXECUTABLES:BOOL=OFF
-                                  -DYARP_COMPILE_TESTS:BOOL=OFF",
-          }
-        - {
-            id: '17',
-            description: 'Build extern dependencies',
-            os: ubuntu-20.04,
-            deps: "apt",
-            build_type: "Release",
-            cc: "gcc",
-            cxx: "g++",
-            cmake_generator: "Unix Makefiles",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
-            cmake_extra_options: "-DCMAKE_DISABLE_FIND_PACKAGE_SQLite:BOOL=ON
-                                  -DCMAKE_DISABLE_FIND_PACKAGE_TinyXML:BOOL=ON
-                                  -DCMAKE_DISABLE_FIND_PACKAGE_QCustomPlot:BOOL=ON",
-          }
-        - {
-            id: '18',
-            description: 'Build extern dependencies',
-            os: ubuntu-20.04,
-            deps: "apt",
-            build_type: "Release",
-            cc: "clang",
-            cxx: "clang++",
-            cmake_generator: "Unix Makefiles",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
-            cmake_extra_options: "-DCMAKE_DISABLE_FIND_PACKAGE_SQLite:BOOL=ON
-                                  -DCMAKE_DISABLE_FIND_PACKAGE_TinyXML:BOOL=ON
-                                  -DCMAKE_DISABLE_FIND_PACKAGE_QCustomPlot:BOOL=ON",
-          }
-        - {
-            id: '19',
-            os: ubuntu-20.04,
-            deps: "apt",
-            build_type: "Release",
-            cc: "gcc",
-            cxx: "g++",
-            cmake_generator: "Ninja",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
-          }
-        - {
-            id: '20',
-            os: ubuntu-20.04,
-            deps: "apt",
-            build_type: "Release",
-            cc: "clang",
-            cxx: "clang++",
-            cmake_generator: "Ninja",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
-          }
-        - {
-            id: '21',
-            description: 'Valgrind (bindings, failing tests and examples as tests disabled)',
-            os: ubuntu-20.04,
-            deps: "apt",
-            build_type: "Debug",
-            cc: "gcc",
-            cxx: "g++",
-            cmake_generator: "Unix Makefiles",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
-            # These devices link to glib/gobject causing some memory leak on
-            # valgrind, therefore they are not enabled on valgrind builds
-            cmake_extra_options: "-DYARP_VALGRIND_TESTS:BOOL=ON
-                                  -DYARP_DISABLE_FAILING_TESTS:BOOL=ON
-                                  -DYARP_ENABLE_EXAMPLES_AS_TESTS:BOOL=OFF
-                                  -DYARP_COMPILE_BINDINGS:BOOL=OFF
-                                  -DCMAKE_DISABLE_FIND_PACKAGE_FFMPEG=ON
-                                  -DENABLE_yarpcar_h264:BOOL=OFF
-                                  -DENABLE_yarpcar_mjpeg:BOOL=OFF
-                                  -DENABLE_yarppm_image_compression_ffmpeg:BOOL=OFF
-                                  -DENABLE_yarpmod_usbCamera:BOOL=OFF
-                                  -DENABLE_yarpmod_usbCameraRaw:BOOL=OFF
-                                  -DENABLE_yarpmod_ffmpeg_grabber:BOOL=OFF
-                                  -DENABLE_yarpmod_ffmpeg_writer:BOOL=OFF
-                                  -DENABLE_yarpmod_portaudio:BOOL=OFF
-                                  -DENABLE_yarpmod_portaudioPlayer:BOOL=OFF
-                                  -DENABLE_yarpmod_portaudioRecorder:BOOL=OFF
-                                  -DENABLE_yarpmod_fakeMicrophone:BOOL=OFF
-                                  -DENABLE_yarpmod_opencv_grabber:BOOL=OFF",
-          }
-        - {
-            id: '22',
-            description: 'Valgrind, No ACE (bindings, failing tests and examples as tests disabled)',
-            os: ubuntu-20.04,
-            deps: "apt",
-            build_type: "Debug",
-            cc: "gcc",
-            cxx: "g++",
-            cmake_generator: "Unix Makefiles",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
-            # These devices link to glib/gobject causing some memory leak on
-            # valgrind, therefore they are not enabled on valgrind builds
-            cmake_extra_options: "-DCMAKE_DISABLE_FIND_PACKAGE_ACE:BOOL=ON
-                                  -DSKIP_ACE:BOOL=ON
-                                  -DYARP_VALGRIND_TESTS:BOOL=ON
-                                  -DYARP_DISABLE_FAILING_TESTS:BOOL=ON
-                                  -DYARP_ENABLE_EXAMPLES_AS_TESTS:BOOL=OFF
-                                  -DYARP_COMPILE_BINDINGS:BOOL=OFF
-                                  -DCMAKE_DISABLE_FIND_PACKAGE_FFMPEG=ON
-                                  -DENABLE_yarpcar_h264:BOOL=OFF
-                                  -DENABLE_yarpcar_mjpeg:BOOL=OFF
-                                  -DENABLE_yarppm_image_compression_ffmpeg:BOOL=OFF
-                                  -DENABLE_yarpmod_usbCamera:BOOL=OFF
-                                  -DENABLE_yarpmod_usbCameraRaw:BOOL=OFF
-                                  -DENABLE_yarpmod_ffmpeg_grabber:BOOL=OFF
-                                  -DENABLE_yarpmod_ffmpeg_writer:BOOL=OFF
-                                  -DENABLE_yarpmod_portaudio:BOOL=OFF
-                                  -DENABLE_yarpmod_portaudioPlayer:BOOL=OFF
-                                  -DENABLE_yarpmod_portaudioRecorder:BOOL=OFF
-                                  -DENABLE_yarpmod_fakeMicrophone:BOOL=OFF
-                                  -DENABLE_yarpmod_opencv_grabber:BOOL=OFF",
-          }
-        - {
-            id: '23',
-            os: windows-latest,
-            deps: "vcpkg",
-            build_type: "Release",
-            cc: "cl",
-            cxx: "cl",
-            cmake_generator: "Visual Studio 16 2019",
-            cmake_toolset: "v142",
-            cmake_platform: "x64",
-            cmake_toolchain_file: "C:/robotology/vcpkg/scripts/buildsystems/vcpkg.cmake",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.windows.cmake",
-            environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
-          }
-        - {
-            id: '24',
-            os: windows-latest,
-            deps: "vcpkg",
-            build_type: "Release",
-            cc: "cl",
-            cxx: "cl",
-            cmake_generator: "Visual Studio 16 2019",
-            cmake_toolset: "v141",
-            cmake_platform: "x64",
-            cmake_toolchain_file: "C:/robotology/vcpkg/scripts/buildsystems/vcpkg.cmake",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.windows.cmake",
-            environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
-          }
-        - {
-            id: '25',
-            os: windows-latest,
-            deps: "vcpkg",
-            build_type: "Release",
-            cc: "cl",
-            cxx: "cl",
-            cmake_generator: "Ninja",
-            cmake_toolset: "v142",
-            cmake_toolchain_file: "C:/robotology/vcpkg/scripts/buildsystems/vcpkg.cmake",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.windows.cmake",
-            environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
-          }
-        - {
-            id: '26',
-            os: windows-latest,
-            deps: "vcpkg",
-            build_type: "Release",
-            cc: "cl",
-            cxx: "cl",
-            cmake_generator: "Ninja",
-            cmake_toolset: "v141",
-            cmake_toolchain_file: "C:/robotology/vcpkg/scripts/buildsystems/vcpkg.cmake",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.windows.cmake",
-            environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
-          }
-        - {
-            id: '27',
-            os: macos-latest,
-            deps: "homebrew",
-            build_type: "Release",
-            cc: "clang",
-            cxx: "clang++",
-            cmake_generator: "Unix Makefiles",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.macos.cmake",
-          }
-        - {
-            id: '28',
-            os: macos-latest,
-            deps: "homebrew",
-            build_type: "Release",
-            cc: "clang",
-            cxx: "clang++",
-            cmake_generator: "Xcode",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.macos.cmake",
-          }
-        - {
-            id: '29',
-            os: macos-11.0,
-            deps: "homebrew",
-            build_type: "Release",
-            cc: "clang",
-            cxx: "clang++",
-            cmake_generator: "Unix Makefiles",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.macos.cmake",
-          }
-        - {
-            id: '30',
-            os: macos-11.0,
-            deps: "homebrew",
-            build_type: "Release",
-            cc: "clang",
-            cxx: "clang++",
-            cmake_generator: "Xcode",
-            cmake_initial_cache_file: ".ci/initial-cache.gh.macos.cmake",
-          }
+        #- {
+            #id: '01',
+            #os: ubuntu-20.04,
+            #deps: "apt",
+            #build_type: "Release",
+            #cc: "gcc",
+            #cxx: "g++",
+            #cmake_generator: "Unix Makefiles",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
+            #test_external_bindings: true,
+          #}
+        #- {
+            #id: '02',
+            #os: ubuntu-20.04,
+            #deps: "apt",
+            #build_type: "Release",
+            #cc: "clang",
+            #cxx: "clang++",
+            #cmake_generator: "Unix Makefiles",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
+            #test_external_bindings: true,
+          #}
+        #- {
+            #id: '03',
+            #description: 'No ACE',
+            #os: ubuntu-20.04,
+            #deps: "apt",
+            #build_type: "Release",
+            #cc: "gcc",
+            #cxx: "g++",
+            #cmake_generator: "Unix Makefiles",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
+            #cmake_extra_options: "-DCMAKE_DISABLE_FIND_PACKAGE_ACE=ON
+                                  #-DSKIP_ACE:BOOL=ON",
+            #test_external_bindings: true,
+          #}
+        #- {
+            #id: '04',
+            #description: 'No ACE',
+            #os: ubuntu-20.04,
+            #deps: "apt",
+            #build_type: "Release",
+            #cc: "clang",
+            #cxx: "clang++",
+            #cmake_generator: "Unix Makefiles",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
+            #cmake_extra_options: "-DCMAKE_DISABLE_FIND_PACKAGE_ACE:BOOL=ON
+                                  #-DSKIP_ACE:BOOL=ON",
+            #test_external_bindings: true,
+          #}
+        #- {
+            #id: '05',
+            #description: 'No YARP_math (bindings disabled)',
+            #os: ubuntu-20.04,
+            #deps: "apt",
+            #build_type: "Release",
+            #cc: "gcc",
+            #cxx: "g++",
+            #cmake_generator: "Unix Makefiles",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
+            #cmake_extra_options: "-DCMAKE_DISABLE_FIND_PACKAGE_Eigen:BOOL=ON
+                                  #-DCMAKE_DISABLE_FIND_PACKAGE_GSL:BOOL=ON
+                                  #-DYARP_COMPILE_libYARP_math:BOOL=OFF
+                                  #-DYARP_COMPILE_BINDINGS:BOOL=OFF",
+          #}
+        #- {
+            #id: '06',
+            #description: 'No YARP_math (bindings disabled)',
+            #os: ubuntu-20.04,
+            #deps: "apt",
+            #build_type: "Release",
+            #cc: "clang",
+            #cxx: "clang++",
+            #cmake_generator: "Unix Makefiles",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
+            #cmake_extra_options: "-DCMAKE_DISABLE_FIND_PACKAGE_Eigen:BOOL=ON
+                                  #-DCMAKE_DISABLE_FIND_PACKAGE_GSL:BOOL=ON
+                                  #-DYARP_COMPILE_libYARP_math:BOOL=OFF
+                                  #-DYARP_COMPILE_BINDINGS:BOOL=OFF",
+          #}
+        #- {
+            #id: '07',
+            #description: 'CLEAN_API (unit tests and bindings disabled)',
+            #os: ubuntu-20.04,
+            #deps: "apt",
+            #build_type: "Release",
+            #cc: "gcc",
+            #cxx: "g++",
+            #cmake_generator: "Unix Makefiles",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
+            #cmake_extra_options: "-DYARP_CLEAN_API:BOOL=ON
+                                  #-DYARP_COMPILE_TESTS:BOOL=OFF
+                                  #-DYARP_COMPILE_BINDINGS:BOOL=OFF",
+          #}
+        #- {
+            #id: '08',
+            #description: 'CLEAN_API (unit tests and bindings disabled)',
+            #os: ubuntu-20.04,
+            #deps: "apt",
+            #build_type: "Release",
+            #cc: "clang",
+            #cxx: "clang++",
+            #cmake_generator: "Unix Makefiles",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
+            #cmake_extra_options: "-DYARP_CLEAN_API:BOOL=ON
+                                  #-DYARP_COMPILE_TESTS:BOOL=OFF
+                                  #-DYARP_COMPILE_BINDINGS:BOOL=OFF",
+          #}
+        #- {
+            #id: '09',
+            #description: 'Static',
+            #os: ubuntu-20.04,
+            #deps: "apt",
+            #build_type: "Release",
+            #cc: "gcc",
+            #cxx: "g++",
+            #cmake_generator: "Unix Makefiles",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
+            #cmake_extra_options: "-DBUILD_SHARED_LIBS:BOOL=OFF",
+          #}
+        #- {
+            #id: '10',
+            #description: 'Static',
+            #os: ubuntu-20.04,
+            #deps: "apt",
+            #build_type: "Release",
+            #cc: "clang",
+            #cxx: "clang++",
+            #cmake_generator: "Unix Makefiles",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
+            #cmake_extra_options: "-DBUILD_SHARED_LIBS:BOOL=OFF",
+          #}
+        #- {
+            #id: '11',
+            #description: 'Static, no ACE (bindings disabled)',
+            #os: ubuntu-20.04,
+            #deps: "apt",
+            #build_type: "Release",
+            #cc: "gcc",
+            #cxx: "g++",
+            #cmake_generator: "Unix Makefiles",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
+            #cmake_extra_options: "-DBUILD_SHARED_LIBS:BOOL=OFF
+                                  #-DCMAKE_DISABLE_FIND_PACKAGE_ACE:BOOL=ON
+                                  #-DSKIP_ACE:BOOL=ON
+                                  #-DYARP_COMPILE_BINDINGS:BOOL=OFF",
+          #}
+        #- {
+            #id: '12',
+            #description: 'Static, no ACE (bindings disabled)',
+            #os: ubuntu-20.04,
+            #deps: "apt",
+            #build_type: "Release",
+            #cc: "clang",
+            #cxx: "clang++",
+            #cmake_generator: "Unix Makefiles",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
+            #cmake_extra_options: "-DBUILD_SHARED_LIBS:BOOL=OFF
+                                  #-DCMAKE_DISABLE_FIND_PACKAGE_ACE:BOOL=ON
+                                  #-DSKIP_ACE:BOOL=ON
+                                  #-DYARP_COMPILE_BINDINGS:BOOL=OFF",
+          #}
+        #- {
+            #id: '13',
+            #description: 'No deprecated',
+            #os: ubuntu-20.04,
+            #deps: "apt",
+            #build_type: "Release",
+            #cc: "gcc",
+            #cxx: "g++",
+            #cmake_generator: "Unix Makefiles",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
+            #cmake_extra_options: "-DYARP_NO_DEPRECATED:BOOL=ON",
+          #}
+        #- {
+            #id: '14',
+            #description: 'No deprecated',
+            #os: ubuntu-20.04,
+            #deps: "apt",
+            #build_type: "Release",
+            #cc: "clang",
+            #cxx: "clang++",
+            #cmake_generator: "Unix Makefiles",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
+            #cmake_extra_options: "-DYARP_NO_DEPRECATED:BOOL=ON",
+          #}
+        #- {
+            #id: '15',
+            #description: 'No executables (unit tests disabled)',
+            #os: ubuntu-20.04,
+            #deps: "apt",
+            #build_type: "Release",
+            #cc: "gcc",
+            #cxx: "g++",
+            #cmake_generator: "Unix Makefiles",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
+            #cmake_extra_options: "-DYARP_COMPILE_EXECUTABLES:BOOL=OFF
+                                  #-DYARP_COMPILE_TESTS:BOOL=OFF",
+          #}
+        #- {
+            #id: '16',
+            #description: 'No executables (unit tests disabled)',
+            #os: ubuntu-20.04,
+            #deps: "apt",
+            #build_type: "Release",
+            #cc: "clang",
+            #cxx: "clang++",
+            #cmake_generator: "Unix Makefiles",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
+            #cmake_extra_options: "-DYARP_COMPILE_EXECUTABLES:BOOL=OFF
+                                  #-DYARP_COMPILE_TESTS:BOOL=OFF",
+          #}
+        #- {
+            #id: '17',
+            #description: 'Build extern dependencies',
+            #os: ubuntu-20.04,
+            #deps: "apt",
+            #build_type: "Release",
+            #cc: "gcc",
+            #cxx: "g++",
+            #cmake_generator: "Unix Makefiles",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
+            #cmake_extra_options: "-DCMAKE_DISABLE_FIND_PACKAGE_SQLite:BOOL=ON
+                                  #-DCMAKE_DISABLE_FIND_PACKAGE_TinyXML:BOOL=ON
+                                  #-DCMAKE_DISABLE_FIND_PACKAGE_QCustomPlot:BOOL=ON",
+          #}
+        #- {
+            #id: '18',
+            #description: 'Build extern dependencies',
+            #os: ubuntu-20.04,
+            #deps: "apt",
+            #build_type: "Release",
+            #cc: "clang",
+            #cxx: "clang++",
+            #cmake_generator: "Unix Makefiles",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
+            #cmake_extra_options: "-DCMAKE_DISABLE_FIND_PACKAGE_SQLite:BOOL=ON
+                                  #-DCMAKE_DISABLE_FIND_PACKAGE_TinyXML:BOOL=ON
+                                  #-DCMAKE_DISABLE_FIND_PACKAGE_QCustomPlot:BOOL=ON",
+          #}
+        #- {
+            #id: '19',
+            #os: ubuntu-20.04,
+            #deps: "apt",
+            #build_type: "Release",
+            #cc: "gcc",
+            #cxx: "g++",
+            #cmake_generator: "Ninja",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
+          #}
+        #- {
+            #id: '20',
+            #os: ubuntu-20.04,
+            #deps: "apt",
+            #build_type: "Release",
+            #cc: "clang",
+            #cxx: "clang++",
+            #cmake_generator: "Ninja",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
+          #}
+        #- {
+            #id: '21',
+            #description: 'Valgrind (bindings, failing tests and examples as tests disabled)',
+            #os: ubuntu-20.04,
+            #deps: "apt",
+            #build_type: "Debug",
+            #cc: "gcc",
+            #cxx: "g++",
+            #cmake_generator: "Unix Makefiles",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
+            ## These devices link to glib/gobject causing some memory leak on
+            ## valgrind, therefore they are not enabled on valgrind builds
+            #cmake_extra_options: "-DYARP_VALGRIND_TESTS:BOOL=ON
+                                  #-DYARP_DISABLE_FAILING_TESTS:BOOL=ON
+                                  #-DYARP_ENABLE_EXAMPLES_AS_TESTS:BOOL=OFF
+                                  #-DYARP_COMPILE_BINDINGS:BOOL=OFF
+                                  #-DCMAKE_DISABLE_FIND_PACKAGE_FFMPEG=ON
+                                  #-DENABLE_yarpcar_h264:BOOL=OFF
+                                  #-DENABLE_yarpcar_mjpeg:BOOL=OFF
+                                  #-DENABLE_yarppm_image_compression_ffmpeg:BOOL=OFF
+                                  #-DENABLE_yarpmod_usbCamera:BOOL=OFF
+                                  #-DENABLE_yarpmod_usbCameraRaw:BOOL=OFF
+                                  #-DENABLE_yarpmod_ffmpeg_grabber:BOOL=OFF
+                                  #-DENABLE_yarpmod_ffmpeg_writer:BOOL=OFF
+                                  #-DENABLE_yarpmod_portaudio:BOOL=OFF
+                                  #-DENABLE_yarpmod_portaudioPlayer:BOOL=OFF
+                                  #-DENABLE_yarpmod_portaudioRecorder:BOOL=OFF
+                                  #-DENABLE_yarpmod_fakeMicrophone:BOOL=OFF
+                                  #-DENABLE_yarpmod_opencv_grabber:BOOL=OFF",
+          #}
+        #- {
+            #id: '22',
+            #description: 'Valgrind, No ACE (bindings, failing tests and examples as tests disabled)',
+            #os: ubuntu-20.04,
+            #deps: "apt",
+            #build_type: "Debug",
+            #cc: "gcc",
+            #cxx: "g++",
+            #cmake_generator: "Unix Makefiles",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.linux.cmake",
+            ## These devices link to glib/gobject causing some memory leak on
+            ## valgrind, therefore they are not enabled on valgrind builds
+            #cmake_extra_options: "-DCMAKE_DISABLE_FIND_PACKAGE_ACE:BOOL=ON
+                                  #-DSKIP_ACE:BOOL=ON
+                                  #-DYARP_VALGRIND_TESTS:BOOL=ON
+                                  #-DYARP_DISABLE_FAILING_TESTS:BOOL=ON
+                                  #-DYARP_ENABLE_EXAMPLES_AS_TESTS:BOOL=OFF
+                                  #-DYARP_COMPILE_BINDINGS:BOOL=OFF
+                                  #-DCMAKE_DISABLE_FIND_PACKAGE_FFMPEG=ON
+                                  #-DENABLE_yarpcar_h264:BOOL=OFF
+                                  #-DENABLE_yarpcar_mjpeg:BOOL=OFF
+                                  #-DENABLE_yarppm_image_compression_ffmpeg:BOOL=OFF
+                                  #-DENABLE_yarpmod_usbCamera:BOOL=OFF
+                                  #-DENABLE_yarpmod_usbCameraRaw:BOOL=OFF
+                                  #-DENABLE_yarpmod_ffmpeg_grabber:BOOL=OFF
+                                  #-DENABLE_yarpmod_ffmpeg_writer:BOOL=OFF
+                                  #-DENABLE_yarpmod_portaudio:BOOL=OFF
+                                  #-DENABLE_yarpmod_portaudioPlayer:BOOL=OFF
+                                  #-DENABLE_yarpmod_portaudioRecorder:BOOL=OFF
+                                  #-DENABLE_yarpmod_fakeMicrophone:BOOL=OFF
+                                  #-DENABLE_yarpmod_opencv_grabber:BOOL=OFF",
+          #}
+        #- {
+            #id: '23',
+            #os: windows-latest,
+            #deps: "vcpkg",
+            #build_type: "Release",
+            #cc: "cl",
+            #cxx: "cl",
+            #cmake_generator: "Visual Studio 16 2019",
+            #cmake_toolset: "v142",
+            #cmake_platform: "x64",
+            #cmake_toolchain_file: "C:/robotology/vcpkg/scripts/buildsystems/vcpkg.cmake",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.windows.cmake",
+            #environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
+          #}
+        #- {
+            #id: '24',
+            #os: windows-latest,
+            #deps: "vcpkg",
+            #build_type: "Release",
+            #cc: "cl",
+            #cxx: "cl",
+            #cmake_generator: "Visual Studio 16 2019",
+            #cmake_toolset: "v141",
+            #cmake_platform: "x64",
+            #cmake_toolchain_file: "C:/robotology/vcpkg/scripts/buildsystems/vcpkg.cmake",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.windows.cmake",
+            #environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
+          #}
+        #- {
+            #id: '25',
+            #os: windows-latest,
+            #deps: "vcpkg",
+            #build_type: "Release",
+            #cc: "cl",
+            #cxx: "cl",
+            #cmake_generator: "Ninja",
+            #cmake_toolset: "v142",
+            #cmake_toolchain_file: "C:/robotology/vcpkg/scripts/buildsystems/vcpkg.cmake",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.windows.cmake",
+            #environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
+          #}
+        #- {
+            #id: '26',
+            #os: windows-latest,
+            #deps: "vcpkg",
+            #build_type: "Release",
+            #cc: "cl",
+            #cxx: "cl",
+            #cmake_generator: "Ninja",
+            #cmake_toolset: "v141",
+            #cmake_toolchain_file: "C:/robotology/vcpkg/scripts/buildsystems/vcpkg.cmake",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.windows.cmake",
+            #environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
+          #}
+        #- {
+            #id: '27',
+            #os: macos-latest,
+            #deps: "homebrew",
+            #build_type: "Release",
+            #cc: "clang",
+            #cxx: "clang++",
+            #cmake_generator: "Unix Makefiles",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.macos.cmake",
+          #}
+        #- {
+            #id: '28',
+            #os: macos-latest,
+            #deps: "homebrew",
+            #build_type: "Release",
+            #cc: "clang",
+            #cxx: "clang++",
+            #cmake_generator: "Xcode",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.macos.cmake",
+          #}
+        #- {
+            #id: '29',
+            #os: macos-11.0,
+            #deps: "homebrew",
+            #build_type: "Release",
+            #cc: "clang",
+            #cxx: "clang++",
+            #cmake_generator: "Unix Makefiles",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.macos.cmake",
+          #}
+        #- {
+            #id: '30',
+            #os: macos-11.0,
+            #deps: "homebrew",
+            #build_type: "Release",
+            #cc: "clang",
+            #cxx: "clang++",
+            #cmake_generator: "Xcode",
+            #cmake_initial_cache_file: ".ci/initial-cache.gh.macos.cmake",
+          #}
         - {
             id: '31',
             os: windows-latest,
