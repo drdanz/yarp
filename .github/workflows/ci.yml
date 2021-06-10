@@ -886,6 +886,11 @@ jobs:
         channels: conda-forge,defaults
         channel-priority: true
 
+    - name: Print cat ~/.bashrc
+      if: matrix.config.deps == 'conda'
+      run: |
+        cat ~/.bashrc
+
     - name: Dependencies [conda]
       if: matrix.config.deps == 'conda'
       run: |
