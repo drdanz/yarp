@@ -885,6 +885,9 @@ jobs:
         mamba-version: "*"
         channels: conda-forge,defaults
         channel-priority: true
+        miniforge-variant: Mambaforge
+        miniforge-version: latest
+        use-mamba: true
 
     - name: Print cat ~/.bash_profile
       if: matrix.config.deps == 'conda'
@@ -1028,6 +1031,12 @@ jobs:
       run: |
         cmake_minimum_required(VERSION 3.17)
         set(_env_script "${{ steps.prepare_environment_script.outputs.environment_script }}")
+
+        if("${{ runner.os }}" STREQUAL "Windows")
+          file(APPEND "${_env_script}" "execute_process_x(COMMAND C:\\\\Miniconda\\\\Scripts\\\\conda.exe)\n")
+        else()
+          file(APPEND "${_env_script}" "execute_process_x(COMMAND C:\\\\Miniconda\\\\Scripts\\\\conda.exe)\n")
+        endif()
         file(APPEND "${_env_script}" "execute_process_x(COMMAND conda activate test)\n")
 
     - name: Print Environment Script
