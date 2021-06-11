@@ -889,11 +889,6 @@ jobs:
         miniforge-version: latest
         use-mamba: true
 
-    - name: Print cat ~/.bash_profile
-      if: matrix.config.deps == 'conda'
-      run: |
-        cat ~/.bash_profile
-
     - name: Dependencies [conda]
       if: matrix.config.deps == 'conda'
       run: |
@@ -970,7 +965,6 @@ jobs:
           file(APPEND "${_env_script}" "set(ENV{CXXFLAGS} -fcolor-diagnostics)\n")
         endif()
 
-
         # Setup environment for ccache
         file(APPEND "${_env_script}" "file(TO_CMAKE_PATH \"\$ENV{GITHUB_WORKSPACE}\" ccache_basedir)\n")
         file(APPEND "${_env_script}" "set(ENV{CCACHE_BASEDIR} \"\${ccache_basedir}\")\n")
@@ -1031,13 +1025,35 @@ jobs:
       run: |
         cmake_minimum_required(VERSION 3.17)
         set(_env_script "${{ steps.prepare_environment_script.outputs.environment_script }}")
+        file(APPEND "${_env_script}" "\n# Conda setup\n\n")
 
-        if("${{ runner.os }}" STREQUAL "Windows")
-          file(APPEND "${_env_script}" "execute_process_x(COMMAND C:\\\\Miniconda\\\\Scripts\\\\conda.exe)\n")
-        else()
-          file(APPEND "${_env_script}" "execute_process_x(COMMAND C:\\\\Miniconda\\\\Scripts\\\\conda.exe)\n")
+        set(CONDA_EXE /usr/local/bin/conda)
+        if("Linux" STREQUAL "Windows")
+          set(CONDA_EXE "C:\\Miniconda\\Scripts\\conda.exe")
         endif()
-        file(APPEND "${_env_script}" "execute_process_x(COMMAND conda activate test)\n")
+
+        if(NOT EXISTS ${CONDA_EXE})
+          message(FATAL_ERROR "Conda executable does not exist (${CONDA_EXE})")
+        endif()
+
+        set(CONDA_ENV test)
+
+        set(_conda_cmd = ${CONDA_EXE} shell.posix activate ${CONDA_ENV})
+        execute_process(COMMAND ${CONDA_EXE} shell.posix activate ${CONDA_ENV}
+                        OUTPUT_VARIABLE _conda_output
+                        RESULT_VARIABLE _conda_result)
+
+        if(NOT _conda_result EQUAL 0)
+          message(FATAL ERROR "The command \"${_conda_cmd}\" failed with result \"${_conda_result}\"")
+        endif()
+
+        string(REPLACE "\n" ";" _conda_output "${_conda_output}")
+        foreach(_line ${_conda_output})
+          message("${_line}")
+          if ("${_line}" MATCHES "^export (.+)='(.+)'")
+            file(APPEND "${_env_script}" "set(ENV{${CMAKE_MATCH_1}} \"${CMAKE_MATCH_2}\")\n")
+          endif()
+        endforeach()
 
     - name: Print Environment Script
       shell: cmake -P {0}
