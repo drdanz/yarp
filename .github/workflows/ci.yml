@@ -1028,7 +1028,7 @@ jobs:
         file(APPEND "${_env_script}" "\n# Conda setup\n\n")
 
         set(CONDA_EXE /usr/local/bin/conda)
-        if("Linux" STREQUAL "Windows")
+        if("${{ runner.os }}" STREQUAL "Windows")
           set(CONDA_EXE "C:\\Miniconda\\Scripts\\conda.exe")
         endif()
 
