@@ -644,7 +644,6 @@ jobs:
             cmake_generator: "Visual Studio 16 2019",
             cmake_toolset: "v142",
             cmake_platform: "x64",
-            cmake_toolchain_file: "C:/robotology/vcpkg/scripts/buildsystems/vcpkg.cmake",
             cmake_initial_cache_file: ".ci/initial-cache.gh.windows.cmake",
             environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
           }
@@ -658,7 +657,6 @@ jobs:
             cmake_generator: "Visual Studio 16 2019",
             cmake_toolset: "v141",
             cmake_platform: "x64",
-            cmake_toolchain_file: "C:/robotology/vcpkg/scripts/buildsystems/vcpkg.cmake",
             cmake_initial_cache_file: ".ci/initial-cache.gh.windows.cmake",
             environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
           }
@@ -671,7 +669,6 @@ jobs:
             cxx: "cl",
             cmake_generator: "Ninja",
             cmake_toolset: "v142",
-            cmake_toolchain_file: "C:/robotology/vcpkg/scripts/buildsystems/vcpkg.cmake",
             cmake_initial_cache_file: ".ci/initial-cache.gh.windows.cmake",
             environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
           }
@@ -684,7 +681,6 @@ jobs:
             cxx: "cl",
             cmake_generator: "Ninja",
             cmake_toolset: "v141",
-            cmake_toolchain_file: "C:/robotology/vcpkg/scripts/buildsystems/vcpkg.cmake",
             cmake_initial_cache_file: ".ci/initial-cache.gh.windows.cmake",
             environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
           }
